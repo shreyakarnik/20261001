@@ -1,0 +1,15 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #05070a;
+}
+
+/* The sized, overflow-controlled parent the landing page fills. */
+.shader-frame {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #05070a;
+}

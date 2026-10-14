@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="analytics.js"></script>
+<title>ROI Calculator — PFX</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="talk-modal.css?v=4">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --red:#C00022; --red-dark:#A80F22;
+  --red-light:rgba(192,0,34,0.15); --red-border:rgba(192,0,34,0.4);
+  --black:#ffffff; --mid:#C7CCD3; --muted:#C7CCD3; --hint:#9AA3AF;
+  --white:#181c24; --off:#12151c; --off2:#1b1f29;
+  --border:rgba(255,255,255,0.14); --border2:rgba(255,255,255,0.08);
+  --green:#33CC66; --gray:#9AA3AF;
+  --ink:#ffffff; --bg:#0D0E10; --bg-alt:#131722;
+  --line:rgba(255,255,255,0.12); --panel:rgba(217,217,217,0.2);
+  --panel-solid:#181c24; --section-bg:#0D0E10; --input-bg:rgba(255,255,255,0.3);
+}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--black);-webkit-font-smoothing:antialiased;line-height:1.6;}
+
+/* NAV (shared identically across every page) */
+header.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 112px;
+  max-width:1282px; margin:20px auto 0;
+  position:sticky; top:20px; z-index:100;
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:50px;
+}
+.logo{font-size:28px; font-weight:800; letter-spacing:-0.5px; text-decoration:none; color:var(--black);}
+  .logo img{height:32px; width:auto; display:block;}
+.logo span{color:var(--red);}
+nav.links{display:flex; align-items:center; gap:19.2px; font-size:15px; font-weight:400;}
+nav.links a{text-decoration:none; color:var(--black); letter-spacing:0.5px;}
+nav.links a.talk{
+  background:var(--red); color:#fff; padding:10px 20px; border-radius:12px; font-weight:600;
+  }
+.search-btn{color:var(--black);}
+.nav-logo-btn{
+  display:flex; align-items:center; justify-content:center;
+  width:40px; height:40px; padding:2px; flex-shrink:0;
+  background:none; border:none;
+}
+.nav-logo-btn:hover{opacity:0.85;}
+.nav-logo-btn img{width:33px; height:33px; display:block; object-fit:contain;}
+
+/* FOOTER (shared identically across every page) */
+footer{
+  border-top:1px solid var(--line); margin-top:60px; padding:48px 80px; background:var(--bg);
+}
+.footer-inner{
+  max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px;
+}
+.footer-left .logo{margin-bottom:16px; display:block;}
+.footer-socials{display:flex; gap:12px;}
+.footer-socials a{
+  width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
+  display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+}
+.footer-right{text-align:right;}
+.footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
+.footer-links a{font-size:14px; color:rgba(255,255,255,0.75); text-decoration:none;}
+.footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+
+/* CALCULATOR */
+.calc-section{padding:56px 2.5rem;}
+.calc-inner{max-width:1160px;margin:0 auto;}
+.calc-inner h1{font-size:clamp(30px,4.5vw,48px); font-weight:800; letter-spacing:-0.5px; margin-bottom:10px; text-align:center;}
+.calc-inner .sub{font-size:15px;color:var(--muted);max-width:560px;margin:0 auto 32px;font-weight:400;line-height:1.7;text-align:center;}
+.calc-box{background:var(--white);border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.04);}
+.calc-header{background:var(--off2);padding:26px 36px;border-bottom:1px solid var(--border2);}
+.calc-header h3{font-size:26px; font-weight:800; color:var(--black); line-height:1; margin-bottom:4px;}
+.calc-header p{font-size:14px;color:var(--hint);font-weight:300;}
+.calc-cols{display:grid;grid-template-columns:1fr 1fr;}
+.calc-left{padding:36px;border-right:1px solid var(--border2);}
+.calc-right{padding:36px;background:var(--off);}
+
+.model-btns{display:flex;gap:6px;margin-bottom:30px;}
+.mbtn{flex:1;padding:11px 6px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-family:inherit;font-size:10px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);text-align:center;line-height:1.5;transition:all .15s;}
+.mbtn:hover{border-color:var(--red-border);color:var(--black);}
+.mbtn.on{background:var(--red);color:#fff;border-color:var(--red);}
+.mbtn .mprice{display:block;font-size:10px;opacity:.7;font-weight:400;margin-top:2px;letter-spacing:.03em;}
+
+.sec-div{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);padding-bottom:10px;border-bottom:1px solid var(--border);margin:28px 0 22px;}
+.sec-div:first-of-type{margin-top:0;}
+
+.ig{margin-bottom:22px;}
+.ig label{display:block;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;}
+.hint-t{font-size:13px;color:var(--hint);margin-top:5px;font-style:italic;font-weight:300;}
+.sr{display:flex;align-items:center;gap:12px;}
+.sr input[type=range]{flex:1;-webkit-appearance:none;height:3px;background:var(--off2);border-radius:2px;outline:none;cursor:pointer;}
+.sr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;background:var(--red);border-radius:50%;cursor:pointer;}
+.sr input[type=range]::-moz-range-thumb{width:17px;height:17px;background:var(--red);border-radius:50%;cursor:pointer;border:none;}
+.sv{font-size:13px;font-weight:700;color:var(--black);min-width:72px;text-align:right;}
+.pf{display:flex;align-items:center;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--white);}
+.pf .px{font-size:12px;color:var(--hint);padding:0 12px;height:40px;display:flex;align-items:center;background:var(--off);border-right:1px solid var(--border);font-weight:700;letter-spacing:.05em;}
+.pf input{border:none;background:transparent;color:var(--black);height:40px;padding:0 14px;font-size:14px;flex:1;outline:none;font-family:inherit;}
+.cr{display:flex;align-items:center;gap:10px;}
+.cr input[type=checkbox]{width:16px;height:16px;accent-color:var(--red);cursor:pointer;}
+.cl{font-size:14px;color:var(--muted);font-weight:300;}
+
+/* Results */
+.rl{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);margin-bottom:16px;}
+.big-r{margin-bottom:26px;}
+.big-lbl{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.big-v{font-size:44px; font-weight:800; line-height:1; color:var(--black);}
+.big-v.good{color:var(--green);}
+.big-v.bad{color:var(--red);}
+.big-s{font-size:14px;color:var(--muted);margin-top:6px;font-weight:300;}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+.kpi{background:var(--white);border:1px solid var(--border2);border-radius:12px;padding:14px 16px;}
+.kpi .kl{font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;}
+.kpi .kv{font-size:20px; font-weight:800; color:var(--black);}
+.bbar-wrap{margin-bottom:24px;}
+.bbar-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:7px;font-weight:300;}
+.bbar{height:4px;background:var(--off2);border-radius:2px;overflow:hidden;}
+.bbar-fill{height:100%;background:var(--red);border-radius:2px;transition:width .3s;}
+.bbar-foot{display:flex;justify-content:space-between;font-size:10px;color:var(--hint);margin-top:4px;letter-spacing:.07em;text-transform:uppercase;}
+.pl{border-top:1px solid var(--border);padding-top:18px;}
+.pr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:12px;}
+.pr:last-child{border-bottom:none;padding-top:12px;}
+.pr .p-l{color:var(--muted);font-weight:300;}
+.pr .p-v{color:var(--black);font-weight:600;font-variant-numeric:tabular-nums;}
+
+.disc{font-size:11px;color:var(--hint);line-height:1.7;border-top:1px solid var(--border);padding-top:22px;margin-top:28px;font-weight:300;max-width:1160px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0;}
+
+/* GATE — lead-capture modal shown over a dimmed, non-interactive calculator until the form is submitted */
+.gate-overlay{
+  position:fixed; inset:0; z-index:500;
+  background:rgba(0,0,0,0.62);
+  display:flex; align-items:center; justify-content:center;
+  padding:40px 20px; overflow-y:auto;
+}
+body.gate-locked{overflow:hidden;}
+.gate-modal{
+  position:relative;
+  background:var(--white); border:1px solid var(--border2); border-radius:12px; width:100%; max-width:640px;
+  padding:36px; box-shadow:0 24px 70px rgba(0,0,0,0.5); margin:auto;
+}
+.gate-skip{
+  position:absolute; top:16px; right:16px;
+  font-size:12.5px; font-weight:400; color:var(--hint);
+  background:none; border:none; cursor:pointer; padding:6px 8px; border-radius:12px;
+  text-decoration:none;
+}
+.gate-skip:hover{color:var(--black); background:var(--off2);}
+.gate-head{text-align:center;margin-bottom:28px;}
+.gate-head .eyebrow{color:var(--red);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;}
+.gate-head h1{font-size:clamp(26px,4vw,36px);font-weight:800;letter-spacing:-0.5px;margin-bottom:5px;}
+.gate-head .sub{font-size:15px;color:var(--hint);font-weight:300;line-height:1.7;}
+.gate-form .form-section-title{font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);border-bottom:1px solid var(--border);padding-bottom:9px;margin:24px 0 18px;}
+.gate-form .form-section-title:first-child{margin-top:0;}
+.gate-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.gate-form .form-row.single{grid-template-columns:1fr;}
+.gate-form .form-group{display:flex;flex-direction:column;gap:6px;}
+.gate-form .form-group label{font-size:12.5px;font-weight:400;color:var(--muted);}
+.gate-form input[type="text"], .gate-form input[type="tel"], .gate-form input[type="email"], .gate-form select{
+  border:1px solid var(--border);border-radius:12px;padding:11px 14px;font-size:14px;
+  font-family:inherit;color:var(--black);background:var(--white);
+}
+.gate-form input:focus, .gate-form select:focus{outline:2px solid var(--red);outline-offset:1px;}
+.hp-field{position:absolute;left:-9999px;top:-9999px;} /* honeypot — never visible to real visitors */
+.gate-error{
+  display:none;background:var(--red-light);border:1px solid var(--red-border);color:#ff8a97;
+  font-size:13px;border-radius:12px;padding:10px 12px;margin-bottom:14px;
+}
+.gate-error.show{display:block;}
+.gate-form .btn-primary{
+  width:100%;background:var(--red);color:#fff;border:none;border-radius:12px;
+  padding:14px 24px;font-size:15px;font-weight:400;cursor:pointer;margin-top:8px;font-family:inherit;
+}
+.gate-form .btn-primary:hover{background:var(--red-dark);}
+.gate-form .btn-primary:disabled{opacity:.6;cursor:default;}
+
+@media(max-width:900px){
+  header.nav{margin:12px; padding:10px 16px;}
+  nav.links{gap:12px; font-size:13px;}
+  nav.links a:not(.talk), nav.links .search-btn{display:none;}
+  footer{padding:32px 24px;}
+  .footer-inner{flex-direction:column;}
+  .footer-right{text-align:left;}
+  .footer-links{justify-content:flex-start;}
+  .footer-legal{margin-left:0;}
+}
+@media(max-width:820px){
+  .calc-section{padding:40px 1.25rem;}
+  .calc-cols{grid-template-columns:1fr;}
+  .calc-left{border-right:none;border-bottom:1px solid var(--border2);}
+  .calc-header,.calc-left,.calc-right{padding:24px;}
+  .gate-overlay{padding:16px;}
+  .gate-modal{padding:22px;}
+  .gate-form .form-row{grid-template-columns:1fr;}
+}
+</style>
+<link rel="stylesheet" href="pfx-nav.css">
+<link rel="stylesheet" href="pfx-theme.css">
+</head>
+<body>
+
+<header class="pfx-nav" id="pfxNav">
+  <a class="pfx-brand" href="kage.html" aria-label="PFX home"><img src="secret-pathways-assets/pfx-light.png" alt="PFX"></a>
+  <nav class="pfx-links" id="pfxLinks">
+    <a class="pfx-link" href="kiosk-outdoor.html">Explore Kiosks</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#case-study">Case Study</a>
+    <a class="pfx-link on" href="roi_calculator.html">ROI Calculator</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+    <a class="pfx-link" href="blog.html">Blog</a>
+    <a class="pfx-link pfx-link--talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+  </nav>
+  <div class="pfx-actions">
+    <button type="button" class="pfx-search" id="siteSearchBtn" aria-label="Search"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="pfx-talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <button type="button" class="pfx-burger" aria-label="Menu" aria-controls="pfxLinks" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="gate-overlay" id="gateOverlay">
+  <div class="gate-modal">
+    <a href="kage.html" class="gate-skip" aria-label="Skip and return to the homepage">Skip →</a>
+    <div class="gate-head">
+      <div class="eyebrow">ROI Calculator</div>
+      <h1>See Your Projected Earnings</h1>
+      <p class="sub">Enter your details below to unlock the interactive PFX licensee ROI calculator.</p>
+    </div>
+
+    <div class="gate-error" id="gateError"></div>
+
+    <form class="gate-form" id="gateForm" onsubmit="return submitGateForm(event);">
+      <div class="form-section-title">Your Information</div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name*</label><input type="text" name="firstname" required></div>
+        <div class="form-group"><label>Last Name*</label><input type="text" name="lastname" required></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Phone*</label><input type="tel" name="phone" required></div>
+        <div class="form-group"><label>Email*</label><input type="email" name="email" required></div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label>Country*</label>
+          <select name="country" required>
+            <option value="">Please Select</option>
+            <option>Canada</option>
+            <option>United States</option>
+            <option>Mexico/Costa Rica</option>
+            <option>Outside of North America</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section-title">Optional Details</div>
+      <div class="form-row single">
+        <div class="form-group"><label>Company Name</label><input type="text" name="company"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Location</label><input type="text" name="location"></div>
+        <div class="form-group"><label>Pincode</label><input type="text" name="pincode"></div>
+      </div>
+
+      <!-- Honeypot: invisible to real visitors, but simple bots often fill every field they see -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="website">Leave this field blank</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button type="submit" class="btn-primary" id="gateSubmitBtn">Unlock Calculator</button>
+    </form>
+  </div>
+</div>
+
+<div id="calcContent" aria-hidden="true">
+<section class="calc-section">
+  <div class="calc-inner">
+    <h1>ROI Calculator</h1>
+    <p class="sub">Adjust the numbers below to model your expected returns from a PFX kiosk.</p>
+
+    <div class="calc-box">
+      <div class="calc-header">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+          <div>
+            <h3>Licensee ROI calculator</h3>
+            <p>Illustrative estimates only — not a guarantee of earnings. Actual results vary by location, foot traffic, and operating conditions.</p>
+          </div>
+          <div style="display:flex;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;flex-shrink:0;align-self:center;">
+            <button id="btn-usd" onclick="setCurrency('usd')" style="padding:9px 18px;background:var(--red);color:white;font-family:inherit;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;">🇺🇸 USD</button>
+            <button id="btn-cad" onclick="setCurrency('cad')" style="padding:9px 18px;background:white;color:#20242c;font-family:inherit;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;">🇨🇦 CAD</button>
+          </div>
+        </div>
+      </div>
+      <div class="calc-cols">
+        <div class="calc-left">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--hint);margin-bottom:14px;">Select unit type</div>
+          <div class="model-btns">
+            <button id="mbtn-atm" class="mbtn on" onclick="setModel('atm',this)">ATM Style<span class="mprice">$86,078</span></button>
+            <button id="mbtn-indoor" class="mbtn" onclick="setModel('indoor',this)">Indoor Kiosk<span class="mprice">$98,216</span></button>
+            <button id="mbtn-outdoor" class="mbtn" onclick="setModel('outdoor',this)">Outdoor Kiosk<span class="mprice">$109,617</span></button>
+          </div>
+
+          <div class="sec-div">Revenue inputs</div>
+
+          <div class="ig">
+            <label>Number of units</label>
+            <div class="sr">
+              <input type="range" id="inp-units" min="1" max="20" step="1" value="1" oninput="calc()">
+              <span class="sv" id="out-units">1</span>
+            </div>
+          </div>
+          <div class="ig">
+            <label>Pizzas sold per day <span style="opacity:.45;">(per unit)</span></label>
+            <div class="sr">
+              <input type="range" id="inp-pizzas" min="0" max="200" step="1" value="25" oninput="calc()">
+              <span class="sv" id="out-pizzas">20</span>
+            </div>
+          </div>
+          <div class="ig">
+            <label>Average sell price per pizza</label>
+            <div class="sr">
+              <input type="range" id="inp-price" min="5" max="30" step="0.5" value="12.5" oninput="calc()">
+              <span class="sv" id="out-price">$12.50</span>
+            </div>
+          </div>
+
+          <div class="sec-div">Cost inputs</div>
+
+          <div class="ig">
+            <label>Avg pizza cost (COGS)</label>
+            <div class="pf"><span class="px cur-sym">$</span><input type="number" id="inp-cogs" value="3.50" min="0" step="0.10" oninput="calc()"></div>
+            <div class="hint-t">Pizza ingredients only — box &amp; disk cost added automatically</div>
+          </div>
+
+          <div class="ig">
+            <label>Payment processing fee</label>
+            <div class="sr">
+              <input type="range" id="inp-cc" min="0" max="10" step="0.1" value="3" oninput="calc()">
+              <span class="sv" id="out-cc">3.0%</span>
+            </div>
+          </div>
+          <div class="ig">
+            <label>Unit rent <span style="opacity:.45;">(% of revenue)</span></label>
+            <div class="sr">
+              <input type="range" id="inp-rent" min="0" max="30" step="0.5" value="7" oninput="calc()">
+              <span class="sv" id="out-rent">7.0%</span>
+            </div>
+            <div class="hint-t">Typically 0–10% depending on location. Special venues may be higher.</div>
+          </div>
+          <div class="ig">
+            <label>Unit utilities <span style="opacity:.45;">(monthly, per unit)</span></label>
+            <div class="pf"><span class="px cur-sym">$</span><input type="number" id="inp-util" value="0" min="0" step="10" oninput="calc()"></div>
+            <div class="hint-t">Usually covered in rent / revenue-share agreement</div>
+          </div>
+          <div class="ig">
+            <label>Maintenance plan <span style="font-weight:400;text-transform:none;letter-spacing:0;font-style:italic;color:var(--hint);">(optional)</span></label>
+            <div class="cr">
+              <input type="checkbox" id="inp-maint" onchange="calc()">
+              <span class="cl" id="lbl-maint">Off — $112 / mo per unit</span>
+            </div>
+            <div class="hint-t">Included free in year 1 — optional from year 2 onward</div>
+          </div>
+
+          <div class="sec-div">Lifetime projection</div>
+
+          <div class="ig">
+            <label>Machine lifespan</label>
+            <div class="sr">
+              <input type="range" id="inp-life" min="1" max="25" step="1" value="15" oninput="calc()">
+              <span class="sv" id="out-life">15 yrs</span>
+            </div>
+            <div class="hint-t">PFX machines are built for long-term operation</div>
+          </div>
+        </div>
+
+        <div class="calc-right">
+          <div class="rl">Your projected returns</div>
+          <div class="big-r">
+            <div class="big-lbl">Annual net earnings</div>
+            <div class="big-v good" id="out-annual">—</div>
+            <div class="big-s" id="out-monthly">— per month</div>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><div class="kl">Annual ROI</div><div class="kv" id="out-roi">—</div></div>
+            <div class="kpi"><div class="kl">Payback period</div><div class="kv" id="out-payback">—</div></div>
+            <div class="kpi"><div class="kl">Monthly revenue</div><div class="kv" id="out-rev">—</div></div>
+            <div class="kpi"><div class="kl">Gross margin</div><div class="kv" id="out-gm">—</div></div>
+          </div>
+
+          <div style="background:rgba(192,0,34,0.12);border:1px solid var(--red-border);border-radius:12px;padding:18px 20px;margin-bottom:24px;">
+            <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:14px;">Lifetime projection (<span id="out-life-label">15</span> years)</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;">Total earnings</div>
+                <div style="font-size:24px; font-weight:800; color:var(--black);" id="out-lifetime">—</div>
+              </div>
+              <div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;">Lifetime ROI</div>
+                <div style="font-size:24px; font-weight:800; color:var(--black);" id="out-lifetime-roi">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bbar-wrap">
+            <div class="bbar-top"><span>Revenue breakdown</span><span id="out-bleg">—</span></div>
+            <div class="bbar"><div class="bbar-fill" id="bbar" style="width:50%"></div></div>
+            <div class="bbar-foot"><span>← Costs</span><span>Earnings →</span></div>
+          </div>
+          <div class="pl">
+            <div class="pr"><span class="p-l">Monthly revenue</span><span class="p-v" id="pl-rev">—</span></div>
+            <div class="pr"><span class="p-l">— Pizza COGS (incl. box)</span><span class="p-v" id="pl-cogs">—</span></div>
+            <div class="pr"><span class="p-l">— Payment processing</span><span class="p-v" id="pl-cc">—</span></div>
+            <div class="pr"><span class="p-l">— Rent (rev share)</span><span class="p-v" id="pl-rent">—</span></div>
+            <div class="pr"><span class="p-l">— Utilities</span><span class="p-v" id="pl-util">—</span></div>
+            <div class="pr"><span class="p-l" id="pl-maint-l">— Maintenance (off)</span><span class="p-v" id="pl-maint">$0</span></div>
+            <div class="pr"><span class="p-l">Net earnings / month</span><span class="p-v" id="pl-net">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="disc">
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--hint);margin-bottom:8px;">ROI Calculator Disclaimer</p>
+      <p>This calculator is provided for informational and illustrative purposes only. It is not a guarantee of sales, revenue, profit, return on investment, payback period, or business performance. Actual results will vary based on many factors, including location, foot traffic, product pricing, pizza cost, box and supply cost, payment processing fees, revenue-share or rent terms, utilities, maintenance, taxes, local labor or service costs, uptime, weather, seasonality, customer demand, and operator execution. All cost and revenue inputs are assumptions and should be independently reviewed by the purchaser. PFX does not guarantee that any location or kiosk will achieve the results shown in the calculator. Final investment costs, operating costs, and business terms may differ from the estimates shown and must be confirmed in a written agreement.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="logo"><img src="Images/pfx-logo-white.png" alt="PFX"></div>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"></path></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle><path d="M10 9v12"></path><path d="M10 13a4 4 0 0 1 8 0v8"></path></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"></rect><polygon points="10 9 16 12 10 15" fill="currentColor" stroke="none"></polygon></svg></a>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Application Form</a>
+        <a href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+        <a href="#">Documentation</a>
+        <a href="contact.html">Support</a>
+      </div>
+      <p class="footer-legal">All trademarks are owned by PFX Canada Inc and used under licence. &copy;2026</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const prices = {
+  usd: { atm:86078,  indoor:98216,  outdoor:109617, install:2999, cogs:3.50, cc:3, rent:7,  util:0, maint:112, pizzas:25, price:12.50, box:0.74,  symbol:'$', label:'USD' },
+  cad: { atm:114275, indoor:122398, outdoor:139999, install:2999, cogs:3.50, cc:3, rent:7,  util:0, maint:150, pizzas:25, price:12.88, box:1.04,  symbol:'$', label:'CAD' }
+};
+let currency = 'usd';
+let model = 'atm';
+
+function setCurrency(c) {
+  currency = c;
+  const p = prices[c];
+  const bu = document.getElementById('btn-usd');
+  const bc = document.getElementById('btn-cad');
+  if (c === 'usd') {
+    bu.style.background='var(--red)'; bu.style.color='white';
+    bc.style.background='white'; bc.style.color='#20242c';
+  } else {
+    bc.style.background='var(--red)'; bc.style.color='white';
+    bu.style.background='white'; bu.style.color='#20242c';
+  }
+  const sym = p.symbol;
+  const mba = document.getElementById('mbtn-atm');    if(mba) mba.querySelector('.mprice').textContent = sym+p.atm.toLocaleString();
+  const mbi = document.getElementById('mbtn-indoor'); if(mbi) mbi.querySelector('.mprice').textContent = sym+p.indoor.toLocaleString();
+  const mbo = document.getElementById('mbtn-outdoor');if(mbo) mbo.querySelector('.mprice').textContent = sym+p.outdoor.toLocaleString();
+  document.querySelectorAll('.cur-sym').forEach(el => el.textContent = sym);
+  document.getElementById('inp-cogs').value = p.cogs.toFixed(2);
+  document.getElementById('inp-util').value = p.util;
+  document.getElementById('inp-price').value = p.price;
+  document.getElementById('out-price').textContent = sym+p.price.toFixed(2);
+  const maintAmt = sym + p.maint;
+  const lm = document.getElementById('lbl-maint');
+  const maintOn = document.getElementById('inp-maint').checked;
+  if (lm) lm.textContent = (maintOn ? 'On' : 'Off') + ' — ' + maintAmt + ' / mo per unit';
+  calc();
+}
+
+function setModel(m,btn){model=m;document.querySelectorAll('.mbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');calc();}
+function $$(id){return document.getElementById(id);}
+function money(n){return '$'+Math.abs(Math.round(n)).toLocaleString()+' '+prices[currency].label;}
+function signed(n){return n<0?'('+money(n)+')':money(n);}
+function calc(){
+  const units  = parseInt($$('inp-units').value,10);
+  const pizzas = parseInt($$('inp-pizzas').value,10);
+  const price  = parseFloat($$('inp-price').value);
+  const cogs   = parseFloat($$('inp-cogs').value)||0;
+  const box    = prices[currency].box;
+  const ccPct  = parseFloat($$('inp-cc').value)/100;
+  const rentPct= parseFloat($$('inp-rent').value)/100;
+  const util   = parseFloat($$('inp-util').value)||0;
+  const maint  = $$('inp-maint').checked;
+
+  $$('out-units').textContent  = units;
+  $$('out-pizzas').textContent = pizzas;
+  $$('out-price').textContent  = prices[currency].symbol+price.toFixed(2);
+  $$('out-cc').textContent     = parseFloat($$('inp-cc').value).toFixed(1)+'%';
+  $$('out-rent').textContent   = parseFloat($$('inp-rent').value).toFixed(1)+'%';
+  const maintSym = prices[currency].symbol + prices[currency].maint;
+  $$('lbl-maint').textContent  = maint ? 'On — ' + maintSym + ' / mo per unit' : 'Off — ' + maintSym + ' / mo per unit';
+
+  const pm      = 30.44;
+  const pmos    = pizzas*pm*units;
+  const rev     = pmos*price;
+  const cogsT   = pmos*(cogs+box);
+  const ccA     = rev*ccPct;
+  const gm      = rev-cogsT-ccA;
+  const rentA   = rev*rentPct;
+  const utilA   = util*units;
+  const maintA  = maint?prices[currency].maint*units:0;
+  const earn    = gm-rentA-utilA-maintA;
+  const annual  = earn*12;
+  const startup = (prices[currency][model]+2999)*units;
+  const roi     = startup>0?annual/startup:0;
+  const payback = earn>0?Math.ceil(startup/earn):null;
+  const gmPct   = rev>0?(gm/rev)*100:0;
+
+  const av=$$('out-annual');
+  av.textContent=signed(annual);
+  av.className='big-v '+(annual>=0?'good':'bad');
+  $$('out-monthly').textContent=signed(earn)+' per month';
+  $$('out-roi').textContent=(roi*100).toFixed(1)+'%';
+  $$('out-payback').textContent=payback?payback+' mo.':earn<=0?'N/A':'—';
+  $$('out-rev').textContent=money(rev);
+  $$('out-gm').textContent=gmPct.toFixed(1)+'%';
+
+  const life = parseInt($$('inp-life').value, 10);
+  $$('out-life').textContent = life + ' yrs';
+  $$('out-life-label').textContent = life;
+  const lifetimeEarnings = earn * 12 * life;
+  const lifetimeRoi = startup > 0 ? lifetimeEarnings / startup : 0;
+  const ltEl = $$('out-lifetime');
+  ltEl.textContent = signed(lifetimeEarnings);
+  ltEl.style.color = lifetimeEarnings >= 0 ? 'var(--green)' : 'var(--red)';
+  const lrEl = $$('out-lifetime-roi');
+  lrEl.textContent = (lifetimeRoi * 100).toFixed(0) + '%';
+  lrEl.style.color = lifetimeRoi >= 0 ? 'var(--green)' : 'var(--red)';
+
+  const tc=cogsT+ccA+rentA+utilA+maintA;
+  const pct=rev>0?Math.min(97,Math.max(3,(tc/rev)*100)):50;
+  $$('bbar').style.width=pct+'%';
+  $$('out-bleg').textContent=pct.toFixed(0)+'% costs · '+Math.max(0,Math.round(100-pct))+'% earnings';
+
+  $$('pl-rev').textContent  =money(rev);
+  $$('pl-cogs').textContent ='('+money(cogsT)+')';
+  $$('pl-cc').textContent   ='('+money(ccA)+')';
+  $$('pl-rent').textContent ='('+money(rentA)+')';
+  $$('pl-util').textContent =utilA>0?'('+money(utilA)+')':'$0';
+  $$('pl-maint-l').textContent='— Maintenance '+(maint?'':'(off)');
+  $$('pl-maint').textContent=maint?'('+money(maintA)+')':'$0';
+  const ne=$$('pl-net');
+  ne.textContent=signed(earn);
+  ne.style.color=earn>=0?'var(--green)':'var(--red)';
+}
+calc();
+</script>
+
+<script>
+  /* =========================================================
+     ROI CALCULATOR GATE — lead-capture modal (no CAPTCHA)
+     -------------------------------------------------------
+     1. The reCAPTCHA has been removed; the hidden honeypot field
+        is the only bot check left.
+     2. In HubSpot, create a form matching the fields below
+        (or reuse an existing one) and replace GATE_PORTAL_ID /
+        GATE_FORM_GUID below with your portal ID + form GUID,
+        same as the Let's Talk form on index.html / contact.html.
+     3. Note: the honeypot stops simple bots that fill every field,
+        but not a determined one. Server-side verification (e.g. via
+        Supabase) can be added later if spam becomes a problem.
+     4. Access is remembered per-browser (localStorage) so a
+        visitor who already submitted isn't asked again — clear
+        "pfx_roi_unlocked" in dev tools to test the gate again.
+     5. The calculator is always rendered on the page — while the
+        gate is up, a dark overlay dims it and the lead form floats
+        on top as a modal card, so visitors can see the calculator
+        in the background but can't interact with it (the overlay
+        blocks clicks, and the page can't be scrolled) until they
+        submit the form.
+     ========================================================= */
+  var GATE_HUBSPOT_PORTAL_ID = "YOUR_PORTAL_ID";
+  var GATE_HUBSPOT_FORM_GUID = "YOUR_FORM_GUID";
+
+  document.addEventListener('DOMContentLoaded', function(){
+    if (localStorage.getItem('pfx_roi_unlocked') === 'true') {
+      unlockCalculator();
+    } else {
+      document.body.classList.add('gate-locked');
+    }
+  });
+
+  function unlockCalculator(){
+    document.getElementById('gateOverlay').style.display = 'none';
+    document.body.classList.remove('gate-locked');
+    document.getElementById('calcContent').setAttribute('aria-hidden', 'false');
+  }
+
+  function submitGateForm(event){
+    event.preventDefault();
+    var form = document.getElementById('gateForm');
+    var errorBox = document.getElementById('gateError');
+    var submitBtn = document.getElementById('gateSubmitBtn');
+    errorBox.classList.remove('show');
+
+    // Honeypot: real visitors never fill this field. If it's filled, quietly stop.
+    if (document.getElementById('website').value.trim() !== '') {
+      return false;
+    }
+
+    var data = new FormData(form);
+    var fieldMap = {
+      firstname: "firstname",
+      lastname: "lastname",
+      phone: "phone",
+      email: "email",
+      country: "country",
+      company: "company",
+      location: "location",
+      pincode: "zip"
+    };
+    var fields = [];
+    Object.keys(fieldMap).forEach(function(localName){
+      var val = data.get(localName);
+      if (val !== null && val !== "") {
+        fields.push({ name: fieldMap[localName], value: val });
+      }
+    });
+
+    var payload = {
+      fields: fields,
+      context: { pageUri: window.location.href, pageName: document.title }
+    };
+    var endpoint = "https://api.hsforms.com/submissions/v3/integration/submit/"
+      + GATE_HUBSPOT_PORTAL_ID + "/" + GATE_HUBSPOT_FORM_GUID;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+    .then(function(res){
+      if (res.ok) {
+        localStorage.setItem('pfx_roi_unlocked', 'true');
+        unlockCalculator();
+      } else {
+        errorBox.textContent = 'Something went wrong submitting the form. Please try again.';
+        errorBox.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Unlock Calculator';
+      }
+    })
+    .catch(function(){
+      errorBox.textContent = 'Something went wrong submitting the form. Please try again.';
+      errorBox.classList.add('show');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Unlock Calculator';
+    });
+
+    return false;
+  }
+</script>
+
+<script src="blog-data.js"></script>
+<script src="site-search.js"></script>
+<script src="talk-modal.js?v=4"></script>
+
+<script src="pfx-nav.js"></script>
+</body>
+</html>

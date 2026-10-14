@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="analytics.js"></script>
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Login — PFX</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#C00022;
+    --red-dark:#A80F22;
+    --ink:#000000;
+    --gray:#8591A0;
+    --line:#E8EAED;
+    --panel:#EFF3F5;
+    --section-bg:#EAF0F2;
+    --white:#fff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    line-height:1.5;
+  }
+  a{text-decoration:none; color:inherit;}
+
+  /* NAV (shared identically across every page) */
+  header.nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16.8px 86.4px;
+    max-width:1440px; margin:0 auto;
+    position:sticky; top:0; z-index:100; background:var(--white);
+  }
+  .logo{font-size:34px; font-weight:800; letter-spacing:-0.5px;}
+  .logo img{height:32px; width:auto; display:block;}
+  .logo span{color:var(--red);}
+  nav.links{display:flex; align-items:center; gap:19.2px; font-size:15px; font-weight:400;}
+  nav.links a.talk{
+    background:var(--red); color:#fff; padding:10px 20px; border-radius:12px; font-weight:400;
+  }
+  .nav-logo-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:40px; height:40px; padding:2px; flex-shrink:0;
+    background:none; border:none;
+  }
+  .nav-logo-btn:hover{opacity:0.85;}
+  .nav-logo-btn img{width:33px; height:33px; display:block; object-fit:contain;}
+
+  .btn-primary{
+    background:var(--red); color:#fff; padding:14px 24px; border-radius:12px;
+    font-weight:400; font-size:15px; display:inline-block; border:none; cursor:pointer; width:100%;
+  }
+  .btn-primary:disabled{opacity:.6; cursor:default;}
+
+  /* LOGIN CARD */
+  .login-wrap{
+    min-height:calc(100vh - 300px);
+    display:flex; align-items:center; justify-content:center;
+    padding:60px 24px;
+  }
+  .login-card{
+    width:100%; max-width:380px;
+    background:none; border:none;
+    padding:32px; box-shadow:0 2px 20px rgba(0,0,0,0.05);
+  }
+  .login-card .eyebrow{color:var(--gray); font-weight:400; font-size:13px; margin-bottom:6px; letter-spacing:0.06em; text-transform:uppercase;}
+  .login-card h1{font-size:26px; font-weight:800; margin-bottom:8px;}
+  .login-card .sub{color:var(--gray); font-size:14px; margin-bottom:24px; line-height:1.6;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:13px; font-weight:700; margin-bottom:6px;}
+  .field input{
+    width:100%; border:1.5px solid #D8DADE; border-radius:12px;
+    padding:12px 14px; font-size:14.5px; font-family:inherit; color:var(--ink); background:#fff;
+  }
+  .field input:focus{outline:2px solid var(--red); outline-offset:1px;}
+  .error-msg{
+    display:none; background:rgba(192,0,34,0.07); border:1px solid rgba(192,0,34,0.22);
+    color:var(--red); font-size:13.5px; border-radius:12px; padding:10px 12px; margin-bottom:16px;
+  }
+  .error-msg.show{display:block;}
+
+  /* FOOTER (shared identically across every page) */
+  footer{
+    border-top:1px solid var(--line); margin-top:60px; padding:36px 57.6px 24px;
+  }
+  .footer-inner{
+    max-width:1440px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;
+  }
+  .footer-inner .logo{margin-bottom:8.4px;}
+  .footer-inner .about{color:var(--gray); font-size:14.5px; max-width:340px; line-height:1.7;}
+  .footer-cols{display:flex; gap:48px;}
+  .footer-cols h4{font-size:15px; font-weight:700; margin-bottom:8.4px;}
+  .footer-cols a{display:block; color:var(--gray); font-size:14.5px; margin-bottom:6px;}
+  .socials{display:flex; gap:9.6px; margin-top:18px; max-width:1440px; margin-left:auto; margin-right:auto; padding:0 86.4px;}
+  .socials div{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid #D8DADE;
+    display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--gray);
+  }
+
+  @media (max-width: 900px){
+    .footer-inner{flex-direction:column;}
+  }
+</style>
+<link rel="stylesheet" href="pfx-nav.css">
+<link rel="stylesheet" href="pfx-theme.css">
+</head>
+<body>
+
+<header class="pfx-nav" id="pfxNav">
+  <a class="pfx-brand" href="kage.html" aria-label="PFX home"><img src="secret-pathways-assets/pfx-light.png" alt="PFX"></a>
+  <nav class="pfx-links" id="pfxLinks">
+    <a class="pfx-link" href="kiosk-outdoor.html">Explore Kiosks</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#case-study">Case Study</a>
+    <a class="pfx-link" href="roi_calculator.html">ROI Calculator</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+    <a class="pfx-link" href="blog.html">Blog</a>
+    <a class="pfx-link pfx-link--talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+  </nav>
+  <div class="pfx-actions">
+    <button type="button" class="pfx-search" id="siteSearchBtn" aria-label="Search"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="pfx-talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <button type="button" class="pfx-burger" aria-label="Menu" aria-controls="pfxLinks" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="eyebrow">Blog Admin</div>
+    <h1>Login</h1>
+    <p class="sub">Sign in to publish and manage posts on the PFX blog.</p>
+
+    <div class="error-msg" id="loginError">Incorrect username or password.</div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn-primary">Login</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  /* =========================================================
+     TEMPORARY LOGIN — placeholder only, replace once Supabase
+     auth is wired up (see admin.html for the matching TODO).
+     This is NOT secure: anyone who views this page's source
+     can read the credentials below. It exists only to gate
+     casual access until real authentication is in place.
+     -------------------------------------------------------
+     To change the password yourself: edit the two lines below.
+     ========================================================= */
+  var ADMIN_USERNAME = "poweredbypfx";
+  var ADMIN_PASSWORD = "poweredbypfx";
+
+  document.getElementById('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var user = document.getElementById('username').value.trim();
+    var pass = document.getElementById('password').value;
+    var errorBox = document.getElementById('loginError');
+
+    if(user === ADMIN_USERNAME && pass === ADMIN_PASSWORD){
+      sessionStorage.setItem('pfx_admin_logged_in', 'true');
+      window.location.href = 'admin.html';
+    } else {
+      errorBox.classList.add('show');
+    }
+  });
+</script>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo"><img src="Images/pfx-logo-white.png" alt="PFX"></div>
+      <p class="about">The white-label pizza automation platform, powered by PizzaForno.<br>development@pizzaforno.com<br>pizzaforno.com</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h4>Explore PizzaForno</h4>
+        <a href="#">Locations</a>
+        <a href="blog.html">Blog</a>
+        <a href="#">About</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="contact.html">Contact</a>
+        <a href="#">Email</a>
+        <a href="#">Legal</a>
+      </div>
+    </div>
+  </div>
+  <div class="socials">
+    <div>IG</div>
+    <div>in</div>
+    <div>X</div>
+  </div>
+</footer>
+
+<script src="blog-data.js"></script>
+<script src="site-search.js"></script>
+
+<script src="pfx-nav.js"></script>
+</body>
+</html>

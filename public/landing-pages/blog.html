@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="analytics.js"></script>
+<title>Blog — PFX</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="talk-modal.css?v=4">
+<style>
+  :root{
+    --red:#C00022;
+    --red-dark:#A80F22;
+    --ink:#ffffff;
+    --bg:#0D0E10;
+    --bg-alt:#131722;
+    --gray:#9AA3AF;
+    --line:rgba(255,255,255,0.12);
+    --panel:rgba(217,217,217,0.2);
+    --panel-solid:#181c24;
+    --section-bg:#0D0E10;
+    --input-bg:rgba(255,255,255,0.3);
+    --white:#fff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.5;
+  }
+  a{text-decoration:none; color:inherit;}
+
+  /* NAV (shared identically across every page) */
+  header.nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 112px;
+    max-width:1282px; margin:20px auto 0;
+    position:sticky; top:20px; z-index:100;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:50px;
+  }
+  .logo{font-size:28px; font-weight:800; letter-spacing:-0.5px; color:var(--white);}
+  .logo img{height:32px; width:auto; display:block;}
+  .logo span{color:var(--red);}
+  nav.links{display:flex; align-items:center; gap:19.2px; font-size:15px; font-weight:400; color:var(--white);}
+  nav.links a{color:var(--white); letter-spacing:0.5px;}
+  nav.links a.talk{
+    background:var(--red); color:#fff; padding:10px 20px; border-radius:12px; font-weight:600;
+  }
+  .search-btn{color:var(--white);}
+  .nav-logo-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:40px; height:40px; padding:2px; flex-shrink:0;
+    background:none; border:none;
+  }
+  .nav-logo-btn:hover{opacity:0.85;}
+  .nav-logo-btn img{width:33px; height:33px; display:block; object-fit:contain;}
+
+  /* PAGE HEAD */
+  .page-head{max-width:1440px; margin:0 auto; padding:64px 86.4px 0;}
+  .page-head-top{display:flex; justify-content:space-between; align-items:flex-end; gap:16px;}
+  .eyebrow{color:rgba(255,255,255,0.6); font-weight:400; font-size:14px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px;}
+  .page-head h1{font-size:44px; font-weight:600; letter-spacing:-0.5px; margin-bottom:14px; color:var(--white);}
+  .page-head p{color:rgba(255,255,255,0.65); font-size:16px; max-width:640px;}
+  .lock-btn{
+    width:40px; height:40px; flex-shrink:0; margin-bottom:10px;
+    display:flex; align-items:center; justify-content:center;
+    border:1.5px solid rgba(255,255,255,0.15); border-radius:12px;
+    background:var(--panel-solid); cursor:pointer;
+  }
+  .lock-btn:hover{border-color:var(--red);}
+  .lock-btn img{width:16px; height:16px; display:block; filter:invert(1);}
+
+  /* BLOG GRID */
+  section.blog-list{max-width:1440px; margin:36px auto 80px; padding:0 86.4px;}
+  .blog-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;}
+  .blog-card{
+    background:var(--panel); border:1px solid rgba(255,255,255,0.08); border-radius:22px; padding:28px;
+    scroll-margin-top:140px;
+    display:flex; flex-direction:column; height:100%;
+  }
+  .blog-card:target{ outline:2px solid var(--red); outline-offset:2px; }
+  .blog-date{font-size:12.5px; color:rgba(255,255,255,0.55); margin-bottom:10px; font-weight:600;}
+  .blog-card h3{font-size:19px; font-weight:600; margin-bottom:10px; line-height:1.3; color:var(--white);}
+  .blog-card p{font-size:14.5px; color:rgba(255,255,255,0.65); margin-bottom:16px; flex:1;}
+  .blog-tags{display:flex; gap:6px; flex-wrap:wrap;}
+  .blog-tags .tag{
+    font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    background:rgba(192,0,34,0.15); color:#ff5c76; padding:4px 9px; border-radius:12px;
+  }
+
+  /* FOOTER (shared identically across every page) */
+  footer{
+    border-top:1px solid var(--line); margin-top:60px; padding:48px 80px; background:var(--bg);
+  }
+  .footer-inner{
+    max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px;
+  }
+  .footer-left .logo{margin-bottom:16px; display:block;}
+  .footer-socials{display:flex; gap:12px;}
+  .footer-socials a{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
+    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+  }
+  .footer-right{text-align:right;}
+  .footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
+  .footer-links a{font-size:14px; color:rgba(255,255,255,0.75);}
+  .footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+
+  @media (max-width: 900px){
+    header.nav{margin:12px; padding:10px 16px;}
+    nav.links{gap:12px; font-size:13px;}
+    nav.links a:not(.talk), nav.links .search-btn{display:none;}
+    .page-head, section.blog-list{padding-left:24px; padding-right:24px;}
+    .page-head{padding-top:40px;}
+    .page-head h1{font-size:32px;}
+    .blog-grid{grid-template-columns:1fr;}
+    footer{padding:32px 24px;}
+    .footer-inner{flex-direction:column;}
+    .footer-right{text-align:left;}
+    .footer-links{justify-content:flex-start;}
+    .footer-legal{margin-left:0;}
+  }
+</style>
+<link rel="stylesheet" href="pfx-nav.css">
+<link rel="stylesheet" href="pfx-theme.css">
+</head>
+<body>
+
+<header class="pfx-nav" id="pfxNav">
+  <a class="pfx-brand" href="kage.html" aria-label="PFX home"><img src="secret-pathways-assets/pfx-light.png" alt="PFX"></a>
+  <nav class="pfx-links" id="pfxLinks">
+    <a class="pfx-link" href="kiosk-outdoor.html">Explore Kiosks</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#case-study">Case Study</a>
+    <a class="pfx-link" href="roi_calculator.html">ROI Calculator</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+    <a class="pfx-link on" href="blog.html">Blog</a>
+    <a class="pfx-link pfx-link--talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+  </nav>
+  <div class="pfx-actions">
+    <button type="button" class="pfx-search" id="siteSearchBtn" aria-label="Search"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="pfx-talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <button type="button" class="pfx-burger" aria-label="Menu" aria-controls="pfxLinks" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="page-head-top">
+    <div>
+      <div class="eyebrow">PFX Blog</div>
+      <h1>News, Case Studies &amp; Operator Resources</h1>
+    </div>
+    <a href="login.html" class="lock-btn" aria-label="Blog admin login">
+      <img src="lock-icon.svg" alt="">
+    </a>
+  </div>
+  <p>Updates on automation, ROI, licensing, and what it's really like to run a PFX kiosk.</p>
+</div>
+
+<section class="blog-list">
+  <div class="blog-grid" id="blogGrid">
+    <!-- Cards are rendered from blog-data.js below so this page and the
+         nav search box always stay in sync with one source of truth. -->
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="logo"><img src="Images/pfx-logo-white.png" alt="PFX"></div>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"></path></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle><path d="M10 9v12"></path><path d="M10 13a4 4 0 0 1 8 0v8"></path></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"></rect><polygon points="10 9 16 12 10 15" fill="currentColor" stroke="none"></polygon></svg></a>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Application Form</a>
+        <a href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+        <a href="#">Documentation</a>
+        <a href="contact.html">Support</a>
+      </div>
+      <p class="footer-legal">All trademarks are owned by PFX Canada Inc and used under licence. &copy;2026</p>
+    </div>
+  </div>
+</footer>
+
+<script src="blog-data.js"></script>
+<script>
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function formatDate(iso){
+    const d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString("en-US", { year:"numeric", month:"long", day:"numeric" });
+  }
+  const grid = document.getElementById("blogGrid");
+  if (typeof PFX_BLOG_POSTS !== "undefined") {
+    grid.innerHTML = PFX_BLOG_POSTS.map(function(p){
+      return '<article class="blog-card" id="' + p.slug + '">' +
+        (p.image ? '<div class="blog-thumb"><img src="' + escapeHtml(p.image) + '" alt="" loading="lazy" decoding="async"></div>' : '') +
+        '<div class="blog-date">' + formatDate(p.date) + '</div>' +
+        '<h3>' + escapeHtml(p.title) + '</h3>' +
+        '<p>' + escapeHtml(p.excerpt) + '</p>' +
+        '<div class="blog-tags">' + p.tags.map(function(t){ return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('') + '</div>' +
+        '</article>';
+    }).join('');
+  }
+</script>
+<script src="site-search.js"></script>
+<script src="talk-modal.js?v=4"></script>
+
+<script src="pfx-nav.js"></script>
+</body>
+</html>

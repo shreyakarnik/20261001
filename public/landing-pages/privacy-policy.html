@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="analytics.js"></script>
+<title>Privacy Policy — PFX</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="talk-modal.css?v=4">
+<style>
+  :root{
+    --red:#C00022;
+    --red-dark:#A80F22;
+    --ink:#ffffff;
+    --bg:#0D0E10;
+    --bg-alt:#131722;
+    --gray:#9AA3AF;
+    --line:rgba(255,255,255,0.12);
+    --panel:rgba(217,217,217,0.2);
+    --panel-solid:#181c24;
+    --section-bg:#0D0E10;
+    --input-bg:rgba(255,255,255,0.3);
+    --white:#fff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.5;
+  }
+  a{text-decoration:none; color:inherit;}
+
+  /* NAV (shared identically across every page) */
+  header.nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 112px;
+    max-width:1282px; margin:20px auto 0;
+    position:sticky; top:20px; z-index:100;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:50px;
+  }
+  .logo{font-size:28px; font-weight:800; letter-spacing:-0.5px; color:var(--white);}
+  .logo img{height:32px; width:auto; display:block;}
+  .logo span{color:var(--red);}
+  nav.links{display:flex; align-items:center; gap:19.2px; font-size:15px; font-weight:400; color:var(--white);}
+  nav.links a{color:var(--white); letter-spacing:0.5px;}
+  nav.links a.talk{
+    background:var(--red); color:#fff; padding:10px 20px; border-radius:12px; font-weight:600;
+  }
+  .search-btn{color:var(--white);}
+  .nav-logo-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:40px; height:40px; padding:2px; flex-shrink:0;
+    background:none; border:none;
+  }
+  .nav-logo-btn:hover{opacity:0.85;}
+  .nav-logo-btn img{width:33px; height:33px; display:block; object-fit:contain;}
+
+  /* LAYOUT: policy text + sticky "On this page" nav */
+  .policy-layout{
+    max-width:1200px; margin:0 auto; padding:0 24px;
+    display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:56px; align-items:start;
+  }
+  .toc{
+    position:sticky; top:110px; margin-top:64px;
+    background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:22px;
+    padding:24px 26px;
+  }
+  .toc summary{font-size:17px; font-weight:600; color:var(--white); list-style:none; margin-bottom:10px;}
+  .toc summary::-webkit-details-marker{display:none;}
+  .toc-scroll{position:relative; max-height:calc(100vh - 210px); overflow-y:auto; scrollbar-width:thin;}
+  .toc ol{list-style:none;}
+  .toc a{
+    display:block; padding:6px 0; font-size:14px; font-weight:500; color:rgba(255,255,255,0.55);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:color .15s ease;
+  }
+  .toc li.sub a{padding-left:16px;}
+  .toc a:hover{color:rgba(255,255,255,0.85);}
+  .toc a.active{color:var(--white); font-weight:600;}
+
+  /* PAGE HEAD */
+  .page-head{padding:64px 0 0; scroll-margin-top:120px;}
+  .page-head h1{scroll-margin-top:120px;}
+  .dates{scroll-margin-top:120px;}
+  .eyebrow{color:rgba(255,255,255,0.6); font-weight:400; font-size:14px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px;}
+  .page-head h1{font-size:44px; font-weight:600; letter-spacing:-0.5px; margin-bottom:14px; color:var(--white);}
+  .page-head p{color:rgba(255,255,255,0.65); font-size:16px;}
+  .dates{margin-top:18px; font-size:13.5px; color:rgba(255,255,255,0.5);}
+
+  /* POLICY BODY */
+  article.policy{margin:36px 0 80px; color:rgba(255,255,255,0.75); font-size:15.5px; line-height:1.7;}
+  .policy h2{font-size:24px; font-weight:600; color:var(--white); margin:44px 0 14px; letter-spacing:-0.2px; scroll-margin-top:120px;}
+  .policy h3{font-size:18px; font-weight:600; color:var(--white); margin:28px 0 10px; scroll-margin-top:120px;}
+  .policy h4{font-size:15.5px; font-weight:600; color:var(--white); margin:20px 0 6px; scroll-margin-top:120px;}
+  .policy p{margin-bottom:14px;}
+  .policy ul{margin:0 0 16px 22px;}
+  .policy li{margin-bottom:6px;}
+  .policy a{color:#ff5c76; text-decoration:underline; text-underline-offset:2px;}
+
+  /* FOOTER (shared identically across every page) */
+  footer{
+    border-top:1px solid var(--line); margin-top:60px; padding:48px 80px; background:var(--bg);
+  }
+  .footer-inner{
+    max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px;
+  }
+  .footer-left .logo{margin-bottom:16px; display:block;}
+  .footer-socials{display:flex; gap:12px;}
+  .footer-socials a{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
+    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+  }
+  .footer-right{text-align:right;}
+  .footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
+  .footer-links a{font-size:14px; color:rgba(255,255,255,0.75);}
+  .footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+
+  @media (max-width: 900px){
+    header.nav{margin:12px; padding:10px 16px;}
+    nav.links{gap:12px; font-size:13px;}
+    nav.links a:not(.talk), nav.links .search-btn{display:none;}
+    /* On small screens the nav sits above the text as a collapsible panel */
+    .policy-layout{grid-template-columns:1fr; gap:0;}
+    .toc{position:static; order:-1; margin-top:32px;}
+    .toc-scroll{max-height:none;}
+    .toc:not([open]) summary{margin-bottom:0;}
+    .toc summary{cursor:pointer; display:flex; justify-content:space-between; align-items:center;}
+    .toc summary::after{content:""; width:8px; height:8px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); margin:-4px 4px 0 0; transition:transform .15s ease;}
+    .toc[open] summary::after{transform:rotate(-135deg); margin-top:4px;}
+    .page-head{padding-top:32px;}
+    .page-head h1{font-size:32px;}
+    footer{padding:32px 24px;}
+    .footer-inner{flex-direction:column;}
+    .footer-right{text-align:left;}
+    .footer-links{justify-content:flex-start;}
+    .footer-legal{margin-left:0;}
+  }
+</style>
+<link rel="stylesheet" href="pfx-nav.css">
+<link rel="stylesheet" href="pfx-theme.css">
+</head>
+<body>
+
+<header class="pfx-nav" id="pfxNav">
+  <a class="pfx-brand" href="kage.html" aria-label="PFX home"><img src="secret-pathways-assets/pfx-light.png" alt="PFX"></a>
+  <nav class="pfx-links" id="pfxLinks">
+    <a class="pfx-link" href="kiosk-outdoor.html">Explore Kiosks</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#case-study">Case Study</a>
+    <a class="pfx-link" href="roi_calculator.html">ROI Calculator</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+    <a class="pfx-link" href="blog.html">Blog</a>
+    <a class="pfx-link pfx-link--talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+  </nav>
+  <div class="pfx-actions">
+    <button type="button" class="pfx-search" id="siteSearchBtn" aria-label="Search"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="pfx-talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <button type="button" class="pfx-burger" aria-label="Menu" aria-controls="pfxLinks" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="policy-layout">
+<div class="policy-main">
+<div class="page-head">
+  <div class="eyebrow">Legal</div>
+  <h1 id="privacy-policy">Privacy Policy</h1>
+  <p>This Privacy Policy describes our policies and procedures on the collection, use and disclosure of your information when you use the Service, and tells you about your privacy rights and how the law protects you. We use your personal data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this Privacy Policy.</p>
+  <div class="dates" id="effective-date">Last updated: July 30, 2024 &middot; Effective date: July 30, 2024</div>
+</div>
+
+<article class="policy">
+  <p>PFX (PFX Canada &amp; PFX USA) (&lsquo;us&rsquo;, &lsquo;we&rsquo;, or &lsquo;our&rsquo;) operates the <a href="https://pizzaforno.com/" target="_blank" rel="noopener">https://pizzaforno.com/</a> website (hereinafter referred to as the &lsquo;Service&rsquo;).</p>
+  <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.</p>
+  <p>We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, the terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, accessible from <a href="https://pizzaforno.com/terms" target="_blank" rel="noopener">https://pizzaforno.com/terms</a>.</p>
+
+  <h2 id="information-collection-and-use">Information Collection and Use</h2>
+  <p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
+
+  <h3 id="types-of-data-collected">Types of Data Collected</h3>
+  <h4 id="personal-data">Personal Data</h4>
+  <p>While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you (&lsquo;Personal Data&rsquo;). Personally identifiable information may include, but is not limited to:</p>
+  <ul>
+    <li>Email address</li>
+    <li>First name and last name</li>
+    <li>Phone number</li>
+    <li>Address, State, Province, ZIP/Postal code, City</li>
+    <li>Cookies and Usage Data</li>
+  </ul>
+
+  <h4 id="usage-data">Usage Data</h4>
+  <p>We may also collect information on how the Service is accessed and used (&lsquo;Usage Data&rsquo;). This Usage Data may include information such as your computer&rsquo;s Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>
+
+  <h4 id="tracking-cookies-data">Tracking &amp; Cookies Data</h4>
+  <p>We use cookies and similar tracking technologies to track the activity on our Service and hold certain information. Cookies are files with small amount of data which may include an anonymous unique identifier. Cookies are sent to your browser from a website and stored on your device. Tracking technologies also used are beacons, tags, and scripts to collect and track information and to improve and analyze our Service. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service. Examples of Cookies we use:</p>
+  <p><strong>Session Cookies</strong></p>
+  <ul><li>We use Session Cookies to operate our Service.</li></ul>
+  <p><strong>Preference Cookies</strong></p>
+  <ul><li>We use Preference Cookies to remember your preferences and various settings.</li></ul>
+  <p><strong>Security Cookies</strong></p>
+  <ul><li>We use Security Cookies for security purposes.</li></ul>
+
+  <h2 id="use-of-data">Use of Data</h2>
+  <p>PFX uses the collected data for various purposes:</p>
+  <ul>
+    <li>To provide and maintain the Service</li>
+    <li>To notify you about changes to our Service</li>
+    <li>To allow you to participate in interactive features of our Service when you choose to do so</li>
+    <li>To provide customer care and support</li>
+    <li>To provide analysis or valuable information so that we can improve the Service</li>
+    <li>To monitor the usage of the Service</li>
+    <li>To detect, prevent and address technical issues</li>
+  </ul>
+
+  <h2 id="transfer-of-data">Transfer of Data</h2>
+  <p>Your information, including Personal Data, may be transferred to &mdash; and maintained on &mdash; computers located outside of your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from your jurisdiction. If you are located outside Canada and choose to provide information to us, please note that we transfer the data, including Personal Data, to Canada and process it there.</p>
+  <p>Your consent to this Privacy Policy followed by your submission of such information represents your agreement to that transfer. PFX will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of your data and other personal information.</p>
+
+  <h2 id="disclosure-of-data">Disclosure of Data</h2>
+  <h3 id="legal-requirements">Legal Requirements</h3>
+  <p>PFX may disclose your Personal Data in the good faith belief that such action is necessary to:</p>
+  <ul>
+    <li>To comply with a legal obligation</li>
+    <li>To protect and defend the rights or property of PFX</li>
+    <li>To prevent or investigate possible wrongdoing in connection with the Service</li>
+    <li>To protect the personal safety of users of the Service or the public</li>
+    <li>To protect against legal liability</li>
+  </ul>
+
+  <h2 id="security-of-data">Security of Data</h2>
+  <p>The security of your data is important to us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.</p>
+
+  <h2 id="service-providers">Service Providers</h2>
+  <p>We may employ third party companies and individuals to facilitate our Service (&lsquo;Service Providers&rsquo;), to provide the Service on our behalf, to perform Service-related services or to assist us in analyzing how our Service is used.</p>
+  <p>These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
+
+  <h3 id="analytics">Analytics</h3>
+  <p>We may use third-party Service Providers to monitor and analyze the use of our Service.</p>
+  <h4 id="google-analytics">Google Analytics</h4>
+  <p>Google Analytics is a web analytics service offered by Google that tracks and reports website traffic. Google uses the data collected to track and monitor the use of our Service. This data is shared with other Google services. Google may use the collected data to contextualize and personalize the ads of its own advertising network.</p>
+  <p>You can opt-out of having made your activity on the Service available to Google Analytics by installing the Google Analytics opt-out browser add-on. The add-on prevents the Google Analytics JavaScript (ga.js, analytics.js, and dc.js) from sharing information with Google Analytics about visits activity.</p>
+  <p>For more information on the privacy practices of Google, please visit the Google Privacy &amp; Terms web page: <a href="https://policies.google.com/privacy?hl=en" target="_blank" rel="noopener">https://policies.google.com/privacy?hl=en</a>.</p>
+
+  <h2 id="links-to-other-sites">Links to Other Sites</h2>
+  <p>Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you will be directed to that third party&rsquo;s site. We strongly advise you to review the Privacy Policy of every site you visit.</p>
+  <p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
+
+  <h2 id="childrens-privacy">Children&rsquo;s Privacy</h2>
+  <p>Our Service does not address anyone under the age of 18 (&lsquo;Children&rsquo;).</p>
+  <p>We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from children without verification of parental consent, we take steps to remove that information from our servers.</p>
+
+  <h2 id="sms-privacy">SMS Privacy</h2>
+  <h3 id="agreement-to-receive-text-messages">Agreement to Receive Text Messages</h3>
+  <p>By providing your mobile number, you agree that PFX (PFX Canada &amp; PFX USA) may send you periodic SMS or MMS messages containing but not limited to deals, news updates, event reminders, etc.</p>
+  <ul>
+    <li>Message frequency may vary.</li>
+    <li>You may unsubscribe at any time by texting the word STOP to the number you received the text message from. You may receive a subsequent message confirming your opt-out request.</li>
+    <li>For help, contact the number you received the text message from.</li>
+    <li>Message and data rates may apply.</li>
+    <li>United States participating carriers include AT&amp;T, T-Mobile&reg;, Verizon Wireless, Sprint, Boost, U.S. Cellular&reg;, MetroPCS&reg;, InterOp, Cellcom, C Spire Wireless, Cricket, Virgin Mobile, and others.</li>
+    <li>T-Mobile is not liable for delayed or undelivered messages.</li>
+    <li>You agree to notify us of any changes to your mobile number and update your account with us to reflect this change.</li>
+    <li>Data obtained from you in connection with this SMS service may include your cell phone number, your carrier&rsquo;s name, and the date, time, and content of your messages, as well as other information that you provide. We may use this information to contact you and to provide the services you request from us.</li>
+    <li>By subscribing or otherwise using the service, you acknowledge and agree that we will have the right to change and/or terminate the service at any time, with or without cause and/or advance notice.</li>
+  </ul>
+  <p>No mobile information will be shared with third parties/affiliates for marketing/promotional purposes. All the above categories exclude text messaging originator opt in data and consent; this information will not be shared with any third parties.</p>
+  <p>PFX (PFX Canada &amp; PFX USA) will not send you sweepstakes related content via SMS messaging. Your mobile phone number will not be used for any sweepstakes related activity.</p>
+  <p>If you have any questions, please contact PFX (PFX Canada &amp; PFX USA) at the number you received the text message from or call <a href="tel:+18886038363">+1-888-603-8363</a> or email <a href="mailto:help@pizzaforno.com">help@pizzaforno.com</a>.</p>
+
+  <h3 id="will-i-be-charged-for-the-text-messages-i-receive">Will I Be Charged for the Text Messages I Receive?</h3>
+  <p>Though we will never charge you for the text messages you receive, depending on your phone plan, you may see some charges from your mobile provider. Please reach out to your wireless provider if you have questions about your text or data plan.</p>
+
+  <h2 id="changes-to-this-privacy-policy">Changes to This Privacy Policy</h2>
+  <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+  <p>We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update the &lsquo;effective date&rsquo; at the top of this Privacy Policy.</p>
+  <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+
+  <h2 id="contact-us">Contact Us</h2>
+  <p>If you have any questions about this Privacy Policy, please contact us by visiting our <a href="contact.html">contact page</a>.</p>
+</article>
+</div>
+
+<details class="toc" open>
+  <summary>On this page</summary>
+  <div class="toc-scroll">
+  <ol>
+    <li><a href="#privacy-policy">Privacy Policy</a></li>
+    <li><a href="#effective-date">Effective Date: July 30, 2024</a></li>
+    <li><a href="#information-collection-and-use">Information Collection and Use</a></li>
+    <li><a href="#types-of-data-collected">Types of Data Collected</a></li>
+    <li><a href="#personal-data">Personal Data</a></li>
+    <li><a href="#usage-data">Usage Data</a></li>
+    <li><a href="#tracking-cookies-data">Tracking &amp; Cookies Data</a></li>
+    <li><a href="#use-of-data">Use of Data</a></li>
+    <li><a href="#transfer-of-data">Transfer of Data</a></li>
+    <li><a href="#disclosure-of-data">Disclosure of Data</a></li>
+    <li><a href="#legal-requirements">Legal Requirements</a></li>
+    <li><a href="#security-of-data">Security of Data</a></li>
+    <li><a href="#service-providers">Service Providers</a></li>
+    <li><a href="#analytics">Analytics</a></li>
+    <li class="sub"><a href="#google-analytics">Google Analytics</a></li>
+    <li><a href="#links-to-other-sites">Links to Other Sites</a></li>
+    <li><a href="#childrens-privacy">Children&rsquo;s Privacy</a></li>
+    <li><a href="#sms-privacy">SMS Privacy</a></li>
+    <li class="sub"><a href="#agreement-to-receive-text-messages">Agreement to Receive Text Messages</a></li>
+    <li class="sub"><a href="#will-i-be-charged-for-the-text-messages-i-receive" title="Will I Be Charged for the Text Messages I Receive?">Will I Be Charged for the Text Messages I Receive?</a></li>
+    <li><a href="#changes-to-this-privacy-policy">Changes to This Privacy Policy</a></li>
+    <li><a href="#contact-us">Contact Us</a></li>
+  </ol>
+  </div>
+</details>
+</div>
+
+<script>
+  // Highlight the section currently being read in the "On this page" nav.
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+    var targets = links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); });
+    var toc = document.querySelector('.toc');
+    var list = toc.querySelector('.toc-scroll');
+    // Always open beside the text on desktop; collapsed by default above it on mobile.
+    var mobile = window.matchMedia('(max-width: 900px)');
+    function syncOpen(){ toc.open = !mobile.matches; }
+    mobile.addEventListener('change', syncOpen);
+    toc.querySelector('summary').addEventListener('click', function(e){ if (!mobile.matches) e.preventDefault(); });
+    syncOpen();
+
+    function update(){
+      var current = 0;
+      targets.forEach(function(t, i){ if (t.getBoundingClientRect().top <= 140) current = i; });
+      // At the very bottom, the last short sections can't reach the top, so mark the last one.
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) current = targets.length - 1;
+      links.forEach(function(a, i){ a.classList.toggle('active', i === current); });
+      // Keep the active link visible when the nav is taller than the screen.
+      var a = links[current], top = a.offsetTop, bottom = top + a.offsetHeight;
+      if (top < list.scrollTop + 40) list.scrollTop = top - 40;
+      else if (bottom > list.scrollTop + list.clientHeight - 20) list.scrollTop = bottom - list.clientHeight + 20;
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="logo"><img src="Images/pfx-logo-white.png" alt="PFX"></div>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"></path></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle><path d="M10 9v12"></path><path d="M10 13a4 4 0 0 1 8 0v8"></path></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"></rect><polygon points="10 9 16 12 10 15" fill="currentColor" stroke="none"></polygon></svg></a>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Application Form</a>
+        <a href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+        <a href="#">Documentation</a>
+        <a href="contact.html">Support</a>
+      </div>
+      <p class="footer-legal">All trademarks are owned by PFX Canada Inc and used under licence. &copy;2026</p>
+    </div>
+  </div>
+</footer>
+
+<script src="blog-data.js"></script>
+<script src="site-search.js"></script>
+<script src="talk-modal.js?v=4"></script>
+
+<script src="pfx-nav.js"></script>
+</body>
+</html>

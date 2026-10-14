@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  /* Gate this page behind the placeholder login. Real session checks
+     will replace this once Supabase auth is wired up. */
+  if (sessionStorage.getItem('pfx_admin_logged_in') !== 'true') {
+    window.location.replace('login.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="analytics.js"></script>
+<meta name="robots" content="noindex, nofollow">
+<title>Write a Post — PFX Admin</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#C00022;
+    --red-dark:#A80F22;
+    --ink:#000000;
+    --gray:#8591A0;
+    --line:#E8EAED;
+    --panel:#EFF3F5;
+    --section-bg:#EAF0F2;
+    --white:#fff;
+    --green:#1c6e37;
+    --amber:#B8710A;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    line-height:1.5;
+  }
+  a{text-decoration:none; color:inherit;}
+
+  /* NAV (shared identically across every page) */
+  header.nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16.8px 86.4px;
+    max-width:1440px; margin:0 auto;
+    position:sticky; top:0; z-index:100; background:var(--white);
+  }
+  .logo{font-size:34px; font-weight:800; letter-spacing:-0.5px;}
+  .logo img{height:32px; width:auto; display:block;}
+  .logo span{color:var(--red);}
+  nav.links{display:flex; align-items:center; gap:19.2px; font-size:15px; font-weight:400;}
+  nav.links a.talk{
+    background:var(--red); color:#fff; padding:10px 20px; border-radius:12px; font-weight:400;
+  }
+  .nav-logo-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:40px; height:40px; padding:2px; flex-shrink:0;
+    background:none; border:none;
+  }
+  .nav-logo-btn:hover{opacity:0.85;}
+  .nav-logo-btn img{width:33px; height:33px; display:block; object-fit:contain;}
+
+  /* ADMIN BAR */
+  .admin-bar{
+    background:var(--panel); padding:12px 86.4px; font-size:13.5px; color:var(--gray);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
+  }
+  .admin-bar strong{color:var(--ink);}
+  .admin-bar a{color:var(--red); font-weight:700;}
+  .save-msg{
+    display:none; font-size:13.5px; color:var(--green); font-weight:700;
+  }
+  .save-msg.show{display:inline;}
+
+  /* LAYOUT */
+  .admin-wrap{max-width:1440px; margin:0 auto; padding:32px 86.4px 60px;}
+  .admin-wrap h1{font-size:28px; font-weight:800; margin-bottom:20px;}
+  .admin-layout{display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:start;}
+
+  /* LEFT — live preview / editor surface */
+  .preview-pane{
+    border:1.5px solid #D8DADE; border-radius:12px; padding:32px; min-height:520px;
+  }
+  .image-block{
+    position:relative; border-radius:12px; overflow:hidden; margin-bottom:20px;
+    background:var(--panel); aspect-ratio:16/9; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; border:1.5px dashed #D8DADE;
+  }
+  .image-block.has-image{border-style:solid; border-color:transparent; cursor:default;}
+  .image-block img{width:100%; height:100%; object-fit:cover; display:none;}
+  .image-block.has-image img{display:block;}
+  .image-placeholder{color:var(--gray); font-size:14px; text-align:center; padding:20px;}
+  .image-block.has-image .image-placeholder{display:none;}
+  .image-actions{
+    position:absolute; top:10px; right:10px; display:none; gap:6px;
+  }
+  .image-block.has-image .image-actions{display:flex;}
+  .image-actions button{
+    width:32px; height:32px; border-radius:12px; border:none; background:rgba(255,255,255,0.95);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .image-actions button:hover{background:#fff;}
+  .preview-title{font-size:32px; font-weight:800; letter-spacing:-0.5px; margin-bottom:16px; line-height:1.2;}
+  .preview-title:empty:before{content:"Your post title will appear here"; color:#bbb;}
+
+  /* RICH TEXT TOOLBAR */
+  .editor-toolbar{
+    display:flex; align-items:center; gap:4px; flex-wrap:wrap;
+    border:1.5px solid #D8DADE; border-radius:12px; padding:6px; margin-bottom:14px;
+  }
+  .toolbar-select{
+    border:1.5px solid #D8DADE; border-radius:12px; padding:7px 10px; font-size:13px;
+    font-family:inherit; color:var(--ink); background:#fff; cursor:pointer;
+  }
+  .toolbar-select:focus{outline:2px solid var(--red); outline-offset:1px;}
+  .toolbar-divider{width:1px; height:22px; background:var(--line); margin:0 4px;}
+  .toolbar-btn{
+    width:34px; height:34px; border-radius:12px; border:1.5px solid transparent;
+    background:none; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:14px; color:var(--ink); line-height:1;
+  }
+  .toolbar-btn:hover{background:var(--panel);}
+  .toolbar-btn.active{border-color:var(--red); color:var(--red); background:rgba(192,0,34,0.06);}
+
+  .preview-body{font-size:16px; color:#222; line-height:1.8; outline:none;}
+  .preview-body p{margin-bottom:16px;}
+  .preview-body h1{font-size:32px; font-weight:800; line-height:1.25; margin:22px 0 12px;}
+  .preview-body h2{font-size:27px; font-weight:800; line-height:1.3; margin:20px 0 12px;}
+  .preview-body h3{font-size:23px; font-weight:700; line-height:1.32; margin:18px 0 10px;}
+  .preview-body h4{font-size:20px; font-weight:700; line-height:1.35; margin:16px 0 10px;}
+  .preview-body h5{font-size:18px; font-weight:700; line-height:1.4; margin:14px 0 8px;}
+  .preview-body h6{font-size:15px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; line-height:1.4; margin:14px 0 8px;}
+  .preview-body a{color:var(--red); text-decoration:underline;}
+  .preview-body img{max-width:100%; border-radius:12px; margin:14px 0; display:block;}
+  .preview-body:empty:before{content:"Click here and start writing your post..."; color:#bbb;}
+
+  /* RIGHT — form panel */
+  .form-pane{border:1.5px solid #D8DADE; border-radius:12px; padding:24px;}
+  .form-pane-tab{font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--red); border-bottom:2px solid var(--red); display:inline-block; padding-bottom:8px; margin-bottom:20px;}
+
+  .serp-preview{
+    background:var(--panel); border-radius:12px; padding:16px; margin-bottom:24px;
+  }
+  .serp-label{font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--gray); margin-bottom:10px;}
+  .serp-site{display:flex; align-items:center; gap:8px; margin-bottom:4px;}
+  .serp-favicon{width:22px; height:22px; border-radius:50%; background:var(--red); color:#fff; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .serp-sitename{font-size:13.5px; font-weight:700;}
+  .serp-url{font-size:12px; color:var(--green); margin-bottom:4px; word-break:break-all;}
+  .serp-title{font-size:16px; color:#1a0dab; margin-bottom:4px; font-weight:400; line-height:1.3;}
+  .serp-desc{font-size:13px; color:#4d5156; line-height:1.5;}
+
+  .field{margin-bottom:20px;}
+  .field-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;}
+  .field label{font-size:13px; font-weight:700;}
+  .field .gen-btn{font-size:12px; font-weight:400; color:var(--red); background:none; border:none; cursor:pointer; padding:0;}
+  .field .hint{font-size:12px; color:var(--gray); margin-top:5px;}
+  .field input[type="text"], .field textarea, .field select{
+    width:100%; border:1.5px solid #D8DADE; border-radius:12px;
+    padding:12px 14px; font-size:14.5px; font-family:inherit; color:var(--ink); background:#fff;
+  }
+  .field textarea{resize:vertical; min-height:90px;}
+  .field input:focus, .field textarea:focus, .field select:focus{outline:2px solid var(--red); outline-offset:1px;}
+  .category-tag{
+    display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;
+    background:var(--panel); color:var(--red); padding:3px 9px; border-radius:12px; margin-left:6px;
+  }
+
+  .counter-row{display:flex; align-items:center; gap:10px; margin-top:8px;}
+  .status-pill{
+    font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px;
+    background:var(--panel); color:var(--gray); flex-shrink:0;
+  }
+  .status-pill.good{background:rgba(28,110,55,0.1); color:var(--green);}
+  .status-pill.warn{background:rgba(184,113,10,0.12); color:var(--amber);}
+  .char-count{font-size:11px; color:var(--gray); flex-shrink:0;}
+  .counter-bar{flex:1; height:3px; background:var(--panel); border-radius:2px; overflow:hidden;}
+  .counter-bar-fill{height:100%; width:0%; background:var(--panel); transition:width .2s, background .2s;}
+
+  .btn-primary{
+    background:var(--red); color:#fff; padding:14px 24px; border-radius:12px;
+    font-weight:400; font-size:15px; border:none; cursor:pointer; width:100%;
+  }
+  .btn-primary:hover{background:var(--red-dark);}
+
+  .drafts-box{margin-top:24px; padding-top:20px; border-top:1px solid var(--line);}
+  .drafts-box h4{font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray); margin-bottom:10px;}
+  .draft-item{
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+    font-size:13.5px; padding:8px 0; border-bottom:1px solid var(--line);
+  }
+  .draft-item button{
+    font-size:12px; color:var(--red); background:none; border:none; cursor:pointer; font-weight:700; flex-shrink:0;
+  }
+  .drafts-empty{font-size:13px; color:var(--gray); font-style:italic;}
+
+  /* FOOTER (shared identically across every page) */
+  footer{
+    border-top:1px solid var(--line); margin-top:60px; padding:36px 57.6px 24px;
+  }
+  .footer-inner{
+    max-width:1440px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;
+  }
+  .footer-inner .logo{margin-bottom:8.4px;}
+  .footer-inner .about{color:var(--gray); font-size:14.5px; max-width:340px; line-height:1.7;}
+  .footer-cols{display:flex; gap:48px;}
+  .footer-cols h4{font-size:15px; font-weight:700; margin-bottom:8.4px;}
+  .footer-cols a{display:block; color:var(--gray); font-size:14.5px; margin-bottom:6px;}
+  .socials{display:flex; gap:9.6px; margin-top:18px; max-width:1440px; margin-left:auto; margin-right:auto; padding:0 86.4px;}
+  .socials div{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid #D8DADE;
+    display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--gray);
+  }
+
+  @media (max-width: 1000px){
+    .admin-layout{grid-template-columns:1fr;}
+    .admin-wrap, .admin-bar{padding-left:24px; padding-right:24px;}
+  }
+</style>
+<link rel="stylesheet" href="pfx-nav.css">
+<link rel="stylesheet" href="pfx-theme.css">
+</head>
+<body>
+
+<header class="pfx-nav" id="pfxNav">
+  <a class="pfx-brand" href="kage.html" aria-label="PFX home"><img src="secret-pathways-assets/pfx-light.png" alt="PFX"></a>
+  <nav class="pfx-links" id="pfxLinks">
+    <a class="pfx-link" href="kiosk-outdoor.html">Explore Kiosks</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#case-study">Case Study</a>
+    <a class="pfx-link" href="roi_calculator.html">ROI Calculator</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+    <a class="pfx-link" href="blog.html">Blog</a>
+    <a class="pfx-link pfx-link--talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+  </nav>
+  <div class="pfx-actions">
+    <button type="button" class="pfx-search" id="siteSearchBtn" aria-label="Search"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="pfx-talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <button type="button" class="pfx-burger" aria-label="Menu" aria-controls="pfxLinks" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="admin-bar">
+  <span>Logged in as <strong id="whoAmI">poweredbypfx</strong></span>
+  <a href="#" id="logoutLink">Log out</a>
+</div>
+
+<div class="admin-wrap">
+  <h1>Write a Post</h1>
+  <div class="admin-layout">
+
+    <!-- LEFT: live preview / editor surface -->
+    <div class="preview-pane">
+      <div class="image-block" id="imageBlock">
+        <div class="image-placeholder">Click to add a featured image</div>
+        <img id="previewImg" alt="">
+        <div class="image-actions">
+          <button type="button" id="imgEditBtn" aria-label="Replace image">✎</button>
+          <button type="button" id="imgDeleteBtn" aria-label="Remove image">🗑</button>
+        </div>
+      </div>
+      <input type="file" id="imageInput" accept="image/*" style="display:none;">
+
+      <div class="preview-title" id="previewTitle"></div>
+
+      <div class="editor-toolbar" id="editorToolbar">
+        <select id="formatSelect" class="toolbar-select" title="Text style">
+          <option value="P">Paragraph</option>
+          <option value="H1">Heading 1</option>
+          <option value="H2">Heading 2</option>
+          <option value="H3">Heading 3</option>
+          <option value="H4">Heading 4</option>
+          <option value="H5">Heading 5</option>
+          <option value="H6">Heading 6</option>
+        </select>
+        <span class="toolbar-divider"></span>
+        <button type="button" class="toolbar-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+        <button type="button" class="toolbar-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+        <button type="button" class="toolbar-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+        <button type="button" class="toolbar-btn" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
+        <span class="toolbar-divider"></span>
+        <button type="button" class="toolbar-btn" id="linkBtn" title="Insert link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+        </button>
+        <button type="button" class="toolbar-btn" id="imageBtnBody" title="Insert image">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </button>
+        <input type="file" id="bodyImageInput" accept="image/*" style="display:none;">
+      </div>
+
+      <div class="preview-body" id="previewBody" contenteditable="true"></div>
+    </div>
+
+    <!-- RIGHT: metadata form -->
+    <div class="form-pane">
+      <div class="form-pane-tab">New Blog Post</div>
+
+      <div class="serp-preview">
+        <div class="serp-label">SERP Preview</div>
+        <div class="serp-site">
+          <div class="serp-favicon">P</div>
+          <div class="serp-sitename">PFX</div>
+        </div>
+        <div class="serp-url" id="serpUrl">yoursite.com/blog.html#your-post</div>
+        <div class="serp-title" id="serpTitle">Your post title</div>
+        <div class="serp-desc" id="serpDesc">Your meta description will preview here as you type.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-top"><label for="fTitle">Title *</label></div>
+        <input type="text" id="fTitle" placeholder="e.g. Introducing PFX: Scale Your Pizzeria with Zero Added Labor">
+        <div class="hint">The title of the post (used as the on-page headline and SEO title)</div>
+        <div class="counter-row">
+          <span class="status-pill" id="titlePill">—</span>
+          <span class="char-count" id="titleCount">0/50-60 chars</span>
+          <span class="counter-bar"><span class="counter-bar-fill" id="titleBar"></span></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-top">
+          <label for="fSlug">Slug *</label>
+          <button type="button" class="gen-btn" id="genSlugBtn">Generate</button>
+        </div>
+        <input type="text" id="fSlug" placeholder="e.g. introducing-pfx">
+        <div class="hint">The relative path of the post — becomes blog.html#your-slug</div>
+        <div class="counter-row">
+          <span class="status-pill" id="slugPill">—</span>
+          <span class="char-count" id="slugCount">0/10-50 chars</span>
+          <span class="counter-bar"><span class="counter-bar-fill" id="slugBar"></span></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-top"><label for="fDesc">Description *</label></div>
+        <textarea id="fDesc" placeholder="A short summary shown in search results and the blog search."></textarea>
+        <div class="hint">The SEO meta description of the post</div>
+        <div class="counter-row">
+          <span class="status-pill" id="descPill">—</span>
+          <span class="char-count" id="descCount">0/120-156 chars</span>
+          <span class="counter-bar"><span class="counter-bar-fill" id="descBar"></span></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-top"><label for="fAuthor">Author</label></div>
+        <input type="text" id="fAuthor" value="Shreya Karnik">
+      </div>
+
+      <div class="field">
+        <div class="field-top"><label for="fCategory">Category *</label></div>
+        <select id="fCategory">
+          <option value="">Please Select</option>
+          <option value="Marketing Insights">Marketing Insights</option>
+          <option value="Operation Insights">Operation Insights</option>
+          <option value="Business Insights">Business Insights</option>
+          <option value="Technical Insights">Technical Insights</option>
+        </select>
+        <div class="hint">Which section this post is grouped under on the blog</div>
+      </div>
+
+      <button type="button" class="btn-primary" id="saveBtn">Save</button>
+      <span class="save-msg" id="saveMsg">✓ Saved as a local draft</span>
+
+      <div class="drafts-box">
+        <h4>Local drafts</h4>
+        <div id="draftsList"><p class="drafts-empty">No drafts saved yet.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo"><img src="Images/pfx-logo-white.png" alt="PFX"></div>
+      <p class="about">The white-label pizza automation platform, powered by PizzaForno.<br>development@pizzaforno.com<br>pizzaforno.com</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h4>Explore PizzaForno</h4>
+        <a href="#">Locations</a>
+        <a href="blog.html">Blog</a>
+        <a href="#">About</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="contact.html">Contact</a>
+        <a href="#">Email</a>
+        <a href="#">Legal</a>
+      </div>
+    </div>
+  </div>
+  <div class="socials">
+    <div>IG</div>
+    <div>in</div>
+    <div>X</div>
+  </div>
+</footer>
+
+<script>
+  /* =========================================================
+     BLOG POST EDITOR — front-end only, for now.
+     -------------------------------------------------------
+     "Save" currently writes to this browser's localStorage
+     (key: pfx_blog_drafts) so the editor is testable end to
+     end. Once Supabase is wired up, replace saveDraft() below
+     with a real insert into your blog_posts table, and update
+     blog.html + site-search.js to read from Supabase instead
+     of blog-data.js.
+     ========================================================= */
+
+  document.getElementById('logoutLink').addEventListener('click', function(e){
+    e.preventDefault();
+    sessionStorage.removeItem('pfx_admin_logged_in');
+    window.location.href = 'login.html';
+  });
+
+  // ---- character-count validators ----
+  function fieldStatus(len, min, max){
+    if(len === 0) return {label:'—', cls:''};
+    if(len < min) return {label:'Too short', cls:'warn'};
+    if(len > max) return {label:'Too long', cls:'warn'};
+    return {label:'Looks good!', cls:'good'};
+  }
+  function bindCounter(inputEl, min, max, pillEl, countEl, barEl, onInput){
+    function update(){
+      var len = inputEl.value.length;
+      var status = fieldStatus(len, min, max);
+      pillEl.textContent = status.label;
+      pillEl.className = 'status-pill' + (status.cls ? ' ' + status.cls : '');
+      countEl.textContent = len + '/' + min + '-' + max + ' chars';
+      var pct = Math.min(100, (len / max) * 100);
+      barEl.style.width = pct + '%';
+      barEl.style.background = status.cls === 'warn' ? 'var(--amber)' : (status.cls === 'good' ? 'var(--green)' : 'var(--panel)');
+      if(onInput) onInput();
+    }
+    inputEl.addEventListener('input', update);
+    update();
+  }
+
+  var fTitle = document.getElementById('fTitle');
+  var fSlug = document.getElementById('fSlug');
+  var fDesc = document.getElementById('fDesc');
+  var fAuthor = document.getElementById('fAuthor');
+  var fCategory = document.getElementById('fCategory');
+
+  function slugify(str){
+    return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  function updateSerp(){
+    document.getElementById('serpTitle').textContent = fTitle.value || 'Your post title';
+    document.getElementById('serpDesc').textContent = fDesc.value || 'Your meta description will preview here as you type.';
+    document.getElementById('serpUrl').textContent = window.location.origin.replace(/^https?:\/\//,'') + window.location.pathname.replace(/admin\.html$/, '') + 'blog.html#' + (fSlug.value || 'your-post');
+  }
+  function updatePreviewTitle(){
+    document.getElementById('previewTitle').textContent = fTitle.value;
+  }
+
+  bindCounter(fTitle, 50, 60, document.getElementById('titlePill'), document.getElementById('titleCount'), document.getElementById('titleBar'), function(){
+    updateSerp(); updatePreviewTitle();
+    // keep slug in sync automatically until the user edits it manually
+    if(!fSlug.dataset.manual){ fSlug.value = slugify(fTitle.value); fSlug.dispatchEvent(new Event('input')); }
+  });
+  bindCounter(fSlug, 10, 50, document.getElementById('slugPill'), document.getElementById('slugCount'), document.getElementById('slugBar'), updateSerp);
+  bindCounter(fDesc, 120, 156, document.getElementById('descPill'), document.getElementById('descCount'), document.getElementById('descBar'), updateSerp);
+
+  fSlug.addEventListener('input', function(){ fSlug.dataset.manual = 'true'; });
+  document.getElementById('genSlugBtn').addEventListener('click', function(){
+    delete fSlug.dataset.manual;
+    fSlug.value = slugify(fTitle.value);
+    fSlug.dispatchEvent(new Event('input'));
+  });
+
+  // ---- featured image ----
+  var imageBlock = document.getElementById('imageBlock');
+  var imageInput = document.getElementById('imageInput');
+  var previewImg = document.getElementById('previewImg');
+
+  imageBlock.addEventListener('click', function(e){
+    if(!imageBlock.classList.contains('has-image')) imageInput.click();
+  });
+  document.getElementById('imgEditBtn').addEventListener('click', function(e){
+    e.stopPropagation(); imageInput.click();
+  });
+  document.getElementById('imgDeleteBtn').addEventListener('click', function(e){
+    e.stopPropagation();
+    imageBlock.classList.remove('has-image');
+    previewImg.src = '';
+    imageInput.value = '';
+  });
+  imageInput.addEventListener('change', function(){
+    var file = imageInput.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      previewImg.src = ev.target.result;
+      imageBlock.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // ---- rich text toolbar for the post body ----
+  var previewBody = document.getElementById('previewBody');
+  var formatSelect = document.getElementById('formatSelect');
+
+  document.querySelectorAll('.toolbar-btn[data-cmd]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      previewBody.focus();
+      document.execCommand(btn.dataset.cmd, false, null);
+    });
+  });
+
+  formatSelect.addEventListener('change', function(){
+    previewBody.focus();
+    document.execCommand('formatBlock', false, formatSelect.value);
+  });
+
+  document.getElementById('linkBtn').addEventListener('click', function(e){
+    e.preventDefault();
+    var selection = window.getSelection();
+    if(!selection || selection.toString().length === 0){
+      window.alert('First highlight the text you want to turn into a link, then click the link button.');
+      return;
+    }
+    var url = window.prompt('Enter the URL this text should link to:', 'https://');
+    if(url){
+      previewBody.focus();
+      document.execCommand('createLink', false, url);
+    }
+  });
+
+  var bodyImageInput = document.getElementById('bodyImageInput');
+  document.getElementById('imageBtnBody').addEventListener('click', function(e){
+    e.preventDefault();
+    bodyImageInput.click();
+  });
+  bodyImageInput.addEventListener('change', function(){
+    var file = bodyImageInput.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      previewBody.focus();
+      document.execCommand('insertImage', false, ev.target.result);
+      bodyImageInput.value = '';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Keep the toolbar in sync with whatever the cursor is currently inside
+  document.addEventListener('selectionchange', function(){
+    if(document.activeElement !== previewBody) return;
+    try{
+      var block = document.queryCommandValue('formatBlock').toUpperCase();
+      formatSelect.value = (['H1','H2','H3','H4','H5','H6'].indexOf(block) !== -1) ? block : 'P';
+      document.querySelectorAll('.toolbar-btn[data-cmd]').forEach(function(btn){
+        btn.classList.toggle('active', document.queryCommandState(btn.dataset.cmd));
+      });
+    } catch(e){}
+  });
+
+  // ---- drafts (localStorage placeholder until Supabase) ----
+  function getDrafts(){
+    try{ return JSON.parse(localStorage.getItem('pfx_blog_drafts') || '[]'); } catch(e){ return []; }
+  }
+  function renderDrafts(){
+    var drafts = getDrafts();
+    var list = document.getElementById('draftsList');
+    if(!drafts.length){ list.innerHTML = '<p class="drafts-empty">No drafts saved yet.</p>'; return; }
+    list.innerHTML = drafts.map(function(d, i){
+      return '<div class="draft-item"><span>' + (d.title || '(untitled)') +
+        (d.category ? '<span class="category-tag">' + d.category + '</span>' : '') + '</span>' +
+        '<span><button type="button" data-i="' + i + '" class="load-draft">Load</button> ' +
+        '<button type="button" data-i="' + i + '" class="delete-draft">Delete</button></span></div>';
+    }).join('');
+    list.querySelectorAll('.load-draft').forEach(function(btn){
+      btn.addEventListener('click', function(){ loadDraft(drafts[parseInt(btn.dataset.i, 10)]); });
+    });
+    list.querySelectorAll('.delete-draft').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var all = getDrafts();
+        all.splice(parseInt(btn.dataset.i, 10), 1);
+        localStorage.setItem('pfx_blog_drafts', JSON.stringify(all));
+        renderDrafts();
+      });
+    });
+  }
+  function loadDraft(d){
+    fTitle.value = d.title || ''; fTitle.dispatchEvent(new Event('input'));
+    fSlug.value = d.slug || ''; fSlug.dataset.manual = 'true'; fSlug.dispatchEvent(new Event('input'));
+    fDesc.value = d.description || ''; fDesc.dispatchEvent(new Event('input'));
+    fAuthor.value = d.author || '';
+    fCategory.value = d.category || '';
+    document.getElementById('previewBody').innerHTML = d.body || '';
+    if(d.image){ previewImg.src = d.image; imageBlock.classList.add('has-image'); }
+    else { previewImg.src=''; imageBlock.classList.remove('has-image'); }
+  }
+  function saveDraft(){
+    var draft = {
+      title: fTitle.value,
+      slug: fSlug.value,
+      description: fDesc.value,
+      author: fAuthor.value,
+      category: fCategory.value,
+      body: document.getElementById('previewBody').innerHTML,
+      image: imageBlock.classList.contains('has-image') ? previewImg.src : null,
+      savedAt: new Date().toISOString()
+    };
+    var drafts = getDrafts();
+    drafts.unshift(draft);
+    localStorage.setItem('pfx_blog_drafts', JSON.stringify(drafts));
+    renderDrafts();
+    var msg = document.getElementById('saveMsg');
+    msg.classList.add('show');
+    setTimeout(function(){ msg.classList.remove('show'); }, 2500);
+  }
+  document.getElementById('saveBtn').addEventListener('click', saveDraft);
+
+  updateSerp();
+  renderDrafts();
+</script>
+
+<script src="blog-data.js"></script>
+<script src="site-search.js"></script>
+
+<script src="pfx-nav.js"></script>
+</body>
+</html>
