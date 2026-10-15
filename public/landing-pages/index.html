@@ -1121,7 +1121,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     <a class="nav-link" href="kiosk-outdoor.html" data-cursor><span>Explore Kiosks</span><span class="alt" aria-hidden="true">Explore Kiosks</span></a>
     <a class="nav-link" href="case-study.html" data-cursor><span>Case Study</span><span class="alt" aria-hidden="true">Case Study</span></a>
     <a class="nav-link" href="roi_calculator.html" data-cursor><span>ROI Calculator</span><span class="alt" aria-hidden="true">ROI Calculator</span></a>
-    <a class="nav-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#faq" data-cursor><span>FAQ</span><span class="alt" aria-hidden="true">FAQ</span></a>
+    <a class="nav-link" href="#faq" data-cursor><span>FAQ</span><span class="alt" aria-hidden="true">FAQ</span></a>
     <a class="nav-link" href="blog.html" data-cursor><span>Blog</span><span class="alt" aria-hidden="true">Blog</span></a>
     <a class="nav-link nav-link--talk" href="contact.html" data-talk-trigger data-cursor><span>Let&rsquo;s Talk</span><span class="alt" aria-hidden="true">Let&rsquo;s Talk</span></a>
   </nav>
@@ -5617,7 +5617,8 @@ function wireNav() {
     const t = document.querySelector(a.getAttribute('href'));
     if (!t) return;
     e.preventDefault();
-    scrollTo({ top: a.getAttribute('href') === '#top' ? 0 : t.offsetTop - 40, behavior: REDUCE ? 'auto' : 'smooth' });
+    const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 84;
+    scrollTo({ top: a.getAttribute('href') === '#top' ? 0 : t.getBoundingClientRect().top + scrollY - navH, behavior: REDUCE ? 'auto' : 'smooth' });
   }));
 }
 
@@ -6099,6 +6100,13 @@ function start() {
       document.body.classList.remove('is-locked');
       $('#hero').querySelectorAll('[data-rv], .mask-line').forEach((e, i) =>
         setTimeout(() => e.classList.add('rv-in'), REDUCE ? 0 : 120 + i * 95));
+      /* arriving from another page on a link like index.html#faq: the page was
+         scroll-locked while the scene loaded, so take the reader there now */
+      const target = location.hash.length > 1 && document.getElementById(location.hash.slice(1));
+      if (target) {
+        const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 84;
+        scrollTo({ top: target.getBoundingClientRect().top + scrollY - navH, behavior: 'auto' });
+      }
     }, REDUCE ? 0 : 340);
   }
   running = true; tPrev = performance.now();
