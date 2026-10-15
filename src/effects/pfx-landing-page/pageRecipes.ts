@@ -1,12 +1,12 @@
 import type { PageTypographyRecipe } from "./pageTypography";
 
-/* The Kage recipe, taken unchanged from ThreeUI's pageRecipes.ts. The other
+/* The landing-page recipe, taken unchanged from ThreeUI's pageRecipes.ts. The other
    pages' recipes (Sylva, Complete Shelf, Bestsellers) are left out. */
 
 const n = (value: number) => Number(value.toFixed(3));
 const px = (value: number) => `${n(value)}px`;
 
-export const KAGE_TYPOGRAPHY: PageTypographyRecipe = {
+export const PFX_TYPOGRAPHY: PageTypographyRecipe = {
   "headingFonts": [
     {
       "value": "onest",

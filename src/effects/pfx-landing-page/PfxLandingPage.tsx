@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { applyPageCustomization, splitTypographyProps, usePageTypography, type LandingPageCustomization, type PageTypographyProps } from "./pageTypography";
-import { KAGE_TYPOGRAPHY } from "./pageRecipes";
+import { PFX_TYPOGRAPHY } from "./pageRecipes";
 
 /* Local copy of ThreeUI's landing-page host (src/shaders/landing-pages/LandingPages.tsx),
-   reduced to the Kage page. The frame and the customization contract are unchanged. */
+   reduced to the PFX page. The frame and the customization contract are unchanged. */
 
 export type LandingPageFrameProps = { className?: string; sourceUrl: string; srcDoc?: string; style?: CSSProperties; title: string; customization?: LandingPageCustomization };
 export type LandingPageProps = Omit<LandingPageFrameProps, "sourceUrl" | "title" | "customization">;
@@ -18,8 +18,8 @@ export function LandingPageFrame({ className = "", customization, sourceUrl, src
   </div>;
 }
 
-export function KageLandingPage(props: LandingPageProps & PageTypographyProps) {
+export function PfxLandingPage(props: LandingPageProps & PageTypographyProps) {
   const [type, frame] = splitTypographyProps(props);
-  const customization = usePageTypography(KAGE_TYPOGRAPHY, type);
-  return <LandingPageFrame {...frame} customization={customization} title="PFX — Where stillness reveals the unseen" sourceUrl={`${import.meta.env.BASE_URL}landing-pages/kage.html`} />;
+  const customization = usePageTypography(PFX_TYPOGRAPHY, type);
+  return <LandingPageFrame {...frame} customization={customization} title="PFX — Pizza Automation Experts" sourceUrl={`${import.meta.env.BASE_URL}landing-pages/index.html`} />;
 }

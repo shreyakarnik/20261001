@@ -39,7 +39,7 @@ html body{
    scrim closing in below it */
 html body::before{
   content:''; position:fixed; inset:0; z-index:-2; pointer-events:none;
-  background:url(secret-pathways-assets/campus-backdrop.webp) center 30% / cover no-repeat;
+  background:url(assets/campus-backdrop.webp) center 30% / cover no-repeat;
 }
 html body::after{
   content:''; position:fixed; inset:0; z-index:-1; pointer-events:none;
@@ -51,7 +51,7 @@ html body::after{
    university at night, captured from the hero (kiosk left out), under a
    lighter scrim so the lit windows read the way they do on the landing */
 html body.kiosk-spec::before{
-  background:#05070a url(secret-pathways-assets/campus-backdrop-night.webp) center 30% / cover no-repeat;
+  background:#05070a url(assets/campus-backdrop-night.webp) center 30% / cover no-repeat;
 }
 html body.kiosk-spec::after{
   background:linear-gradient(180deg, rgba(5,7,10,.18) 0%, rgba(5,7,10,.42) 38%, rgba(5,7,10,.8) 72%, rgba(5,7,10,.92) 100%);

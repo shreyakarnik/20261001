@@ -1,18 +1,18 @@
 import { lazy, Suspense } from "react";
-import "./effects/kage-landing-page/styles.css";
+import "./effects/pfx-landing-page/styles.css";
 
 /* Only the small React host is lazy-loaded. The page itself is never imported
    into the JavaScript graph: it is served as a static file from
-   public/landing-pages/kage.html and loaded by the iframe. */
-const KageLandingPage = lazy(() =>
-  import("./effects/kage-landing-page/KageLandingPage").then((module) => ({ default: module.KageLandingPage })),
+   public/landing-pages/index.html and loaded by the iframe. */
+const PfxLandingPage = lazy(() =>
+  import("./effects/pfx-landing-page/PfxLandingPage").then((module) => ({ default: module.PfxLandingPage })),
 );
 
 export function Scene() {
   return (
     <div className="shader-frame">
       <Suspense fallback={null}>
-        <KageLandingPage
+        <PfxLandingPage
           headingFont="onest"
           bodyFont="onest"
           headingWeight="400"

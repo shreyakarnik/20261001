@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PFX — Where stillness reveals the unseen</title>
-<meta name="description" content="A five-chapter night walk through a Kyoto mountain temple. Charred cypress, lantern light and a vermilion moon, rendered live in WebGL.">
+<title>PFX — Pizza Automation Experts</title>
+<meta name="description" content="PFX is a white-label pizza vending platform: automated kiosks for independent operators, regional chains and franchisors. Your recipes, your brand, your pricing, 24/7.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
-<link rel="stylesheet" href="secret-pathways-assets/fonts.css">
+<link rel="stylesheet" href="assets/fonts.css">
 <style>
 /* Inter, bundled locally (SIL OFL), variable weight 100–900 */
 @font-face{ font-family:'Inter'; font-style:normal; font-weight:100 900; font-display:swap;
-  src:url(secret-pathways-assets/fonts/inter-latin-wght-normal.woff2) format('woff2');
+  src:url(assets/fonts/inter-latin-wght-normal.woff2) format('woff2');
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
 @font-face{ font-family:'Inter'; font-style:normal; font-weight:100 900; font-display:swap;
-  src:url(secret-pathways-assets/fonts/inter-latin-ext-wght-normal.woff2) format('woff2');
+  src:url(assets/fonts/inter-latin-ext-wght-normal.woff2) format('woff2');
   unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
 /* one typeface for the whole site — !important so it also wins over the
    typography the React host injects into this page */
@@ -77,7 +77,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
   color:var(--bone-dim); text-shadow:0 1px 16px rgba(3,6,8,.9);
 }
-.jp{ font-family:'NotoJP','Onest',sans-serif; font-weight:400; }
+.jp{ font-family:'Onest',sans-serif; font-weight:400; }
 h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .display{
   text-transform:uppercase; line-height:1.055; letter-spacing:-.012em;
@@ -209,15 +209,14 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .chip:hover p{ color:var(--bone-dim); }
 .chip.on .num{ color:var(--ember); }
 .chip.on b{ color:var(--bone); }
-/* the floating window: a generated Sanmon still carried over the hero */
+/* the floating preview window over the hero (not used on this page) */
 .peek{
   position:absolute; z-index:2; right:clamp(78px,11vw,190px); top:clamp(132px,25vh,238px);
   width:clamp(150px,16vw,262px); display:block;
   transition:transform .8s var(--ease-out);
 }
 .peek-fr{ display:block; aspect-ratio:16/10;
-  background:linear-gradient(180deg, rgba(3,6,9,.04) 24%, rgba(3,6,9,.48) 100%),
-    url('secret-pathways-assets/generated/kage-sanmon-preview.webp') center / cover no-repeat;
+  background:linear-gradient(180deg, rgba(3,6,9,.04) 24%, rgba(3,6,9,.48) 100%);
   outline:1px solid rgba(223,231,224,.16); outline-offset:-1px;
   box-shadow:0 34px 70px -30px rgba(0,0,0,.9); transition:outline-color .5s; }
 .peek:hover{ transform:translate3d(0,-5px,0); }
@@ -299,18 +298,15 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .card:hover .card-fr{ outline-color:rgba(223,231,224,.30); }
 .card:nth-child(1) .card-fr{
   background:
-    linear-gradient(180deg,rgba(3,6,9,.04) 36%,rgba(3,6,9,.72) 100%),
-    url('secret-pathways-assets/generated/kage-approach.webp') center / cover no-repeat;
+    linear-gradient(180deg,rgba(3,6,9,.04) 36%,rgba(3,6,9,.72) 100%);
 }
 .card:nth-child(2) .card-fr{
   background:
-    linear-gradient(180deg,rgba(3,6,9,.06) 36%,rgba(3,6,9,.74) 100%),
-    url('secret-pathways-assets/generated/kage-lantern-court.webp') center / cover no-repeat;
+    linear-gradient(180deg,rgba(3,6,9,.06) 36%,rgba(3,6,9,.74) 100%);
 }
 .card:nth-child(3) .card-fr{
   background:
-    linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%),
-    url('secret-pathways-assets/generated/kage-moonwater.webp') center / cover no-repeat;
+    linear-gradient(180deg,rgba(3,6,9,.05) 36%,rgba(3,6,9,.74) 100%);
 }
 .card-fr::after{ content:''; position:absolute; inset:0;
   background:linear-gradient(transparent 46%, rgba(4,6,9,.80)); pointer-events:none; }
@@ -380,7 +376,7 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .no-webgl .peek-fr{ background:linear-gradient(160deg,#162326,#0b1013 55%,#241010); }
 .no-webgl .word-fb{
   display:block; position:absolute; left:0; right:0; bottom:16%; z-index:1;
-  font-family:'Wordmark','Onest',sans-serif; font-weight:600; font-size:21.4vw; line-height:.78;
+  font-family:'Onest',sans-serif; font-weight:600; font-size:21.4vw; line-height:.78;
   letter-spacing:.052em; text-align:center; pointer-events:none;
   background:linear-gradient(#e2ece5, #97a89c); -webkit-background-clip:text; background-clip:text;
   color:transparent;
@@ -421,7 +417,7 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .les .k{ font-size:11px; letter-spacing:.16em; color:var(--muted); font-variant-numeric:tabular-nums; transition:color .4s; }
 .les:hover .k{ color:var(--vermilion); }
 .les h3{ font-size:clamp(16px,1.5vw,23px); font-weight:400; letter-spacing:-.005em; }
-.les h3 em{ font-style:normal; font-family:'NotoJP',sans-serif; font-size:.72em; color:var(--muted); margin-left:12px; letter-spacing:.24em; }
+.les h3 em{ font-style:normal; font-family:'Onest',sans-serif; font-size:.72em; color:var(--muted); margin-left:12px; letter-spacing:.24em; }
 .les p{ margin:0; font-size:13px; line-height:1.6; color:#909b95; text-shadow:0 1px 16px rgba(3,6,8,.92); }
 .les .t{ text-align:right; font-size:11px; letter-spacing:.14em; color:#8b958f; font-variant-numeric:tabular-nums; text-shadow:0 1px 16px rgba(3,6,8,.92); }
 .les .bar{ position:absolute; left:0; bottom:-1px; height:1px; width:100%; background:var(--vermilion);
@@ -562,8 +558,7 @@ body[data-layout-hero="b"] .peek{
   left:auto; right:var(--pad); top:auto; bottom:clamp(38px,7vh,96px);
 }
 body[data-layout-hero="b"] .peek-cap b.jp{ font-size:clamp(20px,2.2vw,34px); letter-spacing:.18em; }
-/* The Japanese title reads down the right edge, hung under the navigation —
-   the one mark on that side of the frame now that the romanization has gone. */
+/* the side title reads down the right edge, hung under the navigation */
 body[data-layout-hero="b"] .hero-side{
   left:auto; right:var(--pad); top:calc(var(--nav-h) + clamp(14px,3vh,42px));
   bottom:auto; transform:none; display:block;
@@ -651,176 +646,10 @@ body[data-layout-footer="b"] .foot-grid > div:nth-child(n+3){
 body[data-layout-footer="b"] .foot-base{ display:grid; grid-template-columns:1fr auto 1fr; }
 body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 
-/* ================================================= foreground layers (KAGE)
-   The transparent PNG library in secret-pathways-assets/foreground/png is
-   introduced as a near plane. Each section carries one .fg box holding a few
-   cut-outs that stand between the live sanctuary and the reading: the scene
-   itself is untouched, this is only the garden that grows in front of it.
-
-   The cut-outs are the nearest plane on the page, so they sit in front of the
-   reading rather than behind it. Inside .page — itself z-index:10, above the
-   #gl canvas at 0:
-     -1   .sec::before / .foot::before   the section scrims
-      2   headings, copy, links, cards, stats, CTA
-      3   .fg                            the cut-outs: aria-hidden, inert
-   .page caps everything it holds at tier 10, which is under the fixed
-   furniture (rail 45, nav 50), so the chapter's live near plane is moved out
-   to #fg-sky at 52 — over the layout and the navigation both, and still under
-   the passes that treat the frame as one image: vignette 55, grain 60,
-   cursor 80.
-
-   A stage is only ever shown while its own chapter holds the viewport, and
-   only in the fixed bottom-anchored form. Parked back in its section it is
-   inert and invisible: a near plane that scrolls with the page reads as
-   wallpaper printed on the document rather than as something standing between
-   the camera and the scene, so there is no second, section-owned appearance.
-   Every piece is therefore placed from the bottom edge of that fixed plane —
-   left/right and bottom, never top.
-
-   The entrance is driven by the chapter, not by the scroll observer: each
-   [data-fg-in] piece rises from the edge it is anchored to when its stage goes
-   live, one every 90ms in DOM order, and the reduced-motion block at the foot
-   of this sheet flattens it. The wrapper owns the entrance and animates
-   opacity and transform only; the artwork itself remains at full opacity, with
-   the reading protected by the layer order rather than a translucent
-   foreground treatment. */
-.fg{
-  position:absolute; inset:0; z-index:3;
-  overflow:visible; pointer-events:none;
-}
-/* Nothing inside a section may widen the document. The foreground cut-outs and
-   the cloth canvases are placed to hang past the frame edges on purpose, and as
-   ordinary in-flow descendants they dragged the page box out with them — 194px
-   past a 1440 frame. Clip the horizontal axis at the section, which is exactly
-   viewport-wide, so each overhang is cut precisely where it leaves the screen.
-   `clip` pairs with `visible` without coercing it, so no scroll container is
-   created and every bit of vertical bleed survives. */
+/* section layering. Nothing inside a section may widen the document, so the
+   horizontal axis is clipped at the section (`clip` keeps vertical bleed). */
 .sec, .foot{ overflow-x:clip; overflow-y:visible; }
-/* the host for whichever chapter currently owns the near plane — no box of
-   its own, since every stage it holds is position:fixed to the viewport */
-#fg-sky{
-  position:fixed; left:0; top:0; width:0; height:0;
-  z-index:52; pointer-events:none;
-}
 .sec > *:not(.fg), .foot > *:not(.fg){ position:relative; z-index:2; }
-.fg-el{ position:absolute; display:block; opacity:0; }
-.fg-el > img{
-  width:100%; height:auto;   /* the width/height attrs hold the box before the lazy image lands */
-  opacity:1;
-  filter:saturate(.88) brightness(.86);
-}
-.fg-el--flip > img{ transform:scaleX(-1); }
-/* each piece waits off the edge it is anchored to until its chapter is called */
-[data-fg-in="up"]   { transform:translate3d(0,13%,0); }
-[data-fg-in="left"] { transform:translate3d(-11%,6%,0); }
-[data-fg-in="right"]{ transform:translate3d(11%,6%,0); }
-/* one slow breath, on the two lightest layers only */
-@keyframes fg-sway{
-  from{ transform:rotate(-.45deg) translate3d(0,2px,0); }
-  to  { transform:rotate(.45deg)  translate3d(0,-6px,0); }
-}
-.fg-el--sway > img{ animation:fg-sway 21s var(--ease-io) infinite alternate; transform-origin:0% 45%; }
-
-/* The active chapter owns a bottom-anchored near plane. Its former stage is
-   retained only long enough to dissolve into the next chapter's scene. */
-.fg.fg-active,.fg.fg-retiring{
-  position:fixed; left:0; right:0; top:auto; bottom:0; height:min(56svh,680px);
-  z-index:1; overflow:visible; pointer-events:none;
-}
-.fg.fg-active .fg-el{
-  opacity:1; transform:none;
-  transition:opacity 1.2s var(--ease-out), transform 1.5s var(--ease-out);
-  transition-delay:var(--fg-delay,0ms);
-}
-.fg .fg-el:nth-child(2){ --fg-delay:90ms; }
-.fg .fg-el:nth-child(3){ --fg-delay:180ms; }
-.fg .fg-el:nth-child(4){ --fg-delay:270ms; }
-.fg.fg-retiring .fg-el{
-  opacity:0; transform:translate3d(0,8vh,0) scale(.98); filter:blur(18px);
-  transition:opacity .68s var(--ease-out),transform .78s var(--ease-out),filter .78s var(--ease-out);
-}
-
-/* Placement is keyed off [data-fg] rather than the section id, because the
-   stage of the live chapter is re-parented into #fg-sky and stops being a
-   descendant of its own section for as long as it holds the near plane.
-
-   Every piece is anchored from the bottom of that plane, which is the bottom
-   of the viewport. The cut-outs in png/ are trimmed flush to their own lowest
-   opaque row, so a negative bottom here is a real amount of artwork buried off
-   the foot of the frame, not slack in the file — the ground-sitting pieces
-   carry enough of it that their base line never lifts off the edge. */
-
-/* — I · the gate: the wall runs along the lower-left frame, a pine holds the
-     far edge, and one bank of grass closes the foot of the chapter */
-/* Wall against the left edge, pine against the right: the chapter is framed
-   by the two of them with the court open between.
-
-   left:0, not a negative offset — the plate is trimmed to its own artwork, so
-   pulling it off-frame cuts the gate itself rather than trimming empty margin.
-   Its left edge sits on the viewport's. */
-[data-fg="gate"] .fg-wall  { left:0; bottom:-30px; width:clamp(430px,47vw,780px); }
-[data-fg="gate"] .fg-pine  { right:-4%; bottom:-46px; width:clamp(190px,21vw,370px); }
-[data-fg="gate"] .fg-grass { left:3%;   bottom:-150px; width:clamp(420px,60vw,1050px); }
-
-/* — II · still gardens: sakura and maple sweep in from the two lower corners
-     and carry their whole length, a lit lantern and a low bush hold the edges */
-[data-fg="pathways"] .fg-sakura { left:-6%;  bottom:-86px;  width:clamp(430px,50vw,880px); }
-[data-fg="pathways"] .fg-leaves { right:-6%; bottom:-62px;  width:clamp(330px,38vw,670px); }
-[data-fg="pathways"] .fg-lantern{ left:-1%;  bottom:-96px;  width:clamp(120px,13vw,215px); }
-[data-fg="pathways"] .fg-bush   { right:-4%; bottom:-38px;  width:clamp(250px,30vw,530px); }
-/* the lantern is the one lit object in the library — it keeps its ember */
-[data-fg="pathways"] .fg-lantern > img{ filter:saturate(.96) brightness(1); }
-[data-fg="pathways"] .fg-leaves > img{ transform-origin:100% 40%; }
-
-/* — III · sacred craft: basalt and a low wall fragment bracket the atlas and
-     a stand of grass ties them together, all three below the plate grid */
-[data-fg="lessons"] .fg-wall   { right:-8%; bottom:-78px; width:clamp(390px,50vw,870px); }
-[data-fg="lessons"] .fg-stones { left:-4%;  bottom:-48px; width:clamp(250px,30vw,530px); }
-[data-fg="lessons"] .fg-grass  { left:24%;  bottom:-84px; width:clamp(280px,33vw,580px); }
-
-/* — IV · afterlight: a far hill closes the horizon, the shrine ruins stand at
-     the left of it, grass banks the right, one branch hangs into the corner */
-[data-fg="eternity"] .fg-hill   { left:-8%; width:min(150vh,116%); bottom:calc(-1 * min(20vh,15.5vw)); }
-[data-fg="eternity"] .fg-ruins  { left:-5%;  bottom:-32px; width:clamp(240px,28vw,500px); }
-[data-fg="eternity"] .fg-grass  { right:-7%; bottom:-60px; width:clamp(300px,37vw,670px); }
-[data-fg="eternity"] .fg-sakura { left:-15%; bottom:-70px; width:clamp(280px,33vw,580px); }
-
-/* — colophon: one restrained planting along the lower edge, nothing above it */
-[data-fg="foot"] .fg-bush   { left:-6%;  bottom:-110px; width:clamp(230px,28vw,480px); }
-[data-fg="foot"] .fg-grass  { right:-5%; bottom:-98px;  width:clamp(255px,30vw,530px); }
-[data-fg="foot"] .fg-stones { left:36%;  bottom:-104px; width:clamp(190px,22vw,370px); }
-
-@media (max-width:1080px){
-  /* the columns have collapsed and the copy has taken the width back, so the
-     framing layers step down rather than crowd it */
-  [data-fg="gate"] .fg-wall      { width:clamp(390px,42vw,600px); }
-  [data-fg="pathways"] .fg-sakura{ width:clamp(400px,46vw,660px); }
-  [data-fg="pathways"] .fg-leaves{ width:clamp(310px,35vw,500px); }
-  [data-fg="lessons"] .fg-wall   { width:clamp(360px,45vw,640px); }
-  [data-fg="eternity"] .fg-sakura{ width:clamp(260px,30vw,430px); }
-}
-@media (max-width:820px){
-  /* one or two anchors per section: the stacked cards, the atlas plates and
-     the call to action own the whole width here, so every duplicated piece
-     of ornament goes and what stays is smaller */
-  [data-fg="gate"] .fg-pine, [data-fg="pathways"] .fg-sakura,
-  [data-fg="pathways"] .fg-leaves, [data-fg="lessons"] .fg-wall,
-  [data-fg="eternity"] .fg-sakura, [data-fg="foot"] .fg-stones{ display:none; }
-  [data-fg="gate"] .fg-wall     { left:-14%; bottom:-22px; width:min(82vw,440px); }
-  [data-fg="gate"] .fg-grass    { left:auto; right:-10%; bottom:-76px; width:min(94vw,530px); }
-  [data-fg="pathways"] .fg-lantern{ left:-4%;   bottom:-58px; width:clamp(80px,20vw,128px); }
-  [data-fg="pathways"] .fg-bush   { right:-10%; bottom:-38px; width:min(72vw,400px); }
-  [data-fg="lessons"] .fg-stones  { left:-8%; bottom:-34px; width:min(66vw,360px); }
-  [data-fg="lessons"] .fg-grass   { left:auto; right:-8%; bottom:-44px; width:min(70vw,380px); }
-  [data-fg="eternity"] .fg-ruins  { left:-8%;   bottom:-25px; width:min(54vw,300px); }
-  [data-fg="eternity"] .fg-grass  { right:-12%; bottom:-34px; width:min(80vw,440px); }
-  [data-fg="foot"] .fg-bush  { left:-12%;  bottom:-26px; width:min(68vw,340px); }
-  [data-fg="foot"] .fg-grass { right:-12%; bottom:-30px; width:min(74vw,380px); }
-}
-@media (prefers-reduced-motion:reduce){
-  .fg-el--sway > img{ animation:none; }
-  .fg.fg-retiring .fg-el{ transition:none !important; filter:none !important; }
-}
 
 @media (max-width:1080px){
   body[data-layout-hero="b"] .chapters{ gap:16px 20px; }
@@ -1042,7 +871,7 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 /* the same soft wash the hero copy has, so the text reads over the panelling */
 #pathways > .k2-copy::before{ content:''; position:absolute; z-index:-1; pointer-events:none;
   left:-12vw; right:-14vw; top:-14vh; bottom:-14vh;
-  background:radial-gradient(closest-side, rgba(240,234,222,.92) 0%, rgba(240,234,222,.8) 55%, rgba(240,234,222,0) 100%); }
+  background:radial-gradient(closest-side, rgba(196,196,196,.92) 0%, rgba(188,188,188,.78) 55%, rgba(176,176,176,0) 100%); }
 @media (max-width:820px){
   #pathways > .k2-copy{ left:var(--pad); right:var(--pad); width:auto; top:calc(var(--nav-h) + 16px); }
   #pathways > .k2-copy::before{ left:-8vw; right:-8vw; top:-6vh; bottom:-6vh; }
@@ -1090,7 +919,7 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 @media (max-width:560px){ .tk-cards .gcard h3{ font-size:16px; } }
 /* ---- the inquiry form and the FAQ, as on the PFX home page. The form's own
    look comes from talk-modal.css; these give it the page's colour tokens and
-   bring the FAQ's rules across, scoped so they can't reach the Kage chapters. */
+   bring the FAQ's rules across, scoped so they can't reach the other chapters. */
 :root{ --red:#C00022; --red-dark:#A80F22; --bg:#0D0E10; --panel:rgba(217,217,217,0.2); }
 #inquiry, #faq{ position:relative; z-index:10; font-family:'Inter',system-ui,-apple-system,sans-serif; color:#fff; }
 #inquiry .tm-card{ box-shadow:0 40px 120px -40px rgba(0,0,0,.9); }
@@ -1107,25 +936,102 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 #faq .feature-head{ max-width:407px; }
 #faq .explore-link{ display:inline-flex; align-items:center; gap:8px; margin-top:20px; color:#fff; font-weight:700; font-size:15px; }
 #faq .faq-grid{ display:grid; grid-template-columns:407px 1fr; gap:24px; align-items:start; }
-#faq .faq-list{ display:grid; gap:16px; }
-#faq .faq-item{ position:relative;
-  background:linear-gradient(135deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.03) 42%, rgba(255,255,255,0) 62%), var(--panel);
-  border:1px solid rgba(255,255,255,.1); border-radius:18px; overflow:hidden;
-  backdrop-filter:blur(20px) saturate(160%); -webkit-backdrop-filter:blur(20px) saturate(160%);
-  box-shadow:0 16px 40px rgba(0,0,0,.35), inset 1px 1px 0 rgba(255,255,255,.2), inset -1px -1px 0 rgba(0,0,0,.25); }
-#faq .faq-q{ width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px;
-  background:none; border:none; cursor:pointer; text-align:left;
-  padding:20px 24px; font-family:inherit; font-size:16px; font-weight:500; color:#fff; }
-#faq .faq-q .chev{ flex-shrink:0; transition:transform .2s ease; color:rgba(255,255,255,.6); }
+/* the questions wear chapter I's cards ("Your Brand. Your Business"): square,
+   near-black, set in one hairline grid, numbered, with the red wash and the
+   vermilion rule coming in on hover and staying on the open one */
+#faq .faq-list{ display:grid; gap:1px; background:var(--line-soft); border:1px solid var(--line-soft); counter-reset:faq; }
+#faq .faq-item{ position:relative; background:rgba(5,7,10,.84); overflow:hidden; counter-increment:faq; }
+#faq .faq-item::before{ content:''; position:absolute; inset:0; pointer-events:none; opacity:0;
+  background:linear-gradient(145deg,rgba(224,35,28,.13),transparent 58%); transition:opacity .55s var(--ease); }
+#faq .faq-item::after{ content:''; position:absolute; left:0; bottom:0; height:1px; width:100%; background:var(--vermilion);
+  transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out); }
+#faq .faq-item:hover::before, #faq .faq-item.open::before{ opacity:1; }
+#faq .faq-item:hover::after, #faq .faq-item.open::after{ transform:scaleX(1); }
+#faq .faq-q{ position:relative; width:100%; display:flex; align-items:center; gap:18px;
+  background:none; border:none; border-radius:0; cursor:pointer; text-align:left;
+  padding:22px 24px; font-family:inherit; font-size:clamp(16px,1.35vw,20px); font-weight:400; letter-spacing:-.005em;
+  color:var(--bone); transition:padding .5s var(--ease-out); }
+#faq .faq-item:hover .faq-q{ padding-left:30px; }
+#faq .faq-q::before{ content:counter(faq, decimal-leading-zero); flex:0 0 auto; min-width:22px;
+  font-size:11px; letter-spacing:.16em; color:var(--muted); font-variant-numeric:tabular-nums; transition:color .4s; }
+#faq .faq-item:hover .faq-q::before, #faq .faq-item.open .faq-q::before{ color:var(--vermilion); }
+#faq .faq-q .chev{ flex-shrink:0; margin-left:auto; transition:transform .2s ease, color .4s; color:var(--muted); }
+#faq .faq-item:hover .faq-q .chev{ color:var(--bone); }
 #faq .faq-item.open .faq-q .chev{ transform:rotate(180deg); }
-#faq .faq-a{ max-height:0; overflow:hidden; transition:max-height .25s ease; }
-#faq .faq-a p{ margin:0; padding:0 24px 20px; font-size:14.5px; line-height:1.7; color:rgba(255,255,255,.65); max-width:640px; }
+#faq .faq-a{ position:relative; max-height:0; overflow:hidden; transition:max-height .25s ease; }
+#faq .faq-a p{ margin:0; padding:0 24px 22px 64px; font-size:13px; line-height:1.6; color:#909b95; max-width:640px;
+  text-shadow:0 1px 16px rgba(3,6,8,.92); }
+#faq .faq-a a{ color:var(--bone) !important; }
 @media (max-width:900px){
   #faq{ margin:64px auto; }
   #faq .wrap80{ padding:0 24px; }
   #faq .feature-head{ max-width:100%; }
   #faq .faq-grid{ grid-template-columns:1fr; }
   #faq h2{ font-size:32px; }
+}
+/* ---- "As Seen On", the PFX home page's rules verbatim; it takes the footer's
+   lead row (spanning the grid, ruled off from the index below) */
+.foot .seenon{
+  grid-column:1 / -1; padding:36px 0 34px; margin-bottom:8px; border-bottom:1px solid var(--line-soft);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+}
+.seenon-eyebrow{
+  text-align:center; margin-bottom:12px;
+  font-size:14px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.6);
+}
+.seenon-card{
+  max-width:1280px; margin:0 auto;
+  display:flex; align-items:center; gap:40px;
+  border:1px solid rgba(255,255,255,0.14); border-radius:200px;
+  padding:21px 56px; min-height:160px; overflow:hidden;
+}
+.seenon-mark{flex-shrink:0; width:83px; height:auto; display:block;}
+/* Logos scroll continuously: the track holds two identical sets and slides by
+   exactly one set's width (-50%), so the loop is seamless. */
+.seenon-logos{
+  flex:1; min-width:0; overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+          mask-image:linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.seenon-track{display:flex; align-items:center; width:max-content; animation:seenon-scroll 40s linear infinite;}
+.seenon-logos:hover .seenon-track{animation-play-state:paused;}
+@keyframes seenon-scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.seenon-set{display:flex; align-items:center; flex-shrink:0;}
+.seenon-press-logo{
+  flex-shrink:0; display:flex; align-items:center; height:48px; padding-right:64px;
+  opacity:0.85; transition:opacity .15s ease;
+}
+.seenon-press-logo:hover{opacity:1;}
+.seenon-press-logo img{height:30px; width:auto; display:block; max-width:none;}
+.seenon-press-logo img.logo-sm{height:18px;}
+.seenon-press-logo img.logo-lg{height:36px;}
+.seenon-press-logo img.logo-xl{height:46px;}
+@media (prefers-reduced-motion: reduce){ .seenon-track{animation-duration:120s; animation-iteration-count:infinite !important;} }
+@media (max-width:900px){
+  .seenon-card{flex-direction:column; border-radius:32px; padding:32px 24px; text-align:center; min-height:0; gap:20px;}
+  .seenon-logos{width:100%;}
+  .seenon-press-logo{padding-right:40px;}
+}
+/* ---- the PFX site's footer, its rules as written there; the "As Seen On"
+   strip's rule above it stands in for the original's top border */
+.pfx-footer{ position:relative; z-index:2; padding:48px 0 22px; font-family:'Inter',system-ui,-apple-system,sans-serif; color:#fff; }
+.pfx-footer .footer-inner{ max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px; }
+.pfx-footer .footer-left .logo{ margin-bottom:16px; display:block; }
+.pfx-footer .logo img{ height:32px; width:auto; display:block; }
+.pfx-footer .footer-socials{ display:flex; gap:12px; }
+.pfx-footer .footer-socials a{ width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
+  display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75); transition:color .3s, border-color .3s; }
+.pfx-footer .footer-socials a:hover{ color:#fff; border-color:rgba(255,255,255,0.5); }
+.pfx-footer .footer-right{ text-align:right; }
+.pfx-footer .footer-links{ display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px; }
+.pfx-footer .footer-links a{ font-size:14px; color:rgba(255,255,255,0.75); transition:color .3s; }
+.pfx-footer .footer-links a:hover{ color:#fff; }
+.pfx-footer .footer-legal{ margin:0 0 0 auto; font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; }
+@media (max-width:900px){
+  .pfx-footer .footer-inner{ flex-direction:column; }
+  .pfx-footer .footer-right{ text-align:left; }
+  .pfx-footer .footer-links{ justify-content:flex-start; }
+  .pfx-footer .footer-legal{ margin-left:0; }
 }
 /* the hero headline set like the chapter titles ("Complete Control of Your Brand"): Inter 600, the same tracking and leading */
 .hero h1.h-hero{ font-weight:600; letter-spacing:-.02em; line-height:1.08; }
@@ -1141,29 +1047,46 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 .nav:not(.stuck):not(.menu-open) .nav-search{ border-color:rgba(238,243,247,.28); }
 .nav:not(.stuck):not(.menu-open) .nav-search:hover{ background:rgba(255,255,255,.1); }
 body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
-#pathways > .k2-copy::before{ display:none; }
+/* (the indoor copy's ground is set further down: a left gradient) */
 #lessons > .k2-copy{ position:fixed; z-index:20; left:6.5vw; top:calc(50% + var(--nav-h) * .3); width:min(600px,40vw);
   opacity:0; visibility:hidden; pointer-events:none; transform:translate3d(0,-50%,0); will-change:opacity,transform; }
 #lessons > .k2-copy.on{ visibility:visible; pointer-events:auto; }
-/* chapter III stands in the original Kage night, so its copy takes the
-   original's voice: bone-white uppercase display type, sage-grey reading
-   text, the vermilion accent, and the soft dark halo that holds it off the scene */
-#lessons > .k2-copy .k2-title{ color:var(--bone); text-transform:uppercase; font-weight:400;
-  line-height:1.055; letter-spacing:-.012em; text-shadow:0 2px 34px rgba(3,6,8,.72); }
+/* chapter III stands in the night terrace, so its copy is set light: bone-white
+   type, sage-grey reading text, the red accent, and a soft dark halo */
+/* the headline keeps the indoor kiosk's type (.k2-title: bold, sentence case,
+   tight tracking) and only changes colour for the night */
+#lessons > .k2-copy .k2-title{ color:var(--bone); text-shadow:0 2px 34px rgba(3,6,8,.72); }
 #lessons > .k2-copy .k2-sub{ color:#b4bfb7; font-weight:300; text-shadow:0 1px 20px rgba(3,6,8,.88); }
-#lessons > .k2-copy .hero-badge{ color:var(--bone-dim); border-color:var(--line); background:rgba(5,7,10,.55);
-  font-weight:500; letter-spacing:.18em; text-transform:uppercase; font-size:10px; }
+#lessons > .k2-copy .hero-badge{ color:var(--bone); border-color:var(--line); background:rgba(5,7,10,.55); }
 #lessons > .k2-copy .hero-badge svg{ color:var(--vermilion); }
 #lessons > .k2-copy .btn-talk{ background:var(--vermilion); }
 #lessons > .k2-copy .btn-explore{ color:var(--bone); background:rgba(5,7,10,.55); border:1px solid var(--line); }
+/* the same left gradient the indoor copy has, so the ATM copy reads over the wall */
+#lessons > .k2-copy::before{ content:''; display:block; position:absolute; z-index:-1; pointer-events:none;
+  left:-6.5vw; width:min(64vw,1100px); top:-70vh; bottom:-70vh;
+  background:linear-gradient(90deg, rgba(12,12,12,.78) 0%, rgba(12,12,12,.62) 38%, rgba(12,12,12,.28) 66%, rgba(12,12,12,0) 100%); }
 @media (max-width:820px){
   #lessons > .k2-copy{ left:var(--pad); right:var(--pad); width:auto; top:calc(var(--nav-h) + 16px);
     background:rgba(5,7,10,.72); padding:18px; border-radius:16px; }
   #lessons > .k2-copy .btn-talk, #lessons > .k2-copy .btn-explore{ white-space:nowrap; padding:13px 18px; }
+  #lessons > .k2-copy::before{ display:none; }   /* on a phone the copy has its own dark panel */
 }
-#pathways > .k2-copy .k2-title{ color:#141618; }
-#pathways > .k2-copy .k2-sub{ color:#3c4146; }
-#pathways > .k2-copy .hero-badge{ color:#141618; border-color:rgba(20,22,24,.25); background:rgba(255,255,255,.35); }
+/* the indoor copy is white on a neutral left gradient that darkens the cafeteria
+   behind it: it fades with the copy (it is the copy's own ::before) and stays
+   colourless, so the kiosk is still the only colour in the frame */
+#pathways > .k2-copy::before{ content:''; display:block; position:absolute; z-index:-1; pointer-events:none;
+  left:-6.5vw; width:min(64vw,1100px); top:-70vh; bottom:-70vh; right:auto;
+  background:linear-gradient(90deg, rgba(12,12,12,.78) 0%, rgba(12,12,12,.62) 38%, rgba(12,12,12,.28) 66%, rgba(12,12,12,0) 100%); }
+#pathways > .k2-copy .k2-title{ color:#fff; text-shadow:0 2px 30px rgba(0,0,0,.35); }
+#pathways > .k2-copy .k2-sub{ color:rgba(255,255,255,.86); }
+#pathways > .k2-copy .hero-badge{ color:#fff; border-color:rgba(255,255,255,.3); background:rgba(255,255,255,.08); }
+#pathways > .k2-copy .btn-explore{ color:#fff; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); }
+#pathways > .k2-copy .btn-explore:hover{ background:rgba(255,255,255,.18); }
+@media (max-width:820px){
+  /* on a phone the copy sits at the top: the ground runs down from there instead */
+  #pathways > .k2-copy::before{ left:calc(var(--pad) * -1); right:calc(var(--pad) * -1); width:auto; top:-30vh; bottom:-24vh;
+    background:linear-gradient(180deg, rgba(12,12,12,.8) 0%, rgba(12,12,12,.66) 70%, rgba(12,12,12,0) 100%); }
+}
 @media (max-width:820px){
   .hero::before{ background:linear-gradient(rgba(3,3,4,.82) 0%, rgba(3,3,4,.66) 62%, rgba(3,3,4,0) 100%) !important; }
 }
@@ -1182,24 +1105,21 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <div id="pre">
   <div class="pre-in">
     <div class="pre-mark">
-      <img src="secret-pathways-assets/pfx-light.png" alt="" aria-hidden="true">
+      <img src="assets/pfx-light.png" alt="" aria-hidden="true">
     </div>
     <div class="pre-bar"><i id="pre-fill"></i></div>
-    <div class="pre-meta">
-      <span>Raising the mountain temple</span><b><span id="pre-pct">0</span>%</b>
-    </div>
   </div>
 </div>
 
 <!-- ============================================================ nav -->
 <header class="nav" id="nav">
   <a class="brand" href="#top" data-cursor>
-    <img class="brand-logo brand-logo--dark" src="secret-pathways-assets/pfx-dark.png" alt="PFX" width="474" height="222">
-    <img class="brand-logo brand-logo--light" src="secret-pathways-assets/pfx-light.png" alt="" aria-hidden="true" width="474" height="222">
+    <img class="brand-logo brand-logo--dark" src="assets/pfx-dark.png" alt="PFX" width="474" height="222">
+    <img class="brand-logo brand-logo--light" src="assets/pfx-light.png" alt="" aria-hidden="true" width="474" height="222">
   </a>
   <nav class="nav-links" id="navlinks">
     <a class="nav-link" href="kiosk-outdoor.html" data-cursor><span>Explore Kiosks</span><span class="alt" aria-hidden="true">Explore Kiosks</span></a>
-    <a class="nav-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#case-study" data-cursor><span>Case Study</span><span class="alt" aria-hidden="true">Case Study</span></a>
+    <a class="nav-link" href="case-study.html" data-cursor><span>Case Study</span><span class="alt" aria-hidden="true">Case Study</span></a>
     <a class="nav-link" href="roi_calculator.html" data-cursor><span>ROI Calculator</span><span class="alt" aria-hidden="true">ROI Calculator</span></a>
     <a class="nav-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#faq" data-cursor><span>FAQ</span><span class="alt" aria-hidden="true">FAQ</span></a>
     <a class="nav-link" href="blog.html" data-cursor><span>Blog</span><span class="alt" aria-hidden="true">Blog</span></a>
@@ -1394,32 +1314,64 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <!-- ============================================================ footer -->
 <footer class="foot" data-cam="4">
   <div class="foot-grid">
-    <div class="foot-brand">
-      <img class="foot-logo" src="secret-pathways-assets/pfx-light.png" alt="PFX" width="474" height="222">
-      <p>A five-chapter night walk through a Kyoto mountain temple. Three illustrated garden field notes
-        sit inside a live Three.js sanctuary.</p>
+    <!-- "As Seen On", exactly as on the PFX home page (markup, logos and loop script) -->
+    <div class="seenon" id="case-study">
+      <h2 class="seenon-eyebrow">As Seen On</h2>
+      <div class="seenon-card">
+        <img class="seenon-mark" src="Images/pizzaforno-mark.png?v=2" alt="PizzaForno">
+
+        <div class="seenon-logos">
+          <div class="seenon-track">
+            <div class="seenon-set">
+              <a class="seenon-press-logo" href="https://www.thrillist.com/news/nation/pizzaforno-is-rolling-out-pizza-making-kiosks" target="_blank" rel="noopener"><img src="Images/press/thrillist.png" alt="Thrillist"></a>
+              <a class="seenon-press-logo" href="https://www.qsrmagazine.com/news/pizzaforno-sees-growth-spurt-in-first-half-of-2024/" target="_blank" rel="noopener"><img src="Images/press/qsr.svg" alt="QSR"></a>
+              <a class="seenon-press-logo" href="https://curiocity.com/pizzaforno-calgary/" target="_blank" rel="noopener"><img src="Images/press/curiocity.svg" alt="Curiocity" class="logo-sm"></a>
+              <a class="seenon-press-logo" href="https://www.ctvnews.ca/kitchener/article/pizza-vending-machine-at-university-of-guelph-goes-viral-thanks-to-pizza-cam/" target="_blank" rel="noopener"><img src="Images/press/ctv.png" alt="CTV News"></a>
+              <a class="seenon-press-logo" href="https://www.vendingtimes.com/news/pizza-vending-at-ontario-university-goes-viral/" target="_blank" rel="noopener"><img src="Images/press/vendingtimes.png" alt="Vending Times"></a>
+              <a class="seenon-press-logo" href="https://www.businesswire.com/news/home/20250731251164/en/PizzaForno-Heats-Up-West-Coast-Expansion-with-247-Pizza-Vending-Machines-at-Southern-California-College-Campuses" target="_blank" rel="noopener"><img src="Images/press/businesswire.png" alt="Business Wire" class="logo-lg"></a>
+              <a class="seenon-press-logo" href="https://retail-insider.com/retail-insider/2020/05/automated-pizza-oven-concept-pizzaforno-plans-to-open-thousands-of-locations/" target="_blank" rel="noopener"><img src="Images/press/retailinsider.png" alt="Retail Insider" class="logo-xl"></a>
+              <a class="seenon-press-logo" href="https://fox40.com/news/local-news/sacramento-county/pizzaforno-vending-machine-california/" target="_blank" rel="noopener"><img src="Images/press/fox40.png" alt="Fox40"></a>
+            </div>
+            <!-- Second copy of the set so the scroll loops seamlessly; filled in by the script below. -->
+            <div class="seenon-set" aria-hidden="true"></div>
+          </div>
+        </div>
+        <script>
+          (function(){
+            var sets = document.querySelectorAll('.seenon-set');
+            sets[1].innerHTML = sets[0].innerHTML;
+            sets[1].querySelectorAll('a').forEach(function(a){ a.tabIndex = -1; });
+          })();
+        </script>
+      </div>
     </div>
-    <div><h4>Chapters</h4><ul>
-      <li><a href="#gate" data-cursor>The Sanmon</a></li>
-      <li><a href="#pathways" data-cursor>Still Gardens</a></li>
-      <li><a href="#lessons" data-cursor>Sacred Craft</a></li>
-    </ul></div>
-    <div><h4>Practice</h4><ul>
-      <li><a href="#lessons" data-cursor>Borrowed scenery</a></li>
-      <li><a href="#lessons" data-cursor>Lantern light</a></li>
-      <li><a href="#lessons" data-cursor>Charred cypress</a></li>
-      <li><a href="#lessons" data-cursor>Raked gravel</a></li>
-    </ul></div>
-    <div><h4>Elsewhere</h4><ul>
-      <li><a href="#top" data-cursor>Journal</a></li>
-      <li><a href="#top" data-cursor>Field notes</a></li>
-      <li><a href="#top" data-cursor>Colophon</a></li>
-    </ul></div>
   </div>
-  <div class="foot-base">
-    <span>© 2026 PFX</span>
-    <span></span>
-    <span>WebGL · Onest · Kyoto</span>
+  <!-- the PFX site's footer: logo and socials on the left, links and legal on the right.
+       Its "#" placeholder links point at #top here, which is where "#" lands anyway
+       (a bare "#" trips the page's in-page link handler). -->
+  <div class="pfx-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="logo"><img src="Images/pfx-logo-white.png" alt="PFX"></div>
+        <div class="footer-socials">
+          <a href="#top" aria-label="Instagram" data-cursor><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></a>
+          <a href="#top" aria-label="Facebook" data-cursor><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"></path></svg></a>
+          <a href="#top" aria-label="LinkedIn" data-cursor><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle><path d="M10 9v12"></path><path d="M10 13a4 4 0 0 1 8 0v8"></path></svg></a>
+          <a href="#top" aria-label="YouTube" data-cursor><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"></rect><polygon points="10 9 16 12 10 15" fill="currentColor" stroke="none"></polygon></svg></a>
+        </div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-links">
+          <a href="privacy-policy.html" data-cursor>Privacy Policy</a>
+          <a href="#top" data-cursor>Terms</a>
+          <a href="#top" data-cursor>Application Form</a>
+          <a href="#faq" data-cursor>FAQ</a>
+          <a href="#top" data-cursor>Documentation</a>
+          <a href="contact.html" data-cursor>Support</a>
+        </div>
+        <p class="footer-legal">All trademarks are owned by PFX Canada Inc and used under licence. &copy;2026</p>
+      </div>
+    </div>
   </div>
 </footer>
 
@@ -1432,15 +1384,14 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 
 <div class="rail" id="rail"></div>
 
-<script src="secret-pathways-assets/three.min.js"></script>
-<script src="secret-pathways-assets/kiosk-photo.js"></script>
-<script src="secret-pathways-assets/kiosk-indoor-photo.js"></script>
-<script src="secret-pathways-assets/kiosk-atm-photo.js"></script>
+<script src="assets/three.min.js"></script>
+<script src="assets/kiosk-photo.js"></script>
+<script src="assets/kiosk-indoor-photo.js"></script>
+<script src="assets/kiosk-atm-photo.js"></script>
 <script>
 /* =====================================================================
-   KAGE — a live Kyoto mountain temple, after dark.
-   Everything on this page is generated at runtime: no photographs,
-   no video, no external assets beyond three.js and two subset fonts.
+   PFX — the campus walk, rendered live in WebGL.
+   The scene is generated at runtime; the kiosks are the only photographs.
    ===================================================================== */
 (function () {
 'use strict';
@@ -1636,7 +1587,7 @@ function texFloor() {
   return { map: c, normal: normalFromHeight(h, 1.5), rough: r };
 }
 
-/* --------------------------------------------------- temple timber · cedar
+/* --------------------------------------------------------- timber · cedar
    Boards, not a noise field. Three things make sawn wood read as wood and
    none of them is fbm:
 
@@ -2736,7 +2687,7 @@ function sweepPoly(points, profile) {
   g.setIndex(idx);
   return g;
 }
-/* A temple roof. The height is a concave function of the Chebyshev distance
+/* A pitched, flared roof. The height is a concave function of the Chebyshev distance
    from the ridge out to the eave, and the last fifth of that run flares back
    upward — that lift at the corners is the whole silhouette. Emitted solid:
    a top shell, an underside shell, and a fascia stitching the two rims. */
@@ -2744,7 +2695,7 @@ function roofGeo(A, B, R, Hr, thick, flare) {
   const NX = 52, NZ = 34, FL = flare === undefined ? .30 : flare, e = 1e-3;
   /* The lift has to be weighted toward the corners. Applied evenly along the
      eave it produces a raised rim the whole way round and the roof reads as a
-     saucer; concentrated where the two runs meet, it reads as a temple. */
+     saucer; concentrated where the two runs meet, it reads as a proper roof. */
   const hAt = (x, z) => {
     const cx = Math.min(1, Math.abs(x) / A), cz = Math.min(1, Math.abs(z) / B);
     const tx = Math.max(0, (Math.abs(x) - R) / Math.max(A - R, 1e-4));
@@ -2841,7 +2792,7 @@ const STEPS     = 40;
 const STAIR_Z0  = -11.0;          /* the bottom riser                        */
 const STAIR_RUN = .55;            /* → the flight tops out at z = −33        */
 const STAIR_W   = 8.4;
-const TEMPLE_Z  = -44;            /* the hall's centre line                   */
+const HALL_Z    = -44;            /* the hall's centre line                   */
 
 function buildShell() {
   const wallT = texWall();
@@ -3005,6 +2956,32 @@ function texArchWindow() {
   x.restore();
   return c;
 }
+/* the cafeteria, kept strictly monochrome so the kiosk is the only colour in
+   the room: pale terrazzo underfoot, a fluted back wall, black lettering */
+function texTerrazzo() {
+  const S = 512, c = cvs(S, S), x = c.getContext('2d'), rnd = mulberry32(7301);
+  x.fillStyle = '#d6d6d6'; x.fillRect(0, 0, S, S);
+  x.globalCompositeOperation = 'overlay'; x.globalAlpha = .22;
+  x.drawImage(fbmCanvas(S, S, 7302, 5, 4, 1), 0, 0);
+  x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+  const chips = ['#f4f4f4', '#bcbcbc', '#9a9a9a', '#6e6e6e', '#3c3c3c', '#e6e6e6'];
+  for (let i = 0; i < 2600; i++) {
+    const r = .6 + rnd() * rnd() * 3.4, px = rnd() * S, py = rnd() * S;
+    x.fillStyle = chips[(rnd() * chips.length) | 0];
+    x.beginPath(); x.ellipse(px, py, r, r * (.5 + rnd() * .6), rnd() * TAU, 0, TAU); x.fill();
+  }
+  x.fillStyle = 'rgba(0,0,0,.10)'; x.fillRect(0, 0, S, 2); x.fillRect(0, 0, 2, S);   /* a hairline joint per slab */
+  return c;
+}
+function texFluted() {
+  const W = 512, H = 64, c = cvs(W, H), x = c.getContext('2d'), n = 16, w = W / n;
+  for (let i = 0; i < n; i++) {
+    const g = x.createLinearGradient(i * w, 0, (i + 1) * w, 0);
+    g.addColorStop(0, '#9e9e9e'); g.addColorStop(.2, '#f4f4f4'); g.addColorStop(.6, '#dedede'); g.addColorStop(1, '#8c8c8c');
+    x.fillStyle = g; x.fillRect(i * w, 0, w, H);
+  }
+  return c;
+}
 const HALL_DOOR = { z: -44.0, w: 1.8, h: 2.8 };
 function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   const T = .3;                                       /* wall thickness inside the shell */
@@ -3021,17 +2998,24 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   const tileC = cvs(256, 256), tcx = tileC.getContext('2d');
   tcx.fillStyle = '#ffffff'; tcx.fillRect(0, 0, 256, 256);
   tcx.fillStyle = '#c4c4c4'; tcx.fillRect(0, 0, 256, 2); tcx.fillRect(0, 0, 2, 256);   /* grout, one tile per repeat */
-  const floor = new THREE.MeshBasicMaterial({ map: tx(tileC, { wrap: THREE.RepeatWrapping, repeat: [HW / 1.8, HD / 1.8], aniso: 16 }),
-    color: ungrade('#c2cbd1'), fog: false, toneMapped: false });
+  /* pale terrazzo in 1.2 m slabs, pure greys */
+  const floor = new THREE.MeshBasicMaterial({ map: tx(texTerrazzo(), { wrap: THREE.RepeatWrapping, repeat: [HW / 1.2, HD / 1.2], aniso: 16 }),
+    color: ungrade('#a2a2a2'), fog: false, toneMapped: false });
   const wallTex = tx(texHallWall(), { wrap: THREE.RepeatWrapping, repeat: [4, 2] });
-  const wall = new THREE.MeshBasicMaterial({ color: ungrade('#eff4f7'), fog: false, toneMapped: false });
+  const wall = new THREE.MeshBasicMaterial({ color: ungrade('#8e8e8e'), fog: false, toneMapped: false });   /* mid neutral grey */
   const ceil = new THREE.MeshStandardMaterial({ map: tx(texCoffers(), { wrap: THREE.RepeatWrapping, repeat: [HW / 3, HD / 3] }), roughness: .9, color: 0x55575a });
-  const ceilFlat = new THREE.MeshBasicMaterial({ color: ungrade('#eff4f7'), fog: false, toneMapped: false });
+  const ceilFlat = new THREE.MeshBasicMaterial({ color: ungrade('#9a9a9a'), fog: false, toneMapped: false });
   const goldM = new THREE.MeshStandardMaterial({ color: 0xc9a24a, roughness: .35, metalness: .8 });
 
   put(new THREE.PlaneGeometry(HW, HD), floor, 0, y0 + .002, (zf + zb) / 2, -Math.PI / 2);
   put(new THREE.PlaneGeometry(HW, HD), ceilFlat, 0, y1, (zf + zb) / 2, Math.PI / 2);
   put(new THREE.PlaneGeometry(HW, HH), wall, 0, (y0 + y1) / 2, zb);                         /* back */
+  /* the back wall's feature: a fluted dado, tone on tone, no trim */
+  const fluteH = 2.7;
+  put(new THREE.PlaneGeometry(HW, fluteH), new THREE.MeshBasicMaterial({
+    map: tx(texFluted(), { wrap: THREE.RepeatWrapping, repeat: [HW / 2.2, 1], aniso: 16 }),
+    color: ungrade('#a4a4a4'), fog: false, toneMapped: false }), 0, y0 + fluteH / 2, zb + .01);
+
   put(new THREE.PlaneGeometry(HD, HH), wall, x0, (y0 + y1) / 2, (zf + zb) / 2, 0, Math.PI / 2);
   /* the right-hand wall, with a doorway out to the side terrace (HALL_DOOR) */
   { const s = new THREE.Shape(), dz = HALL_DOOR.z - (zf + zb) / 2;
@@ -3041,7 +3025,7 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
     hole.lineTo(dz + HALL_DOOR.w / 2, -HH / 2 + HALL_DOOR.h); hole.lineTo(dz + HALL_DOOR.w / 2, -HH / 2); hole.closePath();
     s.holes.push(hole);
     put(new THREE.ShapeGeometry(s), wall, x1, (y0 + y1) / 2, (zf + zb) / 2, 0, -Math.PI / 2);
-    const fr = new THREE.MeshBasicMaterial({ color: ungrade('#c2cbd1'), fog: false, toneMapped: false });
+    const fr = new THREE.MeshBasicMaterial({ color: ungrade('#7c7c7c'), fog: false, toneMapped: false });   /* door frame, a shade under the wall */
     put(new THREE.BoxGeometry(.06, .08, HALL_DOOR.w + .16), fr, x1 - .03, y0 + HALL_DOOR.h + .04, HALL_DOOR.z);
     [-1, 1].forEach(sd => put(new THREE.BoxGeometry(.06, HALL_DOOR.h, .08), fr, x1 - .03, y0 + HALL_DOOR.h / 2, HALL_DOOR.z + sd * (HALL_DOOR.w / 2 + .04)));
   }
@@ -3049,7 +3033,7 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   const fs = new THREE.Shape();
   fs.moveTo(x0, 0); fs.lineTo(-DW, 0); fs.lineTo(-DW, DH - .9); fs.lineTo(DW, DH - .9); fs.lineTo(DW, 0);
   fs.lineTo(x1, 0); fs.lineTo(x1, HH); fs.lineTo(x0, HH); fs.closePath();
-  put(new THREE.ShapeGeometry(fs), new THREE.MeshBasicMaterial({ color: ungrade('#eff4f7'), side: THREE.BackSide, fog: false, toneMapped: false }), 0, y0, zf);
+  put(new THREE.ShapeGeometry(fs), new THREE.MeshBasicMaterial({ color: ungrade('#8e8e8e'), side: THREE.BackSide, fog: false, toneMapped: false }), 0, y0, zf);
 
   /* the hall is kept plain: no wainscot, pilasters or gallery */
   const gy = y0 + 4.4;
@@ -3064,34 +3048,51 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   [-5.5, 0, 5.5].forEach(xx => {
     const cz = (zf + zb) / 2 + .6, cy = y1 - 3.4;
     /* (no chandelier: just its light, unseen) */
-    const L = new THREE.PointLight(0xffe2b8, 3.2, 11, 2); L.position.set(xx, cy - .2, cz); hall.add(L);
+    const L = new THREE.PointLight(0xffffff, 1.3, 11, 2); L.position.set(xx, cy - .2, cz); hall.add(L);   /* soft: the furniture stays grey, not washed white */
   });
-  const fillIn = new THREE.PointLight(0xffe2b8, 1.6, 13, 2); fillIn.position.set(0, gy + 2, zb + 2.5); hall.add(fillIn);
+  const fillIn = new THREE.PointLight(0xffffff, .7, 13, 2); fillIn.position.set(0, gy + 2, zb + 2.5); hall.add(fillIn);
   /* daylight through the door and windows, filling the lower hall */
   [[0, y0 + 3.0, zb + 4.6, 1.2, 11], [0, y0 + 3.2, zf - 1.6, .8, 9], [-6, y0 + 2.6, (zf + zb) / 2, 1.0, 8], [6, y0 + 2.6, (zf + zb) / 2, 1.0, 8]]
-    .forEach(([lx2, ly, lz, li, lr]) => { const L2 = new THREE.PointLight(0xffd9a8, li, lr, 2); L2.position.set(lx2, ly, lz); hall.add(L2); });
+    .forEach(([lx2, ly, lz, li, lr]) => { const L2 = new THREE.PointLight(0xffffff, li * .4, lr, 2); L2.position.set(lx2, ly, lz); hall.add(L2); });
 
   /* ---- a cafeteria: a dark sign with light lettering, and tables with chairs
      either side of the kiosk, mostly out of the opening frame so the pans find them */
-  const sC = cvs(1024, 256), sx = sC.getContext('2d');
-  sx.fillStyle = '#f7f9fa'; sx.fillRect(0, 0, 1024, 256);
-  
-  sx.fillStyle = '#8f9aa2'; sx.textAlign = 'center'; sx.textBaseline = 'middle';
-  sx.font = '600 120px Inter, "Helvetica Neue", Arial, sans-serif';
-  if (sx.letterSpacing !== undefined) sx.letterSpacing = '18px';
-  sx.fillText('CAFETERIA', 512, 132);
-  /* light board, lettering only a shade darker; flat like the walls */
-  const signMat = new THREE.MeshBasicMaterial({ map: tx(sC, { aniso: 16 }), color: ungrade('#ffffff'), fog: false, toneMapped: false });
-  put(new THREE.BoxGeometry(4.2, 1.05, .08), new THREE.MeshBasicMaterial({ color: ungrade('#e4e9ec'), fog: false, toneMapped: false }), 5.0, y0 + 3.9, zb + .05);
-  put(new THREE.PlaneGeometry(4.0, 1.0), signMat, 5.0, y0 + 3.9, zb + .095);
-  const top = new THREE.MeshStandardMaterial({ color: 0xe9e9e6, roughness: .25, metalness: .05 });   /* pale stone tops */
-  const steel = new THREE.MeshStandardMaterial({ color: 0x111214, roughness: .3, metalness: .6 });
-  const seat = new THREE.MeshStandardMaterial({ color: 0x1d1e20, roughness: .6, metalness: .05 });
+  const sC = cvs(2048, 256), sx = sC.getContext('2d');
+  sx.fillStyle = '#ffffff'; sx.textAlign = 'center'; sx.textBaseline = 'middle';   /* tinted by the material */
+  sx.font = '500 132px Inter, "Helvetica Neue", Arial, sans-serif';
+  if (sx.letterSpacing !== undefined) sx.letterSpacing = '42px';
+  sx.fillText('CAFETERIA', 1024 + 21, 128);
+  const signMat = new THREE.MeshBasicMaterial({ map: tx(sC, { aniso: 16 }), transparent: true, color: ungrade('#4a4a4a'), fog: false, toneMapped: false });
+  /* the lettering sits on the white wall above the kiosk, the first thing the walk-in frames */
+  put(new THREE.PlaneGeometry(4.0, .5), signMat, 1.9, y0 + 3.95, zb + .02);
+  /* contact shadows, so the furniture sits on the floor */
+  const shC = cvs(128, 128), shx = shC.getContext('2d'), shg = shx.createRadialGradient(64, 64, 4, 64, 64, 64);
+  shg.addColorStop(0, 'rgba(0,0,0,.55)'); shg.addColorStop(.55, 'rgba(0,0,0,.25)'); shg.addColorStop(1, 'rgba(0,0,0,0)');
+  shx.fillStyle = shg; shx.fillRect(0, 0, 128, 128);
+  WORLD.hallShadowTex = tx(shC);
+  const shadowMat = new THREE.MeshBasicMaterial({ map: WORLD.hallShadowTex, transparent: true, depthWrite: false, opacity: .55 });
+  /* the pendants' light on the floor */
+  const poolMat = new THREE.MeshBasicMaterial({ map: tx(texGlow('rgba(255,255,255,1)', 'rgba(255,255,255,.3)')),
+    transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: .10, fog: false });
+  const shadeM = new THREE.MeshStandardMaterial({ color: 0x4a4a4a, roughness: .45, metalness: .3, side: THREE.DoubleSide });
+  const lensM = new THREE.MeshBasicMaterial({ color: hdr(2.4, 2.4, 2.4), toneMapped: false });
+  const cordM = new THREE.MeshBasicMaterial({ color: ungrade('#6a6a6a'), fog: false, toneMapped: false });
+  const top = new THREE.MeshStandardMaterial({ color: 0x8c8c8c, roughness: .32, metalness: .02 });   /* grey tops */
+  const steel = new THREE.MeshStandardMaterial({ color: 0x4a4a4a, roughness: .4, metalness: .45 });
+  const seat = new THREE.MeshStandardMaterial({ color: 0x4e4e4e, roughness: .55, metalness: .05 });   /* graphite moulded seats */
   const tparts = [], sparts = [], cparts = [];
   const table = (cx, cz, rot) => {
     const L = 1.8, Wt = .8, H = .75, c = Math.cos(rot), s = Math.sin(rot);
     const at = (lx, lz) => [cx + lx * c + lz * s, cz - lx * s + lz * c];
     let p = at(0, 0); tparts.push(new THREE.BoxGeometry(L, .04, Wt).rotateY(rot).translate(p[0], y0 + H, p[1]));
+    const sh = put(new THREE.PlaneGeometry(L + 1.1, Wt + 1.4), shadowMat, p[0], y0 + .006, p[1], -Math.PI / 2);
+    sh.rotation.z = rot; sh.renderOrder = 2;
+    /* a black pendant over each table: cord, shade, a bright lens, and its pool of light */
+    const py = y0 + 2.75;
+    put(new THREE.CylinderGeometry(.006, .006, y1 - py - .3, 4), cordM, p[0], (y1 + py + .3) / 2, p[1]);
+    put(new THREE.CylinderGeometry(.06, .3, .3, 32, 1, true), shadeM, p[0], py + .15, p[1]);
+    put(new THREE.CircleGeometry(.27, 32), lensM, p[0], py + .01, p[1], Math.PI / 2);
+    const pool = put(new THREE.PlaneGeometry(2.6, 2.6), poolMat, p[0], y0 + .008, p[1], -Math.PI / 2); pool.renderOrder = 3;
     [[-L / 2 + .12, -Wt / 2 + .1], [L / 2 - .12, -Wt / 2 + .1], [-L / 2 + .12, Wt / 2 - .1], [L / 2 - .12, Wt / 2 - .1]].forEach(([a, b]) => {
       p = at(a, b); sparts.push(new THREE.CylinderGeometry(.022, .022, H, 8).translate(p[0], y0 + H / 2, p[1])); });
     [-.55, .55].forEach(a => [-1, 1].forEach(sd => {             /* two chairs a side */
@@ -3106,11 +3107,6 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
     table(tx2, tz2, i === 4 ? Math.PI / 2 : 0));
   [[mergeGeos(tparts), top], [mergeGeos(sparts), steel], [mergeGeos(cparts), seat]].forEach(([geo, m]) => put(geo, m, 0, 0, 0));
 
-  const skirt = new THREE.MeshBasicMaterial({ color: ungrade('#16171a'), fog: false, toneMapped: false });
-  const shC = cvs(128, 128), shx = shC.getContext('2d'), shg = shx.createRadialGradient(64, 64, 4, 64, 64, 64);
-  shg.addColorStop(0, 'rgba(0,0,0,.55)'); shg.addColorStop(.55, 'rgba(0,0,0,.25)'); shg.addColorStop(1, 'rgba(0,0,0,0)');
-  shx.fillStyle = shg; shx.fillRect(0, 0, 128, 128);
-  WORLD.hallShadowTex = tx(shC);
   g.add(hall); WORLD.hall = hall;
   WORLD.hallBox = { x0: x0, x1: x1, zb: zb, zf: zf, y0: y0, y1: y1 };
 }
@@ -3218,15 +3214,14 @@ function uvBox(w, h, d, tile) {
 
 function buildCampus() {
   const g = new THREE.Group();
-  const F = PODIUM, Z = TEMPLE_Z;
+  const F = PODIUM, Z = HALL_Z;
 
   const lime  = lib('limestone', () => texStone(211, { base: [214, 207, 192], moss: 0, relief: 1.4 }));
   /* the entrance hall inside keeps the stairs' dark slate */
   const hallStone = WORLD.slate ? WORLD.slate(1, 1) : surface(lime, [1, 1], { color: 0x1f1e1d, normal: .55, metalness: 0 });
-  /* The outside wears the original Kage hall's palette: charred cedar boards
-     for the walls, the rust-brown single timbers for every column, band and
-     trim, the dark blue-grey glazed tile for the roofs and the dome, the
-     temple's gold, and windows lit like its paper screens. uvBox tiles at
+  /* The outside palette: charred cedar boards for the walls, rust-brown single
+     timbers for every column, band and trim, dark blue-grey glazed tile for the
+     roofs and the dome, a muted gold, and windows lit like paper screens. uvBox tiles at
      2.4 m, so the boards are scaled to land near the hall's own ~3.4 m run. */
   const brick = surface(wallWood(), [.72, .78], { color: 0x565150, normal: 1.5 });
   const stone = surface(postWood(), [1.1, 1.0], { color: 0x8a746d, normal: 1.05, metalness: .03 });
@@ -3354,7 +3349,7 @@ function buildCampus() {
   });
   add(new THREE.CylinderGeometry(1.45, 1.5, 1.4, 32), stone, 0, cy + 3.4, cz);
   add(new THREE.SphereGeometry(1.62, 32, 14, 0, TAU, 0, Math.PI / 2), dome, 0, cy + 4.1, cz);
-  WORLD.templeTop = cy + 7.5;
+  WORLD.campusTop = cy + 7.5;
 
   /* ---- wings: two storeys, set back from the main front ----------------- */
   const WW = 9.2, WD = 8.4, WH = 7.4, wz = Z - .8;
@@ -3376,14 +3371,14 @@ function buildCampus() {
   const glazing = new THREE.Mesh(mergeGeos(wins), glass);
   glazing.receiveShadow = true; g.add(glazing);
 
-  scene.add(g); WORLD.temple = WORLD.campus = g;
+  scene.add(g); WORLD.campus = g;
 
   /* the band of mist that separates the hall from the trees behind it — the
      one thing that stops the whole background reading as a single flat cut-out */
   const mist = new THREE.Mesh(new THREE.PlaneGeometry(64, 20),
     new THREE.MeshBasicMaterial({ map: tx(texGlow('rgba(150,178,190,.62)', 'rgba(104,138,154,.20)')),
       transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: .17 }));
-  mist.position.set(0, F - 1.4, TEMPLE_Z + 10); mist.renderOrder = 2; scene.add(mist);
+  mist.position.set(0, F - 1.4, HALL_Z + 10); mist.renderOrder = 2; scene.add(mist);
 }
 
 /* ------------------------------------------------ the outdoor pizza kiosk
@@ -3392,7 +3387,7 @@ function buildCampus() {
    and every surface you can see — the tiled "Always Open" wall, the roof sign,
    the menu, the ordering wall, both valances — is the render itself,
    rectified flat and wrapped back onto the matching face here. The pixels come
-   from secret-pathways-assets/kiosk-photo.js.
+   from assets/kiosk-photo.js.
 
    Those surfaces already carry the render's own lighting, so they are drawn
    unlit and skip the scene's colour grade (the same route the sky takes):
@@ -3731,16 +3726,18 @@ function buildOutdoor() {
   const g = new THREE.Group(), X = OUT.x, Y = OUT.y, D = HALL_DOOR;
   WORLD.haze = WORLD.haze || [];
   const add = (geo, m) => { const o = new THREE.Mesh(geo, m); g.add(o); return o; };
-  /* The terrace is the original Kage night: lit, fogged and graded like the
-     temple court, in the temple's own materials — charred cedar for the wall,
+  /* The terrace is the night set: lit, fogged and graded like the front court,
+     in the campus's own materials — charred cedar for the wall,
      rust-brown timber for every sill, lintel and course, black lacquer for the
      frames, lit paper in the windows and wet slate underfoot. Only the kiosk
-     keeps its own authored look (metal below, and its photographed face). */
+     keeps its own photographed face; its surround and hood are cut from the wall's own charred cedar. */
   const brick = surface(wallWood(), [.8, .8], { color: 0x565150, normal: 1.5 });
   const stoneL = surface(postWood(), [1.1, 1.0], { color: 0x8a746d, normal: 1.05, metalness: .03 });
   const lacquer = new THREE.MeshStandardMaterial({ color: 0x120c0c, roughness: .42, metalness: .14 });
-  const metal = dayMat('#34383c');                        /* the kiosk's charcoal metal */
-  const white = new THREE.MeshBasicMaterial({ color: hdr(.62, .34, .15), fog: true, toneMapped: false });   /* the lamp-lit hall seen through the door */
+  /* the kiosk's surround and hood: the wall's charred cedar in its own tone, as single
+     timbers (no board joints) so the grain runs cleanly down each narrow piece */
+  const metal = surface(postWood(), [.3, 1.2], { color: 0x565150, normal: 1.3, metalness: .03 });
+  const white = new THREE.MeshBasicMaterial({ color: 0x000000, fog: false });   /* the side doorway: pure black (no fog to lift it), so it doesn't pull focus from the kiosk */
   const shTex = tx(texSoftShadow(), { srgb: false });
   const shadow = (w, d, x0, z0, a, rot) => {
     const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d).rotateX(-Math.PI / 2),
@@ -3817,9 +3814,11 @@ function buildOutdoor() {
   const hoodSh = new THREE.Mesh(new THREE.PlaneGeometry(OW + .6, .7).rotateY(Math.PI / 2),
     new THREE.MeshBasicMaterial({ map: shTex, transparent: true, depthWrite: false, opacity: .22, color: 0x000000 }));
   hoodSh.position.set(X + .015, Y + OH + .02, kz); hoodSh.renderOrder = 3; g.add(hoodSh);
-  const rev = dayMat('#1f2225', null, { flat: true, side: THREE.DoubleSide }), RD = .14;
+  const rev = surface(postWood(), [.2, 1], { color: 0x3a3634, normal: 1.0, metalness: .03 }), RD = .14;   /* the reveal: the same timber, in shadow */
+  rev.side = THREE.DoubleSide;
   [-1, 1].forEach(sd => add(new THREE.PlaneGeometry(RD, KH).rotateY(sd > 0 ? Math.PI : 0), rev).position.set(X - RD / 2, Y + KH / 2, kz - sd * KW / 2));
-  add(new THREE.PlaneGeometry(RD, KW).rotateX(Math.PI / 2).rotateY(Math.PI / 2), rev).position.set(X - RD / 2, Y + KH, kz);
+  /* the head of the reveal: RD deep into the wall, KW across it (an extra quarter-turn here once stood it 1.9 m out of the wall) */
+  add(new THREE.PlaneGeometry(RD, KW).rotateX(Math.PI / 2), rev).position.set(X - RD / 2, Y + KH, kz);
   const P = window.KIOSK_ATM_PHOTO;
   const faceMat = new THREE.ShaderMaterial({
     uniforms: { uM: { value: null } },
@@ -3919,7 +3918,8 @@ function buildOutdoor() {
 
   /* European street lamps along the wall and among the tables, and maples in
      place of the model trees (the original's own builder, moved into this set) */
-  [[10.3, -44.3, .95], [10.3, -40.6, .9], [16.6, -51.6, 1.0], [23.4, -42.0, 1.05], [27.6, -51.2, 1.0], [17.6, -34.2, .95]]
+  /* (the lamp that stood between the side door and the kiosk is gone: it split the kiosk view down the middle) */
+  [[10.3, -40.6, .9], [16.6, -51.6, 1.0], [23.4, -42.0, 1.05], [27.6, -51.2, 1.0], [17.6, -34.2, .95]]
     .forEach(([lx2, lz, sc]) => g.add(buildStreetLamp(lx2, lz, sc, Y)));
   [[17.5, -59.5, 1.0, 81], [23.5, -49.5, .9, 82], [28.0, -36.0, 1.1, 83], [12.6, -65.0, .95, 84], [31.0, -57.0, 1.05, 85]]
     .forEach(([mx, mz, sc, seed]) => {
@@ -3931,7 +3931,7 @@ function buildOutdoor() {
   /* snow over the terrace: soft round flakes drifting down through the lamp
      light. It replaces the falling leaves, and the rain and embers with them —
      neither belongs in a snowfall. */
-  const N = LOW ? 1800 : 4600, rnd2 = mulberry32(6612);
+  const N = LOW ? 700 : 1800, rnd2 = mulberry32(6612);   /* a light fall, well under half the earlier count */
   const sp = new Float32Array(N * 3), ss = new Float32Array(N);
   for (let i = 0; i < N; i++) { sp[i * 3] = 9.4 + rnd2() * 32; sp[i * 3 + 1] = rnd2() * 16; sp[i * 3 + 2] = -72 + rnd2() * 50; ss[i] = rnd2(); }
   const sg = new THREE.BufferGeometry();
@@ -4058,77 +4058,6 @@ function placeMoon() {
   const x = MOON.x * (1 - .40 * aspectFix());
   WORLD.moon.position.x = x;
   WORLD.moonHalo.position.x = x;
-}
-
-function buildTorii() {
-  /* the weathering costs the gate a lot of its chroma, so the tint puts it
-     back: red lifted well past green and blue rather than a flat brightening,
-     or the vermilion comes out of the grade as brick */
-  const lac = surface(lib('lacquer', () => texLacquer()), [2, 2],
-    { color: hdr(1.72, 1.02, .94), roughness: .92, metalness: .05, normal: .75 });
-  const gold = new THREE.MeshStandardMaterial({ color: 0x7a5d2a, roughness: .50, metalness: .60 });
-  const g = new THREE.Group();
-  const BASE = .78, H = 8.2, SPAN = 3.55;
-
-  [-1, 1].forEach(s => {
-    const col = new THREE.Mesh(new THREE.CylinderGeometry(.30, .38, H, 26), lac);
-    col.position.set(s * SPAN, BASE + H / 2, 0); col.castShadow = true; g.add(col);
-    const foot = new THREE.Mesh(new THREE.CylinderGeometry(.46, .50, .52, 26), gold);
-    foot.position.set(s * SPAN, BASE + .26, 0); foot.castShadow = true; g.add(foot);
-    const collar = new THREE.Mesh(new THREE.CylinderGeometry(.345, .345, .26, 26), gold);
-    collar.position.set(s * SPAN, BASE + H - 1.42, 0); g.add(collar);
-    /* the ornate bracket where the beams cross the column */
-    const br = new THREE.Mesh(new THREE.BoxGeometry(.86, .30, .86), gold);
-    br.position.set(s * SPAN, BASE + H - .72, 0); g.add(br);
-    const br2 = new THREE.Mesh(new THREE.BoxGeometry(.60, .52, .60), gold);
-    br2.position.set(s * SPAN, BASE + H - .34, 0); g.add(br2);
-    [-1, 1].forEach(d => {
-      const wing = new THREE.Mesh(new THREE.BoxGeometry(.24, .70, .18), gold);
-      wing.position.set(s * SPAN + d * .40, BASE + H - .62, .30); g.add(wing);
-      const wing2 = wing.clone(); wing2.position.z = -.30; g.add(wing2);
-    });
-  });
-
-  /* nuki — the straight beam that pierces the columns */
-  const nuki = new THREE.Mesh(new THREE.BoxGeometry(9.4, .52, .46), lac);
-  nuki.position.set(0, BASE + H - 2.15, 0); nuki.castShadow = true; g.add(nuki);
-
-  /* gakuzuka — the little strut at the centre */
-  const gak = new THREE.Mesh(new THREE.BoxGeometry(.46, 1.22, .40), lac);
-  gak.position.set(0, BASE + H + .10, 0); g.add(gak);
-  const gakG = new THREE.Mesh(new THREE.BoxGeometry(.60, .18, .50), gold);
-  gakG.position.set(0, BASE + H + .68, 0); g.add(gakG);
-
-  /* shimaki + kasagi — the two crowning beams, swept upward at the ends */
-  function beamPath(half, rise, power) {
-    const p = [];
-    for (let i = 0; i <= 26; i++) {
-      const u = i / 26 * 2 - 1;
-      p.push(new THREE.Vector3(u * half, Math.pow(Math.abs(u), power) * rise, 0));
-    }
-    return p;
-  }
-  const shimaki = new THREE.Mesh(sweepPoly(beamPath(5.05, .40, 2.6),
-    [[-.30, -.19], [.30, -.19], [.32, .06], [.28, .21], [-.28, .21], [-.32, .06]]), lac);
-  shimaki.position.set(0, BASE + H - .52, 0); shimaki.castShadow = true; g.add(shimaki);
-
-  const kasagi = new THREE.Mesh(sweepPoly(beamPath(5.85, .62, 2.4),
-    [[-.42, -.24], [.42, -.24], [.46, .04], [.30, .28], [-.30, .28], [-.46, .04]]), lac);
-  kasagi.position.set(0, BASE + H + .96, 0); kasagi.castShadow = true; g.add(kasagi);
-  /* a black lacquer cap along the top of the kasagi */
-  const cap = new THREE.Mesh(sweepPoly(beamPath(5.95, .62, 2.4),
-    [[-.48, .22], [.48, .22], [.48, .34], [-.48, .34]]),
-    new THREE.MeshStandardMaterial({ color: 0x120c0c, roughness: .42, metalness: .14 }));
-  cap.position.set(0, BASE + H + .96, 0); g.add(cap);
-
-  /* the gate stands at the foot of the flight, not over the court — small
-     enough that the hall keeps the top of the frame to itself */
-  /* The lowest thing on the gate is the foot of each column, and it starts
-     at BASE — so anchoring the group at y=0 left the whole torii hanging
-     BASE*scale above the court. Drop it by exactly that and the feet land. */
-  const GS = .72;
-  g.position.set(0, -BASE * GS, -8.6); g.scale.setScalar(GS);
-  scene.add(g); WORLD.torii = g;
 }
 
 function buildLantern(x, z, s, y) {
@@ -4329,60 +4258,8 @@ function buildForeground() {
   });
 }
 
-/* --------------------------------------------------- the giant wordmark */
+/* the hero wordmark is gone; these stay as the empty handles the rig reads */
 const WORD_Z = 3.0;
-function buildWordmark() {
-  /* The word is set to the frame width, so a short word is a *taller* word.
-     Four letters at the old tracking put a 400-pixel cap height across the
-     scene; the letters are spaced out instead, which keeps the type edge to
-     edge while the caps come back down to the height of the headline block. */
-  const SZ = 320, TRACK = .40, PAD = 26;
-  const m = cvs(4, 4).getContext('2d');
-  m.font = '600 ' + SZ + 'px Wordmark, sans-serif';
-  m.textBaseline = 'alphabetic'; m.textAlign = 'left';
-  const word = 'KAGE', gl = [];
-  let pen = 0, ascMax = 0, descMax = 0, xMin = 1e9, xMax = -1e9;
-  for (const ch of word) {
-    const t = m.measureText(ch);
-    const g = { ch: ch, adv: t.width, asc: t.actualBoundingBoxAscent, desc: t.actualBoundingBoxDescent,
-                l: t.actualBoundingBoxLeft, r: t.actualBoundingBoxRight, pen: pen };
-    gl.push(g);
-    ascMax = Math.max(ascMax, g.asc); descMax = Math.max(descMax, g.desc);
-    xMin = Math.min(xMin, pen - g.l); xMax = Math.max(xMax, pen + g.r);
-    pen += t.width + TRACK * SZ;
-  }
-  const group = new THREE.Group();
-  WORD.glyphs = [];
-  gl.forEach((g, i) => {
-    const cw = Math.ceil(g.l + g.r) + PAD * 2, chh = Math.ceil(g.asc + g.desc) + PAD * 2;
-    const c = cvs(cw, chh), x = c.getContext('2d');
-    x.font = '600 ' + SZ + 'px Wordmark, sans-serif';
-    x.textBaseline = 'alphabetic'; x.textAlign = 'left';
-    /* the vertical wash is baked per glyph so the whole word shares one ramp */
-    const gy0 = PAD + g.asc - ascMax, gy1 = PAD + g.asc + descMax * .4;
-    const grad = x.createLinearGradient(0, gy0, 0, gy1);
-    grad.addColorStop(0, 'rgb(226,236,229)');
-    grad.addColorStop(.52, 'rgb(198,214,203)');
-    grad.addColorStop(1, 'rgb(150,170,157)');
-    x.fillStyle = grad;
-    x.fillText(g.ch, PAD + g.l, PAD + g.asc);
-
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(cw, chh),
-      new THREE.MeshBasicMaterial({ map: tx(c, { aniso: 16 }), transparent: true,
-        depthWrite: false, side: THREE.DoubleSide, fog: true, opacity: 1 }));
-    mesh.position.set(g.pen + (g.r - g.l) / 2, (g.asc - g.desc) / 2 + (PAD - PAD) , 0);
-    mesh.position.y = (g.asc - g.desc) / 2;
-    mesh.renderOrder = 12;
-    mesh.frustumCulled = false;
-    mesh.userData.baseY = mesh.position.y;
-    group.add(mesh);
-    WORD.glyphs.push(mesh);
-  });
-  group.position.z = WORD_Z;
-  scene.add(group);
-  WORD.group = group;
-  WORD.ink = { xMin: xMin, xMax: xMax, cx: (xMin + xMax) / 2, w: xMax - xMin, asc: ascMax };
-}
 const WORD = { glyphs: [], group: null, ink: null, reveal: 0 };
 
 /* --------------------------------------------------------- atmospherics */
@@ -5270,12 +5147,12 @@ function initPost() {
     uniforms: {
       tS: { value: null }, tB: { value: null }, uRes: { value: new THREE.Vector2(w, h) },
       uT: { value: 0 }, uBloom: { value: .26 }, uCA: { value: .35 }, uGrain: { value: .007 },
-      uVig: { value: .55 }, uExp: { value: .62 }, uFade: { value: 1 }, uSat: { value: 1.05 }
+      uVig: { value: .55 }, uExp: { value: .62 }, uFade: { value: 1 }, uSat: { value: 1.05 }, uTint: { value: 1 }
     },
     vertexShader: QUAD_VS,
     fragmentShader:
       'uniform sampler2D tS; uniform sampler2D tB; uniform vec2 uRes;\n' +
-      'uniform float uT, uBloom, uCA, uGrain, uVig, uExp, uFade, uSat;\n' +
+      'uniform float uT, uBloom, uCA, uGrain, uVig, uExp, uFade, uSat, uTint;\n' +
       'varying vec2 vUv;\n' +
       'vec3 aces(vec3 x){ return clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14), 0.0, 1.0); }\n' +
       'void main(){\n' +
@@ -5291,8 +5168,8 @@ function initPost() {
       ' c = aces(c);\n' +
       ' float l = dot(c, vec3(0.2126,0.7152,0.0722));\n' +
       ' c = mix(vec3(l), c, uSat);\n' +
-      ' c = mix(c, c*vec3(0.74,1.03,1.11), smoothstep(0.55,0.0,l)*0.80);\n' +    /* teal shadows */
-      ' c = mix(c, c*vec3(1.035,0.995,0.968), smoothstep(0.50,1.0,l)*0.26);\n' + /* warm highs   */
+      ' c = mix(c, c*vec3(0.74,1.03,1.11), smoothstep(0.55,0.0,l)*0.80*uTint);\n' +    /* teal shadows */
+      ' c = mix(c, c*vec3(1.035,0.995,0.968), smoothstep(0.50,1.0,l)*0.26*uTint);\n' + /* warm highs   */
       ' float v = smoothstep(1.22, 0.26, length(d*vec2(1.0,0.94))*1.42);\n' +
       ' c *= mix(1.0, v, uVig);\n' +
       ' float g = fract(sin(dot(vUv*uRes + uT*137.0, vec2(12.9898,78.233)))*43758.5453);\n' +
@@ -5335,7 +5212,7 @@ function renderPost() {
 /* ================================================= 8 · the camera rig */
 const CAM = [
   { p: [  0.0, 4.05, 13.6 ], t: [  0.0, 6.60, -18.0 ], fov: 36 },  /* 0 hero        */
-  { p: [ -5.6, 2.35, 11.6 ], t: [  1.2, 5.60, -14.0 ], fov: 48 },  /* 1 the sanmon  */
+  { p: [ -5.6, 2.35, 11.6 ], t: [  1.2, 5.60, -14.0 ], fov: 48 },  /* 1 your brand  */
   { p: [  1.2, 3.60,  2.2 ], t: [ -0.6, 7.50, -22.0 ], fov: 40 },  /* 2 gardens     */
   { p: [  5.2, 2.10, -3.4 ], t: [ -2.6, 7.00, -20.0 ], fov: 46 },  /* 3 craft       */
   { p: [  0.0, 7.60, -16.0 ], t: [  0.0, 13.0, -40.0 ], fov: 42 }, /* 4 afterlight  */
@@ -5355,8 +5232,8 @@ const PATH = [
   { at: 2.36, p: [  5.4, 9.1, -43.6 ], t: [ 14.0, 9.2, -44.0 ], fov: 50 },   /* turn to the side door     */
   { at: 2.62, p: [ 10.8, 9.2, -44.4 ], t: [ 18.0, 9.3, -36.5 ], fov: 50 },   /* straight out onto the terrace */
   { at: 2.84, p: [ 12.9, 9.25, -50.6 ], t: [ 11.6, 9.5, -40.0 ], fov: 50 },  /* turning back to the wall  */
-  { at: 3,    p: [ 13.24, 9.25, -52.2 ], t: [ 9.64, 9.55, -42.9 ], fov: 50 },/* the ATM kiosk in the wall */
-  { at: 3.3,  p: [ 13.4, 9.27, -52.6 ], t: [ 9.74, 9.56, -43.2 ], fov: 50 }, /* …held while the copy reads */
+  { at: 3,    p: [ 13.7, 9.25, -46.3 ], t: [ 9.0, 9.25, -46.3 ], fov: 50 },   /* the ATM kiosk, square to the wall: the hero shot, drawn in toward the copy */
+  { at: 3.3,  p: [ 13.55, 9.25, -46.3 ], t: [ 9.0, 9.25, -46.3 ], fov: 50 },  /* …a slow push in while the copy reads */
   { at: 4,    p: [ 22.0, 10.4, -37.5 ], t: [  9.2, 8.6, -50.0 ], fov: 56 }   /* the footer: the closing view across the terrace (Afterlight removed) */
 ];
 const RIG = { prog: 0, smooth: 0, mx: 0, my: 0, tmx: 0, tmy: 0, intro: 0, focus: -1, focusAmt: 0 };
@@ -5655,15 +5532,39 @@ function wireHeroExit() {
 function wireNav() {
   let last = 0;
   const rail = $('#rail');
-  const names = ['The Hidden Gate', 'The Sanmon', 'Still Gardens', 'Sacred Craft', 'Colophon'];
-  SECS.forEach((s, i) => {
+  /* The rail: one line per stop on the page. The 3-D stops are scroll
+     positions on the camera's walk (in chapter units, as progressFor counts
+     them), so each is re-read from the current anchors when it's needed; the
+     form and the FAQ are ordinary sections and are read off the document. */
+  const atProgress = p => {
+    const i = Math.min(Math.floor(p), anchors.length - 2), f = p - i;
+    return anchors[i] + f * (anchors[i + 1] - anchors[i]);
+  };
+  const atElement = sel => { const el = $(sel); return el ? el.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 84) : 0; };
+  const STOPS = [
+    { name: 'Hero',                      y: () => 0 },
+    { name: 'Your Brand. Your Business', y: () => anchors[1] },
+    { name: 'Turnkey Model',             y: () => atProgress(1.58) },   /* the turnkey copy holds 1.42 – 1.72 */
+    { name: 'Indoor Kiosk',              y: () => atProgress(2.06) },   /* the indoor kiosk copy holds 1.98 – 2.30 */
+    { name: 'ATM Kiosk',                 y: () => anchors[3] },         /* the front-on ATM shot */
+    { name: 'Inquiry Form',              y: () => atElement('#inquiry') },
+    { name: 'FAQ',                       y: () => atElement('#faq') }
+  ];
+  STOPS.forEach(st => {
     const b = document.createElement('button');
-    b.innerHTML = '<i></i>'; b.title = names[i] || '';
-    b.setAttribute('aria-label', names[i] || 'section');
-    b.addEventListener('click', () => scrollTo({ top: anchors[i], behavior: REDUCE ? 'auto' : 'smooth' }));
+    b.innerHTML = '<i></i>'; b.title = st.name;
+    b.setAttribute('aria-label', st.name);
+    b.addEventListener('click', () => scrollTo({ top: Math.max(0, st.y()), behavior: REDUCE ? 'auto' : 'smooth' }));
     rail.appendChild(b);
   });
   const dots = $$('#rail button');
+  /* the lit line is the last stop the reader has reached (with a little lead) */
+  let railOn = -1;
+  const markRail = y => {
+    let k = 0;
+    STOPS.forEach((st, i) => { if (y >= st.y() - vpH() * .25) k = i; });
+    if (k !== railOn) { railOn = k; dots.forEach((d, i) => d.classList.toggle('on', i === k)); }
+  };
   const links = $$('.nav-link');
   const burger = $('.nav-burger');
   const closeMenu = () => {
@@ -5705,10 +5606,10 @@ function wireNav() {
     nav.classList.toggle('hide',
       !nav.classList.contains('menu-open') && y > last + 4 && y > vpH() * .8);
     last = y;
+    if (anchors.length) markRail(y);
     const a = Math.round(progressFor(y));
     if (a !== activeSec) {
       activeSec = a;
-      dots.forEach((d, i) => d.classList.toggle('on', i === a));
       links.forEach((l, i) => l.classList.toggle('on', linkSec[i] === a));
     }
   }, { passive: true });
@@ -6000,8 +5901,8 @@ function updateWorld(dt) {
     if (WORLD.snow) WORLD.snow.visible = out;
     if (out !== !!WORLD._out) {
       WORLD._out = out;
-      /* out on the terrace the frame becomes the original Kage night: its
-         fog, its light, and its full vignette */
+      /* out on the terrace the frame becomes the night set: its fog, its
+         light, and its full vignette */
       if (out) { WORLD._fog = scene.fog; scene.fog = OUT_FOG; }
       else if (WORLD._fog) scene.fog = WORLD._fog;
       if (WORLD.outdoorLights) WORLD.outdoorLights.visible = out;
@@ -6015,13 +5916,21 @@ function updateWorld(dt) {
     }
   }
   document.body.classList.toggle('flat-scene', RIG.smooth > 1.85 && !WORLD._out);
+  /* inside the cafeteria the grade's teal-and-warm cast is faded out, so the
+     room stays truly monochrome and the kiosk is the only colour in it */
+  if (POST.comp && WORLD.hallBox) {
+    const hb = WORLD.hallBox, cp = camera.position;
+    const inHall = cp.x > hb.x0 && cp.x < hb.x1 && cp.z > hb.zb && cp.z < hb.zf + .6 && cp.y > hb.y0;
+    POST.comp.uniforms.uTint.value = damp(POST.comp.uniforms.uTint.value, inHall ? 0 : 1, 6, dt);
+  }
   if (K3) {
     /* …and it leaves before the inquiry form scrolls up under it */
     const inq = INQ && INQ.getBoundingClientRect().top;
     const k = smooth(2.9, 2.99, RIG.smooth) * (1 - smooth(3.32, 3.5, RIG.smooth))
       * (INQ ? 1 - smooth(vpH() * .98, vpH() * .62, inq) : 1);
-    if (Math.abs(k - K3.k) > .001) {
-      K3.k = k;
+    const nar = vpW() <= 820;   /* re-place when the layout crosses the phone breakpoint, not only when k moves */
+    if (Math.abs(k - K3.k) > .001 || K3.nar !== nar) {
+      K3.k = k; K3.nar = nar;
       K3.el.style.opacity = k.toFixed(3);
       K3.el.style.transform = (vpW() > 820 ? 'translate3d(0,calc(-50% + ' : 'translate3d(0,calc(0px + ') + ((1 - k) * 26).toFixed(1) + 'px),0)';
       K3.el.classList.toggle('on', k > .05);
@@ -6032,8 +5941,9 @@ function updateWorld(dt) {
      out at the top of the steps, before the indoor kiosk's copy arrives */
   if (TK) {
     const k = smooth(1.30, 1.42, RIG.smooth) * (1 - smooth(1.72, 1.82, RIG.smooth));
-    if (Math.abs(k - TK.k) > .001) {
-      TK.k = k;
+    const nar = vpW() <= 820;   /* re-place when the layout crosses the phone breakpoint, not only when k moves */
+    if (Math.abs(k - TK.k) > .001 || TK.nar !== nar) {
+      TK.k = k; TK.nar = nar;
       TK.el.style.opacity = k.toFixed(3);
       TK.el.style.transform = (vpW() > 820 ? 'translate3d(0,calc(-50% + ' : 'translate3d(0,calc(0px + ') + ((1 - k) * 26).toFixed(1) + 'px),0)';
       TK.el.classList.toggle('on', k > .05);
@@ -6042,8 +5952,9 @@ function updateWorld(dt) {
   }
   if (K2) {
     const k = smooth(1.86, 1.98, RIG.smooth) * (1 - smooth(2.3, 2.55, RIG.smooth));
-    if (Math.abs(k - K2.k) > .001) {
-      K2.k = k;
+    const nar = vpW() <= 820;   /* re-place when the layout crosses the phone breakpoint, not only when k moves */
+    if (Math.abs(k - K2.k) > .001 || K2.nar !== nar) {
+      K2.k = k; K2.nar = nar;
       K2.el.style.opacity = k.toFixed(3);
       K2.el.style.transform = (vpW() > 820 ? 'translate3d(0,calc(-50% + ' : 'translate3d(0,calc(0px + ') + ((1 - k) * 26).toFixed(1) + 'px),0)';
       K2.el.classList.toggle('on', k > .05);
@@ -6105,7 +6016,7 @@ function queue() { TIMER ? setTimeout(() => frame(performance.now()), 16) : requ
 
 /* ======================================================== 14 · booting */
 const JOBS = [
-  ['Reading the type', () => document.fonts && document.fonts.load('600 320px Wordmark')],
+  ['Reading the type', () => document.fonts && document.fonts.ready],
   ['Pouring the ground', () => { initGL(); WORLD.uT = { value: 0 }; buildRig(); buildLights(); }],
   ['Cutting the approach', () => buildShell()],
   ['Raising the hall', () => buildCampus()],
@@ -6141,13 +6052,13 @@ function boot() {
       i++;
       const p = i / JOBS.length;
       preFill.style.right = ((1 - p) * 100).toFixed(1) + '%';
-      prePct.textContent = Math.round(p * 100);
+      if (prePct) prePct.textContent = Math.round(p * 100);   /* the loader no longer shows a percentage */
       if (i < JOBS.length) setTimeout(step, 16); else setTimeout(start, 220);
     };
     let r;
     try { r = j[1](); }
     catch (err) {
-      console.error('[kage] job "' + j[0] + '" failed', err);
+      console.error('[pfx] job "' + j[0] + '" failed', err);
       if (i <= 1) return fallback(err);          /* no renderer, no scene */
     }
     (r && r.then) ? r.then(done, done) : done();
@@ -6161,7 +6072,7 @@ function fallback(err) {
   document.body.classList.remove('is-locked');
   preEl.classList.add('done');
   $$('[data-rv], .mask-line').forEach(e => e.classList.add('rv-in'));
-  window.__kage = window.__secret = { fallback: true, error: String(err && err.message || err) };
+  window.__pfx = { fallback: true, error: String(err && err.message || err) };
 }
 
 function start() {
@@ -6193,7 +6104,7 @@ function start() {
   running = true; tPrev = performance.now();
   INTRO.t0 = shot !== null ? 0 : (REDUCE ? performance.now() - 4000 : performance.now());
   queue();
-  window.__kage = window.__secret = { RIG: RIG, WORLD: WORLD, WORD: WORD, CAM: CAM, POST: POST, renderer: renderer, scene: scene, camera: camera, anchors: () => anchors };
+  window.__pfx = { RIG: RIG, WORLD: WORLD, WORD: WORD, CAM: CAM, POST: POST, renderer: renderer, scene: scene, camera: camera, anchors: () => anchors };
 }
 
 if (document.readyState === 'complete' || document.readyState === 'interactive') setTimeout(boot, 0);

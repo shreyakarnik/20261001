@@ -1,8 +1,8 @@
 /* The PFX navigation bar, shared by every page except the 3-D homepage
-   (kage.html carries its own copy of the same bar). Self-contained: its own
+   (index.html carries its own copy of the same bar). Self-contained: its own
    class names (pfx-*) so nothing in a page's stylesheet reaches it. */
 @font-face{ font-family:'Inter'; font-style:normal; font-weight:100 900; font-display:swap;
-  src:url(secret-pathways-assets/fonts/inter-latin-wght-normal.woff2) format('woff2'); }
+  src:url(assets/fonts/inter-latin-wght-normal.woff2) format('woff2'); }
 .pfx-nav{
   position:sticky; top:0; z-index:200; height:84px;
   display:flex; align-items:center; gap:24px; padding:0 clamp(20px,3.4vw,56px);
@@ -13,6 +13,10 @@
 .pfx-nav *{ box-sizing:border-box; }
 .pfx-brand{ display:block; flex:0 0 auto; }
 .pfx-brand img{ display:block; height:30px; width:auto; }
+/* the phone menu waits just off the right edge; clip the page's horizontal
+   axis so that parked sheet can't make the whole page scroll sideways
+   (clip, not hidden, so no scroll container is created) */
+html{ overflow-x:clip; }
 .pfx-links{ display:flex; align-items:center; gap:clamp(16px,2vw,34px); margin-left:auto; }
 .pfx-link{ font-size:14px; font-weight:500; letter-spacing:-.005em; color:#aab4ad; text-decoration:none; transition:color .3s; }
 .pfx-link:hover, .pfx-link.on{ color:#dfe7e0; }

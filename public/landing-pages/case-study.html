@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="analytics.js"></script>
+<title>Case Study: Pizza 13 — PFX</title>
+<meta name="description" content="Pizza 13, PFX's first white-label licensee: the story, the video, and the white-label ROI projections behind it.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="talk-modal.css?v=4">
+<style>
+  :root{
+    --red:#C00022;
+    --red-dark:#A80F22;
+    --ink:#ffffff;
+    --bg:#0D0E10;
+    --bg-alt:#131722;
+    --gray:#9AA3AF;
+    --line:rgba(255,255,255,0.12);
+    --panel:rgba(217,217,217,0.2);
+    --panel-solid:#181c24;
+    --section-bg:#0D0E10;
+    --input-bg:rgba(255,255,255,0.3);
+    --white:#fff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.5;
+  }
+  a{text-decoration:none; color:inherit;}
+  .wrap80{max-width:1440px; margin:0 auto; padding:0 80px;}
+
+  /* NAV (shared identically across every page) */
+  header.nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 112px;
+    max-width:1282px; margin:20px auto 0;
+    position:sticky; top:20px; z-index:100;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:50px;
+  }
+  .logo{font-size:26px; font-weight:800; letter-spacing:-0.5px; color:var(--white);}
+  .logo img{height:32px; width:auto; display:block;}
+  .logo span{color:var(--red);}
+  nav.links{display:flex; align-items:center; gap:18px; font-size:14px; font-weight:400;}
+  nav.links a{color:var(--white); letter-spacing:0.3px;}
+  nav.links a.talk{
+    background:var(--red); color:#fff; padding:10px 20px; border-radius:12px; font-weight:600; font-size:14px;
+  }
+  .search-btn{color:var(--white); display:flex;}
+  .nav-logo-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:38px; height:38px; padding:2px; flex-shrink:0;
+    background:none; border:none;
+  }
+  .nav-logo-btn:hover{opacity:0.85;}
+  .nav-logo-btn img{width:30px; height:30px; display:block; object-fit:contain;}
+
+  .btn-primary{
+    background:var(--red); color:#fff; padding:14px 32px; border-radius:12px;
+    font-weight:600; font-size:15px; display:inline-block; border:none; cursor:pointer;
+  }
+  .btn-primary:hover{background:var(--red-dark);}
+
+  /* FOOTER (shared identically across every page) */
+  footer{
+    border-top:1px solid var(--line); margin-top:80px; padding:48px 80px; background:var(--bg);
+  }
+  .footer-inner{
+    max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px;
+  }
+  .footer-left .logo{margin-bottom:16px; display:block;}
+  .footer-socials{display:flex; gap:12px;}
+  .footer-socials a{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
+    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+  }
+  .footer-right{text-align:right;}
+  .footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
+  .footer-links a{font-size:14px; color:rgba(255,255,255,0.75);}
+  .footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+
+  /* PAGE-SPECIFIC: kiosk model detail pages */
+  .model-tabs{display:flex; justify-content:center; gap:14px; padding:44px 24px 0; flex-wrap:wrap;}
+  .model-tabs a{padding:13px 30px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; font-size:14px; font-weight:500; color:rgba(255,255,255,0.8); transition:all .15s;}
+  .model-tabs a:hover{border-color:rgba(255,255,255,0.4); color:var(--white);}
+  .model-tabs a.on{background:var(--red); border-color:var(--red); color:#fff; font-weight:600;}
+
+  .k-hero{padding:56px 120px 0;}
+  .k-hero-grid{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
+  .k-hero-copy{padding-left:30px;}
+  .k-hero h1{font-size:44px; font-weight:700; letter-spacing:-1px; margin-bottom:22px; color:var(--white);}
+  .k-badges{display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap;}
+  .k-pill{display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 16px; font-size:13px; color:rgba(255,255,255,0.85); width:fit-content;}
+  .k-pill svg{flex-shrink:0; color:var(--red);}
+  .k-hero .desc{color:rgba(255,255,255,0.7); font-size:15px; line-height:1.8; max-width:520px; margin-bottom:28px;}
+  .k-specs{display:flex; flex-direction:column; gap:10px; align-items:flex-start;}
+  .k-hero-image{border-radius:24px; overflow:hidden; aspect-ratio:1/1; background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08);}
+  .k-hero-image img{width:100%; height:100%; object-fit:cover; display:block;}
+
+  .cert-bar{max-width:1440px; margin:56px auto 0; padding:0 80px;}
+  /* Same type spec as the section eyebrows ("Your Brand. Your Business") */
+  .cert-eyebrow{text-align:center; margin-bottom:12px; font-size:14px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.6);}
+  .cert-bar-inner{border:1px solid rgba(255,255,255,0.14); border-radius:50px; padding:22px 40px; display:flex; align-items:center; justify-content:center; gap:56px; font-size:15px; color:rgba(255,255,255,0.85); flex-wrap:wrap;}
+  .cert-bar-inner img{height:78px; object-fit:contain;}
+
+  .build-section{padding:88px 80px 0; text-align:center;}
+  .build-section h2{font-size:32px; font-weight:600; margin-bottom:10px; color:var(--white);}
+  .build-section .sub{color:rgba(255,255,255,0.65); font-size:16px; margin-bottom:36px;}
+  .build-cards{max-width:1280px; margin:0 auto; display:grid; gap:20px;}
+  .build-cards.cols-2{grid-template-columns:1fr 1fr;}
+  .build-cards.cols-3{grid-template-columns:repeat(3,1fr);}
+  .build-card{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:26px; text-align:left;}
+  .build-card h3{font-size:16px; font-weight:600; margin-bottom:10px; color:var(--white);}
+  .build-card p{font-size:13.5px; line-height:1.6; color:rgba(255,255,255,0.65);}
+
+  .features-section{padding:56px 80px 0; text-align:center;}
+  .features-eyebrow{font-size:13px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:24px;}
+  .features-grid{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
+  .feature-pill{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 16px; font-size:13.5px; font-weight:500; color:rgba(255,255,255,0.85); line-height:1.4;}
+  .security-bar{max-width:1280px; margin:20px auto 0;}
+  .security-bar-inner{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 24px; text-align:center; font-size:14px; color:rgba(255,255,255,0.75);}
+  .k-cta{text-align:center; padding:40px 80px 0;}
+
+  .deploy-section{padding:88px 80px 0; text-align:center;}
+  .deploy-section h2{font-size:32px; font-weight:600; margin-bottom:10px; color:var(--white);}
+  .deploy-section .sub{color:rgba(255,255,255,0.65); font-size:16px; margin-bottom:32px;}
+  .deploy-tags{display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-bottom:36px;}
+  .deploy-tag{border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 20px; font-size:13.5px; color:rgba(255,255,255,0.8);}
+  .deploy-gallery{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr 1.15fr 1fr; gap:20px; align-items:stretch;}
+  .deploy-gallery .g-item{border-radius:20px; background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); min-height:340px;}
+  .deploy-gallery .g-item.tall{min-height:440px;}
+
+  @media (max-width: 900px){
+    .k-hero{padding:32px 24px 0;}
+    .k-hero-grid{grid-template-columns:1fr; gap:32px;}
+    .k-hero-copy{padding-left:0;}
+    .k-hero h1{font-size:32px;}
+    .k-hero-image{order:-1;}
+    .cert-bar, .build-section, .features-section, .deploy-section, .k-cta{padding-left:24px; padding-right:24px;}
+    .build-cards.cols-2, .build-cards.cols-3{grid-template-columns:1fr;}
+    .features-grid{grid-template-columns:1fr 1fr;}
+    .deploy-gallery{grid-template-columns:1fr; }
+    .deploy-gallery .g-item, .deploy-gallery .g-item.tall{min-height:220px;}
+    .cert-bar-inner{padding:18px 20px; font-size:13px; gap:32px;}
+    .cert-bar-inner img{height:60px;}
+  }
+
+  @media (max-width: 900px){
+    header.nav{margin:12px; padding:10px 16px;}
+    nav.links{gap:12px; font-size:13px;}
+    nav.links a:not(.talk), nav.links .search-btn{display:none;}
+    .footer-inner{flex-direction:column;}
+    .footer-right{text-align:left;}
+    .footer-links{justify-content:flex-start;}
+    .footer-legal{margin-left:0;}
+  }
+</style>
+<link rel="stylesheet" href="pfx-nav.css?v=2">
+<link rel="stylesheet" href="pfx-theme.css?v=2">
+<style>
+/* ---- case study: built on the spec pages' grammar (pfx-theme.css) */
+.cs-hero{ padding:56px 120px 0; }
+.cs-hero-grid{ max-width:1280px; margin:0 auto; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:64px; align-items:center; }
+.cs-hero .eyebrow{ margin-bottom:22px; }
+.cs-hero h1{ margin-bottom:22px; }
+.cs-hero h1 em{ font-style:normal; color:var(--k-verm); }
+.cs-hero .desc{ color:var(--k-text); font-size:15px; line-height:1.8; max-width:540px; margin-bottom:24px; font-weight:300; }
+.cs-badges{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px; }
+.cs-badges .k-pill{ display:inline-flex; align-items:center; gap:8px; padding:9px 16px; font-size:13px; }
+.cs-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
+.cs-ctas .btn-ghost{ display:inline-flex; align-items:center; gap:10px; padding:14px 26px; border:1px solid var(--k-line); color:var(--k-bone);
+  font-size:15px; font-weight:600; border-radius:12px; background:rgba(255,255,255,.04); transition:background .3s; }
+.cs-ctas .btn-ghost:hover{ background:rgba(255,255,255,.1); }
+/* the photo slot: shows its hint until Images/case-study/pizza13.jpg exists */
+.cs-photo{ position:relative; aspect-ratio:4/5; overflow:hidden; display:grid; place-items:center; }
+.cs-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.cs-photo-hint{ max-width:24ch; text-align:center; font-size:12px; line-height:1.6; letter-spacing:.04em; color:var(--k-muted); padding:24px; }
+.cs-photo-hint b{ display:block; font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:var(--k-bone-dim); font-weight:500; margin-bottom:8px; }
+
+/* headline figures: one ruled row */
+.cs-kpis{ max-width:1280px; margin:56px auto 0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  border-top:1px solid var(--k-line); border-left:1px solid var(--k-line); }
+.cs-kpi{ position:relative; padding:26px 28px; border-right:1px solid var(--k-line); border-bottom:1px solid var(--k-line); background:var(--k-plate);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+.cs-kpi b{ display:block; font-size:clamp(28px,2.8vw,40px); font-weight:500; letter-spacing:-.02em; color:var(--k-bone); line-height:1.05; margin-bottom:10px; }
+.cs-kpi span{ display:block; font-size:13px; line-height:1.55; color:var(--k-text); }
+.cs-kpi i{ display:block; font-style:normal; margin-top:8px; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--k-muted); }
+.cs-wrap{ padding:0 120px; }
+.cs-note{ max-width:1280px; margin:14px auto 0; font-size:12px; color:var(--k-muted); }
+
+.cs-section{ padding:110px 120px 0; }
+.cs-section > *{ max-width:1280px; margin-left:auto; margin-right:auto; }
+.cs-section h2{ font-size:clamp(28px,3.2vw,46px); font-weight:500; letter-spacing:-.02em; color:var(--k-bone); margin:20px auto 12px; }
+.cs-section .sub{ color:var(--k-text); font-size:16px; line-height:1.7; font-weight:300; max-width:720px; margin-left:0; margin-bottom:34px; }
+
+/* the video */
+.cs-video{ position:relative; aspect-ratio:16/9; border:1px solid var(--k-line); background:#000; }
+.cs-video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+.cs-video-cap{ display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-top:14px; font-size:13px; color:var(--k-text); }
+.cs-video-cap a{ color:var(--k-bone); text-decoration:underline; text-underline-offset:3px; }
+
+/* the projection table */
+.cs-table-wrap{ overflow-x:auto; border:1px solid var(--k-line); background:var(--k-plate);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+table.cs-table{ width:100%; min-width:760px; border-collapse:collapse; font-size:14px; font-variant-numeric:tabular-nums; }
+.cs-table th, .cs-table td{ padding:11px 20px; text-align:right; border-bottom:1px solid var(--k-line-soft); white-space:nowrap; }
+.cs-table th:first-child, .cs-table td:first-child{ text-align:left; color:var(--k-bone-dim); font-weight:400; padding-left:24px; }
+.cs-table thead th{ font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--k-muted); border-bottom:1px solid var(--k-line); }
+.cs-table thead th b{ display:block; font-size:22px; letter-spacing:-.01em; color:var(--k-bone); font-weight:500; margin-top:4px; }
+.cs-table td{ color:var(--k-text); }
+.cs-table tr.grp td{ padding-top:24px; font-size:10px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--k-verm) !important; border-bottom:1px solid var(--k-line); }
+.cs-table tr.tot td{ color:var(--k-bone); font-weight:500; background:rgba(223,231,224,.03); }
+.cs-table tr.pay td{ color:#fff; font-weight:600; background:rgba(224,35,28,.16); border-bottom:0; }
+.cs-table tr.pay td:first-child{ color:#fff; }
+
+/* payback + equipment, side by side */
+.cs-two{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px; }
+.cs-mini{ border:1px solid var(--k-line); background:var(--k-plate); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+.cs-mini h3{ font-size:10px !important; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--k-muted) !important; padding:18px 24px; border-bottom:1px solid var(--k-line); }
+.cs-mini dl{ display:grid; grid-template-columns:1fr auto; }
+.cs-mini dt, .cs-mini dd{ padding:16px 24px; border-bottom:1px solid var(--k-line-soft); font-size:15px; }
+.cs-mini dt{ color:var(--k-bone-dim); }
+.cs-mini dd{ color:var(--k-bone); font-weight:500; text-align:right; font-variant-numeric:tabular-nums; }
+.cs-mini dl > :nth-last-child(-n+2){ border-bottom:0; }
+
+/* assumptions */
+.cs-assume{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--k-line); border-left:1px solid var(--k-line); margin-top:24px; }
+.cs-assume div{ padding:22px 24px; border-right:1px solid var(--k-line); border-bottom:1px solid var(--k-line); background:var(--k-plate); }
+.cs-assume b{ display:block; font-weight:400; font-size:17px; color:var(--k-bone); margin-bottom:6px; }
+.cs-assume p{ font-size:13px; line-height:1.6; color:var(--k-text); }
+.cs-disclaimer{ margin-top:24px; padding:18px 24px; border:1px solid var(--k-line); border-left:2px solid var(--k-verm); font-size:13px; color:var(--k-text); background:var(--k-plate); }
+
+.cs-cta{ padding:110px 120px 96px; text-align:center; }
+.cs-cta h2{ font-size:clamp(28px,3.2vw,46px); font-weight:500; letter-spacing:-.02em; margin-bottom:12px; }
+.cs-cta p{ color:var(--k-text); margin:0 auto 30px; max-width:560px; font-weight:300; }
+.cs-cta .cs-ctas{ justify-content:center; }
+
+@media (max-width:1080px){
+  .cs-kpis{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cs-assume{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:900px){
+  .cs-hero, .cs-wrap, .cs-section, .cs-cta{ padding-left:24px; padding-right:24px; }
+  .cs-hero{ padding-top:32px; }
+  .cs-section, .cs-cta{ padding-top:72px; }
+  .cs-hero-grid{ grid-template-columns:1fr; gap:32px; }
+  .cs-photo{ order:-1; aspect-ratio:4/3; }
+  .cs-two, .cs-assume{ grid-template-columns:1fr; }
+}
+@media (max-width:520px){ .cs-kpis{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body class="kiosk-spec">
+
+<header class="pfx-nav" id="pfxNav">
+  <a class="pfx-brand" href="index.html" aria-label="PFX home"><img src="assets/pfx-light.png" alt="PFX"></a>
+  <nav class="pfx-links" id="pfxLinks">
+    <a class="pfx-link" href="kiosk-outdoor.html">Explore Kiosks</a>
+    <a class="pfx-link" href="case-study.html">Case Study</a>
+    <a class="pfx-link" href="roi_calculator.html">ROI Calculator</a>
+    <a class="pfx-link" href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+    <a class="pfx-link" href="blog.html">Blog</a>
+    <a class="pfx-link pfx-link--talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+  </nav>
+  <div class="pfx-actions">
+    <button type="button" class="pfx-search" id="siteSearchBtn" aria-label="Search"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="pfx-talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <button type="button" class="pfx-burger" aria-label="Menu" aria-controls="pfxLinks" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<section class="cs-hero">
+  <div class="cs-hero-grid">
+    <div class="cs-hero-copy">
+      <div class="eyebrow">Case Study &middot; Our First White-Label Licensee</div>
+      <h1>Pizza 13, <em>Powered by PFX</em></h1>
+      <p class="desc">Pizza 13 is the first operator to launch on the PFX white-label program: its own brand on the wrap, its own recipes in the kiosk, and PFX automation doing the baking, around the clock. This is the model behind that decision, and the operator behind the brand in his own words.</p>
+      <div class="cs-badges">
+        <span class="k-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3v18l18-9L3 3z"/></svg>First White-Label Licensee</span>
+        <span class="k-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3v18l18-9L3 3z"/></svg>Own Brand &amp; Recipes</span>
+        <span class="k-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3v18l18-9L3 3z"/></svg>Open 24/7</span>
+      </div>
+      <div class="cs-ctas">
+        <a class="btn-primary" href="contact.html" data-talk-trigger>Let&rsquo;s Talk!</a>
+        <a class="btn-ghost" href="#video">Watch the Story <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+    <div class="k-hero-image cs-photo">
+      <!-- the hero photo: drop it in at Images/case-study/pizza13.jpg (portrait works best) -->
+      <span class="cs-photo-hint"><b>Pizza 13</b>Hero photo goes here: add Images/case-study/pizza13.jpg</span>
+      <img src="Images/case-study/pizza13.jpg" alt="The Pizza 13 kiosk, powered by PFX" onerror="this.remove()">
+    </div>
+  </div>
+</section>
+
+<div class="cs-wrap">
+  <div class="cs-kpis">
+    <div class="cs-kpi"><b>4&ndash;5 mo</b><span>Equipment payback at 70 pizzas a day</span><i>Projected</i></div>
+    <div class="cs-kpi"><b>$264K</b><span>Annual net profit at 70 pizzas a day</span><i>Projected</i></div>
+    <div class="cs-kpi"><b>311%</b><span>Annual return on an ATM Kiosk at 70 pizzas a day</span><i>Projected</i></div>
+    <div class="cs-kpi"><b>&lt;1 yr</b><span>Payback from 30 pizzas a day</span><i>Projected</i></div>
+  </div>
+  <p class="cs-note">Figures from the PFX white-label ROI model below, at a $15 sale price. Illustrative, not Pizza 13&rsquo;s reported results.</p>
+</div>
+
+<section class="cs-section" id="video">
+  <div class="eyebrow">In His Words</div>
+  <h2>Antoine Attard on PFX</h2>
+  <p class="sub">Antoine Attard of Pizza 13 talks about launching his brand on PFX.</p>
+  <div class="cs-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/STCAMJAnbsk?rel=0" title="Antoine Attard of Pizza 13 on PFX" loading="lazy"
+      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+  <div class="cs-video-cap"><span>Pizza 13 &times; PFX</span><a href="https://youtu.be/STCAMJAnbsk" target="_blank" rel="noopener">Watch on YouTube</a></div>
+</section>
+
+<section class="cs-section" id="model">
+  <div class="eyebrow">The Model</div>
+  <h2>White-Label ROI Projections</h2>
+  <p class="sub">What a PFX kiosk returns at five daily volumes, at a $15 sale price, after ingredients, packaging, waste, power, labour and card fees.</p>
+  <div class="cs-table-wrap">
+    <table class="cs-table">
+      <thead><tr><th>Monthly figures</th><th>Pizzas / day<b>10</b></th><th>Pizzas / day<b>20</b></th><th>Pizzas / day<b>30</b></th><th>Pizzas / day<b>40</b></th><th>Pizzas / day<b>70</b></th></tr></thead>
+      <tbody>
+          <tr class="grp"><td colspan="6">Gross Revenue</td></tr>
+          <tr><td>Pizzas Sold / Month</td><td>300</td><td>600</td><td>900</td><td>1,200</td><td>2,100</td></tr>
+          <tr><td>Sale Price</td><td>$15</td><td>$15</td><td>$15</td><td>$15</td><td>$15</td></tr>
+          <tr><td>Daily Sales Revenue</td><td>$150</td><td>$300</td><td>$450</td><td>$600</td><td>$1,050</td></tr>
+          <tr class="tot"><td>Monthly Net Sales Revenue (30 days)</td><td>$4,500</td><td>$9,000</td><td>$13,500</td><td>$18,000</td><td>$31,500</td></tr>
+          <tr class="grp"><td colspan="6">Operating Expenses</td></tr>
+          <tr><td>Pizza Ingredients (15%)</td><td>$675</td><td>$1,350</td><td>$2,025</td><td>$2,700</td><td>$4,725</td></tr>
+          <tr><td>Boxes with Disk ($0.83 each)</td><td>$249</td><td>$498</td><td>$747</td><td>$996</td><td>$1,743</td></tr>
+          <tr><td>Pizza Waste (2%)</td><td>$90</td><td>$180</td><td>$270</td><td>$360</td><td>$630</td></tr>
+          <tr><td>Unit Electricity (avg.)</td><td>$110</td><td>$120</td><td>$130</td><td>$140</td><td>$170</td></tr>
+          <tr><td>Restocking Labour (4%)</td><td>$180</td><td>$360</td><td>$540</td><td>$720</td><td>$1,260</td></tr>
+          <tr><td>Payment Terminal Fees (3%)</td><td>$135</td><td>$270</td><td>$405</td><td>$540</td><td>$945</td></tr>
+          <tr class="tot"><td>Total Monthly Operating Expenses</td><td>$1,439</td><td>$2,778</td><td>$4,117</td><td>$5,456</td><td>$9,473</td></tr>
+          <tr class="grp"><td colspan="6">Net Revenue</td></tr>
+          <tr class="tot"><td>Monthly Profit Margin (Net)</td><td>$3,061</td><td>$6,222</td><td>$9,383</td><td>$12,544</td><td>$22,027</td></tr>
+          <tr class="tot"><td>Annual Profit Margin (Net)</td><td>$36,732</td><td>$74,664</td><td>$112,596</td><td>$150,528</td><td>$264,324</td></tr>
+          <tr class="grp"><td colspan="6">Equipment ROI (annual return on investment)</td></tr>
+          <tr><td>ATM Kiosk</td><td>43%</td><td>88%</td><td>132%</td><td>177%</td><td>311%</td></tr>
+          <tr><td>Indoor Kiosk</td><td>38%</td><td>78%</td><td>117%</td><td>156%</td><td>275%</td></tr>
+          <tr><td>Outdoor Kiosk</td><td>34%</td><td>68%</td><td>103%</td><td>137%</td><td>241%</td></tr>
+          <tr class="pay"><td>Equipment Payback Period</td><td>2–3 years</td><td>13–17 months</td><td>9–12 months</td><td>6–9 months</td><td>4–5 months</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cs-two">
+    <div class="cs-mini">
+      <h3>Payback by Daily Volume</h3>
+      <dl>
+        <dt>10 pizzas / day</dt><dd>3 years</dd>
+        <dt>20 pizzas / day</dt><dd>&lt; 1.5 years</dd>
+        <dt>30 pizzas / day</dt><dd>&lt; 1 year</dd>
+      </dl>
+    </div>
+    <div class="cs-mini">
+      <h3>Equipment Price</h3>
+      <dl>
+        <dt>ATM Kiosk</dt><dd>$85,078</dd>
+        <dt>Indoor Kiosk</dt><dd>$96,216</dd>
+        <dt>Outdoor Kiosk</dt><dd>$109,617</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="cs-assume">
+    <div><b>Ingredients</b><p>15% of monthly revenue for pizzas sold.</p></div>
+    <div><b>Pizza boxes</b><p>$0.83 per pizza, box with disk.</p></div>
+    <div><b>Waste</b><p>2% of monthly revenue for expired or unsold product, based on ~3 months of data once volume is stable.</p></div>
+    <div><b>Electricity</b><p>Based on rates in Toronto, Canada.</p></div>
+    <div><b>Restocking labour</b><p>4% of monthly revenue, reflecting 20 minutes of restocking a day.</p></div>
+    <div><b>Payment processing</b><p>3% of sales, in line with industry averages for card transactions.</p></div>
+  </div>
+  <p class="cs-disclaimer">This ROI model is illustrative. Outcomes depend on your site, operational discipline, and local market conditions.</p>
+</section>
+
+<section class="cs-cta">
+  <h2>Launch Your Own Brand on PFX</h2>
+  <p>Run the numbers for your site, or talk to us about becoming the next white-label licensee.</p>
+  <div class="cs-ctas">
+    <a class="btn-primary" href="contact.html" data-talk-trigger>Let&rsquo;s Talk!</a>
+    <a class="btn-ghost" href="roi_calculator.html">Open the ROI Calculator <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="logo"><img src="Images/pfx-logo-white.png" alt="PFX"></div>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"></path></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle><path d="M10 9v12"></path><path d="M10 13a4 4 0 0 1 8 0v8"></path></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"></rect><polygon points="10 9 16 12 10 15" fill="currentColor" stroke="none"></polygon></svg></a>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Application Form</a>
+        <a href="https://shreyakarnik.github.io/PFX-Website/index.html#faq">FAQ</a>
+        <a href="#">Documentation</a>
+        <a href="contact.html">Support</a>
+      </div>
+      <p class="footer-legal">All trademarks are owned by PFX Canada Inc and used under licence. &copy;2026</p>
+    </div>
+  </div>
+</footer>
+
+<script src="blog-data.js"></script>
+<script src="site-search.js"></script>
+<script src="talk-modal.js?v=4"></script>
+
+<script src="pfx-nav.js"></script>
+</body>
+</html>
