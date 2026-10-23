@@ -882,7 +882,7 @@ body[data-layout-story] #gate .gate-grid h2.gate-title{ grid-column:auto; max-wi
 
 /* ---- chapter II is now the walk in through the front door: no copy, no
    scrim, and enough scroll to make the climb and the entrance unhurried */
-#pathways{ min-height:190vh; }
+#pathways{ min-height:260vh; }   /* room for the turnkey block to hold the screen on its own */
 #lessons{ min-height:170vh; }
 #lessons::before{ display:none; }
 body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
@@ -2809,6 +2809,7 @@ const WORLD = {};
 const K2 = (() => { const el = document.getElementById('k2Copy'); return el ? { el: el, k: -1 } : null; })();
 const INQ = document.getElementById('inquiry');
 const TK = (() => { const el = document.getElementById('tkCopy'); return el ? { el: el, k: -1 } : null; })();
+const GATE_CARDS = document.querySelector('#gate .gate-cards');
 const K3 = (() => { const el = document.getElementById('k3Copy'); return el ? { el: el, k: -1 } : null; })();                 /* named handles the page can animate */
 const swayers = [];               /* things the wind touches */
 
@@ -5572,7 +5573,7 @@ function wireNav() {
   const STOPS = [
     { name: 'Hero',                      y: () => 0 },
     { name: 'Your Brand. Your Business', y: () => anchors[1] },
-    { name: 'Turnkey Model',             y: () => atProgress(1.58) },   /* the turnkey copy holds 1.42 – 1.72 */
+    { name: 'Turnkey Model',             y: () => atProgress(1.66) },   /* the turnkey copy holds ~1.55 – 1.76, once the brand cards are gone */
     { name: 'Indoor Kiosk',              y: () => atProgress(2.06) },   /* the indoor kiosk copy holds 1.98 – 2.30 */
     { name: 'ATM Kiosk',                 y: () => anchors[3] },         /* the front-on ATM shot */
     { name: 'Inquiry Form',              y: () => atElement('#inquiry') },
@@ -5966,10 +5967,12 @@ function updateWorld(dt) {
       K3.el.setAttribute('aria-hidden', k > .5 ? 'false' : 'true');
     }
   }
-  /* the turnkey block holds the climb: in once the walk turns onto the axis,
-     out at the top of the steps, before the indoor kiosk's copy arrives */
+  /* the turnkey block holds the climb: in only once the "Your Brand" cards
+     have scrolled off the top, so the two never share the screen; out at the
+     top of the steps, before the indoor kiosk's copy arrives */
   if (TK) {
-    const k = smooth(1.30, 1.42, RIG.smooth) * (1 - smooth(1.72, 1.82, RIG.smooth));
+    const gb = GATE_CARDS ? GATE_CARDS.getBoundingClientRect().bottom : -1;
+    const k = smooth(vpH() * .12, -vpH() * .04, gb) * smooth(1.2, 1.3, RIG.smooth) * (1 - smooth(1.76, 1.85, RIG.smooth));
     const nar = vpW() <= 820;   /* re-place when the layout crosses the phone breakpoint, not only when k moves */
     if (Math.abs(k - TK.k) > .001 || TK.nar !== nar) {
       TK.k = k; TK.nar = nar;
