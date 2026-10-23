@@ -68,3 +68,7 @@
 }
 .pfx-btn-ghost:hover{ background:rgba(255,255,255,.1); }
 .page-head .pfx-hero-ctas{ margin:22px 0 0; }
+
+/* --------------------------------------------- footer on phones */
+/* the shared footer keeps desktop's 80px side padding otherwise */
+@media (max-width:820px){ footer:not(.foot){ padding:40px 24px; } }

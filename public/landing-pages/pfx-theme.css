@@ -71,7 +71,7 @@ html body h1, html body h2, html body h3{ color:var(--k-bone); letter-spacing:-.
 .k-hero .desc, .page-head p, .calc-inner .sub, .build-section .sub, .deploy-section .sub, .login-card .sub,
 .gate-head .sub, .tm-head p{ color:var(--k-text) !important; font-weight:300; }
 
-/* eyebrows: the homepage's "YOUR BRAND. YOUR BUSINESS" — spaced capitals with a rule after,
+/* eyebrows: the homepage's "YOUR BRAND. YOUR BUSINESS" — spaced capitals, no rule,
    set like the homepage's "Explore Specs" link at half its strength */
 .eyebrow, .cert-eyebrow, .features-eyebrow, .rl, .sec-div, .serp-label, .form-section-title,
 .gate-head .eyebrow, .login-card .eyebrow, .form-pane-tab{
@@ -79,12 +79,7 @@ html body h1, html body h2, html body h3{ color:var(--k-bone); letter-spacing:-.
   font-size:11px !important; font-weight:500 !important; letter-spacing:.2em !important;
   text-transform:uppercase; color:rgba(223,231,224,.5) !important; border:0 !important; padding-bottom:0 !important;
 }
-.eyebrow::after, .cert-eyebrow::after, .features-eyebrow::after, .rl::after, .sec-div::after,
-.serp-label::after, .form-section-title::after, .form-pane-tab::after{
-  content:''; flex:1; height:1px; background:var(--k-line); min-width:40px;
-}
 .cert-eyebrow, .features-eyebrow{ justify-content:center; }
-.cert-eyebrow::before, .features-eyebrow::before{ content:''; flex:1; height:1px; background:var(--k-line); }
 .form-pane-tab{ color:var(--k-verm) !important; }
 
 /* ------------------------------------------------------ plates */
@@ -295,4 +290,4 @@ footer .logo img, footer .foot-logo{ height:34px !important; width:auto; }
 .footer-links a:hover, .footer-cols a:hover{ color:var(--k-bone) !important; }
 .footer-legal, .footer-inner .about{ color:var(--k-muted) !important; }
 .footer-socials a, .socials div{ border:1px solid var(--k-line) !important; color:var(--k-bone-dim) !important; }
-.footer-cols h4{ font-size:10px !important; letter-spacing:.24em; text-transform:uppercase; color:var(--k-muted) !important; font-weight:500 !important; }
+.footer-cols h4{ font-size:11px !important; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.5) !important; font-weight:500 !important; }
