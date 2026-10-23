@@ -95,8 +95,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ============================================================= type */
 .eyebrow{
-  font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
-  color:var(--bone-dim); text-shadow:0 1px 16px rgba(3,6,8,.9);
+  font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.5); text-shadow:0 1px 16px rgba(3,6,8,.9);
 }
 .jp{ font-family:'Onest',sans-serif; font-weight:400; }
 h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
@@ -280,7 +279,8 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
   background:linear-gradient(rgba(4,7,10,.55), rgba(4,7,10,.94) 40%, rgba(4,7,10,.98));
 }
 .sec-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:clamp(30px,5vh,66px); }
-.sec-head .k{ font-size:10px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); }
+/* section labels: set like the "Explore Specs" link, at half its strength */
+.sec-head .k{ font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.5); }
 .sec-head .k b{ color:var(--vermilion); font-weight:500; }
 .rule{ flex:1 1 auto; height:1px; background:var(--line-soft); }
 
@@ -290,7 +290,14 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .gate-copy{ padding-top:6px; }
 .gate-copy .lead{ font-size:clamp(15px,1.16vw,19px); line-height:1.66; color:#c2cdc5; text-shadow:0 1px 20px rgba(3,6,8,.9); }
 .gate-copy .lead + p{ margin-top:20px; }
-.arrowlink{ margin-top:34px; }  /* looks: .pfx-btn-soft in pfx-site.css */
+.arrowlink{ display:inline-flex; align-items:center; gap:12px; margin-top:34px;
+  font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--bone); }
+.arrowlink .ar{ width:34px; height:34px; border:1px solid var(--line); border-radius:50%;
+  display:grid; place-items:center; transition:background .45s var(--ease), border-color .45s, transform .5s var(--ease-out); }
+.arrowlink .ar svg{ width:13px; height:13px; transition:transform .5s var(--ease-out); }
+.arrowlink:hover .ar{ background:var(--bone); border-color:var(--bone); }
+.arrowlink:hover .ar svg{ transform:translate3d(2px,-2px,0); }
+.arrowlink:hover .ar svg path{ stroke:#05070a; }
 .gate-stats{ display:flex; gap:clamp(24px,4vw,62px); margin-top:clamp(46px,8vh,96px); border-top:1px solid var(--line-soft); padding-top:24px; }
 .gate-stats div b{ display:block; font-size:clamp(22px,2.1vw,32px); font-weight:300; letter-spacing:-.02em; }
 .gate-stats div span{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
@@ -951,11 +958,11 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
   background:radial-gradient(90% 70% at 40% 50%, rgba(4,7,10,.88), rgba(4,7,10,.6) 55%, rgba(4,7,10,0)); }
 #faq .wrap80{ max-width:1440px; margin:0 auto; padding:0 80px; }
 #faq .inner-1062{ max-width:1062px; margin:0 auto; }
-#faq .eyebrow{ margin-bottom:12px; font-size:14px; font-weight:400; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.6); text-shadow:none; }
+#faq .eyebrow{ margin-bottom:12px; font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.5); text-shadow:none; }
 #faq h2{ font-size:40px; font-weight:700; letter-spacing:-.5px; line-height:1.15; margin:0 0 16px; color:#fff; text-transform:none; }
 #faq .sub{ color:rgba(255,255,255,.75); font-size:16px; line-height:1.6; margin:0; }
 #faq .feature-head{ max-width:407px; }
-#faq .explore-link{ margin-top:20px; }
+#faq .explore-link{ display:inline-flex; align-items:center; gap:8px; margin-top:20px; color:#fff; font-weight:700; font-size:15px; }
 #faq .faq-grid{ display:grid; grid-template-columns:407px 1fr; gap:24px; align-items:start; }
 /* the questions wear chapter I's cards ("Your Brand. Your Business"): square,
    near-black, set in one hairline grid, numbered, with the red wash and the
@@ -998,7 +1005,7 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 }
 .seenon-eyebrow{
   text-align:center; margin-bottom:12px;
-  font-size:14px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.6);
+  font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.5);
 }
 .seenon-card{
   max-width:1280px; margin:0 auto;
@@ -1113,7 +1120,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 }
 </style>
 <link rel="stylesheet" href="talk-modal.css?v=4">
-<link rel="stylesheet" href="pfx-site.css?v=2">
+<link rel="stylesheet" href="pfx-site.css?v=3">
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
       data-layout-curriculum="b" data-layout-closing="b" data-layout-footer="b">
@@ -1195,7 +1202,10 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
       <h2 class="display h-sec gate-title" data-rv="up">Complete Control of Your Brand</h2>
       <p class="gate-body" data-rv="up">Unlike franchise programs, you own the equipment and keep full control. We&rsquo;re built for
         Independent Operators, Regional Chains, Franchisors, and even Convenience Stores.</p>
-      <a class="pfx-btn-soft arrowlink" href="kiosk-outdoor.html" data-rv="fade" data-cursor>Explore Specs <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      <a class="arrowlink" href="kiosk-outdoor.html" data-rv="fade" data-cursor>
+        <span>Explore Specs</span>
+        <span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+      </a>
     </div>
     <div class="gate-cards">
       <div class="gcard" data-cursor><span class="k">01</span><h3>Commercial Grade</h3><p>NAMA &amp; UL Certified, Built to Last</p><i class="bar"></i></div>
@@ -1221,7 +1231,10 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
       <div class="tk-intro">
         <h2 class="tk-title">What&rsquo;s Included?</h2>
         <p class="tk-body">From setup to seamless operation, we&rsquo;ve got you covered every step of the way.</p>
-        <a class="pfx-btn-soft arrowlink" href="kiosk-outdoor.html" data-cursor>Explore Specs <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+        <a class="arrowlink" href="kiosk-outdoor.html" data-cursor>
+          <span>Explore Specs</span>
+          <span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
+        </a>
       </div>
       <div class="tk-cards">
         <div class="gcard" data-cursor><span class="k">01</span><h3>Turnkey Services</h3><p>Turnkey Install + Training, Extended Service Plans, Unit Customization.</p><i class="bar"></i></div>
@@ -1280,7 +1293,9 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
           <div class="eyebrow">Learn More</div>
           <h2>FAQ&rsquo;s</h2>
           <p class="sub">Read Through Some of Our Frequently Asked Questions</p>
-          <a href="kiosk-outdoor.html" class="pfx-btn-soft explore-link" data-cursor>Explore Specs <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+          <a href="kiosk-outdoor.html" class="explore-link" data-cursor>Explore Specs
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>
+          </a>
         </div>
         <div class="faq-list" id="faqList">
           <div class="faq-item">

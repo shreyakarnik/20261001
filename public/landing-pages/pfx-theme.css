@@ -71,12 +71,13 @@ html body h1, html body h2, html body h3{ color:var(--k-bone); letter-spacing:-.
 .k-hero .desc, .page-head p, .calc-inner .sub, .build-section .sub, .deploy-section .sub, .login-card .sub,
 .gate-head .sub, .tm-head p{ color:var(--k-text) !important; font-weight:300; }
 
-/* eyebrows: the homepage's "YOUR BRAND. YOUR BUSINESS" — spaced capitals with a rule after */
+/* eyebrows: the homepage's "YOUR BRAND. YOUR BUSINESS" — spaced capitals with a rule after,
+   set like the homepage's "Explore Specs" link at half its strength */
 .eyebrow, .cert-eyebrow, .features-eyebrow, .rl, .sec-div, .serp-label, .form-section-title,
 .gate-head .eyebrow, .login-card .eyebrow, .form-pane-tab{
   display:flex !important; align-items:center; gap:16px;
-  font-size:10px !important; font-weight:500 !important; letter-spacing:.24em !important;
-  text-transform:uppercase; color:var(--k-muted) !important; border:0 !important; padding-bottom:0 !important;
+  font-size:11px !important; font-weight:500 !important; letter-spacing:.2em !important;
+  text-transform:uppercase; color:rgba(223,231,224,.5) !important; border:0 !important; padding-bottom:0 !important;
 }
 .eyebrow::after, .cert-eyebrow::after, .features-eyebrow::after, .rl::after, .sec-div::after,
 .serp-label::after, .form-section-title::after, .form-pane-tab::after{
