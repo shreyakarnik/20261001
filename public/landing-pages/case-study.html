@@ -189,7 +189,7 @@
   }
 </style>
 <link rel="stylesheet" href="pfx-nav.css?v=3">
-<link rel="stylesheet" href="pfx-theme.css?v=2">
+<link rel="stylesheet" href="pfx-theme.css?v=3">
 <style>
 /* ---- case study: built on the spec pages' grammar (pfx-theme.css) */
 .cs-hero{ padding:56px 120px 0; }
@@ -201,9 +201,6 @@
 .cs-badges{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px; }
 .cs-badges .k-pill{ display:inline-flex; align-items:center; gap:8px; padding:9px 16px; font-size:13px; }
 .cs-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
-.cs-ctas .btn-ghost{ display:inline-flex; align-items:center; gap:10px; padding:14px 26px; border:1px solid var(--k-line); color:var(--k-bone);
-  font-size:15px; font-weight:600; border-radius:12px; background:rgba(255,255,255,.04); transition:background .3s; }
-.cs-ctas .btn-ghost:hover{ background:rgba(255,255,255,.1); }
 /* the photo slot: shows its hint until Images/case-study/pizza13.jpg exists */
 .cs-photo{ position:relative; aspect-ratio:4/5; overflow:hidden; display:grid; place-items:center; }
 .cs-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
@@ -282,7 +279,7 @@ table.cs-table{ width:100%; min-width:760px; border-collapse:collapse; font-size
 }
 @media (max-width:520px){ .cs-kpis{ grid-template-columns:1fr; } }
 </style>
-<link rel="stylesheet" href="pfx-site.css?v=1">
+<link rel="stylesheet" href="pfx-site.css?v=2">
 </head>
 <body class="kiosk-spec">
 
@@ -316,7 +313,7 @@ table.cs-table{ width:100%; min-width:760px; border-collapse:collapse; font-size
       </div>
       <div class="cs-ctas">
         <a class="btn-primary" href="contact.html" data-talk-trigger>Let&rsquo;s Talk!</a>
-        <a class="btn-ghost" href="#video">Watch the Story <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+        <a class="pfx-btn-soft" href="#video">Watch the Story <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
       </div>
     </div>
     <div class="k-hero-image cs-photo">
@@ -416,7 +413,7 @@ table.cs-table{ width:100%; min-width:760px; border-collapse:collapse; font-size
   <p>Run the numbers for your site, or talk to us about becoming the next white-label licensee.</p>
   <div class="cs-ctas">
     <a class="btn-primary" href="contact.html" data-talk-trigger>Let&rsquo;s Talk!</a>
-    <a class="btn-ghost" href="roi_calculator.html">Open the ROI Calculator <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+    <a class="pfx-btn-soft" href="roi_calculator.html">Open the ROI Calculator <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
   </div>
 </section>
 
