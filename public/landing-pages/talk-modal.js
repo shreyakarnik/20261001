@@ -197,10 +197,11 @@
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Inquiry';
         if(res.ok){
-          alert("Thanks! Your inquiry has been submitted.");
           form.reset();
           collapse();
           if(opts.onSuccess) opts.onSuccess();
+          /* every successful inquiry lands on the thank-you page */
+          window.location.href = 'thank-you.html';
         } else {
           alert("Something went wrong submitting the form. Please try again.");
         }

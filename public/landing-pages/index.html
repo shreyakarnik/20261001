@@ -3,12 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="analytics.js"></script>
+<!-- pfx:head -->
 <title>PFX — Pizza Automation Experts</title>
 <meta name="description" content="PFX is a white-label pizza vending platform: automated kiosks for independent operators, regional chains and franchisors. Your recipes, your brand, your pricing, 24/7.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://shreyakarnik.github.io/20261001/public/landing-pages/index.html">
+<meta name="theme-color" content="#05070a">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PFX">
+<meta property="og:title" content="PFX — Pizza Automation Experts">
+<meta property="og:description" content="PFX is a white-label pizza vending platform: automated kiosks for independent operators, regional chains and franchisors. Your recipes, your brand, your pricing, 24/7.">
+<meta property="og:url" content="https://shreyakarnik.github.io/20261001/public/landing-pages/index.html">
+<meta property="og:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PFX: Your Pizzeria, Now Automated. A white-label pizza vending kiosk at night.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PFX — Pizza Automation Experts">
+<meta name="twitter:description" content="PFX is a white-label pizza vending platform: automated kiosks for independent operators, regional chains and franchisors. Your recipes, your brand, your pricing, 24/7.">
+<meta name="twitter:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg">
+<!-- /pfx:head -->
 <link rel="stylesheet" href="assets/fonts.css">
 <style>
 /* Inter, bundled locally (SIL OFL), variable weight 100–900 */
@@ -486,11 +507,12 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
     display:flex; position:fixed; top:0; right:0; bottom:0; width:min(84vw,360px);
     padding:calc(var(--nav-h) + 28px) var(--pad) 34px; flex-direction:column; align-items:flex-start; gap:0;
     background:rgba(3,6,9,.98); border-left:1px solid var(--line-soft);
-    transform:translate3d(100%,0,0); opacity:0; visibility:hidden; pointer-events:none;
-    transition:transform .65s var(--ease-out), opacity .4s, visibility 0s linear .65s;
+    /* wiped away, not pushed off-screen, so a closed menu never widens the page on phones */
+    clip-path:inset(0 0 0 100%); opacity:0; visibility:hidden; pointer-events:none;
+    transition:clip-path .65s var(--ease-out), opacity .4s, visibility 0s linear .65s;
   }
   .nav.menu-open .nav-links{
-    transform:none; opacity:1; visibility:visible; pointer-events:auto; transition-delay:0s;
+    clip-path:inset(0); opacity:1; visibility:visible; pointer-events:auto; transition-delay:0s;
   }
   .nav-links .nav-link{
     width:100%; height:auto; padding:17px 0; overflow:visible; border-bottom:1px solid var(--line-soft);
@@ -774,6 +796,12 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(13,34,54,.62); }
 .btn-explore:hover{ background:rgba(255,255,255,.9); }
 .btn-explore svg{ transition:transform .45s var(--ease-out); }
 .btn-explore:hover svg{ transform:translate3d(2px,-2px,0); }
+/* small phones: keep both hero buttons on one line each, side by side */
+@media (max-width:400px){
+  .hero-ctas{ gap:10px; flex-wrap:wrap; }
+  .hero-ctas .btn-talk, .hero-ctas .btn-explore{ white-space:nowrap; padding:13px 16px; font-size:14px; }
+  .hero-ctas .btn-explore{ gap:8px; }
+}
 /* a soft daylight wash behind the copy column, so the text reads over the building */
 .hero::before{ display:block; top:0; left:0; right:auto; width:62%; height:88%;
   background:radial-gradient(120% 90% at 0% 30%, rgba(226,234,239,.92) 0%, rgba(226,234,239,.78) 38%, rgba(226,234,239,0) 72%); }
@@ -972,7 +1000,7 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 /* ---- "As Seen On", the PFX home page's rules verbatim; it takes the footer's
    lead row (spanning the grid, ruled off from the index below) */
 .foot .seenon{
-  grid-column:1 / -1; padding:36px 0 34px; margin-bottom:8px; border-bottom:1px solid var(--line-soft);
+  grid-column:1 / -1; min-width:0; padding:36px 0 34px; margin-bottom:8px; border-bottom:1px solid var(--line-soft);
   font-family:'Inter',system-ui,-apple-system,sans-serif;
 }
 .seenon-eyebrow{
@@ -1092,6 +1120,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 }
 </style>
 <link rel="stylesheet" href="talk-modal.css?v=4">
+<link rel="stylesheet" href="pfx-site.css?v=1">
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
       data-layout-curriculum="b" data-layout-closing="b" data-layout-footer="b">
@@ -1105,7 +1134,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <div id="pre">
   <div class="pre-in">
     <div class="pre-mark">
-      <img src="assets/pfx-light.png" alt="" aria-hidden="true">
+      <img src="assets/pfx-light.png" alt="PFX" aria-hidden="true">
     </div>
     <div class="pre-bar"><i id="pre-fill"></i></div>
   </div>
@@ -1115,7 +1144,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <header class="nav" id="nav">
   <a class="brand" href="#top" data-cursor>
     <img class="brand-logo brand-logo--dark" src="assets/pfx-dark.png" alt="PFX" width="474" height="222">
-    <img class="brand-logo brand-logo--light" src="assets/pfx-light.png" alt="" aria-hidden="true" width="474" height="222">
+    <img class="brand-logo brand-logo--light" src="assets/pfx-light.png" alt="PFX" aria-hidden="true" width="474" height="222">
   </a>
   <nav class="nav-links" id="navlinks">
     <a class="nav-link" href="kiosk-outdoor.html" data-cursor><span>Explore Kiosks</span><span class="alt" aria-hidden="true">Explore Kiosks</span></a>
@@ -6136,6 +6165,7 @@ else addEventListener('DOMContentLoaded', boot);
     });
   });
 </script>
-<script src="talk-modal.js?v=4"></script>
+<script src="talk-modal.js?v=5"></script>
+<script src="pfx-site.js?v=1"></script>
 </body>
 </html>

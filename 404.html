@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  /* GitHub Pages serves this page at the missing address, so resolve every link
+     from the site folder: /<repo>/public/landing-pages/ on github.io, or
+     /public/landing-pages/ on a custom domain. */
+  (function () {
+    var repo = /\.github\.io$/.test(location.hostname) ? '/' + location.pathname.split('/')[1] : '';
+    document.write('<base href="' + repo + '/public/landing-pages/">');
+  })();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- pfx:head -->
+<title>Page Not Found | PFX</title>
+<meta name="description" content="The page you&#x27;re looking for doesn&#x27;t exist or has moved.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://shreyakarnik.github.io/20261001/404.html">
+<meta name="theme-color" content="#05070a">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PFX">
+<meta property="og:title" content="Page Not Found | PFX">
+<meta property="og:description" content="The page you&#x27;re looking for doesn&#x27;t exist or has moved.">
+<meta property="og:url" content="https://shreyakarnik.github.io/20261001/404.html">
+<meta property="og:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PFX: Your Pizzeria, Now Automated. A white-label pizza vending kiosk at night.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Page Not Found | PFX">
+<meta name="twitter:description" content="The page you&#x27;re looking for doesn&#x27;t exist or has moved.">
+<meta name="twitter:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg">
+<!-- /pfx:head -->
+<script src="analytics.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="talk-modal.css?v=4">
+<style>
+  :root{
+    --red:#C00022;
+    --red-dark:#A80F22;
+    --ink:#ffffff;
+    --bg:#0D0E10;
+    --bg-alt:#131722;
+    --gray:#9AA3AF;
+    --line:rgba(255,255,255,0.12);
+    --panel:rgba(217,217,217,0.2);
+    --panel-solid:#181c24;
+    --section-bg:#0D0E10;
+    --input-bg:rgba(255,255,255,0.3);
+    --white:#fff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.5;
+  }
+  a{text-decoration:none; color:inherit;}
+  .wrap80{max-width:1440px; margin:0 auto; padding:0 80px;}
+
+  /* NAV (shared identically across every page) */
+  header.nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 112px;
+    max-width:1282px; margin:20px auto 0;
+    position:sticky; top:20px; z-index:100;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:50px;
+  }
+  .logo{font-size:26px; font-weight:800; letter-spacing:-0.5px; color:var(--white);}
+  .logo img{height:32px; width:auto; display:block;}
+  .logo span{color:var(--red);}
+  nav.links{display:flex; align-items:center; gap:18px; font-size:14px; font-weight:400;}
+  nav.links a{color:var(--white); letter-spacing:0.3px;}
+  nav.links a.talk{
+    background:var(--red); color:#fff; padding:10px 20px; border-radius:12px; font-weight:600; font-size:14px;
+  }
+  .search-btn{color:var(--white); display:flex;}
+  .nav-logo-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:38px; height:38px; padding:2px; flex-shrink:0;
+    background:none; border:none;
+  }
+  .nav-logo-btn:hover{opacity:0.85;}
+  .nav-logo-btn img{width:30px; height:30px; display:block; object-fit:contain;}
+
+  .btn-primary{
+    background:var(--red); color:#fff; padding:14px 32px; border-radius:12px;
+    font-weight:600; font-size:15px; display:inline-block; border:none; cursor:pointer;
+  }
+  .btn-primary:hover{background:var(--red-dark);}
+
+  /* FOOTER (shared identically across every page) */
+  footer{
+    border-top:1px solid var(--line); margin-top:80px; padding:48px 80px; background:var(--bg);
+  }
+  .footer-inner{
+    max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px;
+  }
+  .footer-left .logo{margin-bottom:16px; display:block;}
+  .footer-socials{display:flex; gap:12px;}
+  .footer-socials a{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
+    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+  }
+  .footer-right{text-align:right;}
+  .footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
+  .footer-links a{font-size:14px; color:rgba(255,255,255,0.75);}
+  .footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+
+  /* PAGE-SPECIFIC: kiosk model detail pages */
+  .model-tabs{display:flex; justify-content:center; gap:14px; padding:44px 24px 0; flex-wrap:wrap;}
+  .model-tabs a{padding:13px 30px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; font-size:14px; font-weight:500; color:rgba(255,255,255,0.8); transition:all .15s;}
+  .model-tabs a:hover{border-color:rgba(255,255,255,0.4); color:var(--white);}
+  .model-tabs a.on{background:var(--red); border-color:var(--red); color:#fff; font-weight:600;}
+
+  .k-hero{padding:56px 120px 0;}
+  .k-hero-grid{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
+  .k-hero-copy{padding-left:30px;}
+  .k-hero h1{font-size:44px; font-weight:700; letter-spacing:-1px; margin-bottom:22px; color:var(--white);}
+  .k-badges{display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap;}
+  .k-pill{display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 16px; font-size:13px; color:rgba(255,255,255,0.85); width:fit-content;}
+  .k-pill svg{flex-shrink:0; color:var(--red);}
+  .k-hero .desc{color:rgba(255,255,255,0.7); font-size:15px; line-height:1.8; max-width:520px; margin-bottom:28px;}
+  .k-specs{display:flex; flex-direction:column; gap:10px; align-items:flex-start;}
+  .k-hero-image{border-radius:24px; overflow:hidden; aspect-ratio:1/1; background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08);}
+  .k-hero-image img{width:100%; height:100%; object-fit:cover; display:block;}
+
+  .cert-bar{max-width:1440px; margin:56px auto 0; padding:0 80px;}
+  /* Same type spec as the section eyebrows ("Your Brand. Your Business") */
+  .cert-eyebrow{text-align:center; margin-bottom:12px; font-size:14px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.6);}
+  .cert-bar-inner{border:1px solid rgba(255,255,255,0.14); border-radius:50px; padding:22px 40px; display:flex; align-items:center; justify-content:center; gap:56px; font-size:15px; color:rgba(255,255,255,0.85); flex-wrap:wrap;}
+  .cert-bar-inner img{height:78px; object-fit:contain;}
+
+  .build-section{padding:88px 80px 0; text-align:center;}
+  .build-section h2{font-size:32px; font-weight:600; margin-bottom:10px; color:var(--white);}
+  .build-section .sub{color:rgba(255,255,255,0.65); font-size:16px; margin-bottom:36px;}
+  .build-cards{max-width:1280px; margin:0 auto; display:grid; gap:20px;}
+  .build-cards.cols-2{grid-template-columns:1fr 1fr;}
+  .build-cards.cols-3{grid-template-columns:repeat(3,1fr);}
+  .build-card{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:26px; text-align:left;}
+  .build-card h3{font-size:16px; font-weight:600; margin-bottom:10px; color:var(--white);}
+  .build-card p{font-size:13.5px; line-height:1.6; color:rgba(255,255,255,0.65);}
+
+  .features-section{padding:56px 80px 0; text-align:center;}
+  .features-eyebrow{font-size:13px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:24px;}
+  .features-grid{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
+  .feature-pill{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 16px; font-size:13.5px; font-weight:500; color:rgba(255,255,255,0.85); line-height:1.4;}
+  .security-bar{max-width:1280px; margin:20px auto 0;}
+  .security-bar-inner{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 24px; text-align:center; font-size:14px; color:rgba(255,255,255,0.75);}
+  .k-cta{text-align:center; padding:40px 80px 0;}
+
+  .deploy-section{padding:88px 80px 0; text-align:center;}
+  .deploy-section h2{font-size:32px; font-weight:600; margin-bottom:10px; color:var(--white);}
+  .deploy-section .sub{color:rgba(255,255,255,0.65); font-size:16px; margin-bottom:32px;}
+  .deploy-tags{display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-bottom:36px;}
+  .deploy-tag{border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 20px; font-size:13.5px; color:rgba(255,255,255,0.8);}
+  .deploy-gallery{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr 1.15fr 1fr; gap:20px; align-items:stretch;}
+  .deploy-gallery .g-item{border-radius:20px; background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); min-height:340px;}
+  .deploy-gallery .g-item.tall{min-height:440px;}
+
+  @media (max-width: 900px){
+    .k-hero{padding:32px 24px 0;}
+    .k-hero-grid{grid-template-columns:1fr; gap:32px;}
+    .k-hero-copy{padding-left:0;}
+    .k-hero h1{font-size:32px;}
+    .k-hero-image{order:-1;}
+    .cert-bar, .build-section, .features-section, .deploy-section, .k-cta{padding-left:24px; padding-right:24px;}
+    .build-cards.cols-2, .build-cards.cols-3{grid-template-columns:1fr;}
+    .features-grid{grid-template-columns:1fr 1fr;}
+    .deploy-gallery{grid-template-columns:1fr; }
+    .deploy-gallery .g-item, .deploy-gallery .g-item.tall{min-height:220px;}
+    .cert-bar-inner{padding:18px 20px; font-size:13px; gap:32px;}
+    .cert-bar-inner img{height:60px;}
+  }
+
+  @media (max-width: 900px){
+    header.nav{margin:12px; padding:10px 16px;}
+    nav.links{gap:12px; font-size:13px;}
+    nav.links a:not(.talk), nav.links .search-btn{display:none;}
+    .footer-inner{flex-direction:column;}
+    .footer-right{text-align:left;}
+    .footer-links{justify-content:flex-start;}
+    .footer-legal{margin-left:0;}
+  }
+</style>
+<link rel="stylesheet" href="pfx-nav.css?v=3">
+<link rel="stylesheet" href="pfx-theme.css?v=2">
+<style>
+/* ---- a short standalone message page (thank-you, 404) */
+.msg{ min-height:calc(100vh - 220px); display:flex; align-items:center; padding:64px 120px; }
+.msg-inner{ max-width:1080px; margin:0 auto; width:100%; }
+.msg .eyebrow{ margin-bottom:22px; max-width:520px; }
+.msg h1{ font-size:clamp(40px,5vw,72px) !important; font-weight:600 !important; letter-spacing:-.03em !important; line-height:1.02; margin-bottom:20px; color:var(--k-bone); }
+.msg h1 em{ font-style:normal; color:var(--k-verm); }
+.msg p.lead{ max-width:560px; font-size:17px; line-height:1.75; color:var(--k-text); font-weight:300; margin-bottom:32px; }
+.msg-ctas{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px; }
+.msg-ctas .btn-ghost{ display:inline-flex; align-items:center; gap:10px; padding:14px 26px; border:1px solid var(--k-line); color:var(--k-bone);
+  font-size:15px; font-weight:600; border-radius:12px; background:rgba(255,255,255,.04); transition:background .3s; }
+.msg-ctas .btn-ghost:hover{ background:rgba(255,255,255,.1); }
+.msg-next{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--k-line); border-left:1px solid var(--k-line); }
+.msg-next a{ position:relative; display:block; padding:24px 26px; border-right:1px solid var(--k-line); border-bottom:1px solid var(--k-line);
+  background:var(--k-plate); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); transition:padding .5s var(--k-ease), background .4s; }
+.msg-next a::after{ content:''; position:absolute; left:0; bottom:-1px; height:1px; width:100%; background:var(--k-verm); transform:scaleX(0); transform-origin:left; transition:transform .6s var(--k-ease); }
+.msg-next a:hover{ padding-left:32px; background:rgba(14,18,23,.84); }
+.msg-next a:hover::after{ transform:scaleX(1); }
+.msg-next span{ display:block; font-size:11px; letter-spacing:.16em; color:var(--k-muted); margin-bottom:10px; }
+.msg-next b{ display:block; font-weight:400; font-size:clamp(17px,1.5vw,21px); color:var(--k-bone); margin-bottom:6px; }
+.msg-next small{ display:block; font-size:13px; line-height:1.6; color:var(--k-text); }
+@media (max-width:900px){
+  .msg{ padding:40px 24px 56px; min-height:0; }
+  .msg-next{ grid-template-columns:1fr; }
+}
+</style>
+<link rel="stylesheet" href="pfx-site.css?v=1">
+</head>
+<body class="kiosk-spec">
+
+<header class="pfx-nav" id="pfxNav">
+  <a class="pfx-brand" href="index.html" aria-label="PFX home"><img src="assets/pfx-light.png" alt="PFX"></a>
+  <nav class="pfx-links" id="pfxLinks">
+    <a class="pfx-link" href="kiosk-outdoor.html">Explore Kiosks</a>
+    <a class="pfx-link" href="case-study.html">Case Study</a>
+    <a class="pfx-link" href="roi_calculator.html">ROI Calculator</a>
+    <a class="pfx-link" href="index.html#faq">FAQ</a>
+    <a class="pfx-link" href="blog.html">Blog</a>
+    <a class="pfx-link pfx-link--talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+  </nav>
+  <div class="pfx-actions">
+    <button type="button" class="pfx-search" id="siteSearchBtn" aria-label="Search"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="pfx-talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <button type="button" class="pfx-burger" aria-label="Menu" aria-controls="pfxLinks" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<section class="msg">
+  <div class="msg-inner">
+    <div class="eyebrow">Error 404</div>
+    <h1>This Page Is <em>Out of Stock.</em></h1>
+    <p class="lead">The page you&rsquo;re looking for doesn&rsquo;t exist or has moved. Our kiosks never close, though, so here are a few places to pick up from.</p>
+    <div class="msg-ctas">
+      <a class="btn-primary" href="index.html">Back to Home</a>
+      <a class="btn-ghost" href="contact.html" data-talk-trigger>Let&rsquo;s Talk <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+    </div>
+      <div class="msg-next">
+        <a href="roi_calculator.html"><span>01</span><b>Run the Numbers</b><small>Project earnings and payback for your site with the ROI calculator.</small></a>
+        <a href="kiosk-outdoor.html"><span>02</span><b>Explore the Kiosks</b><small>Compare the Indoor, Outdoor and ATM kiosks side by side.</small></a>
+        <a href="case-study.html"><span>03</span><b>Read the Case Study</b><small>How Pizza 13 became our first white-label licensee.</small></a>
+      </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="logo"><img src="Images/pfx-logo-white.png" alt="PFX"></div>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"></path></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle><path d="M10 9v12"></path><path d="M10 13a4 4 0 0 1 8 0v8"></path></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"></rect><polygon points="10 9 16 12 10 15" fill="currentColor" stroke="none"></polygon></svg></a>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Application Form</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="#">Documentation</a>
+        <a href="contact.html">Support</a>
+      </div>
+      <p class="footer-legal">All trademarks are owned by PFX Canada Inc and used under licence. &copy;2026</p>
+    </div>
+  </div>
+</footer>
+
+<script src="blog-data.js"></script>
+<script src="site-search.js"></script>
+<script src="talk-modal.js?v=5"></script>
+
+<script src="pfx-nav.js"></script>
+<script src="pfx-site.js?v=1"></script>
+</body>
+</html>

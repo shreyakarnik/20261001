@@ -1,7 +1,7 @@
 /* =========================================================
    PFX ANALYTICS
    -------------------------------------------------------
-   Loads three free tools on every page:
+   Loads three free tools on every page, once the visitor accepts cookies:
      - Google Analytics (GA4) — visit counts, traffic sources,
        which pages people view, how long they stay.
      - Microsoft Clarity — heatmaps + anonymized session
@@ -33,6 +33,16 @@
 var GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
 var CLARITY_PROJECT_ID = "YOUR_CLARITY_PROJECT_ID";
 var HUBSPOT_TRACKING_ACCOUNT_ID = "YOUR_HUBSPOT_ACCOUNT_ID";
+
+/* CONSENT: none of the three tools loads until the visitor accepts cookies in
+   the banner (pfx-site.js). The choice is remembered per browser under the
+   localStorage key "pfx_consent" ("accepted" / "declined"); clearing it brings
+   the banner back. */
+var PFX_CONSENT_KEY = "pfx_consent";
+var pfxAnalyticsLoaded = false;
+function pfxLoadAnalytics() {
+  if (pfxAnalyticsLoaded) return;
+  pfxAnalyticsLoaded = true;
 
 // ---- Google Analytics (GA4) ----
 (function () {
@@ -69,3 +79,6 @@ var HUBSPOT_TRACKING_ACCOUNT_ID = "YOUR_HUBSPOT_ACCOUNT_ID";
   s.src = '//js.hs-scripts.com/' + HUBSPOT_TRACKING_ACCOUNT_ID + '.js';
   document.head.appendChild(s);
 })();
+}
+window.pfxLoadAnalytics = pfxLoadAnalytics;
+try { if (localStorage.getItem(PFX_CONSENT_KEY) === "accepted") pfxLoadAnalytics(); } catch (e) {}
