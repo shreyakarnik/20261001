@@ -282,6 +282,8 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 /* section labels: set like the "Explore Specs" link, at half its strength */
 .sec-head .k{ font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.5); }
 .sec-head .k b{ color:var(--vermilion); font-weight:500; }
+/* inside a two-column section the label heads the left column, level with the cards */
+.gate-intro .sec-head, .tk-intro .sec-head{ margin-bottom:22px; }
 
 /* — chapter I: the gate */
 .gate-grid{ display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,1fr); gap:clamp(28px,5vw,90px); align-items:start; }
@@ -1193,11 +1195,11 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 
 <!-- ============================================================ chapter I -->
 <section class="sec" id="gate" data-cam="1">
-  <div class="sec-head" data-rv="fade">
-    <span class="k">Your Brand. Your Business</span>
-  </div>
   <div class="gate-grid">
     <div class="gate-intro">
+      <div class="sec-head" data-rv="fade">
+        <span class="k">Your Brand. Your Business</span>
+      </div>
       <h2 class="display h-sec gate-title" data-rv="up">Complete Control of Your Brand</h2>
       <p class="gate-body" data-rv="up">Unlike franchise programs, you own the equipment and keep full control. We&rsquo;re built for
         Independent Operators, Regional Chains, Franchisors, and even Convenience Stores.</p>
@@ -1223,11 +1225,11 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <section class="sec" id="pathways" data-cam="2">
   <!-- the turnkey model: shown on the climb to the doors, before the indoor kiosk -->
   <div class="tk-copy" id="tkCopy" aria-hidden="true">
-    <div class="sec-head">
-      <span class="k">Turnkey Model</span>
-    </div>
     <div class="tk-grid">
       <div class="tk-intro">
+        <div class="sec-head">
+          <span class="k">Turnkey Model</span>
+        </div>
         <h2 class="tk-title">What&rsquo;s Included?</h2>
         <p class="tk-body">From setup to seamless operation, we&rsquo;ve got you covered every step of the way.</p>
         <a class="arrowlink" href="kiosk-outdoor.html" data-cursor>
