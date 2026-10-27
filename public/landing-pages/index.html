@@ -3163,6 +3163,11 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   const steel = new THREE.MeshStandardMaterial({ color: 0x4a4a4a, roughness: .4, metalness: .45 });
   const seat = new THREE.MeshStandardMaterial({ color: 0x4e4e4e, roughness: .55, metalness: .05 });   /* graphite moulded seats */
   const tparts = [], sparts = [], cparts = [];
+  /* furniture shadows: each table top and chair seat as a soft rectangle on
+     the floor under it, and a small dark dot where each leg meets the floor */
+  const footShTable = new THREE.MeshBasicMaterial({ map: tx(texFootShadow(1.8, .8, .25)), transparent: true, depthWrite: false, opacity: .55 });
+  const footShChair = new THREE.MeshBasicMaterial({ map: tx(texFootShadow(.44, .42, .17)), transparent: true, depthWrite: false, opacity: .45 });
+  const legSh = new THREE.MeshBasicMaterial({ map: WORLD.hallShadowTex, transparent: true, depthWrite: false, opacity: .9 });
   const table = (cx, cz, rot) => {
     const L = 1.8, Wt = .8, H = .75, c = Math.cos(rot), s = Math.sin(rot);
     const at = (lx, lz) => [cx + lx * c + lz * s, cz - lx * s + lz * c];
@@ -3177,8 +3182,15 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
     const pool = put(new THREE.PlaneGeometry(2.6, 2.6), poolMat, p[0], y0 + .008, p[1], -Math.PI / 2); pool.renderOrder = 3;
     [[-L / 2 + .12, -Wt / 2 + .1], [L / 2 - .12, -Wt / 2 + .1], [-L / 2 + .12, Wt / 2 - .1], [L / 2 - .12, Wt / 2 - .1]].forEach(([a, b]) => {
       p = at(a, b); sparts.push(new THREE.CylinderGeometry(.022, .022, H, 8).translate(p[0], y0 + H / 2, p[1])); });
+    /* the top's own soft shadow on the floor, and a contact dot at each leg */
+    { const sp = at(0, 0), m = put(new THREE.PlaneGeometry(L + .5, Wt + .5), footShTable, sp[0], y0 + .007, sp[1], -Math.PI / 2);
+      m.rotation.z = rot; m.renderOrder = 2; }
+    [[-L / 2 + .12, -Wt / 2 + .1], [L / 2 - .12, -Wt / 2 + .1], [-L / 2 + .12, Wt / 2 - .1], [L / 2 - .12, Wt / 2 - .1]].forEach(([a, b]) => {
+      const lp = at(a, b), m = put(new THREE.PlaneGeometry(.16, .16), legSh, lp[0], y0 + .008, lp[1], -Math.PI / 2); m.renderOrder = 2; });
     [-.55, .55].forEach(a => [-1, 1].forEach(sd => {             /* two chairs a side */
       const cz2 = sd * (Wt / 2 + .3);
+      { const cp = at(a, cz2), m = put(new THREE.PlaneGeometry(.44 + .34, .42 + .34), footShChair, cp[0], y0 + .0075, cp[1], -Math.PI / 2);
+        m.rotation.z = rot; m.renderOrder = 2; }
       p = at(a, cz2); cparts.push(new THREE.BoxGeometry(.44, .04, .42).rotateY(rot).translate(p[0], y0 + .46, p[1]));
       p = at(a, cz2 + sd * .2); cparts.push(new THREE.BoxGeometry(.44, .4, .03).rotateY(rot).translate(p[0], y0 + .7, p[1]));
       [[-.19, -.17], [.19, -.17], [-.19, .17], [.19, .17]].forEach(([u, v]) => {
@@ -3485,29 +3497,29 @@ const KIOSK = { x: 1.6, y: 3.1, z: 7.0, ry: -0.80 };
    1) is rendered from the camera mirrored in the floor plane, and the floor
    patch looks it up through REFL.tm. Mipmapped, so the patch can blur it. */
 const REFL = { rt: null, cam: new THREE.PerspectiveCamera(), tm: new THREE.Matrix4(), cc: new THREE.Color() };
-function renderReflection() {
+function renderReflection(layer, Y, floorMat) {
   if (!REFL.rt) {
     REFL.rt = new THREE.WebGLRenderTarget(512, 512, { minFilter: THREE.LinearMipmapLinearFilter, generateMipmaps: true });
-    if (WORLD.kioskFloor) WORLD.kioskFloor.uniforms.tR.value = REFL.rt.texture;
   }
-  const c = camera, v = REFL.cam, Y = KIOSK.y;
+  floorMat.uniforms.tR.value = REFL.rt.texture;
+  const c = camera, v = REFL.cam;
   c.updateMatrixWorld();
   const dir = c.getWorldDirection(new THREE.Vector3()); dir.y = -dir.y;
   const up = new THREE.Vector3(0, 1, 0).applyQuaternion(c.quaternion); up.y = -up.y;
   v.position.set(c.position.x, 2 * Y - c.position.y, c.position.z);
   v.up.copy(up); v.lookAt(v.position.clone().add(dir)); v.updateMatrixWorld();
   v.projectionMatrix.copy(c.projectionMatrix); v.projectionMatrixInverse.copy(c.projectionMatrixInverse);
-  v.layers.set(1);
+  v.layers.set(layer);
   REFL.tm.set(.5, 0, 0, .5, 0, .5, 0, .5, 0, 0, .5, .5, 0, 0, 0, 1).multiply(v.projectionMatrix).multiply(v.matrixWorldInverse);
   renderOffscreen(REFL.rt, v, null);
 }
 /* the kiosk's silhouette from the main camera, for the depth of field */
 const MASK = { rt: null, mat: new THREE.MeshBasicMaterial({ color: 0xffffff }), cam: null };
-function renderMask() {
+function renderMask(layer) {
   const w = Math.max(2, POST.scene.width >> 1), h = Math.max(2, POST.scene.height >> 1);
   if (!MASK.rt) MASK.rt = new THREE.WebGLRenderTarget(w, h);
   else if (MASK.rt.width !== w || MASK.rt.height !== h) MASK.rt.setSize(w, h);
-  const keep = camera.layers.mask; camera.layers.set(1);
+  const keep = camera.layers.mask; camera.layers.set(layer);
   renderOffscreen(MASK.rt, camera, MASK.mat);
   camera.layers.mask = keep;
 }
@@ -4431,6 +4443,22 @@ function buildIndoorKiosk() {
       const sh = new THREE.Mesh(new THREE.PlaneGeometry(W + 2 * pad, D + 2 * pad),
         new THREE.MeshBasicMaterial({ map: tx(c), transparent: true, depthWrite: false, opacity: .85 }));
       sh.rotation.x = -Math.PI / 2; sh.position.y = .012; sh.renderOrder = 2; g.add(sh); }
+    /* the kiosk proper on layer 2, for its floor reflection and the depth of field */
+    g.traverse(o => { if (o.isMesh && o.material.blending !== THREE.AdditiveBlending) o.layers.enable(2); });
+    /* its reflection in the cafeteria floor, as if polished: added over the
+       floor, blurring and fading away from the base */
+    { const refl = new THREE.ShaderMaterial({
+        uniforms: { tR: { value: null }, uTM: { value: REFL.tm }, uOn: { value: 0 } },
+        vertexShader: 'uniform mat4 uTM; varying vec4 vR; varying vec3 vP;\nvoid main(){ vP = position;\n' +
+          ' vec4 w = modelMatrix * vec4(position, 1.0); vR = uTM * w; gl_Position = projectionMatrix * viewMatrix * w; }',
+        fragmentShader: 'uniform sampler2D tR; uniform float uOn; varying vec4 vR; varying vec3 vP;\nvoid main(){\n' +
+          ' if (uOn <= 0.0) discard;\n' +
+          ' float dOut = length(vec2(max(abs(vP.x) - ' + f(W / 2) + ', 0.0), max(abs(vP.z) - ' + f(D / 2) + ', 0.0)));\n' +
+          ' gl_FragColor = vec4(texture2D(tR, vR.xy / vR.w, dOut * 5.0).rgb * .20 * exp(-dOut / .6) * uOn, 1.0); }',
+        transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+      });
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(9, 9).rotateX(-Math.PI / 2), refl);
+      m.position.y = .006; m.renderOrder = 3; g.add(m); WORLD.kioskInFloor = refl; }
     /* the backlight, as on the hero kiosk: a soft cool glow just behind it, on
        the line from chapter II's camera through it (BACK_DIR, in kiosk space) */
     const BACK_DIR = new THREE.Vector2(.423, .906);
@@ -6415,11 +6443,17 @@ let FRAME = 0;
 function render() {
   FRAME++;
   /* the hero kiosk's reflection, and its mask for the depth of field */
-  const heroK = WORLD.kiosk && WORLD.kiosk.visible && RIG.smooth < 1.05;
+  /* (and the indoor kiosk's, on layer 2, while it holds the shot) */
+  const sm = RIG.smooth;
+  const heroK = !!(WORLD.kiosk && WORLD.kiosk.visible && sm < 1.05 && WORLD.kioskFloor);
+  const inK = !!(WORLD.kioskIn && WORLD.kioskInFloor && sm > 1.8 && sm < 2.32);
   if (WORLD.kioskFloor) WORLD.kioskFloor.uniforms.uOn.value = heroK ? 1 : 0;
-  if (heroK) renderReflection();
-  const dof = WANT_POST ? (1 - smooth(.35, .85, RIG.smooth)) : 0;
-  if (WANT_POST) { if (dof > .001 && WORLD.kiosk) renderMask(); POST.comp.uniforms.uDof.value = dof;
+  if (WORLD.kioskInFloor) WORLD.kioskInFloor.uniforms.uOn.value = inK ? 1 - smooth(2.2, 2.32, sm) : 0;
+  if (heroK) renderReflection(1, KIOSK.y, WORLD.kioskFloor);
+  else if (inK) renderReflection(2, KIOSK_IN.y, WORLD.kioskInFloor);
+  const dofOut = 1 - smooth(.35, .85, sm), dofIn = smooth(1.86, 1.98, sm) * (1 - smooth(2.1, 2.24, sm));
+  const dof = WANT_POST ? Math.max(dofOut, dofIn) : 0;
+  if (WANT_POST) { if (dof > .001 && (WORLD.kiosk || WORLD.kioskIn)) renderMask(dofOut >= dofIn ? 1 : 2); POST.comp.uniforms.uDof.value = dof;
     POST.comp.uniforms.tM.value = MASK.rt ? MASK.rt.texture : null; }
   renderer.setRenderTarget(WANT_POST ? POST.scene : null);
   renderer.clear(true, true, false);
