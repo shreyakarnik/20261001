@@ -3538,6 +3538,13 @@ function makeKiosk(d, T) {
   /* the flat parts, in the render's reds (read off it) */
   const RED = '#8a0a12', INNER = '#9c0c1e', CEIL = '#770109',
         ROOF_TOP = '#b0101f', ROOF_UNDER = '#6e0610', ROOF_SIDE = '#7a0912';
+  /* the rim light: the cool backlight catching the outer edges that face it,
+     a thin whitish line that fades fast inward and is strongest up top.
+     rimLine(d, k) blends toward it at strength k, d being the distance (m) in
+     from the lit edge; the colour is set past 1.0 so it leaves the kiosk's 78%
+     night level as near white. */
+  const RIM = ' vec3 RIMC = vec3(1.10, 1.17, 1.28);\n';
+  const rimLine = (d, k, w) => ' c.rgb = mix(c.rgb, RIMC, clamp(' + k + ' * exp(-max(' + d + ', 0.0) / ' + (w || '.025') + '), 0.0, 1.0));\n';   /* w: falloff width (m), wider on faces seen edge-on */
 
   /* ---- the body behind the alcove (its visible faces are planes below) */
   add(new THREE.BoxGeometry(W - .004, BODY, D - A).translate(0, BODY / 2, -D / 2 + (D - A) / 2), flat(RED));
@@ -3551,7 +3558,8 @@ function makeKiosk(d, T) {
 
   /* ---- the tiled "Pizzeria that's Always Open" wall (+x) */
   add(new THREE.PlaneGeometry(D, BODY).rotateY(Math.PI / 2).translate(W / 2 + .003, BODY / 2, 0),
-    kioskMat({ uM: T.side }, ' c = texture2D(uM, vec2((' + f(D / 2) + ' - p.z) / ' + f(D) + ', p.y / ' + f(BODY) + '));'));
+    kioskMat({ uM: T.side }, ' c = texture2D(uM, vec2((' + f(D / 2) + ' - p.z) / ' + f(D) + ', p.y / ' + f(BODY) + '));\n' +
+      RIM + rimLine('p.z + ' + f(D / 2), '(.50 + .45 * p.y / ' + f(BODY) + ')', '.05')));
   /* the other two outside walls are never in the hero's view: plain red */
   add(new THREE.PlaneGeometry(D, BODY).rotateY(-Math.PI / 2).translate(-W / 2 - .003, BODY / 2, 0), flat(RED));
   add(new THREE.PlaneGeometry(W, BODY).rotateY(Math.PI).translate(0, BODY / 2, -D / 2 - .003), flat(RED));
@@ -3630,7 +3638,8 @@ function makeKiosk(d, T) {
   add(frameGeo, kioskMat({},
     ' if (n.z > 0.5) c = vec4(vec3(0.98, 0.15, 0.26) * (0.93 + 0.07 * p.y / ' + f(BODY) + '), 1.0);\n' +
     ' else { float sh = 0.66 + 0.22 * n.x - 0.12 * max(-n.y, 0.0) + 0.06 * (p.y / ' + f(BODY) + ');\n' +
-    '   c = vec4(vec3(0.86, 0.08, 0.17) * sh, 1.0); }'));
+    '   c = vec4(vec3(0.86, 0.08, 0.17) * sh, 1.0); }\n' +
+    RIM + ' if (n.z > 0.5) {\n' + rimLine('p.x + ' + f(W / 2), '(.35 + .45 * p.y / ' + f(BODY) + ')') + ' }'));
 
   /* ---- the roof: thick red slab, rounded over at the front, falling to the back */
   const zf = D / 2 + F, zb = -D / 2 - B, rr = .07;
@@ -3647,7 +3656,11 @@ function makeKiosk(d, T) {
     ' else if (n.x > 0.6) c = texture2D(uS, vec2((' + f(zf) + ' - p.z) / ' + f(zf - zb) + ', v));\n' +
     ' else if (n.y > 0.5) c = ' + kcol(ROOF_TOP) + ';\n' +
     ' else if (n.y < -0.5) c = ' + kcol(ROOF_UNDER) + ';\n' +
-    ' else c = ' + kcol(ROOF_SIDE) + ';'));
+    ' else c = ' + kcol(ROOF_SIDE) + ';\n' + RIM +
+    ' if (n.z > 0.55) {\n' + rimLine(f(TOP - rr) + ' - p.y', '.90') + rimLine('p.x + ' + f(W / 2 + S), '.60') + ' }\n' +
+    ' else if (n.x > 0.6) { float top = ' + f(TOP) + ' + ' + f(HB - TOP) + ' * (' + f(zf) + ' - p.z) / ' + f(zf - zb) + ';\n' +
+      rimLine('top - p.y', '.95', '.06') + rimLine('p.z - ' + f(zb), '.80', '.06') + ' }\n' +
+    ' else if (n.y > 0.3) c.rgb += RIMC * .30;'));
 
   /* (no valance: the roof sits straight on the red header and the tiled wall) */
 
@@ -3667,10 +3680,10 @@ function makeKiosk(d, T) {
     }
   });
   g.add(lamp);
-  /* a wide gaussian falloff (no disc edge to give it away), at half strength */
+  /* a wide gaussian falloff (no disc edge to give it away), kept faint: the rim line does the work */
   const rim = new THREE.Mesh(new THREE.PlaneGeometry(11, 7.4),   /* wide and low: it wraps the body, not a sun over the roof */
     new THREE.MeshBasicMaterial({ map: lib('kioskRimSoft', () => tx(texSoftGlow(196, 216, 245))),
-      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: .5 }));
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: .25 }));
   rim.position.set(-BACK_DIR.x * 1.9, 2.1, -BACK_DIR.y * 1.9);
   rim.rotation.y = Math.atan2(BACK_DIR.x, BACK_DIR.y);   /* square on to the hero camera */
   rim.renderOrder = 2; g.add(rim);
