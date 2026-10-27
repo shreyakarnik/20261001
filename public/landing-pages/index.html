@@ -3467,11 +3467,14 @@ function buildKiosk() {
    units play. The pies are illustrations, cut out round, side by side in
    assets/screen-pizzas.webp. Redrawn at ~20 fps, and only while the kiosk is
    on screen. */
-function kioskScreen(CW, CH) {                                  /* canvas size: match the screen's shape */
-  CW = CW || 360; CH = CH || 560;
+function kioskScreen(CW, CH, opt) {                             /* canvas size: match the screen's shape */
+  CW = CW || 360; CH = CH || 560; opt = opt || {};
+  /* opt.header: false drops the red PIZZERIA bar; opt.accent: the button colour */
+  const ACC = opt.accent || '#c4161c', HEAD = opt.header !== false;
   const c = cvs(CW, CH), x = c.getContext('2d');
   /* the card's layout, as fractions of the screen so any shape works */
-  const HDR = CH * .107, PY = CH * .446, PR_ = Math.min(CW * .37, CH * .236),
+  const HDR = HEAD ? CH * .107 : 0, PY = HEAD ? CH * .446 : CH * .37,
+        PR_ = HEAD ? Math.min(CW * .37, CH * .236) : Math.min(CW * .44, CH * .31),   /* without the bar the pie takes the room */
         NY = CH * .768, PRY = CH * .825, BY = CH * .882, BH = CH * .068, BW = CW * .67;
   const tex = new THREE.CanvasTexture(c); tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false;
   const PIES = [
@@ -3498,9 +3501,12 @@ function kioskScreen(CW, CH) {                                  /* canvas size: 
     const bg = x.createLinearGradient(0, 0, 0, CH);
     bg.addColorStop(0, '#1d0b0c'); bg.addColorStop(1, '#0c0506');
     x.fillStyle = bg; x.fillRect(0, 0, CW, CH);
-    x.fillStyle = '#c4161c'; x.fillRect(0, 0, CW, HDR);                    /* header */
-    x.fillStyle = '#fff'; x.font = '700 ' + Math.round(HDR * .37) + 'px Inter, system-ui, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
-    x.fillText('PIZZERIA', CW / 2, HDR * .52);
+    x.textAlign = 'center'; x.textBaseline = 'middle';
+    if (HEAD) {                                                            /* header */
+      x.fillStyle = '#c4161c'; x.fillRect(0, 0, CW, HDR);
+      x.fillStyle = '#fff'; x.font = '700 ' + Math.round(HDR * .37) + 'px Inter, system-ui, sans-serif';
+      x.fillText('PIZZERIA', CW / 2, HDR * .52);
+    }
     const glow = x.createRadialGradient(CW / 2, PY, 10, CW / 2, PY, PR_ * 1.36);
     glow.addColorStop(0, 'rgba(255,170,90,.22)'); glow.addColorStop(1, 'rgba(255,170,90,0)');
     x.fillStyle = glow; x.fillRect(0, HDR, CW, NY - HDR);
@@ -3509,8 +3515,8 @@ function kioskScreen(CW, CH) {                                  /* canvas size: 
     x.fillStyle = '#fff'; x.font = '700 ' + Math.round(CH * .046) + 'px Inter, system-ui, sans-serif'; x.fillText(PIES[i].name, CW / 2, NY);
     x.fillStyle = '#f2c45a'; x.font = '600 ' + Math.round(CH * .036) + 'px Inter, system-ui, sans-serif'; x.fillText(PIES[i].price, CW / 2, PRY);
     x.globalAlpha = 1;
-    x.fillStyle = '#c4161c'; x.fillRect((CW - BW) / 2, BY, BW, BH);       /* button */
-    x.fillStyle = '#fff'; x.font = '700 ' + Math.round(CH * .030) + 'px Inter, system-ui, sans-serif'; x.fillText('ORDER NOW', CW / 2, BY + BH / 2);
+    x.fillStyle = ACC; x.fillRect((CW - BW) / 2, BY, BW, BH);             /* button */
+    x.fillStyle = opt.accent ? '#101213' : '#fff';                         /* dark lettering on a light accent */ x.font = '700 ' + Math.round(CH * .030) + 'px Inter, system-ui, sans-serif'; x.fillText('ORDER NOW', CW / 2, BY + BH / 2);
     tex.needsUpdate = true;
   }
   draw(0);
@@ -4184,7 +4190,7 @@ function buildIndoorKiosk() {
       geo.setAttribute('position', new THREE.Float32BufferAttribute([].concat(...corners), 3));
       geo.setAttribute('uv', new THREE.Float32BufferAttribute([0, 0, 1, 0, 1, 1, 0, 1], 2));
       geo.setIndex([0, 1, 2, 0, 2, 3]);
-      const scr = kioskScreen(Math.round(560 * sw / sh), 560);
+      const scr = kioskScreen(Math.round(560 * sw / sh), 560, { header: false, accent: d.LIME });
       add(geo, new THREE.ShaderMaterial({
         uniforms: { uM: { value: scr.tex } },
         vertexShader: 'varying vec2 vUv;\nvoid main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
