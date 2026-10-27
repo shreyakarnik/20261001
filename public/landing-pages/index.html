@@ -3912,7 +3912,7 @@ function makeKiosk(d, T) {
         ' float dOut = length(vec2(max(abs(vP.x) - ' + f(W / 2) + ', 0.0), max(abs(vP.z) - ' + f(D / 2) + ', 0.0)));\n' +
         ' vec2 kc = vP.xz - vec2(-.6, 1.4);\n' +
         ' float light = .06 * exp(-dot(kc, kc) / 6.0) * max(1.0 - .92 * exp(-dOut / .05) - .45 * exp(-dOut / .35), 0.0);\n' +
-        ' vec3 r = uOn > 0.0 ? texture2D(tR, vR.xy / vR.w, dOut * 5.0).rgb * .28 * exp(-dOut / .7) * uOn : vec3(0.0);\n' +
+        ' vec3 r = uOn > 0.0 ? texture2D(tR, vR.xy / vR.w, dOut * 3.0).rgb * 1.6 * exp(-dOut / 1.5) * uOn : vec3(0.0);\n' +
         ' gl_FragColor = vec4(vec3(.85, .88, .95) * light + r, 0.0); }'
     });
     const m = new THREE.Mesh(new THREE.PlaneGeometry(12, 12).rotateX(-Math.PI / 2), pool);
