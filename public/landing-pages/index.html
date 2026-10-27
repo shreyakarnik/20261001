@@ -4384,13 +4384,13 @@ function buildOutdoor() {
       o.traverse(m => {
         /* drawn after the drifting haze (an additive layer) so it can't lift them */
         if (m.isMesh) { m.renderOrder = 1.6; }
-        if (m.isInstancedMesh) { m.material.color.setHex(0x0b1409); m.material.emissive.setHex(0x000000);
+        if (m.isInstancedMesh) { m.material.color.setHex(0x010301); m.material.emissive.setHex(0x000000);
           m.material.transparent = true; m.material.fog = false;
           m.material.onBeforeCompile = (prev => sh => { prev(sh);
             sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>',
               '#include <dithering_fragment>\n gl_FragColor.rgb = diffuseColor.rgb;'); })(m.material.onBeforeCompile);
           m.material.needsUpdate = true; }
-        else if (m.isMesh) m.material = new THREE.MeshBasicMaterial({ color: 0x050505, side: THREE.DoubleSide, transparent: true, fog: false });
+        else if (m.isMesh) m.material = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide, transparent: true, fog: false });
       });
     });
 
