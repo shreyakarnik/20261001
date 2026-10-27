@@ -3424,6 +3424,7 @@ function kioskMat(maps, body, o) {
   return new THREE.ShaderMaterial({
     uniforms: uniforms,
     vertexShader: 'varying vec3 vP; varying vec3 vN;\nvoid main(){ vP = position; vN = normal;\n gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    extensions: { derivatives: true },                                /* fwidth, for the rim line */
     fragmentShader: Object.keys(maps).map(k => 'uniform sampler2D ' + k + ';').join('\n') +
       '\nvarying vec3 vP; varying vec3 vN;\nvoid main(){ vec3 p = vP; vec3 n = normalize(vN); vec4 c;\n' + body +
       (o.cutout ? '\n if (c.a < 0.5) discard;' : '') + '\n gl_FragColor = vec4(c.rgb * 0.78, 0.0); }',
@@ -3544,7 +3545,10 @@ function makeKiosk(d, T) {
      from the lit edge; the colour is set past 1.0 so it leaves the kiosk's 78%
      night level as near white. */
   const RIM = ' vec3 RIMC = vec3(1.10, 1.17, 1.28);\n';
-  const rimLine = (d, k) => ' c.rgb = mix(c.rgb, RIMC, clamp(' + k + ' * exp(-max(' + d + ', 0.0) / .010), 0.0, 1.0));\n';
+  /* a hard line about 1.5 screen pixels wide at any distance (sized off the
+     distance's own screen-space rate, fwidth), anti-aliased on its inner edge */
+  const rimLine = (d, k) => ' { float d_ = ' + d + '; float px_ = fwidth(d_) + 1e-6;\n' +
+    '   c.rgb = mix(c.rgb, RIMC, ' + k + ' * (1.0 - smoothstep(px_ * .9, px_ * 1.9, max(d_, 0.0)))); }\n';
 
   /* ---- the body behind the alcove (its visible faces are planes below) */
   add(new THREE.BoxGeometry(W - .004, BODY, D - A).translate(0, BODY / 2, -D / 2 + (D - A) / 2), flat(RED));
@@ -3659,7 +3663,7 @@ function makeKiosk(d, T) {
   roofGeo.computeVertexNormals();
   add(roofGeo, kioskMat({ uF: T.roofFront, uS: T.roofSide },
     ' float v = (p.y - ' + f(BODY) + ') / ' + f(TOP - BODY) + ';\n' +
-    ' if (n.z > 0.55) c = texture2D(uF, vec2((p.x + ' + f(RX) + ') / ' + f(2 * RX) + ', v));\n' +
+    ' if (n.z > 0.55) c = texture2D(uF, vec2((p.x + ' + f(RX) + ') / ' + f(2 * RX) + ', min(v, .90)));   /* clear of the render\'s pale edge highlight */\n' +
     ' else if (n.x > 0.6) c = texture2D(uS, vec2((' + f(zf) + ' - p.z) / ' + f(zf - zb) + ', v));\n' +
     ' else if (n.y > 0.5) c = ' + kcol(ROOF_TOP) + ';\n' +
     ' else if (n.y < -0.5) c = ' + kcol(ROOF_UNDER) + ';\n' +
