@@ -2839,15 +2839,17 @@ function buildShell() {
      looks out on), standing where a wooded ridge once did */
   /* z, centre y, width, height, x — kept low: a crest that climbs past the
      hall's eaves stops reading as distance and starts reading as a cut-out */
-  const ridgeMap = tx(texSkyline(1207), { wrap: THREE.RepeatWrapping, repeat: [1.7, 1] });
+  const ridgeMap = tx(texSkyline(1207, { tone: [0, 0, 0], grey: 130 }), { wrap: THREE.RepeatWrapping, repeat: [1.7, 1] });   /* pitch-black blocks, grey windows */
   ridgeMap.wrapT = THREE.ClampToEdgeWrapping;
   [[-90, 13, 300, 26, 0], [-63, 9.5, 210, 19, 16]].forEach((r, i) => {
     const m = new THREE.Mesh(new THREE.PlaneGeometry(r[2], r[3]),
       /* fog off: at a hundred metres it would lift a black silhouette to 80%
          of the fog colour, and the treeline came back as a *pale* band */
-      new THREE.MeshBasicMaterial({ map: i ? tx(texSkyline(1311, { tone: [9, 14, 18], lit: .04 })) : ridgeMap, transparent: true,
+      new THREE.MeshBasicMaterial({ map: i ? tx(texSkyline(1311, { tone: [0, 0, 0], lit: .04, grey: 120 })) : ridgeMap, transparent: true,
         depthWrite: false, fog: false, toneMapped: false }));
-    m.position.set(r[4], r[1], r[0]); m.renderOrder = 1; scene.add(m); (WORLD.ridges = WORLD.ridges || []).push(m);
+    /* drawn after the haze and glow layers (which write no depth), so nothing
+       lifts the blocks off pitch black; anything solid in front still hides them */
+    m.position.set(r[4], r[1], r[0]); m.renderOrder = 10; scene.add(m); (WORLD.ridges = WORLD.ridges || []).push(m);
   });
 
   /* floor + podium */
@@ -2995,7 +2997,8 @@ function texFluted() {
   const W = 512, H = 64, c = cvs(W, H), x = c.getContext('2d'), n = 16, w = W / n;
   for (let i = 0; i < n; i++) {
     const g = x.createLinearGradient(i * w, 0, (i + 1) * w, 0);
-    g.addColorStop(0, '#9e9e9e'); g.addColorStop(.2, '#f4f4f4'); g.addColorStop(.6, '#dedede'); g.addColorStop(1, '#8c8c8c');
+    /* a gentle roll from shade to light: enough to read as fluting, not enough to pull the eye from the kiosk */
+    g.addColorStop(0, '#bdbdbd'); g.addColorStop(.2, '#d6d6d6'); g.addColorStop(.6, '#cecece'); g.addColorStop(1, '#b8b8b8');
     x.fillStyle = g; x.fillRect(i * w, 0, w, H);
   }
   return c;
@@ -3436,6 +3439,16 @@ function kioskMat(maps, body, o) {
 }
 const kcol = hexStr => { const v = parseInt(hexStr.slice(1), 16);
   return 'vec4(' + [(v >> 16) & 255, (v >> 8) & 255, v & 255].map(c => (c / 255).toFixed(4)).join(',') + ',1.0)'; };
+/* the rim light: the cool backlight catching a kiosk's top and right-hand
+   edges (both kiosks use it), a thin whitish line and nothing more.
+   rimLine(d, k) blends toward it at strength k, d being the distance (m) in
+   from the lit edge; the colour is set past 1.0 so it leaves the kiosk's 78%
+   night level as near white. */
+const RIM = ' vec3 RIMC = vec3(1.10, 1.17, 1.28);\n';
+/* a hard line about 1.5 screen pixels wide at any distance (sized off the
+   distance's own screen-space rate, fwidth), anti-aliased on its inner edge */
+const rimLine = (d, k) => ' { float d_ = ' + d + '; float px_ = fwidth(d_) + 1e-6;\n' +
+  '   c.rgb = mix(c.rgb, RIMC, ' + k + ' * (1.0 - smoothstep(px_ * .9, px_ * 1.9, max(d_, 0.0)))); }\n';
 
 function buildKiosk() {
   const P = window.KIOSK_PHOTO;
@@ -3515,16 +3528,6 @@ function makeKiosk(d, T) {
   /* the flat parts, in the render's reds (read off it) */
   const RED = '#8a0a12', INNER = '#9c0c1e', CEIL = '#770109',
         ROOF_TOP = '#b0101f', ROOF_UNDER = '#6e0610', ROOF_SIDE = '#7a0912';
-  /* the rim light: the cool backlight catching the kiosk's top and right-hand
-     edges, a thin whitish line and nothing more.
-     rimLine(d, k) blends toward it at strength k, d being the distance (m) in
-     from the lit edge; the colour is set past 1.0 so it leaves the kiosk's 78%
-     night level as near white. */
-  const RIM = ' vec3 RIMC = vec3(1.10, 1.17, 1.28);\n';
-  /* a hard line about 1.5 screen pixels wide at any distance (sized off the
-     distance's own screen-space rate, fwidth), anti-aliased on its inner edge */
-  const rimLine = (d, k) => ' { float d_ = ' + d + '; float px_ = fwidth(d_) + 1e-6;\n' +
-    '   c.rgb = mix(c.rgb, RIMC, ' + k + ' * (1.0 - smoothstep(px_ * .9, px_ * 1.9, max(d_, 0.0)))); }\n';
 
   /* ---- the body behind the alcove (its visible faces are planes below) */
   add(new THREE.BoxGeometry(W - .004, BODY, D - A).translate(0, BODY / 2, -D / 2 + (D - A) / 2), flat(RED));
@@ -3712,7 +3715,8 @@ function buildPlaza() {
    middle by the same measure the rig uses to step back */
 function placeKiosk() {
   if (!WORLD.kiosk) return;
-  WORLD.kiosk.position.x = KIOSK.x * (1 - .55 * aspectFix());
+  WORLD.kioskX = KIOSK.x * (1 - .55 * aspectFix());               /* its resting x; updateWorld slides it off from here */
+  WORLD.kiosk.position.x = WORLD.kioskX;
   if (WORLD.kioskRise) WORLD.kioskRise.position.x = WORLD.kiosk.position.x;
   if (WORLD.kioskIn) WORLD.kioskIn.position.x = KIOSK_IN.x * (1 - .95 * aspectFix());
 }
@@ -3841,7 +3845,8 @@ function buildStreetLamp(x, z, s, y) {
 }
 /* a city skyline, black on transparent like the ridge it stands in for: blocks
    of mixed height and width, setbacks, a few towers with masts and water
-   tanks, and a sparse scatter of dim warm windows still lit late at night */
+   tanks, and a sparse scatter of dim windows still lit late at night (warm,
+   or grey with opt.grey) */
 function texSkyline(seed, opt) {
   const o = opt || {}, W = 2048, H = 512, c = cvs(W, H), x = c.getContext('2d'), rnd = mulberry32(seed);
   const tone = o.tone || [5, 8, 9];
@@ -3861,7 +3866,9 @@ function texSkyline(seed, opt) {
     /* windows: a regular grid, almost all dark */
     for (let wy = H - h + 10; wy < H - 6; wy += 11) for (let wx = px + 6; wx < px + w - 6; wx += 9) {
       if (rnd() > (o.lit || .055)) continue;
-      x.fillStyle = 'rgba(255,' + (170 + rnd() * 50 | 0) + ',' + (90 + rnd() * 40 | 0) + ',' + (.35 + rnd() * .4).toFixed(2) + ')';
+      x.fillStyle = o.grey                                 /* opt.grey: neutral grey windows instead of warm ones */
+        ? 'rgba(' + (o.grey + rnd() * 30 | 0) + ',' + (o.grey + rnd() * 30 | 0) + ',' + (o.grey + rnd() * 30 | 0) + ',' + (.35 + rnd() * .4).toFixed(2) + ')'
+        : 'rgba(255,' + (170 + rnd() * 50 | 0) + ',' + (90 + rnd() * 40 | 0) + ',' + (.35 + rnd() * .4).toFixed(2) + ')';
       x.fillRect(wx, wy, 4, 5);
     }
     px += w + (rnd() > .8 ? 6 + rnd() * 20 : 0);
@@ -4153,13 +4160,15 @@ function buildIndoorKiosk() {
     /* the pillar's return into the bay, in the wrap's lime */
     add(new THREE.PlaneGeometry(PR, H).rotateY(-Math.PI / 2).translate(xb - .002, H / 2, D / 2 - PR / 2), limeSide);
     add(new THREE.PlaneGeometry(D, H).rotateY(Math.PI / 2).translate(W / 2 + .002, H / 2, 0),
-      kioskMat({ uM: T.side }, ' c = texture2D(uM, vec2((' + f(D / 2) + ' - p.z) / ' + f(D) + ', p.y / ' + f(H) + '));'));
+      kioskMat({ uM: T.side }, ' c = texture2D(uM, vec2((' + f(D / 2) + ' - p.z) / ' + f(D) + ', p.y / ' + f(H) + '));\n' +
+        RIM + rimLine('p.z + ' + f(D / 2), '.85') + rimLine(f(H) + ' - p.y', '.85')));
     /* the lime hood: it sits on top of the protruding pillar and runs across
        the bay, its front edge flush with the pillar's face — so it stands out
        exactly as far as the pillar does */
     const hoodL = -W / 2 - .2, hoodR = W / 2, hoodBack = D / 2 - PR - .12;
     add(new THREE.BoxGeometry(hoodR - hoodL, .06, D / 2 - hoodBack).translate((hoodL + hoodR) / 2, H + .03, (hoodBack + D / 2) / 2),
-      kioskMat({}, ' c = n.y > .5 ? ' + kcol(d.LIME) + ' : (n.y < -.5 ? ' + kcol('#6f7c26') + ' : ' + kcol('#a6b83a') + ');'));
+      kioskMat({}, ' c = n.y > .5 ? ' + kcol(d.LIME) + ' : (n.y < -.5 ? ' + kcol('#6f7c26') + ' : ' + kcol('#a6b83a') + ');\n' +
+        RIM + ' if (n.y < 0.5) {\n' + rimLine(f(H + .06) + ' - p.y', '.90') + ' }'));
     /* two pot lights in the hood's underside */
     const pot = kioskMat({}, ' c = vec4(1.0, 0.97, 0.88, 1.0);');
     [.3, .7].forEach(u => add(new THREE.CircleGeometry(.035, 18).rotateX(Math.PI / 2)
@@ -4169,6 +4178,16 @@ function buildIndoorKiosk() {
         new THREE.MeshBasicMaterial({ map: WORLD.hallShadowTex, transparent: true, depthWrite: false, opacity: .9 }));
       sh.rotation.x = -Math.PI / 2; sh.position.y = .01; sh.renderOrder = 2; g.add(sh);
     }
+    /* the backlight, as on the hero kiosk: a soft cool glow just behind it, on
+       the line from chapter II's camera through it (BACK_DIR, in kiosk space) */
+    const BACK_DIR = new THREE.Vector2(.449, .894);
+    const glow = new THREE.Mesh(new THREE.PlaneGeometry(11, 7.4),
+      new THREE.MeshBasicMaterial({ map: lib('kioskRimSoft', () => tx(texSoftGlow(196, 216, 245))),
+        transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false,
+        opacity: .5 }));   /* twice the hero's: a glow reads far less against this grey room than against the night */
+    glow.position.set(-BACK_DIR.x * 1.3, H * .86, -BACK_DIR.y * 1.3);
+    glow.rotation.y = Math.atan2(BACK_DIR.x, BACK_DIR.y);   /* square on to the camera */
+    glow.renderOrder = 2; g.add(glow);
     g.position.set(KIOSK_IN.x, KIOSK_IN.y, KIOSK_IN.z); g.rotation.y = KIOSK_IN.ry;
     scene.add(g); WORLD.kioskIn = g; placeKiosk();
   });
@@ -6024,12 +6043,14 @@ function updateWorld(dt) {
     m.material.opacity = a;
     m.visible = a > .006;
   });
-  /* the kiosk is the hero's product: once the walk starts it sinks back
-     behind its bank of grass, so it never hangs in the edge of a chapter */
+  /* the kiosk is the hero's product: once the walk starts it slides away to
+     the right, out of the frame, so it never hangs in the edge of the next
+     chapter, and it is gone (not drawn) once it is clear */
   if (WORLD.kiosk) {
-    const kd = 0, ky = KIOSK.y;   /* it stands on the paving now: it stays put rather than sinking through it */
-    if (Math.abs(WORLD.kiosk.position.y - ky) > .0005) {
-      WORLD.kiosk.position.y = ky;
+    const kd = smooth(.30, .92, RIG.smooth), ky = KIOSK.y;
+    const kx = (WORLD.kioskX !== undefined ? WORLD.kioskX : KIOSK.x) + kd * 10;   /* far enough that its glow clears the frame too */
+    if (Math.abs(WORLD.kiosk.position.y - ky) > .0005 || Math.abs(WORLD.kiosk.position.x - kx) > .0005) {
+      WORLD.kiosk.position.set(kx, ky, WORLD.kiosk.position.z);
       if (WANT_SHADOW && WORLD.key) WORLD.key.shadow.needsUpdate = true;
     }
     WORLD.kiosk.visible = kd < .999;
