@@ -1416,7 +1416,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 
 <script src="assets/three.min.js"></script>
 <script src="assets/kiosk-photo.js?v=3"></script>
-<script src="assets/kiosk-indoor-photo.js?v=3"></script>
+<script src="assets/kiosk-indoor-photo.js?v=6"></script>
 <script src="assets/kiosk-atm-photo.js"></script>
 <script>
 /* =====================================================================
@@ -4171,15 +4171,16 @@ function buildIndoorKiosk() {
       }
       geo.computeVertexNormals();
       const s = '((' + f(xb) + ' - p.x) / ' + f(xb - xL) + ')';
-      add(geo, kioskMat({}, ' c = n.y > .5 ? ' + kcol(d.LIME) + ' : (n.y < -.5 ? ' + kcol(d.HOOD_UNDER) + ' : ' + kcol(d.HOOD_FRONT) + ');\n' +
+      WORLD.kioskInHood = add(geo, kioskMat({}, ' c = n.y > .5 ? ' + kcol(d.LIME) + ' : (n.y < -.5 ? ' + kcol(d.HOOD_UNDER) + ' : ' + kcol(d.HOOD_FRONT) + ');\n' +
         RIM + ' if (n.z > 0.5) {\n' + rimLine(f(H) + ' + ' + f(R) + ' * clamp(' + s + ', 0.0, 1.0) - p.y', '.90') + ' }')); }
     /* the ordering screen: the same promo loop as the hero kiosk, over the
        grey display in the render (its visible part, left of the pillar; corners
        in the front texture's 1100 x 2160 pixels) */
     { const tw = 1100, th = 2160, zS = D / 2 - PR + .005;
       const at = (u, v) => [-W / 2 + u / tw * W, (1 - v / th) * H, zS];
-      const sw = (745 - 238) / tw * W, sh = (1105 - 558) / th * H;
-      const corners = [at(238, 1105), at(745, 1105), at(745, 558), at(238, 558)];   /* BL BR TR TL */
+      const L = 205, R = 745, T = 545, B = 1122;             /* a few pixels past the grey all round, so none of it shows */
+      const sw = (R - L) / tw * W, sh = (B - T) / th * H;
+      const corners = [at(L, B), at(R, B), at(R, T), at(L, T)];   /* BL BR TR TL */
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.Float32BufferAttribute([].concat(...corners), 3));
       geo.setAttribute('uv', new THREE.Float32BufferAttribute([0, 0, 1, 0, 1, 1, 0, 1], 2));
