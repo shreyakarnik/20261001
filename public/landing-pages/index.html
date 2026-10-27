@@ -3588,7 +3588,7 @@ function makeKiosk(d, T) {
     geo.setAttribute('position', new THREE.Float32BufferAttribute([].concat(...corners), 3));
     geo.setAttribute('uv', new THREE.Float32BufferAttribute([0, 0, 1, 0, 1, 1, 0, 1], 2));
     geo.setIndex([0, 1, 2, 0, 2, 3]);
-    const scr = kioskScreen();
+    const scr = kioskScreen(360, 560, { header: false });   /* no header bar: the pizza takes the room */
     const m = new THREE.Mesh(geo, new THREE.ShaderMaterial({
       uniforms: { uM: { value: scr.tex } },
       vertexShader: 'varying vec2 vUv;\nvoid main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
@@ -4183,7 +4183,7 @@ function buildIndoorKiosk() {
        in the front texture's 1100 x 2160 pixels) */
     { const tw = 1100, th = 2160, zS = D / 2 - PR + .005;
       const at = (u, v) => [-W / 2 + u / tw * W, (1 - v / th) * H, zS];
-      const L = 222, R = 736, T = 550, B = 1102;             /* a few pixels past the grey all round, so none of it shows */
+      const L = 208, R = 736, T = 550, B = 1102;             /* a few pixels past the grey all round, so none of it shows */
       const sw = (R - L) / tw * W, sh = (B - T) / th * H;
       const corners = [at(L, B), at(R, B), at(R, T), at(L, T)];   /* BL BR TR TL */
       const geo = new THREE.BufferGeometry();
