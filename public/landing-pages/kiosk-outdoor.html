@@ -188,8 +188,8 @@
     .footer-legal{margin-left:0;}
   }
 </style>
-<link rel="stylesheet" href="pfx-nav.css?v=5">
-<link rel="stylesheet" href="pfx-theme.css?v=11">
+<link rel="stylesheet" href="pfx-nav.css?v=6">
+<link rel="stylesheet" href="pfx-theme.css?v=13">
 <link rel="stylesheet" href="pfx-site.css?v=4">
 </head>
 <body class="kiosk-spec no-campus">
@@ -197,7 +197,7 @@
 <header class="pfx-nav" id="pfxNav">
   <a class="pfx-brand" href="index.html" aria-label="PFX home"><img src="assets/pfx-light.png" alt="PFX"></a>
   <nav class="pfx-links" id="pfxLinks">
-    <a class="pfx-link on" href="kiosk-outdoor.html">Explore Kiosks</a>
+    <div class="pfx-dd"><a class="pfx-link on" aria-haspopup="true" href="kiosk-outdoor.html">Explore Kiosks</a><div class="pfx-dd-menu" role="menu"><a role="menuitem" href="kiosk-outdoor.html">Outdoor Kiosk</a><a role="menuitem" href="kiosk-indoor.html">Indoor Kiosk</a><a role="menuitem" href="kiosk-atm.html">ATM Kiosk</a></div></div>
     <a class="pfx-link" href="case-study.html">Case Study</a>
     <a class="pfx-link" href="roi_calculator.html">ROI Calculator</a>
     <a class="pfx-link" href="index.html#faq">FAQ</a>
@@ -212,12 +212,36 @@
   </div>
 </header>
 
-<div class="model-tabs">
-            <a href="kiosk-indoor.html" class="">Indoor Kiosk</a>
-            <a href="kiosk-atm.html" class="">ATM Kiosk</a>
-            <a href="kiosk-outdoor.html" class="on">Outdoor Kiosk</a>
-</div>
 
+<section class="kshow" data-kshow aria-label="Outdoor Kiosk features">
+  <div class="kshow-tabs" role="tablist">
+    <button type="button" class="kshow-tab" role="tab" aria-selected="false">
+      <h3>Design</h3><span class="kshow-rule"><i></i></span><p>Robust 8×10 container with weather-resistant aluminum paneling, tailored for diverse outdoor settings.</p>
+    </button>
+    <button type="button" class="kshow-tab" role="tab" aria-selected="false">
+      <h3>Exterior</h3><span class="kshow-rule"><i></i></span><p>Aluminum paneling on corrugated walls with full graphic design and LED strip lighting.</p>
+    </button>
+    <button type="button" class="kshow-tab" role="tab" aria-selected="false">
+      <h3>Interior</h3><span class="kshow-rule"><i></i></span><p>Heat insulation, heat-resistant wiring, a full electrical panel, waterproof walls and ceiling, motion-detecting lights, an exhaust fan and a baseboard heater.</p>
+    </button>
+  </div>
+  <p class="kshow-desc-m" aria-live="polite"></p>
+  <!-- image slots: put an <img> inside each .kshow-ph to replace its placeholder -->
+  <div class="kshow-media">
+    <div class="kshow-set">
+      <div class="kshow-ph"><span>Design · Image 1</span></div>
+      <div class="kshow-ph"><span>Design · Image 2</span></div>
+    </div>
+    <div class="kshow-set">
+      <div class="kshow-ph"><span>Exterior · Image 1</span></div>
+      <div class="kshow-ph"><span>Exterior · Image 2</span></div>
+    </div>
+    <div class="kshow-set">
+      <div class="kshow-ph"><span>Interior · Image 1</span></div>
+      <div class="kshow-ph"><span>Interior · Image 2</span></div>
+    </div>
+  </div>
+</section>
 <section class="k-hero">
   <div class="k-hero-grid">
     <div class="k-hero-copy">
@@ -251,36 +275,6 @@
   </div>
 </div>
 
-<section class="kshow" data-kshow aria-label="Outdoor Kiosk features">
-  <div class="kshow-tabs" role="tablist">
-    <button type="button" class="kshow-tab" role="tab" aria-selected="false">
-      <h3>Design</h3><span class="kshow-rule"><i></i></span><p>Robust 8×10 container with weather-resistant aluminum paneling, tailored for diverse outdoor settings.</p>
-    </button>
-    <button type="button" class="kshow-tab" role="tab" aria-selected="false">
-      <h3>Exterior</h3><span class="kshow-rule"><i></i></span><p>Aluminum paneling on corrugated walls with full graphic design and LED strip lighting.</p>
-    </button>
-    <button type="button" class="kshow-tab" role="tab" aria-selected="false">
-      <h3>Interior</h3><span class="kshow-rule"><i></i></span><p>Heat insulation, heat-resistant wiring, a full electrical panel, waterproof walls and ceiling, motion-detecting lights, an exhaust fan and a baseboard heater.</p>
-    </button>
-  </div>
-  <p class="kshow-desc-m" aria-live="polite"></p>
-  <!-- image slots: put an <img> inside each .kshow-ph to replace its placeholder -->
-  <div class="kshow-media">
-    <div class="kshow-set">
-      <div class="kshow-ph"><span>Design · Image 1</span></div>
-      <div class="kshow-ph"><span>Design · Image 2</span></div>
-    </div>
-    <div class="kshow-set">
-      <div class="kshow-ph"><span>Exterior · Image 1</span></div>
-      <div class="kshow-ph"><span>Exterior · Image 2</span></div>
-    </div>
-    <div class="kshow-set">
-      <div class="kshow-ph"><span>Interior · Image 1</span></div>
-      <div class="kshow-ph"><span>Interior · Image 2</span></div>
-    </div>
-  </div>
-  <a class="kshow-bar" href="contact.html" data-talk-trigger>Let&rsquo;s talk about the Outdoor Kiosk <svg width="30" height="20" viewBox="0 0 30 20" fill="none" aria-hidden="true"><path d="M1 10h27M19 1.5 28 10l-9 8.5" stroke="currentColor" stroke-width="1.8"/></svg></a>
-</section>
 
 <section class="features-section">
   <div class="features-eyebrow">Features</div>
