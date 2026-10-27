@@ -2977,22 +2977,7 @@ function texArchWindow() {
   return c;
 }
 /* the cafeteria, kept strictly monochrome so the kiosk is the only colour in
-   the room: pale terrazzo underfoot, a fluted back wall, black lettering */
-function texTerrazzo() {
-  const S = 512, c = cvs(S, S), x = c.getContext('2d'), rnd = mulberry32(7301);
-  x.fillStyle = '#d6d6d6'; x.fillRect(0, 0, S, S);
-  x.globalCompositeOperation = 'overlay'; x.globalAlpha = .22;
-  x.drawImage(fbmCanvas(S, S, 7302, 5, 4, 1), 0, 0);
-  x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
-  const chips = ['#f4f4f4', '#bcbcbc', '#9a9a9a', '#6e6e6e', '#3c3c3c', '#e6e6e6'];
-  for (let i = 0; i < 2600; i++) {
-    const r = .6 + rnd() * rnd() * 3.4, px = rnd() * S, py = rnd() * S;
-    x.fillStyle = chips[(rnd() * chips.length) | 0];
-    x.beginPath(); x.ellipse(px, py, r, r * (.5 + rnd() * .6), rnd() * TAU, 0, TAU); x.fill();
-  }
-  x.fillStyle = 'rgba(0,0,0,.10)'; x.fillRect(0, 0, S, 2); x.fillRect(0, 0, 2, S);   /* a hairline joint per slab */
-  return c;
-}
+   the room: a plain grey floor, a fluted back wall, black lettering */
 function texFluted() {
   const W = 512, H = 64, c = cvs(W, H), x = c.getContext('2d'), n = 16, w = W / n;
   for (let i = 0; i < n; i++) {
@@ -3019,9 +3004,8 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   const tileC = cvs(256, 256), tcx = tileC.getContext('2d');
   tcx.fillStyle = '#ffffff'; tcx.fillRect(0, 0, 256, 256);
   tcx.fillStyle = '#c4c4c4'; tcx.fillRect(0, 0, 256, 2); tcx.fillRect(0, 0, 2, 256);   /* grout, one tile per repeat */
-  /* pale terrazzo in 1.2 m slabs, pure greys */
-  const floor = new THREE.MeshBasicMaterial({ map: tx(texTerrazzo(), { wrap: THREE.RepeatWrapping, repeat: [HW / 1.2, HD / 1.2], aniso: 16 }),
-    color: ungrade('#a2a2a2'), fog: false, toneMapped: false });
+  /* the floor: one plain grey, no texture (the terrazzo's tone) */
+  const floor = new THREE.MeshBasicMaterial({ color: ungrade('#868686'), fog: false, toneMapped: false });
   const wallTex = tx(texHallWall(), { wrap: THREE.RepeatWrapping, repeat: [4, 2] });
   const wall = new THREE.MeshBasicMaterial({ color: ungrade('#8e8e8e'), fog: false, toneMapped: false });   /* mid neutral grey */
   const ceil = new THREE.MeshStandardMaterial({ map: tx(texCoffers(), { wrap: THREE.RepeatWrapping, repeat: [HW / 3, HD / 3] }), roughness: .9, color: 0x55575a });
