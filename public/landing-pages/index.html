@@ -1416,7 +1416,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <script src="assets/three.min.js"></script>
 <script src="assets/kiosk-photo.js?v=3"></script>
 <script src="assets/kiosk-indoor-photo.js?v=7"></script>
-<script src="assets/kiosk-atm-photo.js?v=3"></script>
+<script src="assets/kiosk-atm-photo.js?v=5"></script>
 <script>
 /* =====================================================================
    PFX — the campus walk, rendered live in WebGL.
@@ -4236,28 +4236,13 @@ function buildOutdoor() {
      the dispenser slot, the knife slot, the card reader and the two buttons
      (rects in the artwork's 461 x 667 pixels; [u0, v0, u1, v1, depth]) */
   const atmParts = [];
-  [[41, 448, 309, 461, .05], [177, 417, 293, 430, .008], [373, 353, 427, 367, .008],
+  [[41, 448, 309, 461, .127],   /* the steel ledge stands 5 in proud */ [177, 417, 293, 430, .008], [373, 353, 427, 367, .008],
    [386, 386, 415, 419, .025], [371, 433, 429, 454, .012], [371, 462, 429, 493, .012]].forEach(([u0, v0, u1, v1, dep]) => {
     const z0 = kz + KW / 2 - u0 / 461 * KW, z1 = kz + KW / 2 - u1 / 461 * KW;
     const y0 = Y + KH * (1 - v1 / 667), y1 = Y + KH * (1 - v0 / 667);
     const m = add(new THREE.BoxGeometry(dep, y1 - y0, Math.abs(z0 - z1)), faceMat);
     m.position.set(FX + dep / 2, (y0 + y1) / 2, (z0 + z1) / 2); atmParts.push(m);
   });
-  /* a brushed-steel trim framing the face, standing just proud of it */
-  { const steel = new THREE.ShaderMaterial({
-      vertexShader: 'varying vec3 vW; varying vec3 vN;\nvoid main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz;\n' +
-        ' vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
-      fragmentShader: KIOSK_NOISE + 'varying vec3 vW; varying vec3 vN;\nvoid main(){ vec3 n = normalize(vN), V = normalize(cameraPosition - vW);\n' +
-        ' float along = abs(n.x) > .5 ? (abs(vW.y - ' + fx(Y + KH / 2) + ') > ' + fx(KH / 2 - .04) + ' ? vW.z : vW.y) : vW.x;\n' +
-        ' float br = .84 + .16 * h3_(vec3(floor(along * 900.0), 0.0, 0.0));\n' +
-        ' float sh = n.x > .5 ? 1.0 : (n.y > .5 ? 1.1 : .55);\n' +
-        ' float sp = pow(max(dot(n, normalize(normalize(vec3(.836, .447, .318)) + V)), 0.0), 40.0) * .35;\n' +
-        ' gl_FragColor = vec4(vec3(.60, .62, .65) * br * sh + sp, 0.0); }'
-    });
-    const T2 = .035, DEP = .03;
-    [[0, KH - T2 / 2, KW + 2 * T2], [0, T2 / 2, KW + 2 * T2]].forEach(([dz, y, len]) =>
-      add(new THREE.BoxGeometry(DEP, T2, len), steel).position.set(FX + DEP / 2, Y + y, kz + dz));
-    [-1, 1].forEach(sd => add(new THREE.BoxGeometry(DEP, KH, T2), steel).position.set(FX + DEP / 2, Y + KH / 2, kz + sd * (KW / 2 + T2 / 2))); }
   /* its shadow on the ground in front, darkest at the foot of the face */
   { const c = cvs(64, 8), x = c.getContext('2d'), gr = x.createLinearGradient(0, 0, 64, 0);
     gr.addColorStop(0, 'rgba(0,0,0,.75)'); gr.addColorStop(.25, 'rgba(0,0,0,.35)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
