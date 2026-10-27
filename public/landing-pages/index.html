@@ -1416,7 +1416,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 
 <script src="assets/three.min.js"></script>
 <script src="assets/kiosk-photo.js?v=3"></script>
-<script src="assets/kiosk-indoor-photo.js?v=2"></script>
+<script src="assets/kiosk-indoor-photo.js?v=3"></script>
 <script src="assets/kiosk-atm-photo.js"></script>
 <script>
 /* =====================================================================
@@ -2988,6 +2988,17 @@ function texFluted() {
   }
   return c;
 }
+/* a kiosk's footprint as a soft shadow: a W x D rectangle blurred into a
+   (W + 2 pad) x (D + 2 pad) canvas, darkest along the base */
+function texFootShadow(W, D, pad) {
+  const cw = 256, s = cw / (W + 2 * pad), ch = Math.round((D + 2 * pad) * s);
+  const c = cvs(cw, ch), x = c.getContext('2d');
+  /* the shape is drawn off-canvas and only its blurred shadow lands in view
+     (canvas blur filters are not everywhere; shadowBlur is) */
+  x.shadowColor = 'rgba(0,0,0,.9)'; x.shadowBlur = .16 * s; x.shadowOffsetX = 4000;
+  x.fillStyle = '#000'; x.fillRect(pad * s - 4000, pad * s, W * s, D * s);
+  return c;
+}
 const HALL_DOOR = { z: -44.0, w: 1.8, h: 2.8 };
 function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   const T = .3;                                       /* wall thickness inside the shell */
@@ -4113,7 +4124,7 @@ const OUT_FOG = new THREE.FogExp2(0x050a0e, 0.0168);
    It stands on a low display plinth in the entrance hall, placed so that from
    chapter II's camera it fills the same part of the frame the outdoor kiosk
    fills in the hero. Local axes as the outdoor kiosk: front +z, side +x. */
-const KIOSK_IN = { x: 1.88, y: 7.9, z: -45.21, ry: -0.8 };   /* standing on the hall floor */
+const KIOSK_IN = { x: 1.88, y: 7.9, z: -45.21, ry: -0.716 };   /* standing on the hall floor, turned so chapter II's camera sees it from the render's angle (~25 deg off its front) */
 function buildIndoorKiosk() {
   const P = window.KIOSK_INDOOR_PHOTO;
   if (!P) return;
@@ -4185,9 +4196,15 @@ function buildIndoorKiosk() {
         new THREE.MeshBasicMaterial({ map: WORLD.hallShadowTex, transparent: true, depthWrite: false, opacity: .9 }));
       sh.rotation.x = -Math.PI / 2; sh.position.y = .01; sh.renderOrder = 2; g.add(sh);
     }
+    /* a contact shadow hugging the base: the footprint itself, softly blurred,
+       so the floor darkens right where the kiosk meets it */
+    { const pad = .32, c = texFootShadow(W, D, pad);
+      const sh = new THREE.Mesh(new THREE.PlaneGeometry(W + 2 * pad, D + 2 * pad),
+        new THREE.MeshBasicMaterial({ map: tx(c), transparent: true, depthWrite: false, opacity: .85 }));
+      sh.rotation.x = -Math.PI / 2; sh.position.y = .012; sh.renderOrder = 2; g.add(sh); }
     /* the backlight, as on the hero kiosk: a soft cool glow just behind it, on
        the line from chapter II's camera through it (BACK_DIR, in kiosk space) */
-    const BACK_DIR = new THREE.Vector2(.449, .894);
+    const BACK_DIR = new THREE.Vector2(.423, .906);
     const glow = new THREE.Mesh(new THREE.PlaneGeometry(11, 7.4),
       new THREE.MeshBasicMaterial({ map: lib('kioskRimSoft', () => tx(texSoftGlow(196, 216, 245))),
         transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false,
