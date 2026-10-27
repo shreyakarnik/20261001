@@ -1416,7 +1416,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 
 <script src="assets/three.min.js"></script>
 <script src="assets/kiosk-photo.js?v=3"></script>
-<script src="assets/kiosk-indoor-photo.js?v=6"></script>
+<script src="assets/kiosk-indoor-photo.js?v=7"></script>
 <script src="assets/kiosk-atm-photo.js"></script>
 <script>
 /* =====================================================================
@@ -4158,11 +4158,10 @@ function buildIndoorKiosk() {
     add(new THREE.PlaneGeometry(D, H).rotateY(Math.PI / 2).translate(W / 2 + .002, H / 2, 0),
       kioskMat({ uM: T.side }, ' c = texture2D(uM, vec2((' + f(D / 2) + ' - p.z) / ' + f(D) + ', p.y / ' + f(H) + '));\n' +
         RIM + rimLine('p.z + ' + f(D / 2), '.85') + rimLine(f(H) + ' - p.y', '.85')));
-    /* the lime canopy: a thin slab across the top of the bay, flush with the
-       pillar's top and face, running a little past the body on the left and
-       tilting up toward that free end; its underside slopes back down to the
-       top of the body */
-    { const xL = d.HOOD_X, R = d.HOOD_RISE, T_ = d.HOOD_T, zF = D / 2, zB = D / 2 - PR - .05;
+    /* the lime canopy: a thin level slab across the top of the bay, flush with
+       the pillar's top and face, running a little past the body on the left;
+       level, so its edges run parallel to the body's own top line */
+    { const xL = d.HOOD_X, R = 0, T_ = d.HOOD_T, zF = D / 2, zB = D / 2 - PR - .05;
       const geo = new THREE.BoxGeometry(1, 1, 1), pa = geo.attributes.position;
       for (let k = 0; k < pa.count; k++) {
         const left = pa.getX(k) < 0, top = pa.getY(k) > 0, front = pa.getZ(k) > 0;
@@ -4178,7 +4177,7 @@ function buildIndoorKiosk() {
        in the front texture's 1100 x 2160 pixels) */
     { const tw = 1100, th = 2160, zS = D / 2 - PR + .005;
       const at = (u, v) => [-W / 2 + u / tw * W, (1 - v / th) * H, zS];
-      const L = 205, R = 745, T = 545, B = 1122;             /* a few pixels past the grey all round, so none of it shows */
+      const L = 222, R = 736, T = 550, B = 1102;             /* a few pixels past the grey all round, so none of it shows */
       const sw = (R - L) / tw * W, sh = (B - T) / th * H;
       const corners = [at(L, B), at(R, B), at(R, T), at(L, T)];   /* BL BR TR TL */
       const geo = new THREE.BufferGeometry();
