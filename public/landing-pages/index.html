@@ -3044,6 +3044,28 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
     const fr = new THREE.MeshBasicMaterial({ color: ungrade('#7c7c7c'), fog: false, toneMapped: false });   /* door frame, a shade under the wall */
     put(new THREE.BoxGeometry(.06, .08, HALL_DOOR.w + .16), fr, x1 - .03, y0 + HALL_DOOR.h + .04, HALL_DOOR.z);
     [-1, 1].forEach(sd => put(new THREE.BoxGeometry(.06, HALL_DOOR.h, .08), fr, x1 - .03, y0 + HALL_DOOR.h / 2, HALL_DOOR.z + sd * (HALL_DOOR.w / 2 + .04)));
+    /* the doors: a pair of panelled leaves like the entrance's, in the walls'
+       grey, that swing out onto the terrace as the walk reaches them
+       (WORLD.hallDoors, driven from updateWorld) */
+    const leafM = new THREE.MeshBasicMaterial({ color: ungrade('#858585'), fog: false, toneMapped: false, side: THREE.DoubleSide });
+    const panelM = new THREE.MeshBasicMaterial({ color: ungrade('#949494'), fog: false, toneMapped: false });
+    const handleM = new THREE.MeshBasicMaterial({ color: ungrade('#4a4a4a'), fog: false, toneMapped: false });
+    const LW = HALL_DOOR.w / 2, LH = HALL_DOOR.h;
+    WORLD.hallDoors = [-1, 1].map(sd => {
+      const hinge = new THREE.Group();
+      hinge.position.set(x1, y0, HALL_DOOR.z + sd * LW);
+      const leaf = new THREE.Mesh(new THREE.BoxGeometry(.05, LH, LW - .01), leafM);
+      leaf.position.set(0, LH / 2, -sd * LW / 2); hinge.add(leaf);
+      [[LH * .70, LH * .42], [LH * .26, LH * .34]].forEach(([cy, ph]) => [-1, 1].forEach(face => {   /* raised panels, both faces */
+        const pn = new THREE.Mesh(new THREE.BoxGeometry(.012, ph, LW - .26), panelM);
+        pn.position.set(face * .031, cy, -sd * LW / 2); hinge.add(pn);
+      }));
+      [-1, 1].forEach(face => {                                     /* a dark pull on each face */
+        const h = new THREE.Mesh(new THREE.BoxGeometry(.03, .26, .03), handleM);
+        h.position.set(face * .05, LH * .48, -sd * (LW - .11)); hinge.add(h);
+      });
+      hinge.userData.side = sd; hall.add(hinge); return hinge;
+    });
   }
   /* the front wall, seen from inside, with the doorway through it */
   const fs = new THREE.Shape();
@@ -3119,8 +3141,9 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
         p = at(a + u, cz2 + v); sparts.push(new THREE.CylinderGeometry(.012, .012, .46, 6).translate(p[0], y0 + .23, p[1])); });
     }));
   };
-  [[-7.4, -47.6], [-7.4, -44.4], [5.6, -43.8], [5.6, -46.6], [7.6, -45.2]].forEach(([tx2, tz2], i) =>
-    table(tx2, tz2, i === 4 ? Math.PI / 2 : 0));
+  /* (the two right-hand tables that stood on the walk to the side door are gone,
+     so the camera never passes through furniture on its way out) */
+  [[-7.4, -47.6], [-7.4, -44.4], [5.6, -46.6]].forEach(([tx2, tz2]) => table(tx2, tz2, 0));
   [[mergeGeos(tparts), top], [mergeGeos(sparts), steel], [mergeGeos(cparts), seat]].forEach(([geo, m]) => put(geo, m, 0, 0, 0));
 
   g.add(hall); WORLD.hall = hall;
@@ -6093,6 +6116,12 @@ function updateWorld(dt) {
   if (WORLD.doors) {
     const open = smooth(-30, -36.5, camera.position.z) * 1.45;
     WORLD.doors.forEach(h => { h.rotation.y = h.userData.side * open; });
+  }
+  /* the side doors swing out onto the terrace as the walk turns to them and
+     crosses the hall (closed while the indoor kiosk holds the shot) */
+  if (WORLD.hallDoors) {
+    const open = smooth(5.2, 7.6, camera.position.x) * 1.45;
+    WORLD.hallDoors.forEach(h => { h.rotation.y = -h.userData.side * open; });
   }
   if (WORLD.hallGlows) WORLD.hallGlows.forEach(m => m.quaternion.copy(camera.quaternion));
   if (WORLD.outdoor) {
