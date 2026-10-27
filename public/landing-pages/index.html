@@ -4201,12 +4201,49 @@ function buildOutdoor() {
   /* the head of the reveal: RD deep into the wall, KW across it (an extra quarter-turn here once stood it 1.9 m out of the wall) */
   add(new THREE.PlaneGeometry(RD, KW).rotateX(Math.PI / 2), rev).position.set(X - RD / 2, Y + KH, kz);
   const P = window.KIOSK_ATM_PHOTO;
+  /* The face, lit like the other two kiosks: the artwork looked up by world
+     position (so the raised details below share it), then a key from the
+     camera's left falling off across it, a soft lift toward the top, the
+     recess's shadow gathering at its edges (deepest under the hood), contact
+     at the foot, a sheen that moves with the eye, and a faint grain.
+     The face looks out along +x; the camera's left is +z. */
+  const fx = v => v.toFixed(4), FX = X - RD;
   const faceMat = new THREE.ShaderMaterial({
     uniforms: { uM: { value: null } },
-    vertexShader: 'varying vec2 vUv;\nvoid main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-    fragmentShader: 'uniform sampler2D uM; varying vec2 vUv;\nvoid main(){ gl_FragColor = vec4(texture2D(uM, vUv).rgb, 0.0); }'
+    vertexShader: 'varying vec3 vW; varying vec3 vN;\nvoid main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz;\n' +
+      ' vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+    fragmentShader: KIOSK_NOISE + 'uniform sampler2D uM; varying vec3 vW; varying vec3 vN;\nvoid main(){ vec3 n = normalize(vN);\n' +
+      ' float u = (' + fx(kz + KW / 2) + ' - vW.z) / ' + fx(KW) + ', v = (vW.y - ' + fx(Y) + ') / ' + fx(KH) + ';\n' +
+      ' vec3 c = texture2D(uM, vec2(clamp(u, 0.0, 1.0), clamp(v, 0.0, 1.0))).rgb;\n' +
+      ' float side = n.x < .5 ? .55 : 1.0;                         /* the raised parts\' edges */\n' +
+      ' float lit = (.90 + .22 * (1.0 - smoothstep(0.0, 1.0, u))) * (.93 + .11 * clamp(v, 0.0, 1.0));\n' +
+      ' float dx = min(u, 1.0 - u) * ' + fx(KW) + ', dT = (1.0 - v) * ' + fx(KH) + ', dB = v * ' + fx(KH) + ';\n' +
+      ' float ao = (1.0 - .32 * exp(-dx / .10)) * (1.0 - .48 * exp(-dT / .20)) * (1.0 - .30 * exp(-dB / .12));\n' +
+      ' vec3 V = normalize(cameraPosition - vW), L = normalize(vec3(.836, .447, .318)), F = normalize(vec3(.95, .30, -.30));\n' +
+      ' float spec = pow(max(dot(n, normalize(L + V)), 0.0), 36.0) * .09 + pow(max(dot(n, normalize(F + V)), 0.0), 16.0) * .03;\n' +
+      ' float gr = (h3_(floor(vW * 180.0)) - .5) * .035 + (vn3_(vW * 3.0) - .5) * .05;\n' +
+      ' c = c * lit * ao * side * (1.0 + gr) + vec3(1.0, .98, .95) * spec * ao;\n' +
+      ' gl_FragColor = vec4(c, 0.0); }'
   });
-  add(new THREE.PlaneGeometry(KW, KH).rotateY(Math.PI / 2), faceMat).position.set(X - RD, Y + KH / 2, kz);
+  add(new THREE.PlaneGeometry(KW, KH).rotateY(Math.PI / 2), faceMat).position.set(FX, Y + KH / 2, kz);
+  /* the hardware, raised off the face so it reads as real: the steel ledge,
+     the dispenser slot, the knife slot, the card reader and the two buttons
+     (rects in the artwork's 461 x 667 pixels; [u0, v0, u1, v1, depth]) */
+  const atmParts = [];
+  [[41, 448, 309, 461, .05], [177, 417, 293, 430, .008], [373, 353, 427, 367, .008],
+   [386, 386, 415, 419, .025], [371, 433, 429, 454, .012], [371, 462, 429, 493, .012]].forEach(([u0, v0, u1, v1, dep]) => {
+    const z0 = kz + KW / 2 - u0 / 461 * KW, z1 = kz + KW / 2 - u1 / 461 * KW;
+    const y0 = Y + KH * (1 - v1 / 667), y1 = Y + KH * (1 - v0 / 667);
+    const m = add(new THREE.BoxGeometry(dep, y1 - y0, Math.abs(z0 - z1)), faceMat);
+    m.position.set(FX + dep / 2, (y0 + y1) / 2, (z0 + z1) / 2); atmParts.push(m);
+  });
+  /* its shadow on the pad in front, darkest at the foot of the face */
+  { const c = cvs(64, 8), x = c.getContext('2d'), gr = x.createLinearGradient(0, 0, 64, 0);
+    gr.addColorStop(0, 'rgba(0,0,0,.75)'); gr.addColorStop(.25, 'rgba(0,0,0,.35)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = gr; x.fillRect(0, 0, 64, 8);
+    const sh = add(new THREE.PlaneGeometry(.9, KW + .1).rotateX(-Math.PI / 2),
+      new THREE.MeshBasicMaterial({ map: tx(c), transparent: true, depthWrite: false }));
+    sh.position.set(FX + .45, Y + .062, kz); sh.renderOrder = 3; }
   if (P) { const img = new Image(); img.onload = () => { const t = new THREE.Texture(img); t.anisotropy = Math.min(16, maxAniso);
     t.minFilter = THREE.LinearMipmapLinearFilter; t.needsUpdate = true; faceMat.uniforms.uM.value = t; }; img.src = P.front; }
   /* its ordering screen: the same pizza loop as the other kiosks, over the
@@ -4225,7 +4262,10 @@ function buildOutdoor() {
       vertexShader: 'varying vec2 vUv;\nvoid main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
       fragmentShader: 'uniform sampler2D uM; varying vec2 vUv;\nvoid main(){ gl_FragColor = vec4(texture2D(uM, vUv).rgb * .92, 0.0); }'
     }));
-    WORLD.kioskAtmScreen = scr; }
+    WORLD.kioskAtmScreen = scr;
+    g.children[g.children.length - 1].layers.enable(3); }
+  /* the kiosk on layer 3, for the depth of field while it holds the shot */
+  g.children.forEach(o => { if (o.material === faceMat) o.layers.enable(3); });
   /* the pad in the original flight's matte slate, so it sits in the night instead of glowing in it */
   add(new THREE.BoxGeometry(1.1, .06, OW + .7), new THREE.MeshStandardMaterial({ color: 0x1c2226, roughness: .93, metalness: .02 })).position.set(X + .55, Y + .03, kz);       /* pad */
   shadow(1.6, OW + 1.4, X + .5, kz, .18);
@@ -6471,8 +6511,9 @@ function render() {
   if (heroK) renderReflection(1, KIOSK.y, WORLD.kioskFloor);
   else if (inK) renderReflection(2, KIOSK_IN.y, WORLD.kioskInFloor);
   const dofOut = 1 - smooth(.35, .85, sm), dofIn = smooth(1.86, 1.98, sm) * (1 - smooth(2.1, 2.24, sm));
-  const dof = WANT_POST ? Math.max(dofOut, dofIn) : 0;
-  if (WANT_POST) { if (dof > .001 && (WORLD.kiosk || WORLD.kioskIn)) renderMask(dofOut >= dofIn ? 1 : 2); POST.comp.uniforms.uDof.value = dof;
+  const dofAtm = smooth(2.86, 2.98, sm) * (1 - smooth(3.32, 3.48, sm));
+  const dof = WANT_POST ? Math.max(dofOut, dofIn, dofAtm) : 0;
+  if (WANT_POST) { if (dof > .001) renderMask(dofAtm > Math.max(dofOut, dofIn) ? 3 : (dofOut >= dofIn ? 1 : 2)); POST.comp.uniforms.uDof.value = dof;
     POST.comp.uniforms.tM.value = MASK.rt ? MASK.rt.texture : null; }
   renderer.setRenderTarget(WANT_POST ? POST.scene : null);
   renderer.clear(true, true, false);
