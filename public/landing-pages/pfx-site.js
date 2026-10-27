@@ -75,3 +75,35 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+
+/* Kiosk feature showcase ([data-kshow]): click a tab to show its images; the
+   active tab's rule fills as a timer and moves on to the next when it runs out
+   (paused while hovered, off with reduced motion). */
+(function () {
+  function wire(root) {
+    var tabs = [].slice.call(root.querySelectorAll('.kshow-tab'));
+    var sets = [].slice.call(root.querySelectorAll('.kshow-set'));
+    var desc = root.querySelector('.kshow-desc-m');
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function show(i) {
+      tabs.forEach(function (t, k) {
+        t.classList.toggle('on', k === i); t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+        var bar = t.querySelector('.kshow-rule i'); if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
+      });
+      sets.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+      if (desc) desc.textContent = tabs[i].querySelector('p').textContent;
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(i); });
+      var bar = t.querySelector('.kshow-rule i');
+      if (bar && !reduce) bar.addEventListener('animationend', function () {
+        if (t.classList.contains('on')) show((i + 1) % tabs.length);
+      });
+    });
+    root.addEventListener('mouseenter', function () { root.classList.add('paused'); });
+    root.addEventListener('mouseleave', function () { root.classList.remove('paused'); });
+    show(0);
+  }
+  function init() { [].forEach.call(document.querySelectorAll('[data-kshow]'), wire); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();

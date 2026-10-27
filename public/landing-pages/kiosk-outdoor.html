@@ -189,7 +189,7 @@
   }
 </style>
 <link rel="stylesheet" href="pfx-nav.css?v=5">
-<link rel="stylesheet" href="pfx-theme.css?v=7">
+<link rel="stylesheet" href="pfx-theme.css?v=11">
 <link rel="stylesheet" href="pfx-site.css?v=4">
 </head>
 <body class="kiosk-spec no-campus">
@@ -251,14 +251,35 @@
   </div>
 </div>
 
-<section class="build-section">
-  <h2>Robust Build For Multi-Weather Support</h2>
-  <p class="sub">Built for Canadian Winters and Texas Summers</p>
-  <div class="build-cards cols-3">
-            <div class="build-card"><h3>Design</h3><p>Robust 8×10 container with weather-resistant aluminum paneling, tailored for diverse outdoor settings.</p></div>
-            <div class="build-card"><h3>Exterior</h3><p>Aluminum paneling on corrugated walls with full graphic design and LED strip lighting.</p></div>
-            <div class="build-card"><h3>Interior</h3><p>Heat insulation, heat-resistant wiring, comprehensive electrical panel, plywood & vinyl flooring, waterproof walls & ceiling, interior motion-detecting lights, exhaust fan, baseboard heater.</p></div>
+<section class="kshow" data-kshow aria-label="Outdoor Kiosk features">
+  <div class="kshow-tabs" role="tablist">
+    <button type="button" class="kshow-tab" role="tab" aria-selected="false">
+      <h3>Design</h3><span class="kshow-rule"><i></i></span><p>Robust 8×10 container with weather-resistant aluminum paneling, tailored for diverse outdoor settings.</p>
+    </button>
+    <button type="button" class="kshow-tab" role="tab" aria-selected="false">
+      <h3>Exterior</h3><span class="kshow-rule"><i></i></span><p>Aluminum paneling on corrugated walls with full graphic design and LED strip lighting.</p>
+    </button>
+    <button type="button" class="kshow-tab" role="tab" aria-selected="false">
+      <h3>Interior</h3><span class="kshow-rule"><i></i></span><p>Heat insulation, heat-resistant wiring, a full electrical panel, waterproof walls and ceiling, motion-detecting lights, an exhaust fan and a baseboard heater.</p>
+    </button>
   </div>
+  <p class="kshow-desc-m" aria-live="polite"></p>
+  <!-- image slots: put an <img> inside each .kshow-ph to replace its placeholder -->
+  <div class="kshow-media">
+    <div class="kshow-set">
+      <div class="kshow-ph"><span>Design · Image 1</span></div>
+      <div class="kshow-ph"><span>Design · Image 2</span></div>
+    </div>
+    <div class="kshow-set">
+      <div class="kshow-ph"><span>Exterior · Image 1</span></div>
+      <div class="kshow-ph"><span>Exterior · Image 2</span></div>
+    </div>
+    <div class="kshow-set">
+      <div class="kshow-ph"><span>Interior · Image 1</span></div>
+      <div class="kshow-ph"><span>Interior · Image 2</span></div>
+    </div>
+  </div>
+  <a class="kshow-bar" href="contact.html" data-talk-trigger>Let&rsquo;s talk about the Outdoor Kiosk <svg width="30" height="20" viewBox="0 0 30 20" fill="none" aria-hidden="true"><path d="M1 10h27M19 1.5 28 10l-9 8.5" stroke="currentColor" stroke-width="1.8"/></svg></a>
 </section>
 
 <section class="features-section">
@@ -280,9 +301,6 @@
   </div>
 </section>
 
-<div class="k-cta">
-  <a href="contact.html" class="btn-primary" data-talk-trigger>Let's Talk!</a>
-</div>
 
 <section class="deploy-section">
   <h2>Deployment Examples</h2>
@@ -332,6 +350,6 @@
 <script src="talk-modal.js?v=5"></script>
 
 <script src="pfx-nav.js"></script>
-<script src="pfx-site.js?v=1"></script>
+<script src="pfx-site.js?v=2"></script>
 </body>
 </html>
