@@ -821,14 +821,18 @@ body[data-layout-hero] .hero .hero-top{ padding-top:calc(var(--nav-h) * .6); mar
 .nav-link .alt{ letter-spacing:-.005em; }
 .nav-link--talk{ display:none !important; }
 .nav-actions{ display:flex; align-items:center; gap:14px; margin-left:clamp(18px,2.2vw,36px); flex:0 0 auto; }
+/* the PizzaForno logomark, between the links and the search button */
+.nav-pf{ display:inline-flex; align-items:center; flex:0 0 auto; opacity:.92; transition:transform .3s, opacity .3s; }
+.nav-pf img{ width:34px; height:34px; display:block; }
+.nav-pf:hover{ opacity:1; transform:translateY(-1px); }
 .nav-search{ width:40px; height:40px; border-radius:50%; display:grid; place-items:center; color:var(--bone);
-  border:1px solid var(--line); transition:background .3s, border-color .3s, color .3s; }
+  border:0; transition:background .3s, color .3s; }   /* no ring: just the glass */
 .nav-search svg{ width:18px; height:18px; }
 .nav-search:hover{ background:rgba(223,231,224,.12); }
 .nav-talk{ display:inline-flex; align-items:center; padding:11px 22px; border-radius:12px; background:#b3242a; color:#fff;
   font-size:14px; font-weight:700; letter-spacing:-.01em; transition:background .3s; }
 .nav-talk:hover{ background:#c62c32; }
-.nav:not(.stuck):not(.menu-open) .nav-search{ color:var(--sky-ink); border-color:rgba(13,34,54,.25); }
+.nav:not(.stuck):not(.menu-open) .nav-search{ color:var(--sky-ink); }
 .nav:not(.stuck):not(.menu-open) .nav-search:hover{ background:rgba(255,255,255,.35); }
 @media (min-width:821px){ .nav-burger{ display:none; } }
 @media (max-width:1080px){ .nav-links{ gap:14px; } .nav-link{ font-size:13px; } .nav-talk{ padding:10px 16px; } }
@@ -1076,7 +1080,6 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 .btn-explore{ color:#0d2236; }
 .nav:not(.stuck):not(.menu-open) .brand-logo--dark{ display:none; }
 .nav:not(.stuck):not(.menu-open) .brand-logo--light{ display:block; }
-.nav:not(.stuck):not(.menu-open) .nav-search{ border-color:rgba(238,243,247,.28); }
 .nav:not(.stuck):not(.menu-open) .nav-search:hover{ background:rgba(255,255,255,.1); }
 body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 /* (the indoor copy's ground is set further down: a left gradient) */
@@ -1155,6 +1158,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     <a class="nav-link nav-link--talk" href="contact.html" data-talk-trigger data-cursor><span>Let&rsquo;s Talk</span><span class="alt" aria-hidden="true">Let&rsquo;s Talk</span></a>
   </nav>
   <div class="nav-actions">
+    <a class="nav-pf" href="https://pizzaforno.com" target="_blank" rel="noopener" aria-label="PizzaForno (opens in a new tab)" title="PizzaForno"><img src="Images/pizzaforno-mark.png?v=2" alt="PizzaForno" width="34" height="34"></a>
     <button class="nav-search" type="button" aria-label="Search" data-cursor>
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
     </button>

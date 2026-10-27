@@ -23,7 +23,7 @@ html{ overflow-x:clip; }
 .pfx-link--talk{ display:none; }
 .pfx-actions{ display:flex; align-items:center; gap:14px; margin-left:clamp(18px,2.2vw,36px); flex:0 0 auto; }
 .pfx-search{ width:40px; height:40px; border-radius:50%; display:grid; place-items:center; padding:0; cursor:pointer;
-  background:none; color:#dfe7e0; border:1px solid rgba(223,231,224,.13); transition:background .3s; }
+  background:none; color:#dfe7e0; border:0; transition:background .3s; }   /* no ring: just the glass */
 .pfx-search svg{ width:18px; height:18px; }
 .pfx-search:hover{ background:rgba(223,231,224,.12); }
 .pfx-talk{ display:inline-flex; align-items:center; padding:11px 22px; border-radius:12px; background:#b3242a; color:#fff;
@@ -56,3 +56,8 @@ html{ overflow-x:clip; }
   .pfx-burger.active i:nth-child(2){ top:7px; width:26px; transform:rotate(-45deg); }
   html.pfx-nav-open, html.pfx-nav-open body{ overflow:hidden; }
 }
+
+/* the PizzaForno logomark, between the links and the search button */
+.pfx-pf{ display:inline-flex; align-items:center; flex:0 0 auto; transition:transform .3s, opacity .3s; opacity:.92; }
+.pfx-pf img{ width:34px; height:34px; display:block; }
+.pfx-pf:hover{ opacity:1; transform:translateY(-1px); }
