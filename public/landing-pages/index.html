@@ -3452,54 +3452,27 @@ function buildKiosk() {
 }
 
 /* The kiosk's ordering screen: a dark menu card with a pizza turning slowly
-   in the middle, cycling through three pies, like the promo loop the real
-   units play. Redrawn at ~20 fps, and only while the kiosk is on screen. */
+   in the middle, cycling through four pies, like the promo loop the real
+   units play. The pies are illustrations, cut out round, side by side in
+   assets/screen-pizzas.webp. Redrawn at ~20 fps, and only while the kiosk is
+   on screen. */
 function kioskScreen() {
   const CW = 360, CH = 560, c = cvs(CW, CH), x = c.getContext('2d');
   const tex = new THREE.CanvasTexture(c); tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false;
-  const rnd = mulberry32(77);
   const PIES = [
-    { name: 'Pepperoni', price: '$15.00', top: 'pep' },
-    { name: 'Margherita', price: '$14.00', top: 'basil' },
-    { name: 'Veggie Supreme', price: '$15.50', top: 'veg' }
+    { name: 'Margherita', price: '$14.00' },
+    { name: 'Tomato & Basil', price: '$15.00' },
+    { name: 'Fior di Latte', price: '$15.50' },
+    { name: 'Margherita Classica', price: '$16.00' }
   ];
-  /* fixed topping layouts, so each pie looks the same every lap */
-  const spots = PIES.map(() => Array.from({ length: 15 }, () => {
-    const a = rnd() * Math.PI * 2, r = Math.sqrt(rnd()) * .78;
-    return { x: Math.cos(a) * r, y: Math.sin(a) * r, s: .8 + rnd() * .4, k: rnd() };
-  }));
-  const cheese = Array.from({ length: 70 }, () => { const a = rnd() * 6.283, r = Math.sqrt(rnd()) * .84;
-    return { x: Math.cos(a) * r, y: Math.sin(a) * r, s: .03 + rnd() * .06 }; });
+  const sheet = new Image(); let ready = false;
+  sheet.onload = () => { ready = true; last = -1; }; sheet.src = 'assets/screen-pizzas.webp';
   function pie(i, cx, cy, R, rot, alpha) {
-    const P = PIES[i];
-    x.save(); x.globalAlpha = alpha; x.translate(cx, cy); x.rotate(rot);
-    x.fillStyle = 'rgba(0,0,0,.35)'; x.beginPath(); x.arc(4, 8, R * 1.02, 0, 6.283); x.fill();
-    let gr = x.createRadialGradient(0, 0, R * .7, 0, 0, R);              /* crust */
-    gr.addColorStop(0, '#d9963f'); gr.addColorStop(.75, '#c47a2c'); gr.addColorStop(1, '#8e4f19');
-    x.fillStyle = gr; x.beginPath(); x.arc(0, 0, R, 0, 6.283); x.fill();
-    x.fillStyle = '#b8261a'; x.beginPath(); x.arc(0, 0, R * .86, 0, 6.283); x.fill();      /* sauce */
-    gr = x.createRadialGradient(-R * .2, -R * .25, R * .1, 0, 0, R * .84);              /* cheese */
-    gr.addColorStop(0, '#ffe9a8'); gr.addColorStop(1, '#f2c45a');
-    x.fillStyle = gr; x.beginPath(); x.arc(0, 0, R * .82, 0, 6.283); x.fill();
-    cheese.forEach(b => { x.fillStyle = 'rgba(214,120,40,.35)'; x.beginPath(); x.arc(b.x * R, b.y * R, b.s * R * .5, 0, 6.283); x.fill(); });
-    spots[i].forEach(t => {
-      const px = t.x * R, py = t.y * R;
-      if (P.top === 'pep') {
-        x.fillStyle = '#9e1f14'; x.beginPath(); x.arc(px, py, R * .11 * t.s, 0, 6.283); x.fill();
-        x.fillStyle = 'rgba(60,8,4,.35)'; x.beginPath(); x.arc(px + R * .02, py + R * .02, R * .05 * t.s, 0, 6.283); x.fill();
-      } else if (P.top === 'basil') {
-        if (t.k < .5) { x.fillStyle = '#fff4dc'; x.beginPath(); x.arc(px, py, R * .12 * t.s, 0, 6.283); x.fill(); }
-        else { x.fillStyle = '#2f7a2a'; x.beginPath(); x.ellipse(px, py, R * .09 * t.s, R * .045 * t.s, t.k * 6, 0, 6.283); x.fill(); }
-      } else {
-        x.fillStyle = t.k < .33 ? '#2e7d32' : t.k < .66 ? '#5b2a6e' : '#e3a21a';
-        x.save(); x.translate(px, py); x.rotate(t.k * 6);
-        x.fillRect(-R * .08 * t.s, -R * .025, R * .16 * t.s, R * .05); x.restore();
-      }
-    });
-    for (let k = 0; k < 8; k++) {                                           /* slice cuts */
-      x.strokeStyle = 'rgba(120,60,20,.28)'; x.lineWidth = 2;
-      x.beginPath(); x.moveTo(0, 0); x.lineTo(Math.cos(k * .785) * R * .9, Math.sin(k * .785) * R * .9); x.stroke();
-    }
+    if (!ready) return;
+    const S = sheet.height;                                       /* each pie is an S x S cell */
+    x.save(); x.globalAlpha = alpha; x.translate(cx, cy);
+    x.fillStyle = 'rgba(0,0,0,.35)'; x.beginPath(); x.arc(4, 8, R * 1.0, 0, 6.283); x.fill();   /* drop shadow */
+    x.rotate(rot); x.drawImage(sheet, i * S, 0, S, S, -R, -R, 2 * R, 2 * R);
     x.restore();
   }
   let last = -1;
