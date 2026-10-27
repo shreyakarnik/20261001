@@ -3000,6 +3000,49 @@ function texFootShadow(W, D, pad) {
   return c;
 }
 const HALL_DOOR = { z: -44.0, w: 1.8, h: 2.8 };
+/* The cafeteria's light, for its floor, walls and ceiling: still monochrome
+   and unlit by the scene, but no longer flat. Worked out per point in world
+   space: a pool of light under each pendant (washing up the nearby walls),
+   walls that fall darker toward the floor, shadow gathering where planes meet
+   (floor and wall, wall and ceiling, the room's corners), a dimmer ceiling,
+   and a broad soft shadow on the floor round the indoor kiosk (its footprint
+   is uK: x, z, turn, which updateWorld keeps in step). */
+const HALL_LIGHT = { kiosk: { value: new THREE.Vector3(1.88, -45.21, -0.716) } };
+function hallMat(hexStr, box, lamps, o) {
+  o = o || {};
+  const f = v => v.toFixed(4), b = box;
+  const L = lamps.map(q => 'vec3(' + f(q[0]) + ', ' + f(b.y0 + 2.75) + ', ' + f(q[1]) + ')');
+  const c = ungrade(hexStr);
+  return new THREE.ShaderMaterial({
+    uniforms: { uC: { value: new THREE.Vector3(c.r, c.g, c.b) }, uM: { value: o.map || null },
+      uRep: { value: new THREE.Vector2(o.rep ? o.rep[0] : 1, o.rep ? o.rep[1] : 1) }, uK: HALL_LIGHT.kiosk },
+    vertexShader: 'varying vec3 vW; varying vec3 vN; varying vec2 vUv;\nvoid main(){ vUv = uv;\n' +
+      ' vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal);\n' +
+      ' gl_Position = projectionMatrix * viewMatrix * w; }',
+    fragmentShader: 'uniform vec3 uC; uniform sampler2D uM; uniform vec2 uRep; uniform vec3 uK;\n' +
+      'varying vec3 vW; varying vec3 vN; varying vec2 vUv;\nvoid main(){ vec3 w = vW, n = normalize(vN);\n' +
+      ' vec3 base = uC' + (o.map ? ' * texture2D(uM, vUv * uRep).rgb' : '') + ';\n' +
+      ' bool fl = n.y > .5, ce = n.y < -.5;\n' +
+      /* the pendants */
+      ' float pend = 0.0;\n' +
+      L.map(v => ' { vec3 d = w - ' + v + '; pend += fl ? exp(-dot(d.xz, d.xz) / 1.7) : (ce ? .6 * exp(-dot(d, d) / 1.2) : .55 * exp(-dot(d, d) / 3.2)); }\n').join('') +
+      ' float lit = fl ? .68 + .50 * pend : (ce ? .66 + .26 * pend : (.72 + .26 * smoothstep(' + f(b.y0) + ', ' + f(b.y0 + 1.9) + ', w.y) - .06 * smoothstep(' + f(b.y0 + 2.8) + ', ' + f(b.y1) + ', w.y) + .30 * pend));\n' +
+      /* shadow where planes meet */
+      ' float o = 0.0;\n' +
+      ' if (!fl) o += exp(-(w.y - ' + f(b.y0) + ') / .35);\n' +
+      ' if (!ce) o += .7 * exp(-(' + f(b.y1) + ' - w.y) / .45);\n' +
+      ' if (abs(n.x) < .5) o += exp(-(w.x - ' + f(b.x0) + ') / .45) + exp(-(' + f(b.x1) + ' - w.x) / .45);\n' +
+      ' if (abs(n.z) < .5) o += exp(-(w.z - ' + f(b.zb) + ') / .45) + exp(-(' + f(b.zf) + ' - w.z) / .45);\n' +
+      ' float ao = 1.0 - .42 * min(o, 1.3) / 1.3;\n' +
+      /* the kiosk's soft shadow on the floor */
+      ' if (fl) { vec2 dk = w.xz - uK.xy; float cs = cos(uK.z), sn = sin(uK.z);\n' +
+      '   vec2 lk = vec2(dk.x * cs - dk.y * sn, dk.x * sn + dk.y * cs);\n' +
+      '   float dOut = length(max(abs(lk) - vec2(' + f(.62) + ', ' + f(1.15) + '), 0.0));\n' +
+      '   ao *= 1.0 - .42 * exp(-dOut / .40) - .14 * exp(-dOut / 1.6); }\n' +
+      ' gl_FragColor = vec4(base * lit * ao, 1.0); }',
+    side: o.side || THREE.FrontSide
+  });
+}
 function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   const T = .3;                                       /* wall thickness inside the shell */
   const x0 = -MW / 2 + T, x1 = MW / 2 - T, zb = Z - MD / 2 + T, zf = Z + MD / 2 - T;
@@ -3016,11 +3059,13 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   tcx.fillStyle = '#ffffff'; tcx.fillRect(0, 0, 256, 256);
   tcx.fillStyle = '#c4c4c4'; tcx.fillRect(0, 0, 256, 2); tcx.fillRect(0, 0, 2, 256);   /* grout, one tile per repeat */
   /* the floor: one plain grey, no texture (the terrazzo's tone) */
-  const floor = new THREE.MeshBasicMaterial({ color: ungrade('#868686'), fog: false, toneMapped: false });
+  const BOX = { x0: x0, x1: x1, zb: zb, zf: zf, y0: y0, y1: y1 };
+  const TABLES = [[-7.4, -47.6], [-7.4, -44.4], [5.6, -46.6]];   /* each with a pendant over it */
+  const floor = hallMat('#868686', BOX, TABLES);
   const wallTex = tx(texHallWall(), { wrap: THREE.RepeatWrapping, repeat: [4, 2] });
-  const wall = new THREE.MeshBasicMaterial({ color: ungrade('#8e8e8e'), fog: false, toneMapped: false });   /* mid neutral grey */
+  const wall = hallMat('#8e8e8e', BOX, TABLES);   /* mid neutral grey */
   const ceil = new THREE.MeshStandardMaterial({ map: tx(texCoffers(), { wrap: THREE.RepeatWrapping, repeat: [HW / 3, HD / 3] }), roughness: .9, color: 0x55575a });
-  const ceilFlat = new THREE.MeshBasicMaterial({ color: ungrade('#9a9a9a'), fog: false, toneMapped: false });
+  const ceilFlat = hallMat('#9a9a9a', BOX, TABLES);
   const goldM = new THREE.MeshStandardMaterial({ color: 0xc9a24a, roughness: .35, metalness: .8 });
 
   put(new THREE.PlaneGeometry(HW, HD), floor, 0, y0 + .002, (zf + zb) / 2, -Math.PI / 2);
@@ -3028,9 +3073,8 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   put(new THREE.PlaneGeometry(HW, HH), wall, 0, (y0 + y1) / 2, zb);                         /* back */
   /* the back wall's feature: a fluted dado, tone on tone, no trim */
   const fluteH = 2.7;
-  put(new THREE.PlaneGeometry(HW, fluteH), new THREE.MeshBasicMaterial({
-    map: tx(texFluted(), { wrap: THREE.RepeatWrapping, repeat: [HW / 2.2, 1], aniso: 16 }),
-    color: ungrade('#a4a4a4'), fog: false, toneMapped: false }), 0, y0 + fluteH / 2, zb + .01);
+  put(new THREE.PlaneGeometry(HW, fluteH), hallMat('#a4a4a4', BOX, TABLES,
+    { map: tx(texFluted(), { wrap: THREE.RepeatWrapping, aniso: 16 }), rep: [HW / 2.2, 1] }), 0, y0 + fluteH / 2, zb + .01);
 
   put(new THREE.PlaneGeometry(HD, HH), wall, x0, (y0 + y1) / 2, (zf + zb) / 2, 0, Math.PI / 2);
   /* the right-hand wall, with a doorway out to the side terrace (HALL_DOOR) */
@@ -3143,7 +3187,7 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   };
   /* (the two right-hand tables that stood on the walk to the side door are gone,
      so the camera never passes through furniture on its way out) */
-  [[-7.4, -47.6], [-7.4, -44.4], [5.6, -46.6]].forEach(([tx2, tz2]) => table(tx2, tz2, 0));
+  TABLES.forEach(([tx2, tz2]) => table(tx2, tz2, 0));
   [[mergeGeos(tparts), top], [mergeGeos(sparts), steel], [mergeGeos(cparts), seat]].forEach(([geo, m]) => put(geo, m, 0, 0, 0));
 
   g.add(hall); WORLD.hall = hall;
@@ -3632,8 +3676,8 @@ function kioskLight(d) {
     '   float ao = 1.0; bool roof = p.y > ' + f(d.BODY) + ' + .001;\n' +
     '   bool outer = !roof && ((n.x > .5 && p.x > ' + f(W2 - .012) + ') || (n.x < -.5 && p.x < ' + f(-W2 + .012) + ') ||\n' +
     '                (n.z > .5 && p.z > ' + f(D2 - .06) + ') || (n.z < -.5 && p.z < ' + f(-D2 + .012) + '));\n' +
-    '   if (outer) { ao *= 1.0 - .30 * exp(-p.y / .16); ao *= 1.0 - .42 * exp(-max(' + f(d.BODY) + ' - p.y, 0.0) / .20); }\n' +
-    '   bool inA = !(n.z > .5 && p.z > ' + f(D2 - .06) + ') && abs(p.x) < ' + f(XI + .02) + ' && p.z > ' + f(ZB - .02) + ' && p.z < ' + f(D2 + .001) +
+    '   if (outer) { ao *= 1.0 - .30 * exp(-p.y / .16); ao *= 1.0 - ' + f(d.OH === undefined ? .42 : d.OH) + ' * exp(-max(' + f(d.BODY) + ' - p.y, 0.0) / .20); }\n' +
+    '   bool inA = ' + (d.A > 0 ? '' : 'false && ') + '!(n.z > .5 && p.z > ' + f(D2 - .06) + ') && abs(p.x) < ' + f(XI + .02) + ' && p.z > ' + f(ZB - .02) + ' && p.z < ' + f(D2 + .001) +
     ' && p.y > ' + f(d.FLOOR - .02) + ' && p.y < ' + f(d.CEIL + .02) + ';\n' +
     '   if (inA) { float o = 0.0;\n' +
     '     if (abs(n.x) < .5) o += exp(-(' + f(XI) + ' - abs(p.x)) / .12);\n' +
@@ -4311,6 +4355,9 @@ function buildIndoorKiosk() {
   }))).then(list => {
     const T = {}; list.forEach(([k, t]) => { T[k] = t; });
     const d = P.dims, W = d.W, D = d.D, H = d.H, f = v => v.toFixed(5);
+    /* the hero's studio lighting, without its alcove and overhang terms */
+    const LIGHT = kioskLight({ W: W, D: D, A: 0, POST: 0, FLOOR: -1, CEIL: H, BODY: H, TOP: H, OH: 0 });
+    const kioskMat = (maps, src, o) => kioskMatBase(maps, src, Object.assign({ lit: LIGHT }, o));
     const g = new THREE.Group();
     const add = (geo, mat) => { const m = new THREE.Mesh(geo, mat); m.castShadow = false; g.add(m); return m; };
     const flat = hexStr => kioskMat({}, ' c = ' + kcol(hexStr) + ';');
@@ -4346,6 +4393,14 @@ function buildIndoorKiosk() {
       const s = '((' + f(xb) + ' - p.x) / ' + f(xb - xL) + ')';
       WORLD.kioskInHood = add(geo, kioskMat({}, ' c = n.y > .5 ? ' + kcol(d.LIME) + ' : (n.y < -.5 ? ' + kcol(d.HOOD_UNDER) + ' : ' + kcol(d.HOOD_FRONT) + ');\n' +
         RIM + ' if (n.z > 0.5) {\n' + rimLine(f(H) + ' + ' + f(R) + ' * clamp(' + s + ', 0.0, 1.0) - p.y', '.90') + ' }')); }
+    /* a brushed-steel ledge under the screen, as on the hero kiosk: across the
+       bay below the payment logos, standing off the face (texture rows
+       1204-1218 of the front's 1100 x 2160) */
+    { const tw = 1100, th = 2160, xL = -W / 2 + 170 / tw * W, xR = xb, dep = .06;
+      const yT = (1 - 1204 / th) * H, yB = (1 - 1218 / th) * H, zF = D / 2 - PR;
+      add(new THREE.BoxGeometry(xR - xL, yT - yB, dep).translate((xL + xR) / 2, (yT + yB) / 2, zF + dep / 2),
+        kioskMat({}, ' float br = .86 + .14 * h3_(floor(vec3(p.x * 900.0, p.y * 40.0, 0.0)));\n' +
+          ' c = vec4(vec3(.74, .76, .79) * br * (n.y > .5 ? 1.12 : (n.y < -.5 ? .45 : .92)), 1.0);')); }
     /* the ordering screen: the same promo loop as the hero kiosk, over the
        grey display in the render (its visible part, left of the pillar; corners
        in the front texture's 1100 x 2160 pixels) */
@@ -6265,6 +6320,7 @@ function updateWorld(dt) {
     /* its ordering screen plays only while the kiosk is in the shot */
     if (WORLD.kioskScreen && RIG.smooth < 1.3) WORLD.kioskScreen.tick(performance.now());
   }
+  if (WORLD.kioskIn) HALL_LIGHT.kiosk.value.set(WORLD.kioskIn.position.x, WORLD.kioskIn.position.z, WORLD.kioskIn.rotation.y);
   if (WORLD.kioskInScreen && RIG.smooth > 1.75 && RIG.smooth < 2.7) {   /* the indoor kiosk's screen, while it is in the shot */
     WORLD.kioskInScreen.tick(performance.now());
   }
