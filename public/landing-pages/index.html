@@ -134,7 +134,7 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
   transition:opacity .8s var(--ease), visibility .8s;
 }
 #pre.done{ opacity:0; visibility:hidden; pointer-events:none; }
-.pre-video{ width:min(560px, 82vw, 82vh); height:auto; display:block;
+.pre-video{ width:min(280px, 41vw, 41vh); height:auto; display:block;
   mix-blend-mode:screen;                        /* the clip's black ground melts into the screen's */
   pointer-events:none; }
 .pre-in{ width:min(420px,74vw); text-align:center; }
@@ -5800,6 +5800,8 @@ function layoutWord() {
 const $  = s => document.querySelector(s);
 const $$ = s => [].slice.call(document.querySelectorAll(s));
 const nav = $('#nav'), preEl = $('#pre'), preFill = $('#pre-fill'), prePct = $('#pre-pct');
+/* the logo animation runs at 1.75x */
+{ const v = $('#pre-video'); if (v) { v.defaultPlaybackRate = 1.75; v.playbackRate = 1.75; } }
 
 function wireReveals() {
   splitHeadingWords();
@@ -6560,15 +6562,16 @@ function fallback(err) {
   window.__pfx = { fallback: true, error: String(err && err.message || err) };
 }
 
-/* the loader lifts once the logo animation has played through (the scene is
+/* the loader lifts 2 s after the logo animation starts playing (the scene is
    ready by now); if it can't play, or with reduced motion, straight away */
+const INTRO_HOLD = 2;
 function afterIntro(go) {
   const v = $('#pre-video');
   let done = false; const once = () => { if (!done) { done = true; go(); } };
   if (!v || REDUCE || v.ended || v.error) return once();
   v.addEventListener('ended', once); v.addEventListener('error', once);
-  const left = isFinite(v.duration) ? (v.duration - v.currentTime) : 8;
-  setTimeout(once, Math.max(0, left) * 1000 + 600);              /* never wait on a stalled clip */
+  const left = Math.max(0, INTRO_HOLD - v.currentTime / v.playbackRate);
+  setTimeout(once, left * 1000);
   if (v.paused) v.play().catch(once);
 }
 function start() {
