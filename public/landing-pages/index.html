@@ -3437,40 +3437,78 @@ function buildCampus() {
 
    Local axes: the open front faces +z, the "Always Open" wall is +x. */
 const KIOSK = { x: 1.6, y: 3.1, z: 7.0, ry: -0.80 };
+/* The hero kiosk's floor reflection: each frame in the hero the kiosk (layer
+   1) is rendered from the camera mirrored in the floor plane, and the floor
+   patch looks it up through REFL.tm. Mipmapped, so the patch can blur it. */
+const REFL = { rt: null, cam: new THREE.PerspectiveCamera(), tm: new THREE.Matrix4(), cc: new THREE.Color() };
+function renderReflection() {
+  if (!REFL.rt) {
+    REFL.rt = new THREE.WebGLRenderTarget(512, 512, { minFilter: THREE.LinearMipmapLinearFilter, generateMipmaps: true });
+    if (WORLD.kioskFloor) WORLD.kioskFloor.uniforms.tR.value = REFL.rt.texture;
+  }
+  const c = camera, v = REFL.cam, Y = KIOSK.y;
+  c.updateMatrixWorld();
+  const dir = c.getWorldDirection(new THREE.Vector3()); dir.y = -dir.y;
+  const up = new THREE.Vector3(0, 1, 0).applyQuaternion(c.quaternion); up.y = -up.y;
+  v.position.set(c.position.x, 2 * Y - c.position.y, c.position.z);
+  v.up.copy(up); v.lookAt(v.position.clone().add(dir)); v.updateMatrixWorld();
+  v.projectionMatrix.copy(c.projectionMatrix); v.projectionMatrixInverse.copy(c.projectionMatrixInverse);
+  v.layers.set(1);
+  REFL.tm.set(.5, 0, 0, .5, 0, .5, 0, .5, 0, 0, .5, .5, 0, 0, 0, 1).multiply(v.projectionMatrix).multiply(v.matrixWorldInverse);
+  renderOffscreen(REFL.rt, v, null);
+}
+/* the kiosk's silhouette from the main camera, for the depth of field */
+const MASK = { rt: null, mat: new THREE.MeshBasicMaterial({ color: 0xffffff }), cam: null };
+function renderMask() {
+  const w = Math.max(2, POST.scene.width >> 1), h = Math.max(2, POST.scene.height >> 1);
+  if (!MASK.rt) MASK.rt = new THREE.WebGLRenderTarget(w, h);
+  else if (MASK.rt.width !== w || MASK.rt.height !== h) MASK.rt.setSize(w, h);
+  const keep = camera.layers.mask; camera.layers.set(1);
+  renderOffscreen(MASK.rt, camera, MASK.mat);
+  camera.layers.mask = keep;
+}
+function renderOffscreen(rt, cam, override) {
+  const bg = scene.background, fog = scene.fog, su = renderer.shadowMap.autoUpdate, ca = renderer.getClearAlpha();
+  renderer.getClearColor(REFL.cc);
+  scene.background = null; scene.fog = null; scene.overrideMaterial = override; renderer.shadowMap.autoUpdate = false;
+  renderer.setRenderTarget(rt); renderer.setClearColor(0x000000, 1); renderer.clear(true, true, false);
+  renderer.render(scene, cam);
+  scene.background = bg; scene.fog = fog; scene.overrideMaterial = null; renderer.shadowMap.autoUpdate = su;
+  renderer.setClearColor(REFL.cc, ca);
+}
 
 /* unlit, ungraded: rgb straight from the render, alpha 0 marks it for the
    composite to pass through untouched. `uv` is GLSL over the kiosk-space
    position p and normal n. */
-/* Product lighting for a kiosk drawn this way (opt.lit): its faces are the
-   render's own pixels, so instead of scene lights they get a studio setup
-   by face direction, in kiosk space — a key from the camera's left, a little
-   in front and above, and a broad, wrapped fill from the right — plus a soft
-   lift toward the top, as a softbox falls off. Applied before any rim line, so
-   the rim stays whole. The directions are for the hero camera (BACK_DIR). */
-const KIOSK_LIGHT =
-  ' { vec3 kL = normalize(vec3(-.318, .447, .836)), fL = normalize(vec3(.95, .30, -.006));\n' +
-  '   float key = max(dot(n, kL), 0.0), fill = clamp((dot(n, fL) + .6) / 1.6, 0.0, 1.0);\n' +
-  /* falloff across the faces: the key is strongest at the left, near where it
-     stands, and the fill gathers toward the back right corner */
-  '   key *= .80 + .32 * (1.0 - smoothstep(-1.0, 1.0, p.x));\n' +
-  '   fill *= .78 + .40 * smoothstep(1.3, -1.3, p.z);\n' +
-  '   float lift = .93 + .11 * clamp(p.y / 2.44, 0.0, 1.0);\n' +
-  '   c.rgb *= (.56 + .56 * key + .24 * fill) * lift; }\n';
-function kioskMatLit(maps, body, o) { return kioskMat(maps, body, Object.assign({ lit: true }, o)); }
+/* noise for the lit kiosk's surface grain (declared ahead of main) */
+const KIOSK_NOISE =
+  'float h3_(vec3 q){ return fract(sin(dot(q, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }\n' +
+  'float vn3_(vec3 q){ vec3 i = floor(q), f = fract(q); f = f * f * (3.0 - 2.0 * f);\n' +
+  '  return mix(mix(mix(h3_(i), h3_(i + vec3(1,0,0)), f.x), mix(h3_(i + vec3(0,1,0)), h3_(i + vec3(1,1,0)), f.x), f.y),\n' +
+  '             mix(mix(h3_(i + vec3(0,0,1)), h3_(i + vec3(1,0,1)), f.x), mix(h3_(i + vec3(0,1,1)), h3_(i + vec3(1,1,1)), f.x), f.y), f.z); }\n';
+const kioskMatBase = (...a) => kioskMat(...a);
+/* opt.lit: a block of GLSL (from kioskLight) that lights the face; it runs
+   after the face's colour and before any rim line, and gets the view
+   direction in kiosk space as vV */
 function kioskMat(maps, body, o) {
   o = o || {};
-  if (o.lit) {                                                      /* light before the rim line, if there is one */
+  if (o.lit) {
     const r = body.indexOf(RIM);
-    body = r < 0 ? body + '\n' + KIOSK_LIGHT : body.slice(0, r) + '\n' + KIOSK_LIGHT + body.slice(r);
+    body = r < 0 ? body + '\n' + o.lit : body.slice(0, r) + '\n' + o.lit + body.slice(r);
   }
   const uniforms = {};
   Object.keys(maps).forEach(k => { uniforms[k] = { value: maps[k] }; });
   return new THREE.ShaderMaterial({
     uniforms: uniforms,
-    vertexShader: 'varying vec3 vP; varying vec3 vN;\nvoid main(){ vP = position; vN = normal;\n gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    vertexShader: 'varying vec3 vP; varying vec3 vN; varying vec3 vV;\nvoid main(){ vP = position; vN = normal;\n' +
+      /* the eye, from this point, in kiosk space (the kiosk is only turned, never scaled) */
+      ' vec3 e = cameraPosition - (modelMatrix * vec4(position, 1.0)).xyz; mat3 m = mat3(modelMatrix);\n' +
+      ' vV = vec3(dot(m[0], e), dot(m[1], e), dot(m[2], e));\n' +
+      ' gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
     extensions: { derivatives: true },                                /* fwidth, for the rim line */
     fragmentShader: Object.keys(maps).map(k => 'uniform sampler2D ' + k + ';').join('\n') +
-      '\nvarying vec3 vP; varying vec3 vN;\nvoid main(){ vec3 p = vP; vec3 n = normalize(vN); vec4 c;\n' + body +
+      '\nvarying vec3 vP; varying vec3 vN; varying vec3 vV;\n' + (o.lit ? KIOSK_NOISE : '') +
+      'void main(){ vec3 p = vP; vec3 n = normalize(vN); vec4 c;\n' + body +
       (o.cutout ? '\n if (c.a < 0.5) discard;' : '') + '\n gl_FragColor = vec4(c.rgb * 0.78, 0.0); }',
     side: o.side || THREE.FrontSide
   });
@@ -3566,8 +3604,67 @@ function kioskScreen(CW, CH, opt) {                             /* canvas size: 
   return { tex: tex, tick(now) { const t = now / 1000; if (t - last < .05) return; last = t; draw(t); } };
 }
 
+/* Product lighting for the hero kiosk. Its faces are the render's own pixels,
+   so instead of scene lights each face is lit by its direction and position,
+   in kiosk space, as a studio would light a product:
+     key   — from the camera's left, a little in front and above, falling off
+             across the faces from that side
+     fill  — broad and wrapped, from the right, gathering toward the back corner
+     lift  — a soft rise toward the top, as a softbox falls off
+     shade — the roof overhang's shadow down the outer walls, contact with the
+             ground at their foot, and occlusion in the alcove's corners
+     spill — the lit ORDER HERE sign's warm light into the alcove
+     sheen — a soft highlight that moves with the eye (sharp on the steel kick
+             plate), a touch of fresnel at grazing angles
+     bevel — the outer edges catching the light, as eased edges do
+     grain — a faint, low-contrast variation in the wrap
+   The lightbox face (already lit past 1.0) keeps its own light. */
+function kioskLight(d) {
+  const f = v => v.toFixed(5), W2 = d.W / 2, D2 = d.D / 2, XI = d.W / 2 - d.POST, ZB = d.D / 2 - d.A;
+  const SX = -XI + .21 * 2 * XI, SY = d.FLOOR + .886 * (d.CEIL - d.FLOOR), SZ = ZB + .05;
+  return ' { bool glow_ = max(c.r, max(c.g, c.b)) > 1.02;\n' +
+    '   vec3 kL = normalize(vec3(-.318, .447, .836)), fL = normalize(vec3(.95, .30, -.006)), V = normalize(vV);\n' +
+    '   float key = max(dot(n, kL), 0.0), fill = clamp((dot(n, fL) + .6) / 1.6, 0.0, 1.0);\n' +
+    '   key *= .80 + .32 * (1.0 - smoothstep(-1.0, 1.0, p.x));\n' +
+    '   fill *= .78 + .40 * smoothstep(1.3, -1.3, p.z);\n' +
+    '   float lit = (.56 + .56 * key + .24 * fill) * (.93 + .11 * clamp(p.y / ' + f(d.TOP) + ', 0.0, 1.0));\n' +
+    /* shade */
+    '   float ao = 1.0; bool roof = p.y > ' + f(d.BODY) + ' + .001;\n' +
+    '   bool outer = !roof && ((n.x > .5 && p.x > ' + f(W2 - .012) + ') || (n.x < -.5 && p.x < ' + f(-W2 + .012) + ') ||\n' +
+    '                (n.z > .5 && p.z > ' + f(D2 - .06) + ') || (n.z < -.5 && p.z < ' + f(-D2 + .012) + '));\n' +
+    '   if (outer) { ao *= 1.0 - .30 * exp(-p.y / .16); ao *= 1.0 - .42 * exp(-max(' + f(d.BODY) + ' - p.y, 0.0) / .20); }\n' +
+    '   bool inA = !(n.z > .5 && p.z > ' + f(D2 - .06) + ') && abs(p.x) < ' + f(XI + .02) + ' && p.z > ' + f(ZB - .02) + ' && p.z < ' + f(D2 + .001) +
+    ' && p.y > ' + f(d.FLOOR - .02) + ' && p.y < ' + f(d.CEIL + .02) + ';\n' +
+    '   if (inA) { float o = 0.0;\n' +
+    '     if (abs(n.x) < .5) o += exp(-(' + f(XI) + ' - abs(p.x)) / .12);\n' +
+    '     if (abs(n.y) < .5) o += exp(-(p.y - ' + f(d.FLOOR) + ') / .12) + exp(-(' + f(d.CEIL) + ' - p.y) / .12);\n' +
+    '     if (abs(n.z) < .5) o += exp(-(p.z - ' + f(ZB) + ') / .12);\n' +
+    '     ao *= (1.0 - .42 * min(o, 1.0)) * (.80 + .20 * smoothstep(' + f(ZB) + ', ' + f(D2) + ', p.z)); }\n' +
+    /* bevel: distance to the nearest outer edge of the face */
+    '   float bd = 1.0;\n' +
+    '   if (!roof && n.x > .5 && p.x > ' + f(W2 - .012) + ') bd = min(min(' + f(D2) + ' - p.z, p.z + ' + f(D2) + '), min(p.y, ' + f(d.BODY) + ' - p.y));\n' +
+    '   if (!roof && n.z > .5 && p.z > ' + f(D2 - .06) + ') bd = min(' + f(W2) + ' - abs(p.x), min(p.y, ' + f(d.BODY) + ' - p.y));\n' +
+    '   float bev = 1.0 - smoothstep(.004, .024, bd);\n' +
+    /* sheen */
+    '   float steel = (n.z > .5 && p.y < ' + f(d.FLOOR) + ' && p.z > ' + f(D2 - .03) + ') ? 1.0 : 0.0;\n' +
+    '   float spec = pow(max(dot(n, normalize(kL + V)), 0.0), mix(36.0, 90.0, steel)) * mix(.10, .55, steel)\n' +
+    '              + pow(max(dot(n, normalize(fL + V)), 0.0), 16.0) * .04 + pow(1.0 - max(dot(n, V), 0.0), 4.0) * .08;\n' +
+    /* grain */
+    '   float gr = (h3_(floor(p * 180.0)) - .5) * .035 + (vn3_(p * 3.0) - .5) * .05;\n' +
+    '   vec3 base = c.rgb;\n' +
+    '   if (!glow_) {\n' +
+    '     c.rgb *= lit * ao * (1.0 + gr);\n' +
+    '     c.rgb += base * bev * .30 * (.5 + key);\n' +
+    '     c.rgb += vec3(1.0, .98, .95) * spec * ao;\n' +
+    /* spill: the sign at (SX, SY, SZ), into the alcove (not onto its own wall, which has its wash) */
+    '     if (inA && n.z < .5) { vec3 sv = vec3(' + f(SX) + ', ' + f(SY) + ', ' + f(SZ) + ') - p; float sd = length(sv);\n' +
+    '       float spill = .55 * exp(-sd / .55) * max(dot(n, sv / sd), 0.0);\n' +
+    '       c.rgb += base * vec3(1.0, .75, .5) * spill + vec3(.22, .14, .07) * spill * .5; }\n' +
+    '   } }\n';
+}
 function makeKiosk(d, T) {
-  const kioskMat = (maps, src, o) => kioskMatLit(maps, src, o);   /* every face gets the product lighting */
+  const LIGHT = kioskLight(d);
+  const kioskMat = (maps, src, o) => kioskMatBase(maps, src, Object.assign({ lit: LIGHT }, o));   /* every face gets the product lighting */
   const g = new THREE.Group();
   const W = d.W, D = d.D, F = d.F, S = d.S, B = d.B, A = d.A, PST = d.POST;
   const FL = d.FLOOR, CE = d.CEIL, BODY = d.BODY, TOP = d.TOP, HB = d.HB;
@@ -3703,6 +3800,23 @@ function makeKiosk(d, T) {
 
   /* (no valance: the roof sits straight on the red header and the tiled wall) */
 
+  /* ---- the ordering wall's hardware, raised off the wall so it reads as
+     real: the knife slot, the two buttons and the card terminal. Each is a
+     shallow box whose face carries the same pixels of the wall behind it.
+     Rects are in the ordering-wall texture's 1200 x 1300 pixels. */
+  { const X0 = W / 2 - PST, zW = D / 2 - A + .002;
+    const hw = kioskMat({ uM: T.back }, ' c = texture2D(uM, vec2((p.x + ' + f(X0) + ') / ' + f(2 * X0) +
+      ', (p.y - ' + f(FL) + ') / ' + f(CE - FL) + '));\n if (n.z < .5) c.rgb *= .55;');
+    [[494, 374, 593, 394, .006], [480, 495, 602, 570, .012], [491, 600, 570, 680, .022], [480, 711, 601, 787, .012]].forEach(([u0, v0, u1, v1, dep]) => {
+      const x0 = -X0 + u0 / 1200 * 2 * X0, x1 = -X0 + u1 / 1200 * 2 * X0;
+      const y0 = FL + (1 - v1 / 1300) * (CE - FL), y1 = FL + (1 - v0 / 1300) * (CE - FL);
+      add(new THREE.BoxGeometry(x1 - x0, y1 - y0, dep).translate((x0 + x1) / 2, (y0 + y1) / 2, zW + dep / 2), hw);
+    }); }
+
+  /* everything built so far is the kiosk proper: it goes on layer 1 too, which
+     the floor reflection and the depth-of-field mask render (glows excluded) */
+  g.traverse(o => { if (o.isMesh && o.material.blending !== THREE.AdditiveBlending) o.layers.enable(1); });
+
   /* ---- the backlight: a short street lamp hidden right behind the kiosk, on
      the line from the hero camera through it, so only its light shows: a cool
      glow rimming the silhouette. In kiosk space the hero camera lies along
@@ -3730,13 +3844,23 @@ function makeKiosk(d, T) {
   g.position.set(KIOSK.x, KIOSK.y, KIOSK.z); g.rotation.y = KIOSK.ry;
   scene.add(g); WORLD.kiosk = g;
 
-  /* a soft contact shadow, so it sits on the paving like a product shot */
-  const cs = cvs(256, 256), csx = cs.getContext('2d'), cg = csx.createRadialGradient(128, 128, 10, 128, 128, 128);
-  cg.addColorStop(0, 'rgba(0,0,0,.75)'); cg.addColorStop(.45, 'rgba(0,0,0,.38)'); cg.addColorStop(1, 'rgba(0,0,0,0)');
-  csx.fillStyle = cg; csx.fillRect(0, 0, 256, 256);
-  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(W * 1.7, D * 1.5),
-    new THREE.MeshBasicMaterial({ map: tx(cs), transparent: true, depthWrite: false, opacity: 1 }));
-  shadow.rotation.x = -Math.PI / 2; shadow.position.set(0, .006, 0); shadow.renderOrder = 2; g.add(shadow);
+  /* the floor under and around it, in one pass: a faint pool of the key light
+     (from the left, in front), cut by a tight contact shadow at the base, and
+     the kiosk's own reflection (REFL, rendered each frame in the hero),
+     blurring and fading as it leaves the base */
+  { const pool = new THREE.ShaderMaterial({
+      uniforms: { tR: { value: null }, uTM: { value: REFL.tm }, uOn: { value: 0 } },
+      vertexShader: 'uniform mat4 uTM; varying vec4 vR; varying vec3 vP;\nvoid main(){ vP = position;\n' +
+        ' vec4 w = modelMatrix * vec4(position, 1.0); vR = uTM * w; gl_Position = projectionMatrix * viewMatrix * w; }',
+      fragmentShader: 'uniform sampler2D tR; uniform float uOn; varying vec4 vR; varying vec3 vP;\nvoid main(){\n' +
+        ' float dOut = length(vec2(max(abs(vP.x) - ' + f(W / 2) + ', 0.0), max(abs(vP.z) - ' + f(D / 2) + ', 0.0)));\n' +
+        ' vec2 kc = vP.xz - vec2(-.6, 1.4);\n' +
+        ' float light = .06 * exp(-dot(kc, kc) / 6.0) * max(1.0 - .92 * exp(-dOut / .05) - .45 * exp(-dOut / .35), 0.0);\n' +
+        ' vec3 r = uOn > 0.0 ? texture2D(tR, vR.xy / vR.w, dOut * 5.0).rgb * .28 * exp(-dOut / .7) * uOn : vec3(0.0);\n' +
+        ' gl_FragColor = vec4(vec3(.85, .88, .95) * light + r, 0.0); }'
+    });
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(12, 12).rotateX(-Math.PI / 2), pool);
+    m.position.y = .004; g.add(m); WORLD.kioskFloor = pool; }
   placeKiosk();
   if (WANT_SHADOW && WORLD.key) WORLD.key.shadow.needsUpdate = true;
 }
@@ -5386,12 +5510,13 @@ function initPost() {
     uniforms: {
       tS: { value: null }, tB: { value: null }, uRes: { value: new THREE.Vector2(w, h) },
       uT: { value: 0 }, uBloom: { value: .26 }, uCA: { value: .35 }, uGrain: { value: .007 },
-      uVig: { value: .55 }, uExp: { value: .62 }, uFade: { value: 1 }, uSat: { value: 1.05 }, uTint: { value: 1 }
+      uVig: { value: .55 }, uExp: { value: .62 }, uFade: { value: 1 }, uSat: { value: 1.05 }, uTint: { value: 1 },
+      tM: { value: null }, uDof: { value: 0 }
     },
     vertexShader: QUAD_VS,
     fragmentShader:
       'uniform sampler2D tS; uniform sampler2D tB; uniform vec2 uRes;\n' +
-      'uniform float uT, uBloom, uCA, uGrain, uVig, uExp, uFade, uSat, uTint;\n' +
+      'uniform float uT, uBloom, uCA, uGrain, uVig, uExp, uFade, uSat, uTint, uDof; uniform sampler2D tM;\n' +
       'varying vec2 vUv;\n' +
       'vec3 aces(vec3 x){ return clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14), 0.0, 1.0); }\n' +
       'void main(){\n' +
@@ -5402,6 +5527,15 @@ function initPost() {
       ' c.r = texture2D(tS, vUv + d*ca).r;\n' +
       ' c.g = texture2D(tS, vUv).g;\n' +
       ' c.b = texture2D(tS, vUv - d*ca).b;\n' +
+      /* depth of field (the hero): everything but the kiosk (tM) softly out of focus;
+         taps that land on the kiosk are left out, so it never bleeds into the blur */
+      ' vec3 s0c = s0.rgb;\n' +
+      ' if (uDof > 0.001) { float k0 = texture2D(tM, vUv).r;\n' +
+      '   if (k0 < 0.5) { vec3 acc = vec3(0.0); float ws = 0.0;\n' +
+      '     for (int i = 0; i < 14; i++) { float fi = float(i); float rr = sqrt((fi + .5) / 14.0); float a = fi * 2.39996;\n' +
+      '       vec2 o = vec2(cos(a), sin(a)) * rr * uDof * 5.0 / uRes; float w = 1.0 - texture2D(tM, vUv + o).r;\n' +
+      '       acc += texture2D(tS, vUv + o).rgb * w; ws += w; }\n' +
+      '     if (ws > 0.5) { vec3 bl = acc / ws; c = mix(c, bl, uDof); s0c = mix(s0c, bl, uDof); } } }\n' +
       ' c += texture2D(tB, vUv).rgb * uBloom;\n' +
       ' c *= uExp;\n' +
       ' c = aces(c);\n' +
@@ -5421,7 +5555,7 @@ function initPost() {
          without pulling the lit paper of the hall down with it. */
       ' e = clamp((e - 0.30) * 1.00 + 0.30, 0.0, 1.0);\n' +
       /* sky pixels skip the grade entirely and keep their authored colour */
-      ' e = mix(s0.rgb * uFade + (g-0.5)*uGrain*0.5, e, m);\n' +
+      ' e = mix(s0c * uFade + (g-0.5)*uGrain*0.5, e, m);\n' +
       ' gl_FragColor = vec4( e, 1.0 );\n' +
       '}'
   });
@@ -6224,6 +6358,13 @@ function updateWorld(dt) {
 let FRAME = 0;
 function render() {
   FRAME++;
+  /* the hero kiosk's reflection, and its mask for the depth of field */
+  const heroK = WORLD.kiosk && WORLD.kiosk.visible && RIG.smooth < 1.05;
+  if (WORLD.kioskFloor) WORLD.kioskFloor.uniforms.uOn.value = heroK ? 1 : 0;
+  if (heroK) renderReflection();
+  const dof = WANT_POST ? (1 - smooth(.35, .85, RIG.smooth)) : 0;
+  if (WANT_POST) { if (dof > .001 && WORLD.kiosk) renderMask(); POST.comp.uniforms.uDof.value = dof;
+    POST.comp.uniforms.tM.value = MASK.rt ? MASK.rt.texture : null; }
   renderer.setRenderTarget(WANT_POST ? POST.scene : null);
   renderer.clear(true, true, false);
   renderer.render(scene, camera);
