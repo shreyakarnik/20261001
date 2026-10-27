@@ -1416,7 +1416,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <script src="assets/three.min.js"></script>
 <script src="assets/kiosk-photo.js?v=3"></script>
 <script src="assets/kiosk-indoor-photo.js?v=7"></script>
-<script src="assets/kiosk-atm-photo.js?v=2"></script>
+<script src="assets/kiosk-atm-photo.js?v=3"></script>
 <script>
 /* =====================================================================
    PFX — the campus walk, rendered live in WebGL.
@@ -4243,6 +4243,21 @@ function buildOutdoor() {
     const m = add(new THREE.BoxGeometry(dep, y1 - y0, Math.abs(z0 - z1)), faceMat);
     m.position.set(FX + dep / 2, (y0 + y1) / 2, (z0 + z1) / 2); atmParts.push(m);
   });
+  /* a brushed-steel trim framing the face, standing just proud of it */
+  { const steel = new THREE.ShaderMaterial({
+      vertexShader: 'varying vec3 vW; varying vec3 vN;\nvoid main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz;\n' +
+        ' vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+      fragmentShader: KIOSK_NOISE + 'varying vec3 vW; varying vec3 vN;\nvoid main(){ vec3 n = normalize(vN), V = normalize(cameraPosition - vW);\n' +
+        ' float along = abs(n.x) > .5 ? (abs(vW.y - ' + fx(Y + KH / 2) + ') > ' + fx(KH / 2 - .04) + ' ? vW.z : vW.y) : vW.x;\n' +
+        ' float br = .84 + .16 * h3_(vec3(floor(along * 900.0), 0.0, 0.0));\n' +
+        ' float sh = n.x > .5 ? 1.0 : (n.y > .5 ? 1.1 : .55);\n' +
+        ' float sp = pow(max(dot(n, normalize(normalize(vec3(.836, .447, .318)) + V)), 0.0), 40.0) * .35;\n' +
+        ' gl_FragColor = vec4(vec3(.60, .62, .65) * br * sh + sp, 0.0); }'
+    });
+    const T2 = .035, DEP = .03;
+    [[0, KH - T2 / 2, KW + 2 * T2], [0, T2 / 2, KW + 2 * T2]].forEach(([dz, y, len]) =>
+      add(new THREE.BoxGeometry(DEP, T2, len), steel).position.set(FX + DEP / 2, Y + y, kz + dz));
+    [-1, 1].forEach(sd => add(new THREE.BoxGeometry(DEP, KH, T2), steel).position.set(FX + DEP / 2, Y + KH / 2, kz + sd * (KW / 2 + T2 / 2))); }
   /* its shadow on the ground in front, darkest at the foot of the face */
   { const c = cvs(64, 8), x = c.getContext('2d'), gr = x.createLinearGradient(0, 0, 64, 0);
     gr.addColorStop(0, 'rgba(0,0,0,.75)'); gr.addColorStop(.25, 'rgba(0,0,0,.35)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
@@ -4266,7 +4281,10 @@ function buildOutdoor() {
     add(geo, new THREE.ShaderMaterial({
       uniforms: { uM: { value: scr.tex } },
       vertexShader: 'varying vec2 vUv;\nvoid main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-      fragmentShader: 'uniform sampler2D uM; varying vec2 vUv;\nvoid main(){ gl_FragColor = vec4(texture2D(uM, vUv).rgb * .92, 0.0); }'
+      /* behind glass: a soft diagonal reflection and a faint lift toward the top */
+      fragmentShader: 'uniform sampler2D uM; varying vec2 vUv;\nvoid main(){ vec3 c = texture2D(uM, vUv).rgb * .92;\n' +
+        ' float d = vUv.x * .7 + vUv.y - 1.15; c += vec3(.85, .9, 1.0) * (.07 * exp(-d * d / .02) + .025 * vUv.y);\n' +
+        ' gl_FragColor = vec4(c, 0.0); }'
     }));
     WORLD.kioskAtmScreen = scr;
     g.children[g.children.length - 1].layers.enable(3); }
@@ -4361,8 +4379,19 @@ function buildOutdoor() {
   [[17.5, -59.5, 1.0, 81], [23.5, -49.5, .9, 82], [28.0, -36.0, 1.1, 83], [12.6, -65.0, .95, 84], [31.0, -57.0, 1.05, 85]]
     .forEach(([mx, mz, sc, seed]) => {
       const o = buildMaple(seed, mx, mz, sc); o.position.y = Y; scene.remove(o); g.add(o);
-      /* green canopies here, rather than the original's red */
-      o.traverse(m => { if (m.isInstancedMesh) { m.material.color.setHex(0x1f3d17); m.material.emissive.setHex(0x031002); } });
+      /* in shadow: unlit dark silhouettes, so no lamp light catches them —
+         a near-black trunk and a very dark green canopy (leaves keep their sway) */
+      o.traverse(m => {
+        /* drawn after the drifting haze (an additive layer) so it can't lift them */
+        if (m.isMesh) { m.renderOrder = 1.6; }
+        if (m.isInstancedMesh) { m.material.color.setHex(0x0b1409); m.material.emissive.setHex(0x000000);
+          m.material.transparent = true; m.material.fog = false;
+          m.material.onBeforeCompile = (prev => sh => { prev(sh);
+            sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>',
+              '#include <dithering_fragment>\n gl_FragColor.rgb = diffuseColor.rgb;'); })(m.material.onBeforeCompile);
+          m.material.needsUpdate = true; }
+        else if (m.isMesh) m.material = new THREE.MeshBasicMaterial({ color: 0x050505, side: THREE.DoubleSide, transparent: true, fog: false });
+      });
     });
 
   /* snow over the terrace: soft round flakes drifting down through the lamp
