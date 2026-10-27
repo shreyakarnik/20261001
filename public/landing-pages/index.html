@@ -134,6 +134,9 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
   transition:opacity .8s var(--ease), visibility .8s;
 }
 #pre.done{ opacity:0; visibility:hidden; pointer-events:none; }
+.pre-video{ width:min(560px, 82vw, 82vh); height:auto; display:block;
+  mix-blend-mode:screen;                        /* the clip's black ground melts into the screen's */
+  pointer-events:none; }
 .pre-in{ width:min(420px,74vw); text-align:center; }
 .pre-mark{ margin:0 auto 26px; width:92px; opacity:.95; }
 .pre-mark img{ width:100%; height:auto; display:block; }
@@ -1133,12 +1136,8 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 
 <!-- ============================================================ preloader -->
 <div id="pre">
-  <div class="pre-in">
-    <div class="pre-mark">
-      <img src="assets/pfx-light.png" alt="PFX" aria-hidden="true">
-    </div>
-    <div class="pre-bar"><i id="pre-fill"></i></div>
-  </div>
+  <!-- the PFX logo animation plays while the scene loads -->
+  <video class="pre-video" id="pre-video" src="assets/pfx-intro.mp4" autoplay muted playsinline preload="auto" aria-label="PFX"></video>
 </div>
 
 <!-- ============================================================ nav -->
@@ -6537,7 +6536,7 @@ function boot() {
     const done = () => {
       i++;
       const p = i / JOBS.length;
-      preFill.style.right = ((1 - p) * 100).toFixed(1) + '%';
+      if (preFill) preFill.style.right = ((1 - p) * 100).toFixed(1) + '%';
       if (prePct) prePct.textContent = Math.round(p * 100);   /* the loader no longer shows a percentage */
       if (i < JOBS.length) setTimeout(step, 16); else setTimeout(start, 220);
     };
@@ -6561,6 +6560,17 @@ function fallback(err) {
   window.__pfx = { fallback: true, error: String(err && err.message || err) };
 }
 
+/* the loader lifts once the logo animation has played through (the scene is
+   ready by now); if it can't play, or with reduced motion, straight away */
+function afterIntro(go) {
+  const v = $('#pre-video');
+  let done = false; const once = () => { if (!done) { done = true; go(); } };
+  if (!v || REDUCE || v.ended || v.error) return once();
+  v.addEventListener('ended', once); v.addEventListener('error', once);
+  const left = isFinite(v.duration) ? (v.duration - v.currentTime) : 8;
+  setTimeout(once, Math.max(0, left) * 1000 + 600);              /* never wait on a stalled clip */
+  if (v.paused) v.play().catch(once);
+}
 function start() {
   addEventListener('resize', () => { resize(); }, { passive: true });
   addEventListener('orientationchange', () => setTimeout(resize, 250));
@@ -6579,8 +6589,9 @@ function start() {
     $$('[data-rv], .mask-line').forEach(e => e.classList.add('rv-in'));
     document.body.classList.remove('is-locked');
     preEl.classList.add('done');
-  } else {
+  } else afterIntro(() => {
     preEl.classList.add('done');
+    INTRO.t0 = REDUCE ? performance.now() - 4000 : performance.now();
     setTimeout(() => {
       document.body.classList.remove('is-locked');
       $('#hero').querySelectorAll('[data-rv], .mask-line').forEach((e, i) =>
@@ -6593,9 +6604,9 @@ function start() {
         scrollTo({ top: target.getBoundingClientRect().top + scrollY - navH, behavior: 'auto' });
       }
     }, REDUCE ? 0 : 340);
-  }
+  });
   running = true; tPrev = performance.now();
-  INTRO.t0 = shot !== null ? 0 : (REDUCE ? performance.now() - 4000 : performance.now());
+  if (shot !== null) INTRO.t0 = 0;
   queue();
   window.__pfx = { RIG: RIG, WORLD: WORLD, WORD: WORD, CAM: CAM, POST: POST, renderer: renderer, scene: scene, camera: camera, anchors: () => anchors };
 }
