@@ -2097,31 +2097,6 @@ function texSky() {
   return c;
 }
 
-/* the wooded ridge the valley closes with — black, ragged, mostly fog */
-function texRidge() {
-  const W = 2048, H = 512, c = cvs(W, H), x = c.getContext('2d');
-  const n = noise2D(1207), rnd = mulberry32(1207);
-  x.beginPath(); x.moveTo(0, H);
-  for (let i = 0; i <= W; i += 4) {
-    const t = i / W;
-    const ridge = .46 + .30 * (fbm(n, t * 2.4, .5, 4, 2.1, .55) * .5 + .5)
-                      + .16 * (fbm(n, t * 7.5, 3.1, 3, 2.2, .5) * .5 + .5);
-    x.lineTo(i, H - ridge * H * .84);
-  }
-  x.lineTo(W, H); x.closePath();
-  x.fillStyle = '#ffffff'; x.fill();
-  /* conifer spikes along the crest so the silhouette reads as forest */
-  x.fillStyle = '#ffffff';
-  for (let i = 0; i < 460; i++) {
-    const px = rnd() * W, t = px / W;
-    const ridge = .46 + .30 * (fbm(n, t * 2.4, .5, 4, 2.1, .55) * .5 + .5)
-                      + .16 * (fbm(n, t * 7.5, 3.1, 3, 2.2, .5) * .5 + .5);
-    const by = H - ridge * H * .84, hh = 8 + rnd() * 30, ww = 3 + rnd() * 6;
-    x.beginPath(); x.moveTo(px, by - hh); x.lineTo(px + ww, by + 4); x.lineTo(px - ww, by + 4);
-    x.closePath(); x.fill();
-  }
-  return c;
-}
 
 /* glazed roof tile — half-round caps running down the slope, weathered */
 function texRoof() {
@@ -2323,6 +2298,15 @@ function texMoon() {
 }
 
 /* soft round falloff — haze, embers, glows */
+/* a gaussian glow: no visible rim anywhere in the falloff, for light that
+   should read as diffused through air rather than as a halo */
+function texSoftGlow(r, g, b) {
+  const S = 256, c = cvs(S, S), x = c.getContext('2d');
+  const gr = x.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
+  for (let i = 0; i <= 16; i++) { const t = i / 16; gr.addColorStop(t, 'rgba(' + r + ',' + g + ',' + b + ',' + Math.exp(-t * t * 5.5).toFixed(3) + ')'); }
+  x.fillStyle = gr; x.fillRect(0, 0, S, S);
+  return c;
+}
 function texGlow(inner, mid) {
   const S = 256, c = cvs(S, S), x = c.getContext('2d');
   const g = x.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
@@ -2848,18 +2832,18 @@ function buildShell() {
   sky.position.set(0, 62, -108); sky.renderOrder = -1; scene.add(sky);
   WORLD.sky = sky;
 
-  /* the wooded ridge that closes the valley — three-quarters eaten by fog,
-     which is the only reason the ground plane can just stop out there */
+  /* the city skyline that closes the valley (the same blocks the ATM terrace
+     looks out on), standing where a wooded ridge once did */
   /* z, centre y, width, height, x — kept low: a crest that climbs past the
      hall's eaves stops reading as distance and starts reading as a cut-out */
-  const ridgeMap = tx(texRidge(), { wrap: THREE.RepeatWrapping, repeat: [1.7, 1] });
+  const ridgeMap = tx(texSkyline(1207), { wrap: THREE.RepeatWrapping, repeat: [1.7, 1] });
   ridgeMap.wrapT = THREE.ClampToEdgeWrapping;
   [[-90, 13, 300, 26, 0], [-63, 9.5, 210, 19, 16]].forEach((r, i) => {
     const m = new THREE.Mesh(new THREE.PlaneGeometry(r[2], r[3]),
       /* fog off: at a hundred metres it would lift a black silhouette to 80%
          of the fog colour, and the treeline came back as a *pale* band */
-      new THREE.MeshBasicMaterial({ map: i ? tx(texRidge()) : ridgeMap, transparent: true,
-        color: ungrade(i ? '#080808' : '#0c0c0d'), depthWrite: false, fog: false, toneMapped: false }));
+      new THREE.MeshBasicMaterial({ map: i ? tx(texSkyline(1311, { tone: [9, 14, 18], lit: .04 })) : ridgeMap, transparent: true,
+        depthWrite: false, fog: false, toneMapped: false }));
     m.position.set(r[4], r[1], r[0]); m.renderOrder = 1; scene.add(m); (WORLD.ridges = WORLD.ridges || []).push(m);
   });
 
@@ -3262,8 +3246,8 @@ function buildCampus() {
   const dome  = tileMat;
   const gold  = new THREE.MeshStandardMaterial({ color: 0x8f6f2e, roughness: .38, metalness: .78 });
   const winTex = tx(texWindow(), { aniso: 16 });
-  /* the original's lit paper: just above white, and the only bright thing on the hall */
-  const glass = new THREE.MeshBasicMaterial({ map: winTex, color: hdr(1.06, .48, .18), fog: true, toneMapped: false });
+  /* the windows: a cool, moonlit glow at half strength, so the kiosk is the warmest, brightest thing in the shot */
+  const glass = new THREE.MeshBasicMaterial({ map: winTex, color: hdr(.066, .084, .111), fog: true, toneMapped: false });   /* a faint cool glow, well below the kiosk */
   const door  = new THREE.MeshStandardMaterial({ map: tx(texDoor()), roughness: .7, metalness: 0 });
   const clockTex = tx(texClock(), { aniso: 16 });
   const clock = new THREE.MeshStandardMaterial({ map: clockTex, transparent: true, alphaTest: .5,
@@ -3470,7 +3454,7 @@ function buildKiosk() {
    in the middle, cycling through three pies, like the promo loop the real
    units play. Redrawn at ~20 fps, and only while the kiosk is on screen. */
 function kioskScreen() {
-  const CW = 360, CH = 432, c = cvs(CW, CH), x = c.getContext('2d');
+  const CW = 360, CH = 560, c = cvs(CW, CH), x = c.getContext('2d');
   const tex = new THREE.CanvasTexture(c); tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false;
   const rnd = mulberry32(77);
   const PIES = [
@@ -3525,19 +3509,19 @@ function kioskScreen() {
     const bg = x.createLinearGradient(0, 0, 0, CH);
     bg.addColorStop(0, '#1d0b0c'); bg.addColorStop(1, '#0c0506');
     x.fillStyle = bg; x.fillRect(0, 0, CW, CH);
-    x.fillStyle = '#c4161c'; x.fillRect(0, 0, CW, 54);                     /* header */
+    x.fillStyle = '#c4161c'; x.fillRect(0, 0, CW, 60);                     /* header */
     x.fillStyle = '#fff'; x.font = '700 22px Inter, system-ui, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
-    x.fillText('PIZZERIA', CW / 2, 28);
-    const glow = x.createRadialGradient(CW / 2, 200, 10, CW / 2, 200, 170);
+    x.fillText('PIZZERIA', CW / 2, 31);
+    const glow = x.createRadialGradient(CW / 2, 250, 10, CW / 2, 250, 180);
     glow.addColorStop(0, 'rgba(255,170,90,.22)'); glow.addColorStop(1, 'rgba(255,170,90,0)');
-    x.fillStyle = glow; x.fillRect(0, 54, CW, 300);
-    pie(i, CW / 2, 200, 118, t * .35, a);
+    x.fillStyle = glow; x.fillRect(0, 60, CW, 380);
+    pie(i, CW / 2, 250, 132, t * .35, a);
     x.globalAlpha = a;
-    x.fillStyle = '#fff'; x.font = '700 26px Inter, system-ui, sans-serif'; x.fillText(PIES[i].name, CW / 2, 342);
-    x.fillStyle = '#f2c45a'; x.font = '600 20px Inter, system-ui, sans-serif'; x.fillText(PIES[i].price, CW / 2, 372);
+    x.fillStyle = '#fff'; x.font = '700 26px Inter, system-ui, sans-serif'; x.fillText(PIES[i].name, CW / 2, 430);
+    x.fillStyle = '#f2c45a'; x.font = '600 20px Inter, system-ui, sans-serif'; x.fillText(PIES[i].price, CW / 2, 462);
     x.globalAlpha = 1;
-    x.fillStyle = '#c4161c'; x.fillRect(70, 392, CW - 140, 30);             /* button */
-    x.fillStyle = '#fff'; x.font = '700 15px Inter, system-ui, sans-serif'; x.fillText('ORDER NOW', CW / 2, 408);
+    x.fillStyle = '#c4161c'; x.fillRect(60, 494, CW - 120, 38);             /* button */
+    x.fillStyle = '#fff'; x.font = '700 17px Inter, system-ui, sans-serif'; x.fillText('ORDER NOW', CW / 2, 514);
     tex.needsUpdate = true;
   }
   draw(0);
@@ -3599,11 +3583,11 @@ function makeKiosk(d, T) {
   }
   /* the ordering screen: a little looping promo (a pizza turning on a dark
      menu card) drawn on a canvas, laid over the screen glass in the render.
-     Corners are the glass's pixels in the ordering-wall texture (1200 x 1300). */
+     Corners are the whole grey display's pixels in the ordering-wall texture (1200 x 1300). */
   {
     const tw = 1200, th = 1300, X0 = W / 2 - PST, zS = D / 2 - A + .004;
     const at = (u, v) => [-X0 + u / tw * 2 * X0, FL + (1 - v / th) * (CE - FL), zS];
-    const corners = [at(235, 597), at(427, 597), at(427, 368), at(253, 368)];     /* BL BR TR TL */
+    const corners = [at(202, 657), at(427, 657), at(428, 300), at(230, 300)];     /* BL BR TR TL */
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.Float32BufferAttribute([].concat(...corners), 3));
     geo.setAttribute('uv', new THREE.Float32BufferAttribute([0, 0, 1, 0, 1, 1, 0, 1], 2));
@@ -3683,9 +3667,10 @@ function makeKiosk(d, T) {
     }
   });
   g.add(lamp);
-  const rim = new THREE.Mesh(new THREE.PlaneGeometry(8.6, 5.6),   /* wide and low: it wraps the body, not a sun over the roof */
-    new THREE.MeshBasicMaterial({ map: lib('kioskRimCool', () => tx(texGlow('rgba(206,226,255,1)', 'rgba(130,172,235,.5)'))),
-      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: 1 }));
+  /* a wide gaussian falloff (no disc edge to give it away), at half strength */
+  const rim = new THREE.Mesh(new THREE.PlaneGeometry(11, 7.4),   /* wide and low: it wraps the body, not a sun over the roof */
+    new THREE.MeshBasicMaterial({ map: lib('kioskRimSoft', () => tx(texSoftGlow(196, 216, 245))),
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: .5 }));
   rim.position.set(-BACK_DIR.x * 1.9, 2.1, -BACK_DIR.y * 1.9);
   rim.rotation.y = Math.atan2(BACK_DIR.x, BACK_DIR.y);   /* square on to the hero camera */
   rim.renderOrder = 2; g.add(rim);
