@@ -3466,6 +3466,84 @@ function buildKiosk() {
   }))).then(list => { const T = {}; list.forEach(([k, t]) => { T[k] = t; }); makeKiosk(P.dims, T); });
 }
 
+/* The kiosk's ordering screen: a dark menu card with a pizza turning slowly
+   in the middle, cycling through three pies, like the promo loop the real
+   units play. Redrawn at ~20 fps, and only while the kiosk is on screen. */
+function kioskScreen() {
+  const CW = 360, CH = 432, c = cvs(CW, CH), x = c.getContext('2d');
+  const tex = new THREE.CanvasTexture(c); tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+  const rnd = mulberry32(77);
+  const PIES = [
+    { name: 'Pepperoni', price: '$15.00', top: 'pep' },
+    { name: 'Margherita', price: '$14.00', top: 'basil' },
+    { name: 'Veggie Supreme', price: '$15.50', top: 'veg' }
+  ];
+  /* fixed topping layouts, so each pie looks the same every lap */
+  const spots = PIES.map(() => Array.from({ length: 15 }, () => {
+    const a = rnd() * Math.PI * 2, r = Math.sqrt(rnd()) * .78;
+    return { x: Math.cos(a) * r, y: Math.sin(a) * r, s: .8 + rnd() * .4, k: rnd() };
+  }));
+  const cheese = Array.from({ length: 70 }, () => { const a = rnd() * 6.283, r = Math.sqrt(rnd()) * .84;
+    return { x: Math.cos(a) * r, y: Math.sin(a) * r, s: .03 + rnd() * .06 }; });
+  function pie(i, cx, cy, R, rot, alpha) {
+    const P = PIES[i];
+    x.save(); x.globalAlpha = alpha; x.translate(cx, cy); x.rotate(rot);
+    x.fillStyle = 'rgba(0,0,0,.35)'; x.beginPath(); x.arc(4, 8, R * 1.02, 0, 6.283); x.fill();
+    let gr = x.createRadialGradient(0, 0, R * .7, 0, 0, R);              /* crust */
+    gr.addColorStop(0, '#d9963f'); gr.addColorStop(.75, '#c47a2c'); gr.addColorStop(1, '#8e4f19');
+    x.fillStyle = gr; x.beginPath(); x.arc(0, 0, R, 0, 6.283); x.fill();
+    x.fillStyle = '#b8261a'; x.beginPath(); x.arc(0, 0, R * .86, 0, 6.283); x.fill();      /* sauce */
+    gr = x.createRadialGradient(-R * .2, -R * .25, R * .1, 0, 0, R * .84);              /* cheese */
+    gr.addColorStop(0, '#ffe9a8'); gr.addColorStop(1, '#f2c45a');
+    x.fillStyle = gr; x.beginPath(); x.arc(0, 0, R * .82, 0, 6.283); x.fill();
+    cheese.forEach(b => { x.fillStyle = 'rgba(214,120,40,.35)'; x.beginPath(); x.arc(b.x * R, b.y * R, b.s * R * .5, 0, 6.283); x.fill(); });
+    spots[i].forEach(t => {
+      const px = t.x * R, py = t.y * R;
+      if (P.top === 'pep') {
+        x.fillStyle = '#9e1f14'; x.beginPath(); x.arc(px, py, R * .11 * t.s, 0, 6.283); x.fill();
+        x.fillStyle = 'rgba(60,8,4,.35)'; x.beginPath(); x.arc(px + R * .02, py + R * .02, R * .05 * t.s, 0, 6.283); x.fill();
+      } else if (P.top === 'basil') {
+        if (t.k < .5) { x.fillStyle = '#fff4dc'; x.beginPath(); x.arc(px, py, R * .12 * t.s, 0, 6.283); x.fill(); }
+        else { x.fillStyle = '#2f7a2a'; x.beginPath(); x.ellipse(px, py, R * .09 * t.s, R * .045 * t.s, t.k * 6, 0, 6.283); x.fill(); }
+      } else {
+        x.fillStyle = t.k < .33 ? '#2e7d32' : t.k < .66 ? '#5b2a6e' : '#e3a21a';
+        x.save(); x.translate(px, py); x.rotate(t.k * 6);
+        x.fillRect(-R * .08 * t.s, -R * .025, R * .16 * t.s, R * .05); x.restore();
+      }
+    });
+    for (let k = 0; k < 8; k++) {                                           /* slice cuts */
+      x.strokeStyle = 'rgba(120,60,20,.28)'; x.lineWidth = 2;
+      x.beginPath(); x.moveTo(0, 0); x.lineTo(Math.cos(k * .785) * R * .9, Math.sin(k * .785) * R * .9); x.stroke();
+    }
+    x.restore();
+  }
+  let last = -1;
+  function draw(t) {
+    const LAP = 4.5, i = Math.floor(t / LAP) % PIES.length, f = (t % LAP) / LAP;
+    const fadeIn = Math.min(1, f / .12), fadeOut = 1 - Math.max(0, (f - .88) / .12);
+    const a = Math.min(fadeIn, fadeOut);
+    const bg = x.createLinearGradient(0, 0, 0, CH);
+    bg.addColorStop(0, '#1d0b0c'); bg.addColorStop(1, '#0c0506');
+    x.fillStyle = bg; x.fillRect(0, 0, CW, CH);
+    x.fillStyle = '#c4161c'; x.fillRect(0, 0, CW, 54);                     /* header */
+    x.fillStyle = '#fff'; x.font = '700 22px Inter, system-ui, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.fillText('PIZZERIA', CW / 2, 28);
+    const glow = x.createRadialGradient(CW / 2, 200, 10, CW / 2, 200, 170);
+    glow.addColorStop(0, 'rgba(255,170,90,.22)'); glow.addColorStop(1, 'rgba(255,170,90,0)');
+    x.fillStyle = glow; x.fillRect(0, 54, CW, 300);
+    pie(i, CW / 2, 200, 118, t * .35, a);
+    x.globalAlpha = a;
+    x.fillStyle = '#fff'; x.font = '700 26px Inter, system-ui, sans-serif'; x.fillText(PIES[i].name, CW / 2, 342);
+    x.fillStyle = '#f2c45a'; x.font = '600 20px Inter, system-ui, sans-serif'; x.fillText(PIES[i].price, CW / 2, 372);
+    x.globalAlpha = 1;
+    x.fillStyle = '#c4161c'; x.fillRect(70, 392, CW - 140, 30);             /* button */
+    x.fillStyle = '#fff'; x.font = '700 15px Inter, system-ui, sans-serif'; x.fillText('ORDER NOW', CW / 2, 408);
+    tex.needsUpdate = true;
+  }
+  draw(0);
+  return { tex: tex, tick(now) { const t = now / 1000; if (t - last < .05) return; last = t; draw(t); } };
+}
+
 function makeKiosk(d, T) {
   const g = new THREE.Group();
   const W = d.W, D = d.D, F = d.F, S = d.S, B = d.B, A = d.A, PST = d.POST;
@@ -3496,8 +3574,48 @@ function makeKiosk(d, T) {
 
   /* ---- inside the alcove: the ordering wall, the menu wall, the plain wall */
   add(new THREE.PlaneGeometry(W - 2 * PST, CE - FL).translate(0, (CE + FL) / 2, D / 2 - A + .002),
-    kioskMat({ uM: T.back }, ' c = texture2D(uM, vec2((p.x + ' + f(W / 2 - PST) + ') / ' + f(W - 2 * PST) +
-      ', (p.y - ' + f(FL) + ') / ' + f(CE - FL) + '));'));
+    kioskMat({ uM: T.back }, ' vec2 q = vec2((p.x + ' + f(W / 2 - PST) + ') / ' + f(W - 2 * PST) +
+      ', (p.y - ' + f(FL) + ') / ' + f(CE - FL) + ');\n c = texture2D(uM, q);\n' +
+      /* the "ORDER HERE" lightbox is lit: its cream face glows (the lettering stays
+         dark, as on a real lightbox) and throws a warm wash onto the wall round it.
+         The box sits at u .008–.41, v .838–.934 of this face (KIOSK_SIGN). */
+      ' float box = smoothstep(.0, .006, q.x - .008) * smoothstep(.0, .006, .41 - q.x) *\n' +
+      '   smoothstep(.0, .006, q.y - .838) * smoothstep(.0, .006, .934 - q.y);\n' +
+      ' float lum = dot(c.rgb, vec3(.299, .587, .114));\n' +
+      ' float lit = box * smoothstep(.42, .62, lum);\n' +
+      /* (lit face is set past 1.0: every kiosk surface leaves at 78% to sit in
+         the night, and a lightbox should not) */
+      ' c.rgb = mix(c.rgb, vec3(1.30, 1.25, 1.12) * min(lum / .80, 1.0), lit);\n' +
+      ' vec2 dq = (q - vec2(.21, .886)) / vec2(.30, .13);\n' +
+      ' c.rgb += vec3(1.0, .74, .48) * .34 * exp(-dot(dq, dq) * 1.4) * (1.0 - box);'));
+  /* the lightbox's halo: a warm bloom just in front of it */
+  {
+    const X0 = W / 2 - PST;
+    const cx = -X0 + .21 * 2 * X0, cy = FL + .886 * (CE - FL), sw = .40 * 2 * X0, sh = .096 * (CE - FL);
+    const halo = new THREE.Mesh(new THREE.PlaneGeometry(sw * 1.9, sh * 4.2),
+      new THREE.MeshBasicMaterial({ map: tx(texGlow('rgba(255,236,204,.55)', 'rgba(255,214,160,.22)')),
+        transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, toneMapped: false }));
+    halo.position.set(cx, cy, D / 2 - A + .05); halo.renderOrder = 3; g.add(halo);
+  }
+  /* the ordering screen: a little looping promo (a pizza turning on a dark
+     menu card) drawn on a canvas, laid over the screen glass in the render.
+     Corners are the glass's pixels in the ordering-wall texture (1200 x 1300). */
+  {
+    const tw = 1200, th = 1300, X0 = W / 2 - PST, zS = D / 2 - A + .004;
+    const at = (u, v) => [-X0 + u / tw * 2 * X0, FL + (1 - v / th) * (CE - FL), zS];
+    const corners = [at(235, 597), at(427, 597), at(427, 368), at(253, 368)];     /* BL BR TR TL */
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute([].concat(...corners), 3));
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute([0, 0, 1, 0, 1, 1, 0, 1], 2));
+    geo.setIndex([0, 1, 2, 0, 2, 3]);
+    const scr = kioskScreen();
+    const m = new THREE.Mesh(geo, new THREE.ShaderMaterial({
+      uniforms: { uM: { value: scr.tex } },
+      vertexShader: 'varying vec2 vUv;\nvoid main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+      fragmentShader: 'uniform sampler2D uM; varying vec2 vUv;\nvoid main(){ gl_FragColor = vec4(texture2D(uM, vUv).rgb * .92, 0.0); }'
+    }));
+    g.add(m); WORLD.kioskScreen = scr;
+  }
   add(new THREE.PlaneGeometry(A, CE - FL).rotateY(Math.PI / 2).translate(-W / 2 + PST + .002, (CE + FL) / 2, D / 2 - A / 2),
     kioskMat({ uM: T.menu }, ' c = texture2D(uM, vec2((' + f(D / 2) + ' - p.z) / ' + f(A) +
       ', (p.y - ' + f(FL) + ') / ' + f(CE - FL) + '));'));
@@ -3549,6 +3667,29 @@ function makeKiosk(d, T) {
 
   /* (no valance: the roof sits straight on the red header and the tiled wall) */
 
+  /* ---- the backlight: a short street lamp hidden right behind the kiosk, on
+     the line from the hero camera through it, so only its light shows: a cool
+     glow rimming the silhouette. In kiosk space the hero camera lies along
+     BACK_DIR, so "behind" is the opposite way. */
+  const BACK_DIR = new THREE.Vector2(.535, .845);
+  const lamp = buildStreetLamp(-BACK_DIR.x * 2.4, -BACK_DIR.y * 2.4, .48, 0);   /* 2 m: below the roof line, so the kiosk hides it */
+  /* a cool, moonlit backlight rather than the lanterns' warm gas-light: its
+     own copies of the light and halo, so the other lamps keep theirs */
+  const COOL = 0xa9c8ff;
+  lamp.traverse(o => {
+    if (o.isPointLight) o.color.setHex(COOL);
+    else if (o.isMesh && o.material.blending === THREE.AdditiveBlending) {
+      o.material = o.material.clone(); o.material.map = lib('kioskRimHalo', () => tx(texGlow('rgba(196,220,255,.9)', 'rgba(140,180,240,.28)')));
+    }
+  });
+  g.add(lamp);
+  const rim = new THREE.Mesh(new THREE.PlaneGeometry(8.6, 5.6),   /* wide and low: it wraps the body, not a sun over the roof */
+    new THREE.MeshBasicMaterial({ map: lib('kioskRimCool', () => tx(texGlow('rgba(206,226,255,1)', 'rgba(130,172,235,.5)'))),
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: 1 }));
+  rim.position.set(-BACK_DIR.x * 1.9, 2.1, -BACK_DIR.y * 1.9);
+  rim.rotation.y = Math.atan2(BACK_DIR.x, BACK_DIR.y);   /* square on to the hero camera */
+  rim.renderOrder = 2; g.add(rim);
+
   g.position.set(KIOSK.x, KIOSK.y, KIOSK.z); g.rotation.y = KIOSK.ry;
   scene.add(g); WORLD.kiosk = g;
 
@@ -3562,33 +3703,14 @@ function makeKiosk(d, T) {
   placeKiosk();
   if (WANT_SHADOW && WORLD.key) WORLD.key.shadow.needsUpdate = true;
 }
-/* The forecourt: a broad raised plaza of large pale stone slabs in front of
-   the flight, level with the kiosk's base, ending in a crisp coped edge where
-   it meets the bottom of the steps. A few rectangular planters, nothing else. */
+/* The forecourt: a broad raised plaza in front of the flight, level with the
+   kiosk's base, ending where it meets the bottom of the steps. Its paving is
+   flat black. */
 const PLAZA = { y: 3.1, x0: -40, x1: 40, zBack: -11.0, zFront: 30 };
-function texPaving() {
-  const S = 1024, N = 4, c = cvs(S, S), x = c.getContext('2d'), rnd = mulberry32(4401);
-  x.fillStyle = '#8c9092'; x.fillRect(0, 0, S, S);                      /* joints */
-  const cell = S / N, j = 3;
-  for (let r = 0; r < N; r++) for (let q = 0; q < N; q++) {
-    const t = .955 + rnd() * .045;
-    x.fillStyle = hex(206 * t, 208 * t, 207 * t);
-    x.fillRect(q * cell + j / 2, r * cell + j / 2, cell - j, cell - j);
-  }
-  x.globalCompositeOperation = 'overlay'; x.globalAlpha = .18;
-  x.drawImage(fbmCanvas(S, S, 4403, 5, 6, 1.1), 0, 0);
-  x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
-  for (let i = 0; i < 9000; i++) {                                        /* fine stone grain */
-    x.fillStyle = rnd() > .5 ? 'rgba(90,94,96,.10)' : 'rgba(255,255,255,.14)';
-    x.fillRect(rnd() * S, rnd() * S, 1.2, 1.2);
-  }
-  return c;
-}
 function buildPlaza() {
   const P = PLAZA, W = P.x1 - P.x0, Dp = P.zFront - P.zBack, cx = (P.x0 + P.x1) / 2, cz = (P.zFront + P.zBack) / 2;
-  const SL = 1.5;                                                         /* one slab, in metres */
-  const pave = new THREE.MeshStandardMaterial({ map: tx(lib('paving', texPaving), { wrap: THREE.RepeatWrapping,
-    repeat: [W / (SL * 4), Dp / (SL * 4)], aniso: 16 }), roughness: .86, metalness: 0, color: 0x0a0a0a });   /* near-black at night (35% darker again) */
+  /* flat black, unlit and unfogged: no light or haze can lift it, so the kiosk stands on its own glow */
+  const pave = new THREE.MeshBasicMaterial({ color: 0x000000, fog: false });
   const side = new THREE.MeshStandardMaterial({ color: 0x141415, roughness: .9, metalness: 0 });
   const coping = new THREE.MeshStandardMaterial({ color: 0x48494b, roughness: .8, metalness: 0 });
   const g = new THREE.Group();
@@ -5926,6 +6048,8 @@ function updateWorld(dt) {
       if (WANT_SHADOW && WORLD.key) WORLD.key.shadow.needsUpdate = true;
     }
     WORLD.kiosk.visible = kd < .999;
+    /* its ordering screen plays only while the kiosk is in the shot */
+    if (WORLD.kioskScreen && RIG.smooth < 1.3) WORLD.kioskScreen.tick(performance.now());
   }
   if (WORLD.doors) {
     const open = smooth(-30, -36.5, camera.position.z) * 1.45;
