@@ -1415,7 +1415,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <div class="rail" id="rail"></div>
 
 <script src="assets/three.min.js"></script>
-<script src="assets/kiosk-photo.js"></script>
+<script src="assets/kiosk-photo.js?v=2"></script>
 <script src="assets/kiosk-indoor-photo.js"></script>
 <script src="assets/kiosk-atm-photo.js"></script>
 <script>
@@ -3414,11 +3414,12 @@ function buildCampus() {
 
 /* ------------------------------------------------ the outdoor pizza kiosk
    A copy of the reference render, at its real size (8 ft to the top of the
-   roof). The proportions were recovered by fitting a camera to that render,
-   and every surface you can see — the tiled "Always Open" wall, the roof sign,
-   the menu, the ordering wall, both valances — is the render itself,
-   rectified flat and wrapped back onto the matching face here. The pixels come
-   from assets/kiosk-photo.js.
+   roof): the all-red unit with "Pizzeria that's Always Open" on the roof. The
+   proportions were recovered by fitting a camera to that render, and every
+   surface you can see — the "Open 24 Hour" wall, the roof sign, the steps
+   wall, the ordering wall, the floor and its steel kick plate — is the render
+   itself, rectified flat and wrapped back onto the matching face here. The
+   pixels come from assets/kiosk-photo.js.
 
    Those surfaces already carry the render's own lighting, so they are drawn
    unlit and skip the scene's colour grade (the same route the sky takes):
@@ -3451,7 +3452,7 @@ const kcol = hexStr => { const v = parseInt(hexStr.slice(1), 16);
 function buildKiosk() {
   const P = window.KIOSK_PHOTO;
   if (!P) return;
-  const keys = ['side', 'back', 'menu', 'roofFront', 'roofSide', 'front', 'valFront', 'valSide', 'valFrontA', 'valSideA'];
+  const keys = ['side', 'back', 'menu', 'roofFront', 'roofSide', 'floor', 'kick'];
   return Promise.all(keys.map(k => new Promise(res => {
     const img = new Image();
     img.onload = () => {
@@ -3472,21 +3473,24 @@ function makeKiosk(d, T) {
   const f = v => v.toFixed(5);
   const add = (geo, mat) => { const m = new THREE.Mesh(geo, mat); m.castShadow = true; g.add(m); return m; };
   const flat = hexStr => kioskMat({}, ' c = ' + kcol(hexStr) + ';');
-  const RED = '#8f2a22', GREY = '#aaa49f', FLOOR = '#b4aba8', CREAM_TOP = '#f1ebe1',
-        CREAM_UNDER = '#c9c5bf', CREAM_SIDE = '#a6978a';
+  /* the flat parts, in the render's reds (read off it) */
+  const RED = '#8a0a12', INNER = '#9c0c1e', CEIL = '#770109',
+        ROOF_TOP = '#b0101f', ROOF_UNDER = '#6e0610', ROOF_SIDE = '#7a0912';
 
   /* ---- the body behind the alcove (its visible faces are planes below) */
   add(new THREE.BoxGeometry(W - .004, BODY, D - A).translate(0, BODY / 2, -D / 2 + (D - A) / 2), flat(RED));
-  /* the alcove's floor slab and the two posts beside it */
-  add(new THREE.BoxGeometry(W - 2 * PST, FL, A).translate(0, FL / 2, D / 2 - A / 2), flat(FLOOR));
+  /* the alcove's floor slab, faced with the brushed-steel kick plate, and the two posts beside it */
+  add(new THREE.BoxGeometry(W - 2 * PST, FL, A).translate(0, FL / 2, D / 2 - A / 2),
+    kioskMat({ uK: T.kick }, ' if (n.z > 0.5) c = texture2D(uK, vec2((p.x + ' + f(W / 2 - PST) + ') / ' + f(W - 2 * PST) +
+      ', p.y / ' + f(FL) + ')); else c = ' + kcol(RED) + ';'));
   [-1, 1].forEach(sx => add(new THREE.BoxGeometry(PST, BODY, A)
     .translate(sx * (W / 2 - PST / 2), BODY / 2, D / 2 - A / 2), flat(RED)));
-  add(new THREE.BoxGeometry(W - 2 * PST, BODY - CE, A).translate(0, CE + (BODY - CE) / 2, D / 2 - A / 2), flat(GREY));
+  add(new THREE.BoxGeometry(W - 2 * PST, BODY - CE, A).translate(0, CE + (BODY - CE) / 2, D / 2 - A / 2), flat(INNER));
 
   /* ---- the tiled "Pizzeria that's Always Open" wall (+x) */
   add(new THREE.PlaneGeometry(D, BODY).rotateY(Math.PI / 2).translate(W / 2 + .003, BODY / 2, 0),
     kioskMat({ uM: T.side }, ' c = texture2D(uM, vec2((' + f(D / 2) + ' - p.z) / ' + f(D) + ', p.y / ' + f(BODY) + '));'));
-  /* the other two outside walls are never in the hero's view: plain tile red */
+  /* the other two outside walls are never in the hero's view: plain red */
   add(new THREE.PlaneGeometry(D, BODY).rotateY(-Math.PI / 2).translate(-W / 2 - .003, BODY / 2, 0), flat(RED));
   add(new THREE.PlaneGeometry(W, BODY).rotateY(Math.PI).translate(0, BODY / 2, -D / 2 - .003), flat(RED));
 
@@ -3497,20 +3501,24 @@ function makeKiosk(d, T) {
   add(new THREE.PlaneGeometry(A, CE - FL).rotateY(Math.PI / 2).translate(-W / 2 + PST + .002, (CE + FL) / 2, D / 2 - A / 2),
     kioskMat({ uM: T.menu }, ' c = texture2D(uM, vec2((' + f(D / 2) + ' - p.z) / ' + f(A) +
       ', (p.y - ' + f(FL) + ') / ' + f(CE - FL) + '));'));
-  add(new THREE.PlaneGeometry(A, CE - FL).rotateY(-Math.PI / 2).translate(W / 2 - PST - .002, (CE + FL) / 2, D / 2 - A / 2), flat(GREY));
-  add(new THREE.PlaneGeometry(W - 2 * PST, A).rotateX(-Math.PI / 2).translate(0, FL + .002, D / 2 - A / 2), flat(FLOOR));
-  add(new THREE.PlaneGeometry(W - 2 * PST, A).rotateX(Math.PI / 2).translate(0, CE - .002, D / 2 - A / 2), flat('#8d8782'));
+  add(new THREE.PlaneGeometry(A, CE - FL).rotateY(-Math.PI / 2).translate(W / 2 - PST - .002, (CE + FL) / 2, D / 2 - A / 2), flat(INNER));
+  add(new THREE.PlaneGeometry(W - 2 * PST, A).rotateX(-Math.PI / 2).translate(0, FL + .002, D / 2 - A / 2),
+    kioskMat({ uM: T.floor }, ' c = texture2D(uM, vec2((p.x + ' + f(W / 2 - PST) + ') / ' + f(W - 2 * PST) +
+      ', (p.z - ' + f(D / 2 - A) + ') / ' + f(A) + '));'));
+  add(new THREE.PlaneGeometry(W - 2 * PST, A).rotateX(Math.PI / 2).translate(0, CE - .002, D / 2 - A / 2), flat(CEIL));
 
   /* ---- the red front frame: a plain rectangular opening under a red header
      (no arch), the way the built units are framed */
-  const px = d.PXM, py = 654 / BODY;
-  const X = u => u / px - W / 2, Y = v => BODY - v / py;
+  const px = d.PXM;
+  const X = u => u / px - W / 2;
+  /* the opening runs right up to the alcove's ceiling, so the frame is the
+     same slim red band across the top as down the sides, and it is open to
+     the ground between the posts, so the floor's steel kick plate shows:
+     one U-shaped outline */
+  const HR = d.HOLE_R || 573;
   const outer = new THREE.Shape();
-  outer.moveTo(-W / 2, 0); outer.lineTo(W / 2, 0); outer.lineTo(W / 2, BODY); outer.lineTo(-W / 2, BODY); outer.closePath();
-  const hole = new THREE.Path();
-  /* the opening runs right up to the alcove's ceiling, so the frame is the same slim red band across the top as down the sides */
-  hole.moveTo(X(22), Y(600)); hole.lineTo(X(22), CE); hole.lineTo(X(573), CE); hole.lineTo(X(573), Y(600)); hole.closePath();
-  outer.holes.push(hole);
+  outer.moveTo(-W / 2, 0); outer.lineTo(X(22), 0); outer.lineTo(X(22), CE); outer.lineTo(X(HR), CE);
+  outer.lineTo(X(HR), 0); outer.lineTo(W / 2, 0); outer.lineTo(W / 2, BODY); outer.lineTo(-W / 2, BODY); outer.closePath();
   /* The frame has real depth: the arch's inner faces (the reveal) are
      geometry, so it hides the front edge of the menu wall the way it does in
      the render instead of being painted onto it. */
@@ -3518,11 +3526,11 @@ function makeKiosk(d, T) {
   const frameGeo = new THREE.ExtrudeGeometry(outer, { depth: REV, bevelEnabled: false, curveSegments: 40 }).translate(0, 0, D / 2 - REV);
   frameGeo.computeVertexNormals();
   add(frameGeo, kioskMat({},
-    ' if (n.z > 0.5) c = vec4(vec3(0.737, 0.282, 0.235) * (0.93 + 0.07 * p.y / ' + f(BODY) + '), 1.0);\n' +
+    ' if (n.z > 0.5) c = vec4(vec3(0.98, 0.15, 0.26) * (0.93 + 0.07 * p.y / ' + f(BODY) + '), 1.0);\n' +
     ' else { float sh = 0.66 + 0.22 * n.x - 0.12 * max(-n.y, 0.0) + 0.06 * (p.y / ' + f(BODY) + ');\n' +
-    '   c = vec4(vec3(0.69, 0.21, 0.17) * sh, 1.0); }'));
+    '   c = vec4(vec3(0.86, 0.08, 0.17) * sh, 1.0); }'));
 
-  /* ---- the roof: thick cream slab, rounded over at the front, falling to the back */
+  /* ---- the roof: thick red slab, rounded over at the front, falling to the back */
   const zf = D / 2 + F, zb = -D / 2 - B, rr = .07;
   const prof = new THREE.Shape();
   prof.moveTo(zb, BODY); prof.lineTo(zf, BODY); prof.lineTo(zf, TOP - rr);
@@ -3535,9 +3543,9 @@ function makeKiosk(d, T) {
     ' float v = (p.y - ' + f(BODY) + ') / ' + f(TOP - BODY) + ';\n' +
     ' if (n.z > 0.55) c = texture2D(uF, vec2((p.x + ' + f(W / 2 + S) + ') / ' + f(W + 2 * S) + ', v));\n' +
     ' else if (n.x > 0.6) c = texture2D(uS, vec2((' + f(zf) + ' - p.z) / ' + f(zf - zb) + ', v));\n' +
-    ' else if (n.y > 0.5) c = ' + kcol(CREAM_TOP) + ';\n' +
-    ' else if (n.y < -0.5) c = ' + kcol(CREAM_UNDER) + ';\n' +
-    ' else c = ' + kcol(CREAM_SIDE) + ';'));
+    ' else if (n.y > 0.5) c = ' + kcol(ROOF_TOP) + ';\n' +
+    ' else if (n.y < -0.5) c = ' + kcol(ROOF_UNDER) + ';\n' +
+    ' else c = ' + kcol(ROOF_SIDE) + ';'));
 
   /* (no valance: the roof sits straight on the red header and the tiled wall) */
 
