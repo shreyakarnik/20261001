@@ -3436,7 +3436,7 @@ const kcol = hexStr => { const v = parseInt(hexStr.slice(1), 16);
 function buildKiosk() {
   const P = window.KIOSK_PHOTO;
   if (!P) return;
-  const keys = ['side', 'back', 'menu', 'roofFront', 'roofSide', 'floor', 'kick'];
+  const keys = ['side', 'back', 'menu', 'roofFront', 'floor', 'kick'];
   return Promise.all(keys.map(k => new Promise(res => {
     const img = new Image();
     img.onload = () => {
@@ -3531,13 +3531,13 @@ function kioskScreen() {
 function makeKiosk(d, T) {
   const g = new THREE.Group();
   const W = d.W, D = d.D, F = d.F, S = d.S, B = d.B, A = d.A, PST = d.POST;
-  const FL = d.FLOOR, CE = d.CEIL, BODY = d.BODY, TOP = d.TOP, HB = d.HB;
+  const FL = d.FLOOR, CE = d.CEIL, BODY = d.BODY, TOP = d.TOP;
   const f = v => v.toFixed(5);
   const add = (geo, mat) => { const m = new THREE.Mesh(geo, mat); m.castShadow = true; g.add(m); return m; };
   const flat = hexStr => kioskMat({}, ' c = ' + kcol(hexStr) + ';');
   /* the flat parts, in the render's reds (read off it) */
   const RED = '#8a0a12', INNER = '#9c0c1e', CEIL = '#770109',
-        ROOF_TOP = '#b0101f', ROOF_UNDER = '#6e0610', ROOF_SIDE = '#7a0912';
+        ROOF_TOP = '#b0101f', ROOF_UNDER = '#6e0610';
   /* the rim light: the cool backlight catching the kiosk's top and right-hand
      edges, a thin whitish line and nothing more.
      rimLine(d, k) blends toward it at strength k, d being the distance (m) in
@@ -3640,33 +3640,31 @@ function makeKiosk(d, T) {
     ' else { float sh = 0.66 + 0.22 * n.x - 0.12 * max(-n.y, 0.0) + 0.06 * (p.y / ' + f(BODY) + ');\n' +
     '   c = vec4(vec3(0.86, 0.08, 0.17) * sh, 1.0); }'));
 
-  /* ---- the roof: a flat red slab with sharp edges, falling to the back; only
-     its two front corners are rounded, in plan (where the front fascia turns
-     into the sides). Built as the plan shape extruded upward, with the top
-     then tilted down toward the back. */
-  const zf = D / 2 + F, zb = -D / 2 - B, rr = .07, RX = W / 2 + S;
-  const topAt = z => TOP + (HB - TOP) * (zf - z) / (zf - zb);
-  const plan = new THREE.Shape();                               /* x across, -z deep */
-  plan.moveTo(-RX, -zb); plan.lineTo(RX, -zb); plan.lineTo(RX, -zf + rr);
-  plan.quadraticCurveTo(RX, -zf, RX - rr, -zf); plan.lineTo(-RX + rr, -zf);
-  plan.quadraticCurveTo(-RX, -zf, -RX, -zf + rr); plan.closePath();
-  const roofGeo = new THREE.ExtrudeGeometry(plan, { depth: TOP - BODY, bevelEnabled: false, curveSegments: 10 })
-    .rotateX(-Math.PI / 2).translate(0, BODY, 0);
-  { const pa = roofGeo.attributes.position;                     /* tilt the top down to the back */
-    for (let k = 0; k < pa.count; k++) {
-      const y = pa.getY(k); if (y > BODY + 1e-4) pa.setY(k, BODY + (y - BODY) / (TOP - BODY) * (topAt(pa.getZ(k)) - BODY));
-    } }
+  /* ---- the roof: a level slab of even thickness all round, its four vertical
+     corners generously rounded in plan and its edges softly eased, sitting on
+     the body with an overhang. The front fascia carries the "Pizzeria" sign
+     from the render; the other faces are its plain red. */
+  const zf = D / 2 + F, zb = -D / 2 - B, RX = W / 2 + S;
+  const RC = .18, EASE = .025;                                   /* corner radius in plan; edge roundover */
+  const ROOF_FASCIA = '#840002';                                 /* the render's side fascia */
+  const plan = new THREE.Shape();                               /* x across, -z deep; inset by the ease */
+  { const x0 = -RX + EASE, x1 = RX - EASE, y0 = -zf + EASE, y1 = -zb - EASE, r = RC - EASE;
+    plan.moveTo(x0 + r, y0); plan.lineTo(x1 - r, y0); plan.absarc(x1 - r, y0 + r, r, -Math.PI / 2, 0, false);
+    plan.lineTo(x1, y1 - r); plan.absarc(x1 - r, y1 - r, r, 0, Math.PI / 2, false);
+    plan.lineTo(x0 + r, y1); plan.absarc(x0 + r, y1 - r, r, Math.PI / 2, Math.PI, false);
+    plan.lineTo(x0, y0 + r); plan.absarc(x0 + r, y0 + r, r, Math.PI, Math.PI * 1.5, false); }
+  const roofGeo = new THREE.ExtrudeGeometry(plan, { depth: TOP - BODY - 2 * EASE, bevelEnabled: true,
+    bevelThickness: EASE, bevelSize: EASE, bevelSegments: 4, curveSegments: 16 })
+    .rotateX(-Math.PI / 2).translate(0, BODY + EASE, 0);
   roofGeo.computeVertexNormals();
-  add(roofGeo, kioskMat({ uF: T.roofFront, uS: T.roofSide },
-    ' float v = (p.y - ' + f(BODY) + ') / ' + f(TOP - BODY) + ';\n' +
-    ' if (n.z > 0.55) c = texture2D(uF, vec2((p.x + ' + f(RX) + ') / ' + f(2 * RX) + ', v));\n' +
-    ' else if (n.x > 0.6) c = texture2D(uS, vec2((' + f(zf) + ' - p.z) / ' + f(zf - zb) + ', v));\n' +
-    ' else if (n.y > 0.5) c = ' + kcol(ROOF_TOP) + ';\n' +
+  add(roofGeo, kioskMat({ uF: T.roofFront },
+    ' float v = clamp((p.y - ' + f(BODY) + ') / ' + f(TOP - BODY) + ', 0.0, 1.0);\n' +
+    ' vec4 fr = texture2D(uF, vec2(clamp((p.x + ' + f(RX) + ') / ' + f(2 * RX) + ', 0.0, 1.0), v));\n' +
+    ' if (n.y > 0.5) c = ' + kcol(ROOF_TOP) + ';\n' +
     ' else if (n.y < -0.5) c = ' + kcol(ROOF_UNDER) + ';\n' +
-    ' else c = ' + kcol(ROOF_SIDE) + ';\n' + RIM +
-    /* the slab's top edge, level at the front and falling to the back */
-    ' float top = ' + f(TOP) + ' + ' + f(HB - TOP) + ' * (' + f(zf) + ' - p.z) / ' + f(zf - zb) + ';\n' +
-    ' if (n.y < 0.5) {\n' + rimLine('top - p.y', '.90') + ' }\n' +
+    /* the sign wraps a little way round the front corners, then the plain fascia takes over */
+    ' else c = mix(' + kcol(ROOF_FASCIA) + ', fr, smoothstep(.25, .85, n.z));\n' + RIM +
+    ' if (n.y < 0.5) {\n' + rimLine(f(TOP) + ' - p.y', '.90') + ' }\n' +
     ' if (n.x > 0.6) {\n' + rimLine('p.z - ' + f(zb), '.85') + ' }'));
 
   /* (no valance: the roof sits straight on the red header and the tiled wall) */
