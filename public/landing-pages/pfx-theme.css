@@ -290,7 +290,7 @@ html body .model-tabs a:hover{ color:rgba(223,231,224,.8); }
 html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#fff; }
 
 /* the showcase: three tabs (title, line of copy), two image panels below, a talk bar */
-.kshow{ max-width:1180px; margin:0 auto; padding:64px 80px 0; }   /* the kiosk pages' opening section, under the nav */
+.kshow{ max-width:1180px; margin:0 auto; padding:64px 80px 0; }
 .kshow-tabs{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:0 28px; align-items:start; }
 .kshow-tab{ all:unset; cursor:pointer; display:block; color:rgba(223,231,224,.38); transition:color .45s; }
 .kshow-tab h3{ font-size:22px !important; font-weight:400 !important; line-height:1.25 !important; letter-spacing:-.01em; color:inherit !important; margin:0 0 16px !important; padding:0 !important; }
@@ -336,4 +336,70 @@ html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#ff
   .kshow-set{ grid-template-columns:1fr; gap:12px; }
   .kshow-ph, .kshow-ph + .kshow-ph{ aspect-ratio:4 / 3; }
   .kshow-bar{ margin-top:12px; padding:18px 22px; font-size:18px; }
+}
+
+/* ============================================= kiosk page layout (.kp)
+   One language with the showcase: thin rules, light large type, a title
+   column on the left and the content on the right, flat dark panels. */
+.kp{ --kp-pad:80px; --kp-rule:rgba(223,231,224,.16); padding-bottom:120px; }
+.kp h1, .kp h2{ font-weight:400 !important; letter-spacing:-.02em !important; color:#fff !important; margin:0 !important; }
+.kp-head{ max-width:1180px; margin:0 auto; padding:64px var(--kp-pad) 0;
+  display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:28px; align-items:end; }
+.kp-head h1{ font-size:clamp(44px, 5.4vw, 76px) !important; line-height:1 !important; }
+.kp-lede{ margin:0; font-size:16px; line-height:1.6; color:rgba(223,231,224,.62); max-width:52ch; }
+.kp .kshow{ padding-top:56px; }
+
+.kp-row{ max-width:1180px; margin:0 auto; padding:120px var(--kp-pad) 0;
+  display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 2fr); gap:28px; }
+.kp-row > :not(.kp-row-head){ grid-column:2; }
+.kp-row-head{ grid-column:1; border-top:1px solid #fff; padding-top:20px; }
+.kp-row-head h2{ font-size:22px !important; line-height:1.25 !important; }
+.kp-row-head p{ margin:10px 0 0; font-size:15px; line-height:1.55; color:rgba(223,231,224,.45); max-width:28ch; }
+
+.kp-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:22px; margin-top:28px; }
+.kp-actions .btn-primary{ margin:0; }
+.kp-link{ display:inline-flex; align-items:center; gap:8px; font-size:15px; color:#dfe7e0; text-decoration:none;
+  border-bottom:1px solid rgba(223,231,224,.3); padding-bottom:3px; transition:border-color .3s, color .3s; }
+.kp-link:hover{ color:#fff; border-color:#fff; }
+
+.kp-stats{ margin:0; display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:0 28px; }
+.kp-stat{ border-top:1px solid var(--kp-rule); padding:20px 0 26px; }
+.kp-stat dt{ font-size:13px; color:rgba(223,231,224,.45); margin-bottom:8px; }
+.kp-stat dd{ margin:0; font-size:20px; line-height:1.35; color:#fff; letter-spacing:-.01em; }
+
+.kp-wide{ aspect-ratio:16 / 9 !important; }
+.kp-wide img{ object-fit:contain; padding:4%; }
+
+.kp-list{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:0 28px; }
+.kp-list li{ display:flex; gap:18px; align-items:baseline; border-top:1px solid var(--kp-rule); padding:18px 0 20px;
+  font-size:17px; line-height:1.45; color:#dfe7e0; }
+.kp-n{ flex:0 0 auto; font-size:12px; letter-spacing:.08em; color:rgba(223,231,224,.35); font-variant-numeric:tabular-nums; }
+.kp-list .kp-sec{ grid-column:1 / -1; }
+.kp-list .kp-sec b{ font-weight:500; color:#fff; }
+
+.kp-logos{ display:flex; align-items:center; gap:56px; border-top:1px solid var(--kp-rule); padding-top:28px; }
+.kp-logos img{ height:64px; width:auto; filter:grayscale(1) brightness(1.6) contrast(.9); opacity:.85; }
+
+.kp-tags{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:0 28px; }
+.kp-tags li{ border-top:1px solid var(--kp-rule); padding:16px 0 18px; font-size:17px; color:#dfe7e0; }
+.kp-gallery{ grid-column:1 / -1 !important; display:grid; grid-template-columns:minmax(0, .73fr) minmax(0, 1fr) minmax(0, .73fr); gap:18px; margin-top:44px; align-items:start; }
+.kp-gallery .kshow-ph{ aspect-ratio:4 / 5; }
+.kp-gallery .kshow-ph + .kshow-ph{ aspect-ratio:4 / 5; }
+
+@media (max-width:900px){
+  .kp{ --kp-pad:24px; padding-bottom:80px; }
+  .kp-head{ grid-template-columns:1fr; padding-top:36px; gap:16px; }
+  .kp .kshow{ padding-top:36px; }
+  .kp-row{ grid-template-columns:1fr; padding-top:72px; gap:22px; }
+  .kp-row > :not(.kp-row-head), .kp-row-head{ grid-column:1; }
+  .kp-list, .kp-tags{ grid-template-columns:1fr; }
+  .kp-stats{ grid-template-columns:1fr; }
+  .kp-stat{ display:flex; justify-content:space-between; gap:18px; align-items:baseline; padding:16px 0; }
+  .kp-stat dt{ margin:0; flex:0 0 auto; }
+  .kp-stat dd{ font-size:17px; text-align:right; }
+  .kp-tags{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .kp-gallery{ grid-template-columns:1fr; margin-top:12px; }
+  .kp-gallery .kshow-ph, .kp-gallery .kshow-ph + .kshow-ph{ aspect-ratio:4 / 3; }
+  .kp-logos{ gap:36px; }
+  .kp-logos img{ height:48px; }
 }
