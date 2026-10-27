@@ -56,6 +56,9 @@ html body.kiosk-spec::before{
 html body.kiosk-spec::after{
   background:linear-gradient(180deg, rgba(5,7,10,.18) 0%, rgba(5,7,10,.42) 38%, rgba(5,7,10,.8) 72%, rgba(5,7,10,.92) 100%);
 }
+/* the three kiosk pages: no campus behind the product, just the night */
+html body.kiosk-spec.no-campus::before{ background:#05070a; }
+html body.kiosk-spec.no-campus::after{ background:radial-gradient(ellipse at 50% 0%, rgba(210,223,230,.05), transparent 60%); }
 /* plain pages (the privacy policy): no campus behind the text, just the ink */
 html body.plain-bg::before, html body.plain-bg::after{ display:none; }
 ::selection{ background:var(--k-verm); color:#fff; }
