@@ -2686,14 +2686,14 @@ const HI = qs('q', COARSE ? 'low' : 'high');
 const LOW = HI === 'low';
 const WANT_POST    = qs('post', '1') !== '0';
 const WANT_SHADOW  = qs('shadow', LOW ? '0' : '1') !== '0';
-const DPR_CAP      = qn('dpr', LOW ? 1.4 : 2);   /* full retina on capable machines: the kiosk's lettering needs it */
+const DPR_CAP      = qn('dpr', 2);   /* retina everywhere: on a phone the hero kiosk is shown cropped and enlarged, so it needs the pixels most */
 /* the renderer trades resolution for frame rate on its own — the scene is
    fill-bound (five big alpha-blended veils plus a bloom chain), so pixels
    are the only knob worth turning on unknown hardware */
 const PERF = { scale: 1, acc: 0, n: 0, rose: false, locked: qs('adapt', '1') === '0',
   /* how far it may fall: on capable machines no lower than 85%, so the kiosk
      stays crisp while the page scrolls (a dip to half res read as a blur) */
-  floor: LOW ? .55 : .85 };
+  floor: LOW ? .75 : .85 };   /* phones: below .75 the enlarged hero kiosk turns visibly soft */
 
 function initGL() {
   if (qs('nogl', '0') !== '0' || !window.THREE) throw new Error('webgl disabled');
@@ -6554,7 +6554,7 @@ function resize() {
   }
   /* multisampling is the first thing to go when the budget tightens */
   if (POST.scene) {
-    const want = LOW ? 0 : PERF.scale > .95 ? 4 : 2;   /* 4x at full resolution keeps moving edges from crawling */
+    const want = LOW ? 2 : PERF.scale > .95 ? 4 : 2;   /* 4x at full resolution keeps moving edges from crawling; phones keep 2x, or the roof edge breaks into dashes */
     if (POST.scene.samples !== want) { POST.scene.samples = want; POST.scene.dispose(); }
   }
   CARDS.forEach(C => { C.dirty = true; });
