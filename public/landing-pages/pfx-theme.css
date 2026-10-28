@@ -458,7 +458,7 @@ html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#ff
    (as on the Support page): a quiet label, no box, one rule under the field */
 .tm-group label, form.inquiry-form .form-group label, .gate-form .form-group label{
   font-size:13px !important; font-weight:400 !important; letter-spacing:0 !important; text-transform:none !important;
-  color:rgba(223,231,224,.45) !important; margin-bottom:4px; line-height:1.4;
+  color:#fff !important; margin-bottom:4px; line-height:1.4;
 }
 .tm-group label .hint, form.inquiry-form .form-group label .hint, .gate-form .form-group label .hint{ font-size:12px !important; color:rgba(223,231,224,.3) !important; text-transform:none !important; letter-spacing:0 !important; }
 .tm-group input[type="text"], .tm-group input[type="email"], .tm-group input[type="tel"], .tm-group input[type="number"], form.inquiry-form .form-group input[type="text"], form.inquiry-form .form-group input[type="email"], form.inquiry-form .form-group input[type="tel"], form.inquiry-form .form-group input[type="number"], .gate-form .form-group input[type="text"], .gate-form .form-group input[type="email"], .gate-form .form-group input[type="tel"], .gate-form .form-group input[type="number"], .tm-group select, form.inquiry-form .form-group select, .gate-form .form-group select, .tm-group textarea, form.inquiry-form .form-group textarea, .gate-form .form-group textarea{
