@@ -197,8 +197,6 @@
 .tm-cap{ display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; margin:14px 0 0; font-size:13px; color:rgba(223,231,224,.45); }
 .tm-cap a{ color:#dfe7e0; text-decoration:none; border-bottom:1px solid rgba(223,231,224,.3); }
 .tm-cap a:hover{ color:#fff; border-color:#fff; }
-.tm-photo{ margin:28px 0 0; aspect-ratio:16/9; overflow:hidden; background:#232625; }
-.tm-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
 .tm-row-head .tm-who{ margin-top:18px; font-size:13px; color:rgba(223,231,224,.45); line-height:1.6; }
 .tm-row-head .tm-who b{ display:block; font-weight:400; font-size:15px; color:#dfe7e0; }
 /* the operator's Instagram: a call-out under who they are */
@@ -208,31 +206,12 @@
 .tm-ig b{ display:block; font-weight:400; font-size:15px; color:#fff; }
 .tm-ig:hover, .tm-ig:hover b, .tm-ig:hover svg{ color:#c00022; }
 .kp-row .kp-stats{ margin-top:36px; }
-.kp-stat dd.tm-tbd{ color:rgba(223,231,224,.3); }
 /* the street address under a location, linked to the map */
 .kp-stat .tm-addr{ display:block; width:fit-content; margin-top:6px; font-size:13px; line-height:1.5; letter-spacing:0; color:rgba(223,231,224,.45); border-bottom:1px solid rgba(223,231,224,.2); transition:color .2s, border-color .2s; }
 .kp-stat .tm-addr:hover{ color:#fff; border-color:#fff; }
 @media (max-width:900px){ .kp-stat .tm-addr{ margin-left:auto; text-align:right; } }
-.kp-row .cs-note{ margin:14px 0 0; font-size:12px; color:rgba(223,231,224,.4); }
-#model > .cs-table-wrap{ grid-column:1 / -1; margin-top:48px; }
-/* the projection table: open, ruled like the spec rows */
-.cs-table-wrap{ overflow-x:auto; }
-table.cs-table{ width:100%; min-width:680px; border-collapse:collapse; font-size:14px; font-variant-numeric:tabular-nums; }
-.cs-table th, .cs-table td{ padding:12px 0 12px 16px; text-align:right; border-top:1px solid rgba(223,231,224,.1); white-space:nowrap; color:rgba(223,231,224,.62); font-weight:400; }
-.cs-table th:first-child, .cs-table td:first-child{ text-align:left; padding-left:0; color:rgba(223,231,224,.62); }
-.cs-table thead th{ border-top:0; padding-top:0; padding-bottom:16px; font-size:13px; color:rgba(223,231,224,.45); }
-.cs-table thead th b{ display:block; margin-top:6px; font-size:20px; font-weight:400; letter-spacing:-.01em; color:#fff; }
-.cs-table tr.grp td{ padding-top:36px; padding-bottom:12px; border-top:1px solid rgba(223,231,224,.16); font-size:13px; color:#fff !important; }
-.cs-table tr.tot td{ color:#fff; }
-.cs-table tr.pay td{ color:#fff; border-top:1px solid #fff; padding-top:16px; }
-/* small ruled lists: assumptions */
-.tm-list{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:0 28px; }
-.tm-list li{ border-top:1px solid rgba(223,231,224,.16); padding:20px 0 24px; }
-.tm-list b{ display:block; font-weight:400; font-size:17px; color:#fff; margin-bottom:8px; }
-.tm-list span{ display:block; font-size:14px; line-height:1.55; color:rgba(223,231,224,.5); max-width:40ch; }
-.tm-fine{ margin:20px 0 0; font-size:12px; line-height:1.6; color:rgba(223,231,224,.4); }
 .tm-row-head{ position:sticky; top:96px; align-self:start; }
-@media (max-width:900px){ .tm-list{ grid-template-columns:1fr; } .tm-row-head{ position:static; } }
+@media (max-width:900px){ .tm-row-head{ position:static; } }
 </style>
 <link rel="stylesheet" href="pfx-site.css?v=7">
 </head>
@@ -280,7 +259,6 @@ table.cs-table{ width:100%; min-width:680px; border-collapse:collapse; font-size
         <div class="kp-stat"><dt>Kiosk</dt><dd>Outdoor Kiosk</dd></div>
         <div class="kp-stat"><dt>Location</dt><dd>Quad Cities, USA<a class="tm-addr" href="https://www.google.com/maps/search/?api=1&amp;query=5181%20Competition%20Dr%2C%20Bettendorf%2C%20IA%2052722%2C%20United%20States" target="_blank" rel="noopener">5181 Competition Dr, Bettendorf, IA 52722, United States</a></dd></div>
       </dl>
-      <figure class="tm-photo"><img src="Images/kiosks/outdoor-kiosk.jpg" alt="The Speedy Pie Outdoor Kiosk" loading="lazy"></figure>
     </div>
   </section>
 
@@ -304,90 +282,6 @@ table.cs-table{ width:100%; min-width:680px; border-collapse:collapse; font-size
     </div>
   </section>
 
-  <section class="kp-row" id="model" aria-label="The numbers">
-    <div class="kp-row-head">
-      <h2>The Numbers</h2>
-      <p>Monthly returns at five daily volumes, at a $15 sale price, after every running cost.</p>
-    </div>
-    <div>
-      <dl class="kp-stats">
-        <div class="kp-stat"><dt>Annual Net Profit At 70 / Day</dt><dd>$264K</dd></div>
-        <div class="kp-stat"><dt>Annual Return, ATM Kiosk At 70 / Day</dt><dd>311%</dd></div>
-      </dl>
-      <p class="cs-note">Projected figures from the PFX white-label ROI model below. Illustrative, not an operator&rsquo;s reported results.</p>
-
-    </div>
-  <div class="cs-table-wrap">
-        <table class="cs-table">
-          <thead><tr><th>Monthly Figures</th><th>Pizzas / Day<b>10</b></th><th>Pizzas / Day<b>20</b></th><th>Pizzas / Day<b>30</b></th><th>Pizzas / Day<b>40</b></th><th>Pizzas / Day<b>70</b></th></tr></thead>
-          <tbody>
-              <tr class="grp"><td colspan="6">Gross Revenue</td></tr>
-              <tr><td>Pizzas Sold / Month</td><td>300</td><td>600</td><td>900</td><td>1,200</td><td>2,100</td></tr>
-              <tr><td>Sale Price</td><td>$15</td><td>$15</td><td>$15</td><td>$15</td><td>$15</td></tr>
-              <tr><td>Daily Sales Revenue</td><td>$150</td><td>$300</td><td>$450</td><td>$600</td><td>$1,050</td></tr>
-              <tr class="tot"><td>Monthly Net Sales Revenue (30 days)</td><td>$4,500</td><td>$9,000</td><td>$13,500</td><td>$18,000</td><td>$31,500</td></tr>
-              <tr class="grp"><td colspan="6">Operating Expenses</td></tr>
-              <tr><td>Pizza Ingredients (15%)</td><td>$675</td><td>$1,350</td><td>$2,025</td><td>$2,700</td><td>$4,725</td></tr>
-              <tr><td>Boxes with Disk ($0.83 each)</td><td>$249</td><td>$498</td><td>$747</td><td>$996</td><td>$1,743</td></tr>
-              <tr><td>Pizza Waste (2%)</td><td>$90</td><td>$180</td><td>$270</td><td>$360</td><td>$630</td></tr>
-              <tr><td>Unit Electricity (avg.)</td><td>$110</td><td>$120</td><td>$130</td><td>$140</td><td>$170</td></tr>
-              <tr><td>Restocking Labour (4%)</td><td>$180</td><td>$360</td><td>$540</td><td>$720</td><td>$1,260</td></tr>
-              <tr><td>Payment Terminal Fees (3%)</td><td>$135</td><td>$270</td><td>$405</td><td>$540</td><td>$945</td></tr>
-              <tr class="tot"><td>Total Monthly Operating Expenses</td><td>$1,439</td><td>$2,778</td><td>$4,117</td><td>$5,456</td><td>$9,473</td></tr>
-              <tr class="grp"><td colspan="6">Net Revenue</td></tr>
-              <tr class="tot"><td>Monthly Profit Margin (Net)</td><td>$3,061</td><td>$6,222</td><td>$9,383</td><td>$12,544</td><td>$22,027</td></tr>
-              <tr class="tot"><td>Annual Profit Margin (Net)</td><td>$36,732</td><td>$74,664</td><td>$112,596</td><td>$150,528</td><td>$264,324</td></tr>
-              <tr class="grp"><td colspan="6">Equipment ROI (annual return on investment)</td></tr>
-              <tr><td>ATM Kiosk</td><td>43%</td><td>88%</td><td>132%</td><td>177%</td><td>311%</td></tr>
-              <tr><td>Indoor Kiosk</td><td>38%</td><td>78%</td><td>117%</td><td>156%</td><td>275%</td></tr>
-              <tr><td>Outdoor Kiosk</td><td>34%</td><td>68%</td><td>103%</td><td>137%</td><td>241%</td></tr>
-              <tr class="pay"><td>Equipment Payback Period</td><td>2–3 years</td><td>13–17 months</td><td>9–12 months</td><td>6–9 months</td><td>4–5 months</td></tr>
-          </tbody>
-        </table>
-      </div>
-  </section>
-
-  <section class="kp-row" aria-label="Payback by daily volume">
-    <div class="kp-row-head"><h2>Payback</h2><p>How long the equipment takes to pay for itself.</p></div>
-    <dl class="kp-stats">
-      <div class="kp-stat"><dt>10 Pizzas / Day</dt><dd>3 Years</dd></div>
-      <div class="kp-stat"><dt>20 Pizzas / Day</dt><dd>Under 1.5 Years</dd></div>
-      <div class="kp-stat"><dt>30 Pizzas / Day</dt><dd>Under 1 Year</dd></div>
-      <div class="kp-stat"><dt>70 Pizzas / Day</dt><dd>4&ndash;5 Months</dd></div>
-    </dl>
-  </section>
-
-  <section class="kp-row" aria-label="Equipment price">
-    <div class="kp-row-head"><h2>Equipment Price</h2><p>One-time purchase. No franchise fees.</p></div>
-    <dl class="kp-stats">
-      <div class="kp-stat"><dt>ATM Kiosk</dt><dd>$85,078</dd></div>
-      <div class="kp-stat"><dt>Indoor Kiosk</dt><dd>$96,216</dd></div>
-      <div class="kp-stat"><dt>Outdoor Kiosk</dt><dd>$109,617</dd></div>
-    </dl>
-  </section>
-
-  <section class="kp-row" aria-label="Assumptions">
-    <div class="kp-row-head"><h2>Assumptions</h2><p>What the model counts as a cost.</p></div>
-    <div>
-      <ul class="tm-list">
-        <li><b>Ingredients</b><span>15% of monthly revenue for pizzas sold.</span></li>
-        <li><b>Pizza Boxes</b><span>$0.83 per pizza, box with disk.</span></li>
-        <li><b>Waste</b><span>2% of monthly revenue for expired or unsold product, based on about 3 months of data once volume is stable.</span></li>
-        <li><b>Electricity</b><span>Based on rates in Toronto, Canada.</span></li>
-        <li><b>Restocking Labour</b><span>4% of monthly revenue, reflecting 20 minutes of restocking a day.</span></li>
-        <li><b>Payment Processing</b><span>3% of sales, in line with industry averages for card transactions.</span></li>
-      </ul>
-      <p class="tm-fine">This ROI model is illustrative. Outcomes depend on your site, operational discipline and local market conditions.</p>
-    </div>
-  </section>
-
-  <section class="kp-row" aria-label="Get started">
-    <div class="kp-row-head"><h2>Launch Your Own Brand</h2><p>Run the numbers for your site, or talk to us about becoming the next operator.</p></div>
-    <div class="kp-actions">
-      <a class="btn-primary" href="contact.html" data-talk-trigger>Let&rsquo;s Talk!</a>
-      <a class="kp-link" href="roi_calculator.html">Open the ROI Calculator <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
-    </div>
-  </section>
 </main>
 <footer>
   <div class="footer-inner">
