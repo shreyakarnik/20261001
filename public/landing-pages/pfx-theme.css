@@ -382,9 +382,15 @@ html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#ff
 .kp-list .kp-sec{ grid-column:1 / -1; }
 .kp-list .kp-sec b{ font-weight:500; color:#fff; }
 
-.kp-logos{ display:flex; align-items:center; gap:56px; border-top:1px solid var(--kp-rule); padding-top:28px; }
-.kp-logos img{ height:64px; width:auto; filter:grayscale(1) brightness(1.6) contrast(.9); opacity:.85; }
-.kp-logos img[src^="nama-logo"]{ height:44px; }   /* NAMA's official mark has no tagline, so it sits smaller to match */
+/* certifications: each mark with what it covers and why an operator needs it */
+.kp-certs{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:0 28px; }
+.kp-certs li{ border-top:1px solid var(--kp-rule); padding:28px 0 8px; }
+.kp-certs img{ display:block; height:56px; width:auto; margin-bottom:22px; filter:grayscale(1) brightness(1.6) contrast(.9); opacity:.85; }
+.kp-certs img[src^="nama-logo"]{ height:40px; margin:8px 0 30px; }
+.kp-certs h3{ margin:0 0 16px !important; font-size:20px !important; font-weight:400 !important; line-height:1.3 !important; color:#fff !important; letter-spacing:-.01em; }
+.kp-certs dl{ margin:0; }
+.kp-certs dt{ font-size:13px; color:rgba(223,231,224,.45); margin-top:14px; }
+.kp-certs dd{ margin:4px 0 0; font-size:15px; line-height:1.55; color:rgba(223,231,224,.75); max-width:40ch; }
 
 .kp-tags{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:0 28px; }
 .kp-tags li{ border-top:1px solid var(--kp-rule); padding:16px 0 18px; font-size:17px; color:#dfe7e0; }
@@ -406,9 +412,8 @@ html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#ff
   .kp-tags{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
   .kp-gallery{ grid-template-columns:1fr; margin-top:12px; }
   .kp-gallery .kshow-ph, .kp-gallery .kshow-ph + .kshow-ph{ aspect-ratio:4 / 3; }
-  .kp-logos{ gap:36px; }
-  .kp-logos img{ height:48px; }
-  .kp-logos img[src^="nama-logo"]{ height:33px; }
+  .kp-certs{ grid-template-columns:1fr; }
+  .kp-certs li + li{ margin-top:12px; }
 }
 
 /* kiosk pages: four images, one shape — the hero and one per showcase tab,
