@@ -194,6 +194,9 @@ body.gate-locked{overflow:hidden;}
 }
 .gate-form input:focus, .gate-form select:focus{outline:2px solid var(--red);outline-offset:1px;}
 .hp-field{position:absolute;left:-9999px;top:-9999px;} /* honeypot — never visible to real visitors */
+.gate-consent{font-size:12.5px;line-height:1.6;color:rgba(223,231,224,.5);margin:18px 0 10px;}
+.gate-check{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;line-height:1.5;color:#fff;margin:0 0 18px;cursor:pointer;}
+.gate-check input{width:16px;height:16px;margin-top:2px;flex:0 0 auto;accent-color:var(--red);cursor:pointer;}
 .gate-error{
   display:none;background:var(--red-light);border:1px solid var(--red-border);color:#c00022;
   font-size:13px;border-radius:12px;padding:10px 12px;margin-bottom:14px;
@@ -299,6 +302,9 @@ body.gate-locked{overflow:hidden;}
         <label for="website">Leave this field blank</label>
         <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
       </div>
+
+      <p class="gate-consent">PizzaForno is committed to protecting and respecting your privacy. You may unsubscribe from these communications at any time. By submitting, you allow PizzaForno to store and process the information above to respond to you.</p>
+      <label class="gate-check"><input type="checkbox" name="consent_comms" value="1" required> I agree to receive other communications from PizzaForno.*</label>
 
       <button type="submit" class="btn-primary" id="gateSubmitBtn">Unlock Calculator</button>
     </form>
@@ -623,8 +629,10 @@ calc();
         blocks clicks, and the page can't be scrolled) until they
         submit the form.
      ========================================================= */
-  var GATE_HUBSPOT_PORTAL_ID = "YOUR_PORTAL_ID";
-  var GATE_HUBSPOT_FORM_GUID = "YOUR_FORM_GUID";
+  /* the same HubSpot form as every "Let's Talk!" form (talk-modal.js, contact.html) */
+  var GATE_HUBSPOT_PORTAL_ID = "14495142";
+  var GATE_HUBSPOT_FORM_GUID = "8eea1b28-f409-476f-95c0-48d769f516ae";   /* https://8moiu.share.hsforms.com/2juobKPQJR2-VwEjXafUWrg */
+  var GATE_HUBSPOT_SUBSCRIPTION_ID = 11922088;   /* the form's required consent box */
 
   document.addEventListener('DOMContentLoaded', function(){
     if (localStorage.getItem('pfx_roi_unlocked') === 'true') {
@@ -660,8 +668,8 @@ calc();
       email: "email",
       country: "country",
       company: "company",
-      location: "location",
-      pincode: "zip"
+      location: "city",
+      pincode: "postal___zip_code"
     };
     var fields = [];
     Object.keys(fieldMap).forEach(function(localName){
@@ -673,7 +681,12 @@ calc();
 
     var payload = {
       fields: fields,
-      context: { pageUri: window.location.href, pageName: document.title }
+      context: { hutk: (document.cookie.match(/(?:^|; )hubspotutk=([^;]+)/) || [])[1], pageUri: window.location.href, pageName: document.title },   /* hutk: ties the lead to their visits */
+      legalConsentOptions: { consent: {
+        consentToProcess: true,
+        text: "PizzaForno is committed to protecting and respecting your privacy. You may unsubscribe from these communications at any time. By submitting, you allow PizzaForno to store and process the information above to respond to you.",
+        communications: [{ value: !!data.get('consent_comms'), subscriptionTypeId: GATE_HUBSPOT_SUBSCRIPTION_ID, text: "I agree to receive other communications from PizzaForno." }]
+      } }
     };
     var endpoint = "https://api.hsforms.com/submissions/v3/integration/submit/"
       + GATE_HUBSPOT_PORTAL_ID + "/" + GATE_HUBSPOT_FORM_GUID;
@@ -710,7 +723,7 @@ calc();
 
 <script src="blog-data.js"></script>
 <script src="site-search.js"></script>
-<script src="talk-modal.js?v=8"></script>
+<script src="talk-modal.js?v=9"></script>
 
 <script src="pfx-nav.js?v=3"></script>
 <script src="pfx-site.js?v=3"></script>

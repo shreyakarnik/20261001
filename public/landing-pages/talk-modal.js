@@ -180,7 +180,7 @@
 
       var payload = {
         fields: fields,
-        context: { pageUri: window.location.href, pageName: document.title },
+        context: { hutk: (document.cookie.match(/(?:^|; )hubspotutk=([^;]+)/) || [])[1], pageUri: window.location.href, pageName: document.title },   /* hutk: ties the lead to their visits */
         legalConsentOptions: { consent: {
           consentToProcess: true,
           text: "PizzaForno is committed to protecting and respecting your privacy. You may unsubscribe from these communications at any time. By submitting, you allow PizzaForno to store and process the information above to respond to you.",

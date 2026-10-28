@@ -419,6 +419,7 @@
     var payload = {
       fields: fields,
       context: {
+        hutk: (document.cookie.match(/(?:^|; )hubspotutk=([^;]+)/) || [])[1],   /* ties the lead to their visits */
         pageUri: window.location.href,
         pageName: document.title
       },

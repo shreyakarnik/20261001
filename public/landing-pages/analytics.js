@@ -32,7 +32,7 @@
    ========================================================= */
 var GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
 var CLARITY_PROJECT_ID = "YOUR_CLARITY_PROJECT_ID";
-var HUBSPOT_TRACKING_ACCOUNT_ID = "YOUR_HUBSPOT_ACCOUNT_ID";
+var HUBSPOT_TRACKING_ACCOUNT_ID = "14495142";
 
 /* CONSENT: none of the three tools loads until the visitor accepts cookies in
    the banner (pfx-site.js). The choice is remembered per browser under the

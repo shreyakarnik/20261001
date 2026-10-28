@@ -35,7 +35,7 @@
     fetch("https://api.hsforms.com/submissions/v3/integration/submit/" + SUPPORT_HUBSPOT_PORTAL_ID + "/" + SUPPORT_HUBSPOT_FORM_GUID, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fields: fields, context: { pageUri: location.href, pageName: document.title } })
+      body: JSON.stringify({ fields: fields, context: { hutk: (document.cookie.match(/(?:^|; )hubspotutk=([^;]+)/) || [])[1], pageUri: location.href, pageName: document.title } })
     })
     .then(function(res){
       btn.disabled = false; btn.textContent = 'Send Message';
