@@ -95,6 +95,11 @@
     display:none; font-size:13.5px; color:var(--green); font-weight:700;
   }
   .save-msg.show{display:inline;}
+  .publish-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .publish-msg{display:none; margin-top:14px; padding-top:12px; border-top:1px solid rgba(223,231,224,.16); font-size:13px; line-height:1.6; color:rgba(223,231,224,.75);}
+  .publish-msg.show{display:block;}
+  .publish-msg.warn{color:#ffb4ae;}
+  .publish-msg code{font-size:12px; color:#fff;}
 
   /* LAYOUT */
   .admin-wrap{max-width:1440px; margin:0 auto; padding:32px 86.4px 60px;}
@@ -325,7 +330,7 @@
           <div class="serp-favicon">P</div>
           <div class="serp-sitename">PFX</div>
         </div>
-        <div class="serp-url" id="serpUrl">yoursite.com/blog.html#your-post</div>
+        <div class="serp-url" id="serpUrl">yoursite.com/post.html?p=your-post</div>
         <div class="serp-title" id="serpTitle">Your post title</div>
         <div class="serp-desc" id="serpDesc">Your meta description will preview here as you type.</div>
       </div>
@@ -347,7 +352,7 @@
           <button type="button" class="gen-btn" id="genSlugBtn">Generate</button>
         </div>
         <input type="text" id="fSlug" placeholder="e.g. introducing-pfx">
-        <div class="hint">The relative path of the post — becomes blog.html#your-slug</div>
+        <div class="hint">The post's address — it opens at post.html?p=your-slug</div>
         <div class="counter-row">
           <span class="status-pill" id="slugPill">—</span>
           <span class="char-count" id="slugCount">0/10-50 chars</span>
@@ -383,8 +388,13 @@
         <div class="hint">Which section this post is grouped under on the blog</div>
       </div>
 
-      <button type="button" class="btn-primary" id="saveBtn">Save</button>
+      <div class="publish-row">
+        <button type="button" class="btn-primary" id="saveBtn">Save</button>
+        <button type="button" class="btn-outline" id="previewBtn">Preview</button>
+        <button type="button" class="btn-primary" id="publishBtn">Publish</button>
+      </div>
       <span class="save-msg" id="saveMsg">✓ Saved as a local draft</span>
+      <div class="publish-msg" id="publishMsg" role="status"></div>
 
       <div class="drafts-box">
         <h4>Local drafts</h4>
@@ -477,7 +487,7 @@
   function updateSerp(){
     document.getElementById('serpTitle').textContent = fTitle.value || 'Your post title';
     document.getElementById('serpDesc').textContent = fDesc.value || 'Your meta description will preview here as you type.';
-    document.getElementById('serpUrl').textContent = window.location.origin.replace(/^https?:\/\//,'') + window.location.pathname.replace(/admin\.html$/, '') + 'blog.html#' + (fSlug.value || 'your-post');
+    document.getElementById('serpUrl').textContent = window.location.origin.replace(/^https?:\/\//,'') + window.location.pathname.replace(/admin\.html$/, '') + 'post.html?p=' + (fSlug.value || 'your-post');
   }
   function updatePreviewTitle(){
     document.getElementById('previewTitle').textContent = fTitle.value;
@@ -642,6 +652,73 @@
     setTimeout(function(){ msg.classList.remove('show'); }, 2500);
   }
   document.getElementById('saveBtn').addEventListener('click', saveDraft);
+
+  // ---- preview + publish ----
+  // The site is static, so publishing means updating blog-data.js: Publish
+  // downloads a new copy of it with this post added (or updated, if the slug
+  // already exists). Replace public/landing-pages/blog-data.js with it and
+  // push, and the post appears on blog.html and opens at post.html?p=<slug>.
+  var publishMsg = document.getElementById('publishMsg');
+  var publishedThisSession = null;   // so a second Publish keeps the first
+  function say(html, warn){
+    publishMsg.innerHTML = html;
+    publishMsg.className = 'publish-msg show' + (warn ? ' warn' : '');
+  }
+  function today(){
+    var d = new Date(), p = function(n){ return (n < 10 ? '0' : '') + n; };
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  }
+  function currentPost(){
+    return {
+      slug: slugify(fSlug.value || fTitle.value),
+      image: imageBlock.classList.contains('has-image') ? previewImg.src : null,
+      title: fTitle.value.trim(),
+      date: today(),
+      author: fAuthor.value.trim() || 'PFX Team',
+      tags: fCategory.value ? [fCategory.value] : [],
+      excerpt: fDesc.value.trim(),
+      body: document.getElementById('previewBody').innerHTML
+    };
+  }
+  document.getElementById('previewBtn').addEventListener('click', function(){
+    var p = currentPost();
+    if(!p.slug){ say('Add a title or slug first, so the preview has an address.', true); return; }
+    fSlug.value = p.slug; fSlug.dispatchEvent(new Event('input'));
+    saveDraft();
+    window.open('post.html?p=' + encodeURIComponent(p.slug) + '&preview=1', '_blank');
+  });
+  document.getElementById('publishBtn').addEventListener('click', function(){
+    var p = currentPost(), missing = [];
+    if(!p.title) missing.push('a title');
+    if(!p.slug) missing.push('a slug');
+    if(!p.excerpt) missing.push('a description');
+    if(!p.tags.length) missing.push('a category');
+    if(!p.body.replace(/<[^>]*>/g, '').trim()) missing.push('some body text');
+    if(missing.length){ say('To publish, add ' + missing.join(', ') + '.', true); return; }
+    var posts = (publishedThisSession || ((typeof PFX_BLOG_POSTS !== 'undefined') ? PFX_BLOG_POSTS : [])).slice();
+    var at = posts.findIndex(function(x){ return x.slug === p.slug; });
+    if(at > -1){ p.date = posts[at].date || p.date; posts[at] = p; } else posts.unshift(p);
+    posts.sort(function(a, b){ return (b.date || '').localeCompare(a.date || ''); });
+    var head = '/* =========================================================\n' +
+      '   PFX BLOG DATA\n' +
+      '   -------------------------------------------------------\n' +
+      '   Single source of truth for blog posts used by blog.html (the cards),\n' +
+      '   post.html (one post: post.html?p=<slug>) and site-search.js.\n' +
+      '   Written by the admin tool\'s Publish button. To add or edit a post,\n' +
+      '   publish it from admin.html, or edit this array by hand.\n' +
+      '   ========================================================= */\n';
+    var file = head + 'const PFX_BLOG_POSTS = ' + JSON.stringify(posts, null, 2) + ';\n';
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([file], { type: 'text/javascript' }));
+    a.download = 'blog-data.js';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+    saveDraft();
+    publishedThisSession = posts;
+    say('✓ <b>' + (at > -1 ? 'Updated' : 'Ready to publish') + ':</b> a new <code>blog-data.js</code> was downloaded with this post in it. ' +
+        'Replace <code>public/landing-pages/blog-data.js</code> with it and push. The post will then open at ' +
+        '<code>post.html?p=' + p.slug + '</code>.');
+  });
 
   updateSerp();
   renderDrafts();

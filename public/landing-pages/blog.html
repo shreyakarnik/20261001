@@ -110,6 +110,11 @@
     display:flex; flex-direction:column; height:100%;
   }
   .blog-card:target{ outline:2px solid var(--red); outline-offset:2px; }
+  /* the whole card opens the post: the title's link stretches over it */
+  .blog-card{position:relative; cursor:pointer;}
+  .blog-card-link{color:inherit;}
+  .blog-card-link::after{content:''; position:absolute; inset:0; z-index:1;}
+  .blog-card-link:focus-visible{outline:none; text-decoration:underline;}
   .blog-date{font-size:12.5px; color:rgba(255,255,255,0.55); margin-bottom:10px; font-weight:600;}
   .blog-card h3{font-size:19px; font-weight:600; margin-bottom:10px; line-height:1.3; color:var(--white);}
   .blog-card p{font-size:14.5px; color:rgba(255,255,255,0.65); margin-bottom:16px; flex:1;}
@@ -153,7 +158,7 @@
   }
 </style>
 <link rel="stylesheet" href="pfx-nav.css?v=6">
-<link rel="stylesheet" href="pfx-theme.css?v=17">
+<link rel="stylesheet" href="pfx-theme.css?v=20">
 <link rel="stylesheet" href="pfx-site.css?v=5">
 </head>
 <body class="kiosk-spec no-campus">
@@ -242,12 +247,17 @@
       return '<article class="blog-card" id="' + p.slug + '">' +
         (p.image ? '<div class="blog-thumb"><img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.title || "Blog post image") + '" loading="lazy" decoding="async"></div>' : '') +
         '<div class="blog-date">' + formatDate(p.date) + '</div>' +
-        '<h3>' + escapeHtml(p.title) + '</h3>' +
+        '<h3><a class="blog-card-link" href="post.html?p=' + encodeURIComponent(p.slug) + '">' + escapeHtml(p.title) + '</a></h3>' +
         '<p>' + escapeHtml(p.excerpt) + '</p>' +
         '<div class="blog-tags">' + p.tags.map(function(t){ return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('') + '</div>' +
         '</article>';
     }).join('');
   }
+</script>
+<script>
+  if (location.hash.length > 1 && typeof PFX_BLOG_POSTS !== 'undefined' &&
+      PFX_BLOG_POSTS.some(function(p){ return '#' + p.slug === location.hash; }))
+    location.replace('post.html?p=' + encodeURIComponent(location.hash.slice(1)));
 </script>
 <script src="site-search.js"></script>
 <script src="talk-modal.js?v=5"></script>

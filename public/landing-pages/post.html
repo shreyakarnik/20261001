@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- pfx:head -->
+<title>Blog | PFX</title>
+<meta name="description" content="News, case studies and practical resources for operators running automated, white-label pizza vending kiosks with PFX.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://shreyakarnik.github.io/20261001/public/landing-pages/post.html">
+<meta name="theme-color" content="#05070a">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PFX">
+<meta property="og:title" content="Blog — News, Case Studies &amp; Operator Resources | PFX">
+<meta property="og:description" content="News, case studies and practical resources for operators running automated, white-label pizza vending kiosks with PFX.">
+<meta property="og:url" content="https://shreyakarnik.github.io/20261001/public/landing-pages/post.html">
+<meta property="og:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PFX: Your Pizzeria, Now Automated. A white-label pizza vending kiosk at night.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog — News, Case Studies &amp; Operator Resources | PFX">
+<meta name="twitter:description" content="News, case studies and practical resources for operators running automated, white-label pizza vending kiosks with PFX.">
+<meta name="twitter:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg">
+<!-- /pfx:head -->
+<script src="analytics.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="talk-modal.css?v=4">
+<style>
+  :root{
+    --red:#C00022;
+    --red-dark:#A80F22;
+    --ink:#ffffff;
+    --bg:#0D0E10;
+    --bg-alt:#131722;
+    --gray:#9AA3AF;
+    --line:rgba(255,255,255,0.12);
+    --panel:rgba(217,217,217,0.2);
+    --panel-solid:#181c24;
+    --section-bg:#0D0E10;
+    --input-bg:rgba(255,255,255,0.3);
+    --white:#fff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.5;
+  }
+  a{text-decoration:none; color:inherit;}
+
+  /* NAV (shared identically across every page) */
+  header.nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 112px;
+    max-width:1282px; margin:20px auto 0;
+    position:sticky; top:20px; z-index:100;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:50px;
+  }
+  .logo{font-size:28px; font-weight:800; letter-spacing:-0.5px; color:var(--white);}
+  .logo img{height:32px; width:auto; display:block;}
+  .logo span{color:var(--red);}
+  nav.links{display:flex; align-items:center; gap:19.2px; font-size:15px; font-weight:400; color:var(--white);}
+  nav.links a{color:var(--white); letter-spacing:0.5px;}
+  nav.links a.talk{
+    background:var(--red); color:#fff; padding:10px 20px; border-radius:12px; font-weight:600;
+  }
+  .search-btn{color:var(--white);}
+  .nav-logo-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:40px; height:40px; padding:2px; flex-shrink:0;
+    background:none; border:none;
+  }
+  .nav-logo-btn:hover{opacity:0.85;}
+  .nav-logo-btn img{width:33px; height:33px; display:block; object-fit:contain;}
+
+  /* PAGE HEAD */
+  .page-head{max-width:1440px; margin:0 auto; padding:64px 86.4px 0;}
+  .page-head-top{display:flex; justify-content:space-between; align-items:flex-end; gap:16px;}
+  .eyebrow{color:rgba(255,255,255,0.6); font-weight:400; font-size:14px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px;}
+  .page-head h1{font-size:44px; font-weight:600; letter-spacing:-0.5px; margin-bottom:14px; color:var(--white);}
+  .page-head p{color:rgba(255,255,255,0.65); font-size:16px; max-width:640px;}
+  .lock-btn{
+    width:40px; height:40px; flex-shrink:0; margin-bottom:10px;
+    display:flex; align-items:center; justify-content:center;
+    border:1.5px solid rgba(255,255,255,0.15); border-radius:12px;
+    background:var(--panel-solid); cursor:pointer;
+  }
+  .lock-btn:hover{border-color:var(--red);}
+  .lock-btn img{width:16px; height:16px; display:block; filter:invert(1);}
+
+  /* BLOG GRID */
+  section.blog-list{max-width:1440px; margin:36px auto 80px; padding:0 86.4px;}
+  .blog-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;}
+  .blog-card{
+    background:var(--panel); border:1px solid rgba(255,255,255,0.08); border-radius:22px; padding:28px;
+    scroll-margin-top:140px;
+    display:flex; flex-direction:column; height:100%;
+  }
+  .blog-card:target{ outline:2px solid var(--red); outline-offset:2px; }
+  .blog-date{font-size:12.5px; color:rgba(255,255,255,0.55); margin-bottom:10px; font-weight:600;}
+  .blog-card h3{font-size:19px; font-weight:600; margin-bottom:10px; line-height:1.3; color:var(--white);}
+  .blog-card p{font-size:14.5px; color:rgba(255,255,255,0.65); margin-bottom:16px; flex:1;}
+  .blog-tags{display:flex; gap:6px; flex-wrap:wrap;}
+  .blog-tags .tag{
+    font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    background:rgba(192,0,34,0.15); color:#ff5c76; padding:4px 9px; border-radius:12px;
+  }
+
+  /* FOOTER (shared identically across every page) */
+  footer{
+    border-top:1px solid var(--line); margin-top:60px; padding:48px 80px; background:var(--bg);
+  }
+  .footer-inner{
+    max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px;
+  }
+  .footer-left .logo{margin-bottom:16px; display:block;}
+  .footer-socials{display:flex; gap:12px;}
+  .footer-socials a{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
+    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+  }
+  .footer-right{text-align:right;}
+  .footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
+  .footer-links a{font-size:14px; color:rgba(255,255,255,0.75);}
+  .footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+
+  @media (max-width: 900px){
+    header.nav{margin:12px; padding:10px 16px;}
+    nav.links{gap:12px; font-size:13px;}
+    nav.links a:not(.talk), nav.links .search-btn{display:none;}
+    .page-head, section.blog-list{padding-left:24px; padding-right:24px;}
+    .page-head{padding-top:40px;}
+    .page-head h1{font-size:32px;}
+    .blog-grid{grid-template-columns:1fr;}
+    footer{padding:32px 24px;}
+    .footer-inner{flex-direction:column;}
+    .footer-right{text-align:left;}
+    .footer-links{justify-content:flex-start;}
+    .footer-legal{margin-left:0;}
+  }
+</style>
+<link rel="stylesheet" href="pfx-nav.css?v=6">
+<link rel="stylesheet" href="pfx-theme.css?v=20">
+<style>
+/* ---- one blog post (post.html?p=<slug>), in the kiosk pages' line style */
+.bp{ max-width:1180px; margin:0 auto; padding:56px 80px 120px; }
+.bp-back{ display:inline-flex; align-items:center; gap:10px; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.6); }
+.bp-back:hover{ color:#fff; }
+.bp-back svg{ transform:rotate(-135deg); }
+.bp-head{ margin-top:40px; border-top:1px solid rgba(223,231,224,.16); padding-top:22px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:28px; }
+.bp-meta{ font-size:13px; line-height:1.7; color:rgba(223,231,224,.45); }
+.bp-meta b{ display:block; font-weight:400; color:#dfe7e0; }
+.bp-tags{ display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:14px; }
+.bp-tags span{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:rgba(223,231,224,.45); }
+.bp h1{ margin:0 !important; font-size:clamp(32px,4vw,56px) !important; line-height:1.08 !important; font-weight:400 !important; letter-spacing:-.02em !important; color:#fff !important; }
+.bp-lede{ margin:20px 0 0; font-size:17px; line-height:1.65; color:rgba(223,231,224,.62); max-width:60ch; }
+.bp-hero{ margin:48px 0 0; aspect-ratio:16/9; overflow:hidden; background:#232625; }
+.bp-hero img{ width:100%; height:100%; object-fit:cover; display:block; }
+.bp-body{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:28px; margin-top:56px; }
+.bp-article{ grid-column:2; max-width:68ch; font-size:17px; line-height:1.75; color:rgba(223,231,224,.78); }
+.bp-article > *:first-child{ margin-top:0 !important; }
+.bp-article p{ margin:0 0 20px; }
+.bp-article h1, .bp-article h2, .bp-article h3, .bp-article h4, .bp-article h5, .bp-article h6{ color:#fff !important; font-weight:400 !important; letter-spacing:-.01em; margin:44px 0 16px !important; padding-top:18px; border-top:1px solid rgba(223,231,224,.16); }
+.bp-article h1, .bp-article h2{ font-size:26px !important; line-height:1.25 !important; }
+.bp-article h3{ font-size:21px !important; }
+.bp-article h4, .bp-article h5, .bp-article h6{ font-size:17px !important; }
+.bp-article ul, .bp-article ol{ margin:0 0 22px; padding:0; list-style:none; border-bottom:1px solid rgba(223,231,224,.1); }
+.bp-article li{ padding:12px 0; border-top:1px solid rgba(223,231,224,.1); }
+.bp-article ol{ counter-reset:bp; }
+.bp-article ol li{ counter-increment:bp; }
+.bp-article ol li::before{ content:counter(bp, decimal-leading-zero) "  "; color:rgba(223,231,224,.4); font-size:13px; }
+.bp-article b, .bp-article strong{ color:#fff; font-weight:500; }
+.bp-article a{ color:#fff; text-decoration:none; border-bottom:1px solid rgba(223,231,224,.4); }
+.bp-article a:hover{ border-color:#fff; }
+.bp-article img{ max-width:100%; height:auto; display:block; margin:28px 0; }
+.bp-article blockquote{ margin:28px 0; padding:18px 0 0; border-top:1px solid #fff; font-size:21px; line-height:1.5; color:#fff; }
+.bp-note{ margin:0 0 28px; padding-top:14px; border-top:1px solid rgba(223,231,224,.16); font-size:13px; color:rgba(223,231,224,.55); }
+.bp-more{ margin-top:120px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:28px; }
+.bp-more-head{ border-top:1px solid #fff; padding-top:20px; }
+.bp-more-head h2{ margin:0 !important; font-size:22px !important; font-weight:400 !important; color:#fff !important; }
+.bp-more ul{ list-style:none; margin:0; padding:0; }
+.bp-more li a{ position:relative; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:baseline; padding:20px 0 22px; border-top:1px solid rgba(223,231,224,.16); }
+.bp-more li a::before{ content:''; position:absolute; left:0; right:0; top:-1px; height:1px; background:#fff; transform:scaleX(0); transform-origin:left; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
+.bp-more li a:hover::before{ transform:scaleX(1); }
+.bp-more li b{ font-weight:400; font-size:19px; color:#fff; }
+.bp-more li span{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(223,231,224,.4); white-space:nowrap; }
+.bp-missing{ padding:80px 0; }
+.bp-missing h1{ margin-bottom:16px !important; }
+.bp-missing p{ color:rgba(223,231,224,.6); }
+@media (max-width:900px){
+  .bp{ padding:32px 24px 80px; }
+  .bp-head, .bp-body, .bp-more{ grid-template-columns:1fr; }
+  .bp-head > :first-child{ order:2; }
+  .bp-article{ grid-column:1; font-size:16px; }
+  .bp-more li a{ grid-template-columns:1fr; gap:6px; }
+}
+</style>
+
+<link rel="stylesheet" href="pfx-site.css?v=5">
+</head>
+<body class="kiosk-spec no-campus">
+
+<header class="pfx-nav" id="pfxNav">
+  <a class="pfx-brand" href="index.html" aria-label="PFX home"><img src="assets/pfx-light.png" alt="PFX"></a>
+  <nav class="pfx-links" id="pfxLinks">
+    <div class="pfx-dd"><a class="pfx-link" aria-haspopup="true" href="kiosk-outdoor.html">Explore Kiosks</a><div class="pfx-dd-menu" role="menu"><a role="menuitem" href="kiosk-outdoor.html">Outdoor Kiosk</a><a role="menuitem" href="kiosk-indoor.html">Indoor Kiosk</a><a role="menuitem" href="kiosk-atm.html">ATM Kiosk</a></div></div>
+    <a class="pfx-link" href="testimonials.html">Testimonials</a>
+    <a class="pfx-link" href="roi_calculator.html">ROI Calculator</a>
+    <a class="pfx-link" href="index.html#faq">FAQ</a>
+    <a class="pfx-link on" href="blog.html">Blog</a>
+    <a class="pfx-link pfx-link--talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+  </nav>
+  <div class="pfx-actions">
+    <a class="pfx-pf" href="https://pizzaforno.com" target="_blank" rel="noopener" aria-label="PizzaForno (opens in a new tab)" title="PizzaForno"><img src="Images/pizzaforno-mark.png?v=2" alt="PizzaForno" width="34" height="34"></a>
+    <button type="button" class="pfx-search" id="siteSearchBtn" aria-label="Search"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="pfx-talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <button type="button" class="pfx-burger" aria-label="Menu" aria-controls="pfxLinks" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<main class="bp" id="post">
+  <a class="bp-back" href="blog.html"><svg viewBox="0 0 14 14" fill="none" width="12" height="12" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.5"/></svg>All Posts</a>
+  <!-- filled in from blog-data.js by the script below -->
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="logo"><img src="Images/pfx-logo-white.png" alt="PFX"></div>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"></path></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle><path d="M10 9v12"></path><path d="M10 13a4 4 0 0 1 8 0v8"></path></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"></rect><polygon points="10 9 16 12 10 15" fill="currentColor" stroke="none"></polygon></svg></a>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Application Form</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="#">Documentation</a>
+        <a href="contact.html">Support</a>
+      </div>
+      <p class="footer-legal">All trademarks are owned by PFX Canada Inc and used under licence. &copy;2026</p>
+    </div>
+  </div>
+</footer>
+
+<script src="blog-data.js"></script>
+<script>
+  /* One page for every post: post.html?p=<slug> looks the slug up in
+     PFX_BLOG_POSTS (blog-data.js). Posts written in the admin tool open
+     here too: published ones from blog-data.js, and unpublished drafts as
+     a preview (post.html?p=<slug>&preview=1) in the browser that saved them. */
+  (function(){
+    function esc(str){
+      return String(str == null ? '' : str).replace(/[&<>"']/g, function(c){
+        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+      });
+    }
+    function formatDate(iso){
+      if(!iso) return '';
+      var d = new Date(iso + "T00:00:00");
+      return isNaN(d) ? iso : d.toLocaleDateString("en-US", { year:"numeric", month:"long", day:"numeric" });
+    }
+    function setMeta(sel, attr, val){ var m = document.querySelector(sel); if(m) m.setAttribute(attr, val); }
+    var params = new URLSearchParams(location.search);
+    var slug = params.get('p') || location.hash.replace(/^#/, '');
+    var posts = (typeof PFX_BLOG_POSTS !== 'undefined') ? PFX_BLOG_POSTS : [];
+    var post = null, preview = false;
+    for (var i = 0; i < posts.length; i++) if (posts[i].slug === slug) { post = posts[i]; break; }
+    if (!post && params.get('preview')) {
+      try {
+        var drafts = JSON.parse(localStorage.getItem('pfx_blog_drafts') || '[]');
+        for (var j = 0; j < drafts.length; j++) if (drafts[j].slug === slug) {
+          var d = drafts[j];
+          post = { slug: d.slug, title: d.title, excerpt: d.description, author: d.author, image: d.image,
+                   date: (d.savedAt || '').slice(0, 10), tags: d.category ? [d.category] : [], body: d.body };
+          preview = true; break;
+        }
+      } catch (e) {}
+    }
+    var main = document.getElementById('post');
+    if (!post) {
+      main.insertAdjacentHTML('beforeend', '<div class="bp-missing"><h1>Post not found</h1><p>This post may have moved. <a href="blog.html" style="color:#fff;border-bottom:1px solid">See all posts</a>.</p></div>');
+      return;
+    }
+    document.title = post.title + ' | PFX Blog';
+    setMeta('meta[name="description"]', 'content', post.excerpt || '');
+    setMeta('meta[property="og:title"]', 'content', post.title);
+    setMeta('meta[property="og:description"]', 'content', post.excerpt || '');
+    setMeta('link[rel="canonical"]', 'href', location.href.split('#')[0]);
+    var tags = (post.tags || []).map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('');
+    var html =
+      '<header class="bp-head">' +
+        '<div class="bp-meta">' + (post.date ? '<b>' + esc(formatDate(post.date)) + '</b>' : '') + (post.author ? 'By ' + esc(post.author) : '') +
+          (tags ? '<div class="bp-tags">' + tags + '</div>' : '') + '</div>' +
+        '<div><h1>' + esc(post.title) + '</h1>' + (post.excerpt ? '<p class="bp-lede">' + esc(post.excerpt) + '</p>' : '') + '</div>' +
+      '</header>' +
+      (post.image ? '<figure class="bp-hero"><img src="' + esc(post.image) + '" alt="' + esc(post.title) + '"></figure>' : '') +
+      '<div class="bp-body"><article class="bp-article">' +
+        (preview ? '<p class="bp-note">Draft preview: only you can see this until it&rsquo;s published.</p>' : '') +
+        (post.body || '<p>' + esc(post.excerpt) + '</p>') +
+      '</article></div>';
+    var others = posts.filter(function(p){ return p.slug !== post.slug; }).slice(0, 3);
+    if (others.length) {
+      html += '<section class="bp-more" aria-label="More posts"><div class="bp-more-head"><h2>More From the Blog</h2></div><ul>' +
+        others.map(function(p){
+          return '<li><a href="post.html?p=' + encodeURIComponent(p.slug) + '"><b>' + esc(p.title) + '</b><span>' + esc(formatDate(p.date)) + '</span></a></li>';
+        }).join('') + '</ul></section>';
+    }
+    main.insertAdjacentHTML('beforeend', html);
+  })();
+</script>
+<script src="site-search.js"></script>
+<script src="talk-modal.js?v=5"></script>
+
+<script src="pfx-nav.js"></script>
+<script src="pfx-site.js?v=2"></script>
+</body>
+</html>
