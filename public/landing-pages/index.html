@@ -844,7 +844,7 @@ body[data-layout-hero] .hero .hero-top{ padding-top:calc(var(--nav-h) * .6); mar
   .nav-dd-menu a{ padding:10px 0 !important; font-size:15px; }
 }
 /* the PizzaForno logomark, between the links and the search button */
-.nav-link--m{ display:none; }
+.nav-link--m, .nav-msearch{ display:none; }
 .nav-pf{ display:inline-flex; align-items:center; flex:0 0 auto; opacity:.92; transition:transform .3s, opacity .3s; }
 .nav-pf img{ width:34px; height:34px; display:block; }
 .nav-pf:hover{ opacity:1; transform:translateY(-1px); }
@@ -865,6 +865,15 @@ body[data-layout-hero] .hero .hero-top{ padding-top:calc(var(--nav-h) * .6); mar
   .nav-burger{ margin-left:12px; }
   .nav-links .nav-link--talk{ display:block !important; color:#e2565b; }
   .nav-links .nav-link--m{ display:block !important; width:100%; background:none; border:0; border-radius:0; font-family:inherit; text-align:left; cursor:pointer; }
+  .nav-links .nav-link--pf{ color:#e2565b !important; border-bottom:0; }
+  /* the search entry looks like a field: a ruled line, the word greyed, the glass at the right */
+  .nav-links .nav-msearch{ display:flex !important; align-items:center; justify-content:space-between; width:100%; margin:0 0 10px;
+    padding:12px 0; background:none; border:0; border-bottom:1px solid rgba(223,231,224,.3); border-radius:0;
+    font:400 16px/1.2 inherit; font-family:inherit; color:rgba(223,231,224,.45); text-align:left; cursor:pointer; }
+  .nav-links .nav-msearch svg{ width:18px; height:18px; flex:0 0 auto; }
+  /* a long menu scrolls inside the sheet rather than running off the bottom */
+  .nav-links{ overflow-y:auto; overscroll-behavior:contain; padding-top:calc(var(--nav-h) + 14px) !important; }
+  .nav-links .nav-link{ padding:14px 0 !important; }
   /* the bar keeps just the logo and the menu button */
   .nav .nav-search, .nav .nav-pf{ display:none !important; }
   .brand-logo{ height:22px; }
@@ -1211,6 +1220,14 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
   #lessons > .k2-copy .hero-badge svg{ color:currentColor !important; }
   #lessons > .k2-copy .btn-talk{ background:#b3242a; }
   .hero-ctas, #pathways > .k2-copy .hero-ctas, #lessons > .k2-copy .hero-ctas{ margin-top:16px !important; }
+  /* the buttons a quarter bigger on a phone */
+  .hero-ctas .btn-talk{ font-size:17.5px !important; padding:10px 21px !important; }
+  .hero-ctas{ gap:12px !important; flex-wrap:nowrap !important; }
+  .hero-ctas .arrowlink{ font-size:13.75px; letter-spacing:.08em; gap:10px; }
+  .hero-ctas .arrowlink .ar{ width:42px; height:42px; }
+  .hero-ctas .arrowlink .ar svg{ width:16px; height:16px; }
+  /* the FAQ's dark ground stops at the FAQ, so it can't shade the form above it */
+  #faq::before{ top:0; bottom:-6%; }
   /* "As Seen On": the PizzaForno mark sits above the heading */
   .seenon-mark--top{ display:block !important; width:42px; margin:0 auto 14px; }
   .seenon-card .seenon-mark{ display:none; }
@@ -1241,14 +1258,14 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     <img class="brand-logo brand-logo--light" src="assets/pfx-light.png" alt="PFX" aria-hidden="true" width="474" height="222">
   </a>
   <nav class="nav-links" id="navlinks">
+    <button class="nav-msearch" type="button" aria-label="Search the site" data-cursor><span>Search</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
     <div class="nav-dd"><a class="nav-link" aria-haspopup="true" href="kiosk-outdoor.html" data-cursor><span>Explore Kiosks</span><span class="alt" aria-hidden="true">Explore Kiosks</span></a><div class="nav-dd-menu" role="menu"><a role="menuitem" href="kiosk-outdoor.html">Outdoor Kiosk</a><a role="menuitem" href="kiosk-indoor.html">Indoor Kiosk</a><a role="menuitem" href="kiosk-atm.html">ATM Kiosk</a></div></div>
+    <a class="nav-link nav-link--talk" href="contact.html" data-talk-trigger data-cursor><span>Let&rsquo;s Talk</span><span class="alt" aria-hidden="true">Let&rsquo;s Talk</span></a>
     <a class="nav-link" href="testimonials.html" data-cursor><span>Testimonials</span><span class="alt" aria-hidden="true">Testimonials</span></a>
     <a class="nav-link" href="roi_calculator.html" data-cursor><span>ROI Calculator</span><span class="alt" aria-hidden="true">ROI Calculator</span></a>
     <a class="nav-link" href="#faq" data-cursor><span>FAQ</span><span class="alt" aria-hidden="true">FAQ</span></a>
     <a class="nav-link" href="blog.html" data-cursor><span>Blog</span><span class="alt" aria-hidden="true">Blog</span></a>
-    <button class="nav-link nav-link--m nav-msearch" type="button" data-cursor><span>Search</span><span class="alt" aria-hidden="true">Search</span></button>
-    <a class="nav-link nav-link--m" href="https://pizzaforno.com" target="_blank" rel="noopener" data-cursor><span>Become a PizzaForno Licensee</span><span class="alt" aria-hidden="true">Become a PizzaForno Licensee</span></a>
-    <a class="nav-link nav-link--talk" href="contact.html" data-talk-trigger data-cursor><span>Let&rsquo;s Talk</span><span class="alt" aria-hidden="true">Let&rsquo;s Talk</span></a>
+    <a class="nav-link nav-link--m nav-link--pf" href="https://pizzaforno.com" target="_blank" rel="noopener" data-cursor><span>Become a PizzaForno Licensee</span><span class="alt" aria-hidden="true">Become a PizzaForno Licensee</span></a>
   </nav>
   <div class="nav-actions">
     <a class="nav-pf" href="https://pizzaforno.com" target="_blank" rel="noopener" aria-label="PizzaForno (opens in a new tab)" title="PizzaForno"><img src="Images/pizzaforno-mark.png?v=2" alt="PizzaForno" width="34" height="34"></a>
@@ -4057,7 +4074,9 @@ function placeKiosk() {
   WORLD.kioskX = KIOSK.x * (1 - .55 * aspectFix());               /* its resting x; updateWorld slides it off from here */
   WORLD.kiosk.position.x = WORLD.kioskX;
   if (WORLD.kioskRise) WORLD.kioskRise.position.x = WORLD.kiosk.position.x;
-  if (WORLD.kioskIn) WORLD.kioskIn.position.x = KIOSK_IN.x * (1 - .95 * aspectFix());
+  /* (on a phone the indoor kiosk keeps its desktop place, so it is seen from the
+     same angle; frameKioskOnPhone crops it to the middle instead) */
+  if (WORLD.kioskIn) WORLD.kioskIn.position.x = KIOSK_IN.x * (1 - .95 * aspectFix() * (isPhoneFrame() ? 0 : 1));
 }
 
 
@@ -5907,7 +5926,10 @@ function applyCamera() {
      screens — it would put the lens through the walls */
   const indoor = smooth(-29, -36, _p.z);
   fov = fitAspect(_p, _t, fov, 1 - indoor);
-  fov *= 1 + aspectFix() * .9 * indoor;        /* tall frames: open up inside instead */
+  /* tall frames: open up inside instead — except on a phone while the indoor
+     kiosk holds the shot, where it keeps desktop's lens so it reads the same */
+  const k2hold = isPhoneFrame() && K2 && K2.k > 0 ? K2.k : 0;
+  fov *= 1 + aspectFix() * .9 * indoor * (1 - k2hold);
 
   /* the opening dolly: a long lens easing in from further back */
   const io = 1 - RIG.intro;
@@ -5934,9 +5956,9 @@ function applyCamera() {
      of the chapter's copy (0 = nav, .5 = midway), so the gap above and
      below the kiosk follows the copy's real height. */
 const PHONE_FRAME = {
-  hero:   { zoom: 1.32, x: .57, down: .6, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
-  indoor: { zoom: 1.4,  x: .5,  down: .5, copy: () => K2 && K2.el },
-  atm:    { zoom: 1.4,  x: .5,  down: .55, copy: () => K3 && K3.el }
+  hero:   { zoom: 1.45, x: .53, down: .6, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
+  indoor: { zoom: .55,  x: .5,  down: .5, copy: () => K2 && K2.el },
+  atm:    { zoom: 1.9,  x: .5,  down: .5,  copy: () => K3 && K3.el }
 };
 function phoneTarget(f, W, H) {
   const navEl = document.getElementById('nav'), el = f.copy();
@@ -5944,10 +5966,6 @@ function phoneTarget(f, W, H) {
   const bot = el ? el.getBoundingClientRect().top : H * .6;
   return [f.x * W, top + (bot - top) * f.down];
 }
-/* the indoor kiosk turns to face the lens on a phone (desktop's three-quarter
-   view shows mostly its side from the phone's camera). Its front is local +z;
-   a small angle is kept so it still reads as a box */
-const PHONE_INDOOR_TURN = .16;
 const PHONE_CAM = new THREE.PerspectiveCamera();
 const _kb = new THREE.Box3();
 const KCEN = {};
@@ -5970,19 +5988,9 @@ function kioskCentre(key, obj) {
   obj.updateMatrixWorld(true);
   return obj.localToWorld(KCEN[key].clone());
 }
+function isPhoneFrame() { return vpW() <= 820 && vpW() / vpH() < 1; }
 function frameKioskOnPhone() {
-  const W = vpW(), H = vpH(), phone = W <= 820 && W / H < 1;
-  /* the indoor kiosk's turn, eased in with its copy */
-  if (WORLD.kioskIn) {
-    let ry = KIOSK_IN.ry;
-    if (phone && K2 && K2.k > 0) {
-      const k = WORLD.kioskIn.position;
-      const face = Math.atan2(camera.position.x - k.x, camera.position.z - k.z) + PHONE_INDOOR_TURN;
-      let d = face - KIOSK_IN.ry; d = Math.atan2(Math.sin(d), Math.cos(d));
-      ry = KIOSK_IN.ry + d * K2.k;
-    }
-    WORLD.kioskIn.rotation.y = ry;
-  }
+  const W = vpW(), H = vpH(), phone = isPhoneFrame();
   if (!phone) { if (camera.view && camera.view.enabled) camera.clearViewOffset(); return; }
   const picks = [];
   const wHero = 1 - smooth(.3, .75, RIG.smooth);
@@ -6005,9 +6013,9 @@ function frameKioskOnPhone() {
     PHONE_CAM.updateProjectionMatrix(); PHONE_CAM.updateMatrixWorld(true);
     picks.forEach(([w, f, p]) => {
       p.project(PHONE_CAM);
-      if (p.z > 1 || Math.abs(p.x) > 1.6 || Math.abs(p.y) > 1.6) return;   /* behind the lens, or nowhere near the frame */
+      if (p.z > 1 || Math.abs(p.x) > 3 || Math.abs(p.y) > 3) return;   /* behind the lens, or nowhere near the frame */
       ws += w; zoom += w * f.zoom;
-      px += w * (clamp(p.x, -1.2, 1.2) + 1) * .5 * W; py += w * (1 - clamp(p.y, -1.2, 1.2)) * .5 * H;
+      px += w * (clamp(p.x, -2.6, 2.6) + 1) * .5 * W; py += w * (1 - clamp(p.y, -2.6, 2.6)) * .5 * H;
       const t = phoneTarget(f, W, H); tx += w * t[0]; ty += w * t[1];
     });
   }
@@ -6324,7 +6332,7 @@ function wireNav() {
   });
   links.forEach(link => link.addEventListener('click', closeMenu));
   const mSearch = $('.nav-msearch');
-  if (mSearch) mSearch.addEventListener('click', () => { if (window.PFXSearch) window.PFXSearch.open(); });
+  if (mSearch) mSearch.addEventListener('click', () => { closeMenu(); if (window.PFXSearch) window.PFXSearch.open(); });
   addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
   addEventListener('resize', () => { if (vpW() > 820) closeMenu(); }, { passive:true });
   /* Which chapter each link actually points at, read off its href. The old
@@ -6733,7 +6741,7 @@ function render() {
   if (heroK) renderReflection(1, KIOSK.y, WORLD.kioskFloor);
   else if (inK) renderReflection(2, KIOSK_IN.y, WORLD.kioskInFloor);
   const dofOut = 1 - smooth(.35, .85, sm), dofIn = smooth(1.86, 1.98, sm) * (1 - smooth(2.1, 2.24, sm));
-  const dofAtm = smooth(2.86, 2.98, sm) * (1 - smooth(3.32, 3.48, sm));
+  const dofAtm = smooth(2.86, 2.98, sm) * (1 - smooth(3.32, 3.48, sm)) * (isPhoneFrame() ? .2 : 1);   /* phones: the wall stays sharp */
   const dof = WANT_POST ? Math.max(dofOut, dofIn, dofAtm) : 0;
   if (WANT_POST) { if (dof > .001) renderMask(dofAtm > Math.max(dofOut, dofIn) ? 3 : (dofOut >= dofIn ? 1 : 2)); POST.comp.uniforms.uDof.value = dof;
     POST.comp.uniforms.tM.value = MASK.rt ? MASK.rt.texture : null;
