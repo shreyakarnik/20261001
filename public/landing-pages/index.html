@@ -1252,7 +1252,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <!-- ============================================================ preloader -->
 <div id="pre">
   <!-- the PFX logo animation plays while the scene loads -->
-  <video class="pre-video" id="pre-video" src="assets/pfx-intro.mp4" autoplay muted playsinline preload="auto" aria-label="PFX"></video>
+  <video class="pre-video" id="pre-video" src="assets/pfx-intro.mp4?v=2" autoplay muted playsinline preload="auto" aria-label="PFX"></video>
 </div>
 
 <!-- ============================================================ nav -->
@@ -6885,8 +6885,10 @@ const INTRO_HOLD = 2;
 function afterIntro(go) {
   const v = $('#pre-video');
   let done = false; const once = () => { if (!done) { done = true; go(); } };
-  if (!v || REDUCE || v.ended || v.error) return once();
-  v.addEventListener('ended', once); v.addEventListener('error', once);
+  if (!v || REDUCE || v.error) return once();
+  /* the animation ends on the finished mark (about 1.5 s in at this speed);
+     it holds that last frame until the 2 s are up, rather than lifting early */
+  v.addEventListener('error', once);
   const left = Math.max(0, INTRO_HOLD - v.currentTime / v.playbackRate);
   setTimeout(once, left * 1000);
   if (v.paused) v.play().catch(once);

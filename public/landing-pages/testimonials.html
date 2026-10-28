@@ -201,8 +201,18 @@
 .tm-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
 .tm-row-head .tm-who{ margin-top:18px; font-size:13px; color:rgba(223,231,224,.45); line-height:1.6; }
 .tm-row-head .tm-who b{ display:block; font-weight:400; font-size:15px; color:#dfe7e0; }
+/* the operator's Instagram: a call-out under who they are */
+.tm-ig{ display:flex; align-items:center; gap:12px; width:fit-content; margin-top:22px; padding-top:16px; border-top:1px solid rgba(223,231,224,.16);
+  font-size:13px; line-height:1.4; color:rgba(223,231,224,.45); transition:color .2s; }
+.tm-ig svg{ flex:0 0 auto; color:#dfe7e0; }
+.tm-ig b{ display:block; font-weight:400; font-size:15px; color:#fff; }
+.tm-ig:hover, .tm-ig:hover b, .tm-ig:hover svg{ color:#c00022; }
 .kp-row .kp-stats{ margin-top:36px; }
 .kp-stat dd.tm-tbd{ color:rgba(223,231,224,.3); }
+/* the street address under a location, linked to the map */
+.kp-stat .tm-addr{ display:block; width:fit-content; margin-top:6px; font-size:13px; line-height:1.5; letter-spacing:0; color:rgba(223,231,224,.45); border-bottom:1px solid rgba(223,231,224,.2); transition:color .2s, border-color .2s; }
+.kp-stat .tm-addr:hover{ color:#fff; border-color:#fff; }
+@media (max-width:900px){ .kp-stat .tm-addr{ margin-left:auto; text-align:right; } }
 .kp-row .cs-note{ margin:14px 0 0; font-size:12px; color:rgba(223,231,224,.4); }
 #model > .cs-table-wrap{ grid-column:1 / -1; margin-top:48px; }
 /* the projection table: open, ruled like the spec rows */
@@ -256,7 +266,8 @@ table.cs-table{ width:100%; min-width:680px; border-collapse:collapse; font-size
     <div class="kp-row-head tm-row-head">
       <h2>Speedy Pie</h2>
       <p>An Outdoor Kiosk busy enough that it was being restocked four times a day.</p>
-      <div class="tm-who"><b>David &amp; Savannah Necker</b>Owners, Speedy Pie &middot; Outdoor Kiosk</div>
+      <div class="tm-who"><b>David &amp; Savannah Necker</b>Owners, Speedy Pie</div>
+      <a class="tm-ig" href="https://www.instagram.com/speedypiepizza/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Check out their Instagram<b>@speedypiepizza</b></span></a>
     </div>
     <div>
       <div class="tm-video">
@@ -264,12 +275,10 @@ table.cs-table{ width:100%; min-width:680px; border-collapse:collapse; font-size
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <p class="tm-cap"><span>Speedy Pie &times; PFX</span><a href="https://youtu.be/rpFps0Y71wo" target="_blank" rel="noopener">Watch on YouTube</a></p>
-      <!-- Speedy Pie's results: replace each "TBD" with the real figure -->
       <dl class="kp-stats">
-        <div class="kp-stat"><dt>Restocks</dt><dd>Up To 4&times; A Day</dd></div>
+        <div class="kp-stat"><dt>Since</dt><dd>August 2026</dd></div>
         <div class="kp-stat"><dt>Kiosk</dt><dd>Outdoor Kiosk</dd></div>
-        <div class="kp-stat"><dt>Pizzas Sold</dt><dd class="tm-tbd">TBD</dd></div>
-        <div class="kp-stat"><dt>Average Per Day</dt><dd class="tm-tbd">TBD</dd></div>
+        <div class="kp-stat"><dt>Location</dt><dd>Quad Cities, USA<a class="tm-addr" href="https://www.google.com/maps/search/?api=1&amp;query=5181%20Competition%20Dr%2C%20Bettendorf%2C%20IA%2052722%2C%20United%20States" target="_blank" rel="noopener">5181 Competition Dr, Bettendorf, IA 52722, United States</a></dd></div>
       </dl>
       <figure class="tm-photo"><img src="Images/kiosks/outdoor-kiosk.jpg" alt="The Speedy Pie Outdoor Kiosk" loading="lazy"></figure>
     </div>
@@ -279,7 +288,8 @@ table.cs-table{ width:100%; min-width:680px; border-collapse:collapse; font-size
     <div class="kp-row-head tm-row-head">
       <h2>Pizza 13</h2>
       <p>Our first white-label licensee: its own brand on the wrap and its own recipes in the kiosk, baked around the clock.</p>
-      <div class="tm-who"><b>Antoine Attard</b>Pizza 13 &middot; First White-Label Licensee</div>
+      <div class="tm-who"><b>Antoine Attard</b>Pizza 13</div>
+      <a class="tm-ig" href="https://www.instagram.com/p13.bathurst/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Check out their Instagram<b>@p13.bathurst</b></span></a>
     </div>
     <div>
       <div class="tm-video">
@@ -287,6 +297,10 @@ table.cs-table{ width:100%; min-width:680px; border-collapse:collapse; font-size
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <p class="tm-cap"><span>Pizza 13 &times; PFX</span><a href="https://youtu.be/STCAMJAnbsk" target="_blank" rel="noopener">Watch on YouTube</a></p>
+      <dl class="kp-stats">
+        <div class="kp-stat"><dt>Since</dt><dd>July 2025</dd></div>
+        <div class="kp-stat"><dt>Location</dt><dd>Bathurst, New Brunswick, Canada<a class="tm-addr" href="https://www.google.com/maps/search/?api=1&amp;query=325%20Murray%20Avenue%2C%20Bathurst%2C%20NB%2C%20Canada" target="_blank" rel="noopener">325 Murray Avenue, Bathurst, NB, Canada</a></dd></div>
+      </dl>
     </div>
   </section>
 
