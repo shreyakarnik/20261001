@@ -79,6 +79,7 @@ html{ overflow-x:clip; }
 
 /* "Explore Kiosks": the three kiosks drop down on hover (and keyboard focus) */
 .pfx-dd, .nav-dd{ position:relative; display:flex; align-items:center; }
+.pfx-dd-toggle{ display:none; }
 .pfx-dd-menu, .nav-dd-menu{
   position:absolute; top:100%; left:-18px; padding-top:14px; min-width:190px; z-index:60;
   opacity:0; visibility:hidden; transform:translateY(-4px); transition:opacity .25s, transform .25s, visibility 0s linear .25s;
@@ -92,9 +93,15 @@ html{ overflow-x:clip; }
 .pfx-dd:hover .pfx-dd-menu, .pfx-dd:focus-within .pfx-dd-menu,
 .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu{ opacity:1; visibility:visible; transform:none; transition-delay:0s; }
 @media (max-width:820px){
-  /* in the phone menu the three sit under it, indented, always shown */
-  .pfx-dd, .nav-dd{ display:block; width:100%; }
-  .pfx-dd-menu, .nav-dd-menu{ position:static; opacity:1; visibility:visible; transform:none; padding:0 0 6px 16px; min-width:0; }
+  /* in the phone menu the three sit under it, indented, folded away until
+     the arrow beside "Explore Kiosks" opens them */
+  .pfx-dd, .nav-dd{ display:block; width:100%; position:relative; }
+  .pfx-dd-menu, .nav-dd-menu{ position:static; opacity:1; visibility:visible; transform:none; padding:0 0 6px 16px; min-width:0; display:none; }
+  .pfx-dd.open .pfx-dd-menu{ display:block; }
+  .pfx-dd-toggle{ display:flex !important; position:absolute; top:0; right:0; height:var(--dd-h, 52px); width:56px; align-items:center; justify-content:flex-end;
+    padding:0; background:none; border:0; color:#fff; cursor:pointer; }
+  .pfx-dd-toggle svg{ width:22px; height:22px; transition:transform .25s; }
+  .pfx-dd.open .pfx-dd-toggle svg{ transform:rotate(180deg); }
   .pfx-dd-menu::before, .nav-dd-menu::before{ display:none; }
   .pfx-dd-menu a, .nav-dd-menu a{ padding:10px 0 !important; font-size:15px; }
 }

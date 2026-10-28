@@ -26,6 +26,24 @@
     pf.textContent = 'Become a PizzaForno Licensee';
     links.insertBefore(search, links.firstChild);
     var dd = links.querySelector('.pfx-dd');
+    /* the arrow beside "Explore Kiosks" folds the three kiosks open */
+    if (dd) {
+      var ddBtn = document.createElement('button');
+      ddBtn.type = 'button'; ddBtn.className = 'pfx-dd-toggle';
+      ddBtn.setAttribute('aria-label', 'Show the kiosks'); ddBtn.setAttribute('aria-expanded', 'false');
+      ddBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+      dd.insertBefore(ddBtn, dd.querySelector('.pfx-dd-menu'));
+      var setDD = function (open) {
+        dd.classList.toggle('open', open);
+        ddBtn.setAttribute('aria-expanded', String(open));
+        ddBtn.setAttribute('aria-label', open ? 'Hide the kiosks' : 'Show the kiosks');
+      };
+      ddBtn.addEventListener('click', function () {
+        dd.style.setProperty('--dd-h', dd.querySelector('.pfx-link').offsetHeight + 'px');
+        setDD(!dd.classList.contains('open'));
+      });
+      burger.addEventListener('click', function () { setDD(false); });
+    }
     if (talk && dd) links.insertBefore(talk, dd.nextSibling);
     var contact = document.createElement('a');
     contact.className = 'pfx-link pfx-link--m'; contact.href = 'support.html'; contact.textContent = 'Contact';
