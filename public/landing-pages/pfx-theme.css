@@ -263,6 +263,8 @@ article.policy{ background:none !important; border:0 !important; border-radius:0
 /* ------------------------------------------------------ the Let's Talk overlay */
 .tm-overlay{ background:rgba(3,5,8,.78) !important; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
 .tm-close{ color:var(--k-bone) !important; }
+/* the pop-up form reads on a near-solid panel, not a see-through plate */
+.tm-overlay .tm-card{ background:rgba(14,16,19,.94) !important; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
 
 /* ------------------------------------------------------ footer */
 html body footer{
