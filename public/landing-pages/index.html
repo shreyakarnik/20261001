@@ -1067,7 +1067,7 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
   #faq h2{ font-size:32px; }
 }
 /* ---- customer support: the FAQ's ground and type, ruled rows like the kiosk pages */
-#support{ position:relative; z-index:10; margin:0 auto 96px; font-family:'Inter',system-ui,-apple-system,sans-serif; color:#fff; }
+#support{ position:relative; z-index:10; margin:0 auto 96px; padding:0 80px; font-family:'Inter',system-ui,-apple-system,sans-serif; color:#fff; }
 #support::before{ content:''; position:absolute; inset:-20% 0; z-index:-1; pointer-events:none;
   background:radial-gradient(100% 75% at 45% 50%, rgba(4,7,10,.96), rgba(4,7,10,.86) 60%, rgba(4,7,10,0)); }
 #support .sup-wrap{ max-width:1062px; margin:0 auto; display:grid; grid-template-columns:407px 1fr; gap:24px; align-items:start; }
@@ -1084,11 +1084,30 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 #support dd{ margin:0; font-size:20px; letter-spacing:-.01em; }
 #support dd a{ color:#fff; transition:color .2s; }
 #support dd a:hover{ color:#c00022; }
+#support .sup-form{ margin-top:48px; }
+#support .sup-form h3{ margin:0 0 8px; font-size:20px; font-weight:500; letter-spacing:-.01em; color:#fff; }
+#support .sup-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0 28px; }
+#support .sup-f{ display:block; padding-top:18px; }
+#support .sup-f--wide{ grid-column:1 / -1; }
+#support .sup-f span{ display:block; font-size:13px; color:rgba(223,231,224,.45); margin-bottom:4px; }
+#support .sup-f input, #support .sup-f select, #support .sup-f textarea{
+  width:100%; box-sizing:border-box; padding:10px 0; background:transparent; border:0; border-bottom:1px solid rgba(223,231,224,.22); border-radius:0;
+  color:#fff; font:inherit; font-size:16px; outline:none; transition:border-color .2s; }
+#support .sup-f select{ appearance:none; -webkit-appearance:none; cursor:pointer;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23dfe7e0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 2px center; }
+#support .sup-f select option{ background:#0d0e10; color:#fff; }
+#support .sup-f textarea{ resize:vertical; min-height:96px; }
+#support .sup-f textarea::placeholder{ color:rgba(223,231,224,.3); }
+#support .sup-f input:focus, #support .sup-f select:focus, #support .sup-f textarea:focus{ border-color:#fff; }
+#support .sup-submit{ margin-top:28px; border:0; cursor:pointer; font:inherit; font-weight:600; }
+#support .sup-done{ margin:48px 0 0; padding-top:20px; border-top:1px solid #fff; font-size:16px; color:#fff; }
 @media (max-width:900px){
   #support{ margin-bottom:64px; padding:0 24px; }
   #support .sup-wrap{ grid-template-columns:1fr; gap:20px; }
   #support h2{ font-size:32px; }
   #support dd{ font-size:16px; }
+  #support .sup-grid{ grid-template-columns:1fr; }
+  #support .sup-form{ margin-top:36px; }
 }
 /* ---- "As Seen On", the PFX home page's rules verbatim; it takes the footer's
    lead row (spanning the grid, ruled off from the index below) */
@@ -1499,6 +1518,20 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
         <div><dt>By Email</dt><dd><a href="mailto:help@poweredbypfx.com" data-cursor>help@poweredbypfx.com</a></dd></div>
         <div><dt>By Phone</dt><dd><a href="tel:+18886038363" data-cursor>+1-888-603-8363</a></dd></div>
       </dl>
+      <form class="sup-form" id="supForm">
+        <h3>Send Us a Message</h3>
+        <div class="sup-grid">
+          <label class="sup-f"><span>Email*</span><input type="email" name="email" autocomplete="email" required></label>
+          <label class="sup-f"><span>Phone Number*</span><input type="tel" name="phone" autocomplete="tel" required></label>
+          <label class="sup-f"><span>First Name*</span><input type="text" name="firstname" autocomplete="given-name" required></label>
+          <label class="sup-f"><span>Last Name</span><input type="text" name="lastname" autocomplete="family-name"></label>
+          <label class="sup-f"><span>Country</span><select name="country"><option value="">Please Select</option><option>United States</option><option>Canada</option><option>Other</option></select></label>
+          <label class="sup-f"><span>Which Location Is This For?*</span><input type="text" name="location" required></label>
+          <label class="sup-f sup-f--wide"><span>Message*</span><textarea name="message" rows="4" placeholder="Drop us a note (location, date &amp; time help us)" required></textarea></label>
+        </div>
+        <button type="submit" class="btn-talk sup-submit" data-cursor>Send Message</button>
+      </form>
+      <p class="sup-done" id="supDone" hidden>Thanks, your message is on its way. Our support team will get back to you shortly.</p>
     </div>
   </div>
 </section>
@@ -6973,6 +7006,7 @@ else addEventListener('DOMContentLoaded', boot);
 </script>
 <script src="blog-data.js"></script>
 <script src="site-search.js"></script>
+<script src="support-form.js"></script>
 <script src="talk-modal.js?v=5"></script>
 <script src="pfx-site.js?v=3"></script>
 </body>
