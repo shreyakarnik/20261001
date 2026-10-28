@@ -26,9 +26,9 @@ html{ overflow-x:clip; }
   background:none; color:#dfe7e0; border:0; transition:background .3s; }   /* no ring: just the glass */
 .pfx-search svg{ width:18px; height:18px; }
 .pfx-search:hover{ background:rgba(223,231,224,.12); }
-.pfx-talk{ display:inline-flex; align-items:center; padding:11px 22px; border-radius:12px; background:#b3242a; color:#fff;
+.pfx-talk{ display:inline-flex; align-items:center; padding:11px 22px; border-radius:12px; background:#c00022; color:#fff;
   font-size:14px; font-weight:700; letter-spacing:-.01em; text-decoration:none; transition:background .3s; }
-.pfx-talk:hover{ background:#c62c32; }
+.pfx-talk:hover{ background:#a80f22; }
 .pfx-burger{ display:none; width:26px; height:16px; position:relative; background:none; border:0; padding:0; cursor:pointer; }
 .pfx-burger i{ position:absolute; right:0; height:1.5px; background:#dfe7e0; transition:transform .45s cubic-bezier(.16,1,.3,1), top .45s; }
 .pfx-burger i:nth-child(1){ top:4px; width:26px; }
@@ -50,10 +50,10 @@ html{ overflow-x:clip; }
   .pfx-nav.menu-open .pfx-links{ clip-path:inset(0); visibility:visible; transition-delay:0s; }
   .pfx-nav.menu-open{ backdrop-filter:none; -webkit-backdrop-filter:none; }
   .pfx-link{ display:block; width:100%; padding:17px 0; font-size:17px; border-bottom:1px solid rgba(223,231,224,.07); }
-  .pfx-link--talk{ display:block; color:#e2565b; }
+  .pfx-link--talk{ display:block; color:#c00022; }
   .pfx-link--m{ display:block; background:none; border:0; border-bottom:1px solid rgba(223,231,224,.07); border-radius:0;
     font-family:inherit; text-align:left; cursor:pointer; }
-  .pfx-link--pf{ color:#e2565b; border-bottom:0; }
+  .pfx-link--pf{ color:#c00022; border-bottom:0; }
   /* the search entry looks like a field: a ruled line, the word greyed, the glass at the right */
   .pfx-msearch{ display:flex; align-items:center; justify-content:space-between; width:100%; margin:0 0 10px; padding:12px 0;
     background:none; border:0; border-bottom:1px solid rgba(223,231,224,.3); border-radius:0;

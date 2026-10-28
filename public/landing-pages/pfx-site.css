@@ -19,8 +19,8 @@
 .pfx-cookie button{
   flex:1; min-height:44px; border-radius:10px; font:600 14px 'Inter', system-ui, sans-serif; cursor:pointer;
 }
-.pfx-cookie .pfx-cookie-yes{ background:#b3242a; color:#fff; border:0; }
-.pfx-cookie .pfx-cookie-yes:hover{ background:#c62c32; }
+.pfx-cookie .pfx-cookie-yes{ background:#c00022; color:#fff; border:0; }
+.pfx-cookie .pfx-cookie-yes:hover{ background:#a80f22; }
 .pfx-cookie .pfx-cookie-no{ background:transparent; color:#dfe7e0; border:1px solid rgba(223,231,224,.26); }
 .pfx-cookie .pfx-cookie-no:hover{ background:rgba(255,255,255,.06); }
 @media (max-width:820px){

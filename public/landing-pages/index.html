@@ -53,7 +53,7 @@ html, body, body *{ font-family:'Inter', system-ui, -apple-system, 'Helvetica Ne
   --muted:#78837c;
   --line:rgba(223,231,224,.13);
   --line-soft:rgba(223,231,224,.07);
-  --vermilion:#e0231c;
+  --vermilion:#c00022;
   --ember:#ff5a3c;
   --gold:#c9a24a;
   --pad:clamp(20px, 3.4vw, 56px);
@@ -436,7 +436,7 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
   cursor:pointer; transition:padding .5s var(--ease-out);
 }
 .les::before{ content:''; position:absolute; left:calc(var(--pad) * -1); right:0; top:0; bottom:0;
-  background:linear-gradient(90deg, rgba(224,35,28,.09), transparent 46%);
+  background:linear-gradient(90deg, rgba(192,0,34,.09), transparent 46%);
   opacity:0; transition:opacity .55s var(--ease); pointer-events:none; }
 .les:hover::before{ opacity:1; }
 .les:hover{ padding-left:clamp(8px,1.2vw,18px); }
@@ -635,7 +635,7 @@ body[data-layout-curriculum="b"] .les{
 }
 body[data-layout-curriculum="b"] .les:nth-child(-n+2){ grid-column:span 3; }
 body[data-layout-curriculum="b"] .les:nth-child(n+3){ grid-column:span 2; }
-body[data-layout-curriculum="b"] .les::before{ left:0; background:linear-gradient(145deg,rgba(224,35,28,.13),transparent 58%); }
+body[data-layout-curriculum="b"] .les::before{ left:0; background:linear-gradient(145deg,rgba(192,0,34,.13),transparent 58%); }
 body[data-layout-curriculum="b"] .les:hover{ padding-left:32px; }
 body[data-layout-curriculum="b"] .les h3{ font-size:clamp(20px,2vw,30px); }
 body[data-layout-curriculum="b"] .les p{ display:block; max-width:34ch; }
@@ -791,9 +791,9 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(13,34,54,.62); }
 .hero-badge svg{ width:18px; height:18px; flex:0 0 auto; }
 .hero .hero-sub{ max-width:470px; font-size:clamp(14px,1.15vw,17px); line-height:1.7; font-weight:400; }
 .hero-ctas{ display:flex; align-items:center; gap:14px; margin-top:30px; position:relative; z-index:3; }
-.btn-talk{ display:inline-flex; align-items:center; padding:16px 34px; border-radius:14px; background:#b3242a; color:#fff;
+.btn-talk{ display:inline-flex; align-items:center; padding:16px 34px; border-radius:14px; background:#c00022; color:#fff;
   font-size:clamp(14px,1.1vw,17px); font-weight:700; letter-spacing:-.01em; transition:background .3s, transform .4s var(--ease-out); }
-.btn-talk:hover{ background:#c62c32; transform:translate3d(0,-2px,0); }
+.btn-talk:hover{ background:#a80f22; transform:translate3d(0,-2px,0); }
 .btn-explore{ display:inline-flex; align-items:center; gap:12px; font-size:clamp(14px,1.1vw,17px); font-weight:700;
   color:var(--sky-ink); letter-spacing:-.01em; padding:16px 26px; border-radius:14px;
   background:rgba(255,255,255,.72); border:1px solid rgba(13,34,54,.14);
@@ -852,9 +852,9 @@ body[data-layout-hero] .hero .hero-top{ padding-top:calc(var(--nav-h) * .6); mar
   border:0; transition:background .3s, color .3s; }   /* no ring: just the glass */
 .nav-search svg{ width:18px; height:18px; }
 .nav-search:hover{ background:rgba(223,231,224,.12); }
-.nav-talk{ display:inline-flex; align-items:center; padding:11px 22px; border-radius:12px; background:#b3242a; color:#fff;
+.nav-talk{ display:inline-flex; align-items:center; padding:11px 22px; border-radius:12px; background:#c00022; color:#fff;
   font-size:14px; font-weight:700; letter-spacing:-.01em; transition:background .3s; }
-.nav-talk:hover{ background:#c62c32; }
+.nav-talk:hover{ background:#a80f22; }
 .nav:not(.stuck):not(.menu-open) .nav-search{ color:var(--sky-ink); }
 .nav:not(.stuck):not(.menu-open) .nav-search:hover{ background:rgba(255,255,255,.35); }
 @media (min-width:821px){ .nav-burger{ display:none; } }
@@ -863,9 +863,9 @@ body[data-layout-hero] .hero .hero-top{ padding-top:calc(var(--nav-h) * .6); mar
   .nav-actions{ margin-left:auto; gap:12px; }
   .nav-talk{ display:none; }
   .nav-burger{ margin-left:12px; }
-  .nav-links .nav-link--talk{ display:block !important; color:#e2565b; }
+  .nav-links .nav-link--talk{ display:block !important; color:#c00022; }
   .nav-links .nav-link--m{ display:block !important; width:100%; background:none; border:0; border-radius:0; font-family:inherit; text-align:left; cursor:pointer; }
-  .nav-links .nav-link--pf{ color:#e2565b !important; border-bottom:0; }
+  .nav-links .nav-link--pf{ color:#c00022 !important; border-bottom:0; }
   /* the search entry looks like a field: a ruled line, the word greyed, the glass at the right */
   .nav-links .nav-msearch{ display:flex !important; align-items:center; justify-content:space-between; width:100%; margin:0 0 10px;
     padding:12px 0; background:none; border:0; border-bottom:1px solid rgba(223,231,224,.3); border-radius:0;
@@ -910,7 +910,7 @@ body[data-layout-story] #gate .gate-grid h2.gate-title{ grid-column:auto; max-wi
 #gate .gcard{ position:relative; display:flex; flex-direction:column; gap:10px; min-height:150px; padding:22px 24px;
   background:rgba(5,7,10,.84); overflow:hidden; cursor:pointer; transition:padding .5s var(--ease-out); }
 #gate .gcard::before{ content:''; position:absolute; inset:0; pointer-events:none; opacity:0;
-  background:linear-gradient(145deg,rgba(224,35,28,.13),transparent 58%); transition:opacity .55s var(--ease); }
+  background:linear-gradient(145deg,rgba(192,0,34,.13),transparent 58%); transition:opacity .55s var(--ease); }
 #gate .gcard:hover::before{ opacity:1; }
 #gate .gcard:hover{ padding-left:30px; }
 #gate .gcard .k{ font-size:11px; letter-spacing:.16em; color:var(--muted); font-variant-numeric:tabular-nums; transition:color .4s; }
@@ -968,7 +968,7 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 .tk-cards .gcard{ position:relative; display:flex; flex-direction:column; gap:10px; min-height:150px; padding:22px 24px;
   background:rgba(5,7,10,.84); overflow:hidden; cursor:pointer; transition:padding .5s var(--ease-out); }
 .tk-cards .gcard::before{ content:''; position:absolute; inset:0; pointer-events:none; opacity:0;
-  background:linear-gradient(145deg,rgba(224,35,28,.13),transparent 58%); transition:opacity .55s var(--ease); }
+  background:linear-gradient(145deg,rgba(192,0,34,.13),transparent 58%); transition:opacity .55s var(--ease); }
 .tk-cards .gcard:hover::before{ opacity:1; }
 .tk-cards .gcard:hover{ padding-left:30px; }
 .tk-cards .gcard .k{ font-size:11px; letter-spacing:.16em; color:var(--muted); font-variant-numeric:tabular-nums; transition:color .4s; }
@@ -1029,7 +1029,7 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 #faq .faq-list{ display:grid; gap:1px; background:var(--line-soft); border:1px solid var(--line-soft); counter-reset:faq; }
 #faq .faq-item{ position:relative; background:rgba(5,7,10,.84); overflow:hidden; counter-increment:faq; }
 #faq .faq-item::before{ content:''; position:absolute; inset:0; pointer-events:none; opacity:0;
-  background:linear-gradient(145deg,rgba(224,35,28,.13),transparent 58%); transition:opacity .55s var(--ease); }
+  background:linear-gradient(145deg,rgba(192,0,34,.13),transparent 58%); transition:opacity .55s var(--ease); }
 #faq .faq-item::after{ content:''; position:absolute; left:0; bottom:0; height:1px; width:100%; background:var(--vermilion);
   transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out); }
 #faq .faq-item:hover::before, #faq .faq-item.open::before{ opacity:1; }
@@ -1218,11 +1218,11 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
   .hero-badge, #lessons > .k2-copy .hero-badge, #pathways > .k2-copy .hero-badge{
     color:#fff !important; font-size:13px; margin-bottom:12px !important; }
   #lessons > .k2-copy .hero-badge svg{ color:currentColor !important; }
-  #lessons > .k2-copy .btn-talk{ background:#b3242a; }
+  #lessons > .k2-copy .btn-talk{ background:#c00022; }
   .hero-ctas, #pathways > .k2-copy .hero-ctas, #lessons > .k2-copy .hero-ctas{ margin-top:16px !important; }
   /* the buttons a quarter bigger on a phone */
-  .hero-ctas .btn-talk{ font-size:14px !important; padding:8px 17px !important; background:#c10021 !important; }  /* the red of the X in the PFX logo */
-  .hero-ctas .btn-talk:hover{ background:#a8001d !important; }
+  .hero-ctas .btn-talk{ font-size:14px !important; padding:8px 17px !important; background:#c00022 !important; }
+  .hero-ctas .btn-talk:hover{ background:#a80f22 !important; }
   .hero-ctas{ gap:10px !important; flex-wrap:nowrap !important; }
   /* the FAQ's dark ground stops at the FAQ, so it can't shade the form above it */
   #faq::before{ top:0; bottom:-6%; }
@@ -1233,7 +1233,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 .seenon-mark--top{ display:none; }
 </style>
 <link rel="stylesheet" href="talk-modal.css?v=4">
-<link rel="stylesheet" href="pfx-site.css?v=6">
+<link rel="stylesheet" href="pfx-site.css?v=7">
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
       data-layout-curriculum="b" data-layout-closing="b" data-layout-footer="b">
@@ -2690,7 +2690,7 @@ const DPR_CAP      = qn('dpr', LOW ? 1.4 : 2);   /* full retina on capable machi
 /* the renderer trades resolution for frame rate on its own — the scene is
    fill-bound (five big alpha-blended veils plus a bloom chain), so pixels
    are the only knob worth turning on unknown hardware */
-const PERF = { scale: 1, acc: 0, n: 0, locked: qs('adapt', '1') === '0',
+const PERF = { scale: 1, acc: 0, n: 0, rose: false, locked: qs('adapt', '1') === '0',
   /* how far it may fall: on capable machines no lower than 85%, so the kiosk
      stays crisp while the page scrolls (a dip to half res read as a blur) */
   floor: LOW ? .55 : .85 };
@@ -5955,7 +5955,7 @@ function applyCamera() {
      of the chapter's copy (0 = nav, .5 = midway), so the gap above and
      below the kiosk follows the copy's real height. */
 const PHONE_FRAME = {
-  hero:   { zoom: 2.03, x: .56, down: .42, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
+  hero:   { zoom: 2.44, x: .64, down: .42, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
   indoor: { zoom: .55,  x: .5,  down: .5, copy: () => K2 && K2.el },
   atm:    { zoom: 1.9,  x: .5,  down: .5,  copy: () => K3 && K3.el }
 };
@@ -6768,8 +6768,11 @@ function frame(now) {
     PERF.acc += raw; PERF.n++;      /* … but the governor reads the truth */
     if (PERF.n >= 40 || PERF.acc > .9) {
       const avg = PERF.acc / PERF.n; PERF.acc = 0; PERF.n = 0;
-      if (avg > .0230 && PERF.scale > PERF.floor) { PERF.scale = Math.max(PERF.floor, PERF.scale * (avg > .05 ? .64 : .85)); resize(); }
-      else if (avg < .0138 && PERF.scale < 1) { PERF.scale = Math.min(1, PERF.scale + .08); resize(); }
+      /* it settles rather than hunts: a step down after a step up means this
+         device sits on the line, and swapping resolution back and forth reads
+         as the kiosk flickering — so it stays at the lower one from then on */
+      if (avg > .0230 && PERF.scale > PERF.floor) { if (PERF.rose) PERF.locked = true; PERF.scale = Math.max(PERF.floor, PERF.scale * (avg > .05 ? .64 : .85)); resize(); }
+      else if (avg < .0138 && PERF.scale < 1) { PERF.rose = true; PERF.scale = Math.min(1, PERF.scale + .08); resize(); }
     }
   }
   RIG.prog = progressFor(scrollY);
