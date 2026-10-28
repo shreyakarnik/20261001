@@ -441,3 +441,8 @@ html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#ff
   .kb-t .kshow-ph{ flex:none; aspect-ratio:4 / 3; min-height:0; }
   .kb-t1 .kshow-ph, .kb-t4 .kshow-ph{ aspect-ratio:4 / 5; }
 }
+
+/* Section heading rule: dim like the others; draws across in white while the section is hovered (same as the bento tiles) */
+.kp-row-head{ position:relative; border-top-color:var(--kp-rule); }
+.kp-row-head::before{ content:""; position:absolute; left:0; right:0; top:-1px; height:1px; background:#fff; transform:scaleX(0); transform-origin:left; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
+.kp-row:hover .kp-row-head::before{ transform:scaleX(1); }
