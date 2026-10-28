@@ -7,8 +7,8 @@
    fieldMap are this form's; on the right, HubSpot's internal names.
    ============================================================ */
 (function(){
-  var SUPPORT_HUBSPOT_PORTAL_ID = "YOUR_PORTAL_ID";
-  var SUPPORT_HUBSPOT_FORM_GUID = "YOUR_SUPPORT_FORM_GUID";
+  var SUPPORT_HUBSPOT_PORTAL_ID = "14495142";
+  var SUPPORT_HUBSPOT_FORM_GUID = "e609c377-9403-4c70-98d9-f41de1bc57a3";   /* https://share.hsforms.com/15gnDd5QDTHCY2fQd4bxXow8moiu */
 
   var form = document.getElementById('supForm'); if (!form) return;
   var btn = form.querySelector('.sup-submit'), done = document.getElementById('supDone');
@@ -21,8 +21,8 @@
       phone: "phone",
       firstname: "firstname",
       lastname: "lastname",
-      country: "country",
-      location: "support_location",
+      country: "country2",
+      location: "which_location_is_this_for_",
       message: "message"
     };
     var fields = [];

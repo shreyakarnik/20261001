@@ -16,20 +16,22 @@
    must match your HubSpot form's internal field names.
    ============================================================ */
 (function(){
-  var TALK_HUBSPOT_PORTAL_ID = "YOUR_PORTAL_ID";
-  var TALK_HUBSPOT_FORM_GUID = "YOUR_FORM_GUID";
+  var TALK_HUBSPOT_PORTAL_ID = "14495142";
+  var TALK_HUBSPOT_FORM_GUID = "8eea1b28-f409-476f-95c0-48d769f516ae";   /* https://8moiu.share.hsforms.com/2juobKPQJR2-VwEjXafUWrg */
+  /* the HubSpot form's required consent box ("other communications" subscription) */
+  var TALK_HUBSPOT_SUBSCRIPTION_ID = 11922088;
 
   // `id` keeps the checkbox/label pairs unique when the form appears twice on a page.
   function formMarkup(id){
     return ''
     + '      <form class="tm-form">'
     + '        <div class="tm-row">'
-    + '          <div class="tm-group"><label>Email</label><input type="email" name="email" required></div>'
-    + '          <div class="tm-group"><label>Last Name</label><input type="text" name="lastname" required></div>'
+    + '          <div class="tm-group"><label>First Name</label><input type="text" name="firstname" autocomplete="given-name" required></div>'
+    + '          <div class="tm-group"><label>Last Name</label><input type="text" name="lastname" autocomplete="family-name" required></div>'
     + '        </div>'
     + '        <div class="tm-row">'
-    + '          <div class="tm-group"><label>First Name</label><input type="text" name="firstname" required></div>'
-    + '          <div class="tm-group"><label>Email</label><input type="text" name="email2"></div>'
+    + '          <div class="tm-group"><label>Phone</label><input type="tel" name="phone" autocomplete="tel" required></div>'
+    + '          <div class="tm-group"><label>Email</label><input type="email" name="email" autocomplete="email" required></div>'
     + '        </div>'
     + '        <div class="tm-row single">'
     + '          <div class="tm-group">'
@@ -43,11 +45,13 @@
     + '            </select>'
     + '          </div>'
     + '        </div>'
+    + '        <p class="tm-consent">PizzaForno is committed to protecting and respecting your privacy. You may unsubscribe from these communications at any time. By submitting, you allow PizzaForno to store and process the information above to respond to you.</p>'
+    + '        <div class="tm-checkbox-row"><input type="checkbox" id="' + id + 'Consent" name="consent_comms" value="1" required><label for="' + id + 'Consent">I agree to receive other communications from PizzaForno.*</label></div>'
     + '        <p class="tm-note">Contact us for detailed specifications, site requirements, and pricing. The more details you provide, the better we can assist you.</p>'
     + '        <div class="tm-extra">'
     + '          <div class="tm-row">'
     + '            <div class="tm-group"><label>Company Name</label><input type="text" name="company"></div>'
-    + '            <div class="tm-group"><label>Role</label><input type="text" name="role"></div>'
+    + '            <div class="tm-group"><label>Employment Role</label><select name="role"><option value="">Please Select</option><option value="accounting">Accounting</option><option value="administrative">Administrative</option><option value="business_development">Business Development</option><option value="communications">Communications</option><option value="consulting">Consulting</option><option value="customer_service">Customer Service</option><option value="design">Design</option><option value="education">Education</option><option value="engineering">Engineering</option><option value="entrepreneurship">Entrepreneurship</option><option value="finance">Finance</option><option value="health_professional">Health Professional</option><option value="human_resources">Human Resources</option><option value="information_technology">Information Technology</option><option value="legal">Legal</option><option value="marketing">Marketing</option><option value="operations">Operations</option><option value="product">Product</option><option value="project_management">Project Management</option><option value="public_relations">Public Relations</option><option value="quality_assurance">Quality Assurance</option><option value="real_estate">Real Estate</option><option value="recruiting">Recruiting</option><option value="research">Research</option><option value="sales">Sales</option><option value="support">Support</option><option value="retired">Retired</option></select></div>'
     + '          </div>'
     + '          <div class="tm-row">'
     + '            <div class="tm-group"><label>Address</label><input type="text" name="address"></div>'
@@ -62,7 +66,7 @@
     + '          </div>'
     + '          <div class="tm-row">'
     + '            <div class="tm-group"><label>Units Interested</label>'
-    + '              <select name="num_units"><option value="">Please Select</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select>'
+    + '              <input type="number" name="num_units" min="1" step="1" inputmode="numeric">'
     + '            </div>'
     + '            <div class="tm-group"><label>Unencumbered Cash Available</label>'
     + '              <select name="investment"><option value="">Please Select</option><option>$1,000,000+</option><option>$500,000 - $1,000,000</option><option>$100,000 - $500,000</option><option>&lt; $100,000</option></select>'
@@ -75,11 +79,6 @@
     + '          </div>'
     + '          <div class="tm-row single">'
     + '            <div class="tm-group"><label>Additional Information (Optional) <span class="hint">Let us know if there is any additional information you\'d like to share!</span></label><textarea name="additional_info"></textarea></div>'
-    + '          </div>'
-    + '          <p class="tm-consent">By checking the boxes below, you consent to receive periodic email or SMS communications from PizzaForno and allow our team to reach out and provide information about our licensing opportunity. You may opt out at any time.</p>'
-    + '          <div class="tm-checkbox-grid">'
-    + '          <div class="tm-checkbox-row"><input type="checkbox" id="' + id + 'ConsentEmail" name="consent_email"><label for="' + id + 'ConsentEmail">I agree to receive email communications</label></div>'
-    + '          <div class="tm-checkbox-row"><input type="checkbox" id="' + id + 'ConsentSms" name="consent_sms"><label for="' + id + 'ConsentSms">I agree to receive SMS communications</label></div>'
     + '          </div>'
     + '        </div>'
     + '        <div class="tm-actions">'
@@ -151,23 +150,24 @@
       event.preventDefault();
       var data = new FormData(form);
 
-      // Map this site's field names -> HubSpot internal field names.
+      // Map this site's field names -> HubSpot internal field names (the form's own, read off it).
       var fieldMap = {
-        email: "email",
-        lastname: "lastname",
         firstname: "firstname",
+        lastname: "lastname",
+        phone: "phone",
+        email: "email",
         country: "country",
         company: "company",
-        role: "jobtitle",
+        role: "hs_role",
         address: "address",
         city: "city",
         province: "state",
-        postal: "zip",
-        region_interest: "region_of_interest",
-        num_units: "number_of_units",
-        investment: "investment_range",
-        referral: "how_did_you_hear_about_us",
-        additional_info: "additional_information"
+        postal: "postal___zip_code",
+        region_interest: "what_region_market_country_are_you_interested_in_developing_",
+        num_units: "units_interested",
+        investment: "how_much_unencumbered_cash_do_you_have_for_investment_",
+        referral: "how_did_you_hear_about_pizzaforno_",
+        additional_info: "additional_comments__optional__"
       };
 
       var fields = [];
@@ -180,7 +180,12 @@
 
       var payload = {
         fields: fields,
-        context: { pageUri: window.location.href, pageName: document.title }
+        context: { pageUri: window.location.href, pageName: document.title },
+        legalConsentOptions: { consent: {
+          consentToProcess: true,
+          text: "PizzaForno is committed to protecting and respecting your privacy. You may unsubscribe from these communications at any time. By submitting, you allow PizzaForno to store and process the information above to respond to you.",
+          communications: [{ value: !!data.get('consent_comms'), subscriptionTypeId: TALK_HUBSPOT_SUBSCRIPTION_ID, text: "I agree to receive other communications from PizzaForno." }]
+        } }
       };
       var endpoint = "https://api.hsforms.com/submissions/v3/integration/submit/"
         + TALK_HUBSPOT_PORTAL_ID + "/" + TALK_HUBSPOT_FORM_GUID;

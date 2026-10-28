@@ -117,6 +117,7 @@
   .form-group input[type="text"],
   .form-group input[type="email"],
   .form-group input[type="tel"],
+  .form-group input[type="number"],
   .form-group select,
   .form-group textarea{
     border:1.5px solid #D8DADE; border-radius:12px; padding:12px 14px; font-size:14.5px;
@@ -221,7 +222,7 @@
       <div class="form-section-title">Contact Information</div>
       <div class="form-row">
         <div class="form-group">
-          <label>Name*</label>
+          <label>First Name*</label>
           <input type="text" name="name" required>
         </div>
         <div class="form-group">
@@ -231,12 +232,12 @@
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label>Email* <span class="hint">Enter your preferred contact email</span></label>
-          <input type="email" name="email" required>
-        </div>
-        <div class="form-group">
           <label>Phone Number* <span class="hint">Enter number with country code</span></label>
           <input type="tel" name="phone" required>
+        </div>
+        <div class="form-group">
+          <label>Email* <span class="hint">Enter your preferred contact email</span></label>
+          <input type="email" name="email" required>
         </div>
       </div>
       <div class="form-row single">
@@ -250,6 +251,12 @@
             <option>Outside of North America</option>
           </select>
         </div>
+      </div>
+
+      <p class="consent-text">PizzaForno is committed to protecting and respecting your privacy. You may unsubscribe from these communications at any time. By submitting, you allow PizzaForno to store and process the information above to respond to you.</p>
+      <div class="checkbox-row">
+        <input type="checkbox" id="consent-comms" name="consent_comms" value="1" required>
+        <label for="consent-comms">I agree to receive other communications from PizzaForno.*</label>
       </div>
 
       <p class="pre-actions-note">The more information you provide, the easier it is for us to assist you.</p>
@@ -266,6 +273,12 @@
           <div class="form-group">
             <label>Company Name</label>
             <input type="text" name="company">
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="form-group">
+            <label>Employment Role</label>
+            <select name="role"><option value="">Please Select</option><option value="accounting">Accounting</option><option value="administrative">Administrative</option><option value="business_development">Business Development</option><option value="communications">Communications</option><option value="consulting">Consulting</option><option value="customer_service">Customer Service</option><option value="design">Design</option><option value="education">Education</option><option value="engineering">Engineering</option><option value="entrepreneurship">Entrepreneurship</option><option value="finance">Finance</option><option value="health_professional">Health Professional</option><option value="human_resources">Human Resources</option><option value="information_technology">Information Technology</option><option value="legal">Legal</option><option value="marketing">Marketing</option><option value="operations">Operations</option><option value="product">Product</option><option value="project_management">Project Management</option><option value="public_relations">Public Relations</option><option value="quality_assurance">Quality Assurance</option><option value="real_estate">Real Estate</option><option value="recruiting">Recruiting</option><option value="research">Research</option><option value="sales">Sales</option><option value="support">Support</option><option value="retired">Retired</option></select>
           </div>
         </div>
 
@@ -303,14 +316,7 @@
         <div class="form-row">
           <div class="form-group">
             <label>How many automated pizzerias are you seeking to purchase?</label>
-            <select name="num_units">
-              <option value="">Please Select</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5+</option>
-            </select>
+            <input type="number" name="num_units" min="1" step="1" inputmode="numeric">
           </div>
           <div class="form-group">
             <label>How much unencumbered cash do you have for investment?</label>
@@ -345,17 +351,6 @@
           </div>
         </div>
 
-        <p class="consent-text">By checking the boxes below, you consent to receive periodic email or SMS communications from PizzaForno and allow our team to reach out and provide information about our licensing opportunity. You may opt out at any time.</p>
-
-        <div class="checkbox-row">
-          <input type="checkbox" id="consent-email" name="consent_email">
-          <label for="consent-email">I agree to receive email communications</label>
-        </div>
-        <div class="checkbox-row">
-          <input type="checkbox" id="consent-sms" name="consent_sms">
-          <label for="consent-sms">I agree to receive SMS communications</label>
-        </div>
-
         <button type="submit" class="btn-primary" style="width:100%; margin-top:20px; text-align:center;">Submit Inquiry</button>
 
       </div>
@@ -384,30 +379,33 @@
      or field mapping, update BOTH index.html and this file
      so they stay in sync.
      ========================================================= */
-  var HUBSPOT_PORTAL_ID = "YOUR_PORTAL_ID";
-  var HUBSPOT_FORM_GUID  = "YOUR_FORM_GUID";
+  var HUBSPOT_PORTAL_ID = "14495142";
+  var HUBSPOT_FORM_GUID  = "8eea1b28-f409-476f-95c0-48d769f516ae";   /* https://8moiu.share.hsforms.com/2juobKPQJR2-VwEjXafUWrg */
+  var HUBSPOT_SUBSCRIPTION_ID = 11922088;   /* the form's required consent box */
 
   function submitToHubspot(event){
     event.preventDefault();
     var form = document.getElementById('inquiryForm');
     var data = new FormData(form);
 
+    // this page's field names -> HubSpot internal field names (the form's own, read off it)
     var fieldMap = {
       name: "firstname",
       last_name: "lastname",
-      email: "email",
       phone: "phone",
+      email: "email",
       country: "country",
       company: "company",
+      role: "hs_role",
       address: "address",
       city: "city",
       province: "state",
-      postal: "zip",
-      region_interest: "region_of_interest",
-      num_units: "number_of_units",
-      investment: "investment_range",
-      referral: "how_did_you_hear_about_us",
-      additional_info: "additional_information"
+      postal: "postal___zip_code",
+      region_interest: "what_region_market_country_are_you_interested_in_developing_",
+      num_units: "units_interested",
+      investment: "how_much_unencumbered_cash_do_you_have_for_investment_",
+      referral: "how_did_you_hear_about_pizzaforno_",
+      additional_info: "additional_comments__optional__"
     };
 
     var fields = [];
@@ -423,7 +421,12 @@
       context: {
         pageUri: window.location.href,
         pageName: document.title
-      }
+      },
+      legalConsentOptions: { consent: {
+        consentToProcess: true,
+        text: "PizzaForno is committed to protecting and respecting your privacy. You may unsubscribe from these communications at any time. By submitting, you allow PizzaForno to store and process the information above to respond to you.",
+        communications: [{ value: !!data.get('consent_comms'), subscriptionTypeId: HUBSPOT_SUBSCRIPTION_ID, text: "I agree to receive other communications from PizzaForno." }]
+      } }
     };
 
     var endpoint = "https://api.hsforms.com/submissions/v3/integration/submit/"

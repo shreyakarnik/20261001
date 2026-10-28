@@ -1274,7 +1274,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 }
 .seenon-mark--top{ display:none; }
 </style>
-<link rel="stylesheet" href="talk-modal.css?v=4">
+<link rel="stylesheet" href="talk-modal.css?v=5">
 <link rel="stylesheet" href="pfx-site.css?v=7">
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
@@ -1521,11 +1521,11 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
       <form class="sup-form" id="supForm">
         <h3>Send Us a Message</h3>
         <div class="sup-grid">
-          <label class="sup-f"><span>Email*</span><input type="email" name="email" autocomplete="email" required></label>
-          <label class="sup-f"><span>Phone Number*</span><input type="tel" name="phone" autocomplete="tel" required></label>
           <label class="sup-f"><span>First Name*</span><input type="text" name="firstname" autocomplete="given-name" required></label>
           <label class="sup-f"><span>Last Name</span><input type="text" name="lastname" autocomplete="family-name"></label>
-          <label class="sup-f"><span>Country</span><select name="country"><option value="">Please Select</option><option>United States</option><option>Canada</option><option>Other</option></select></label>
+          <label class="sup-f"><span>Phone Number*</span><input type="tel" name="phone" autocomplete="tel" required></label>
+          <label class="sup-f"><span>Email*</span><input type="email" name="email" autocomplete="email" required></label>
+          <label class="sup-f"><span>Country</span><select name="country"><option value="">Please Select</option><option>United States</option><option>Canada</option><option value="Outside of North America">Other</option></select></label>
           <label class="sup-f"><span>Which Location Is This For?*</span><input type="text" name="location" required></label>
           <label class="sup-f sup-f--wide"><span>Message*</span><textarea name="message" rows="4" placeholder="Drop us a note (location, date &amp; time help us)" required></textarea></label>
         </div>
@@ -7006,8 +7006,8 @@ else addEventListener('DOMContentLoaded', boot);
 </script>
 <script src="blog-data.js"></script>
 <script src="site-search.js"></script>
-<script src="support-form.js"></script>
-<script src="talk-modal.js?v=5"></script>
+<script src="support-form.js?v=2"></script>
+<script src="talk-modal.js?v=8"></script>
 <script src="pfx-site.js?v=3"></script>
 </body>
 </html>
