@@ -379,6 +379,7 @@ html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#ff
 
 .kp-logos{ display:flex; align-items:center; gap:56px; border-top:1px solid var(--kp-rule); padding-top:28px; }
 .kp-logos img{ height:64px; width:auto; filter:grayscale(1) brightness(1.6) contrast(.9); opacity:.85; }
+.kp-logos img[src^="nama-logo"]{ height:44px; }   /* NAMA's official mark has no tagline, so it sits smaller to match */
 
 .kp-tags{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:0 28px; }
 .kp-tags li{ border-top:1px solid var(--kp-rule); padding:16px 0 18px; font-size:17px; color:#dfe7e0; }
@@ -402,6 +403,7 @@ html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#ff
   .kp-gallery .kshow-ph, .kp-gallery .kshow-ph + .kshow-ph{ aspect-ratio:4 / 3; }
   .kp-logos{ gap:36px; }
   .kp-logos img{ height:48px; }
+  .kp-logos img[src^="nama-logo"]{ height:33px; }
 }
 
 /* kiosk pages: four images, one shape — the hero and one per showcase tab,
