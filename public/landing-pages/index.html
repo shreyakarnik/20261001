@@ -1221,11 +1221,9 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
   #lessons > .k2-copy .btn-talk{ background:#b3242a; }
   .hero-ctas, #pathways > .k2-copy .hero-ctas, #lessons > .k2-copy .hero-ctas{ margin-top:16px !important; }
   /* the buttons a quarter bigger on a phone */
-  .hero-ctas .btn-talk{ font-size:17.5px !important; padding:10px 21px !important; }
-  .hero-ctas{ gap:12px !important; flex-wrap:nowrap !important; }
-  .hero-ctas .arrowlink{ font-size:13.75px; letter-spacing:.08em; gap:10px; }
-  .hero-ctas .arrowlink .ar{ width:42px; height:42px; }
-  .hero-ctas .arrowlink .ar svg{ width:16px; height:16px; }
+  .hero-ctas .btn-talk{ font-size:14px !important; padding:8px 17px !important; background:#c10021 !important; }  /* the red of the X in the PFX logo */
+  .hero-ctas .btn-talk:hover{ background:#a8001d !important; }
+  .hero-ctas{ gap:10px !important; flex-wrap:nowrap !important; }
   /* the FAQ's dark ground stops at the FAQ, so it can't shade the form above it */
   #faq::before{ top:0; bottom:-6%; }
   /* "As Seen On": the PizzaForno mark sits above the heading */
@@ -5957,7 +5955,7 @@ function applyCamera() {
      of the chapter's copy (0 = nav, .5 = midway), so the gap above and
      below the kiosk follows the copy's real height. */
 const PHONE_FRAME = {
-  hero:   { zoom: 2.03, x: .56, down: .6, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
+  hero:   { zoom: 2.03, x: .56, down: .42, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
   indoor: { zoom: .55,  x: .5,  down: .5, copy: () => K2 && K2.el },
   atm:    { zoom: 1.9,  x: .5,  down: .5,  copy: () => K3 && K3.el }
 };
