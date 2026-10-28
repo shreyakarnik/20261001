@@ -974,6 +974,21 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
   .tk-cards .gcard p{ font-size:12px; }
 }
 @media (max-width:560px){ .tk-cards .gcard h3{ font-size:16px; } }
+/* ---- call-outs in the kiosk pages' spec style: no boxes, a dim hairline above each
+   item that draws across in white on hover */
+#gate .gate-cards, #pathways .tk-cards{ gap:0 28px; background:none; border:0; }
+#gate .gate-cards .gcard, #pathways .tk-cards .gcard{ min-height:0; gap:8px; padding:20px 0 26px; background:none; overflow:visible;
+  border-top:1px solid rgba(223,231,224,.16); }
+#gate .gate-cards .gcard::before, #pathways .tk-cards .gcard::before, #gate .gate-cards .gcard .k, #pathways .tk-cards .gcard .k{ display:none; }
+#gate .gate-cards .gcard:hover, #pathways .tk-cards .gcard:hover{ padding-left:0; }
+#gate .gate-cards .gcard h3, #pathways .tk-cards .gcard h3{ font-size:20px; line-height:1.35; color:#fff; }
+#gate .gate-cards .gcard p, #pathways .tk-cards .gcard p{ font-size:14px; line-height:1.55; color:rgba(223,231,224,.5); }
+#gate .gate-cards .gcard .bar, #pathways .tk-cards .gcard .bar{ top:-1px; bottom:auto; background:#fff; }
+@media (max-width:820px){
+  #gate .gate-cards .gcard, #pathways .tk-cards .gcard{ padding:14px 0 16px; gap:4px; }
+  #gate .gate-cards .gcard h3, #pathways .tk-cards .gcard h3{ font-size:16px; }
+  #gate .gate-cards .gcard p, #pathways .tk-cards .gcard p{ font-size:12px; }
+}
 /* ---- the inquiry form and the FAQ, as on the PFX home page. The form's own
    look comes from talk-modal.css; these give it the page's colour tokens and
    bring the FAQ's rules across, scoped so they can't reach the other chapters. */
