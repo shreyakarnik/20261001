@@ -440,6 +440,8 @@ html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#ff
 /* rows alternate a tall (5-col) and a wide (7-col) image: tall|wide, wide|tall, tall|wide */
 .kb-t:nth-child(4n+1), .kb-t:nth-child(4n){ grid-column:span 5; }
 .kb-t:nth-child(4n+2), .kb-t:nth-child(4n+3){ grid-column:span 7; }
+/* an odd tile left over at the end takes the whole row rather than half of it */
+.kb-t:last-child:nth-child(4n+1){ grid-column:span 12; }
 @media (max-width:820px){
   .kb{ grid-template-columns:1fr; gap:36px; padding-top:36px; }
   .kb-t{ grid-column:1 !important; }
