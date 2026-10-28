@@ -13,7 +13,7 @@
 const PFX_BLOG_POSTS = [
   {
     slug: "why-pizza-vending-is-the-future",
-    image: "Images/blog/why-pizza-vending-is-the-future.webp",   /* placeholder — replace with the post's own image */
+    image: "Images/blog/why-pizza-vending-is-the-future.webp?v=2",
     title: "Why Automated Pizza Vending Is the Future of Quick Service",
     date: "2026-06-02",
     tags: ["Automation", "Industry Trends", "Quick Service"],
@@ -21,7 +21,7 @@ const PFX_BLOG_POSTS = [
   },
   {
     slug: "roi-breakdown-first-year",
-    image: "Images/blog/roi-breakdown-first-year.webp",   /* placeholder — replace with the post's own image */
+    image: "Images/blog/roi-breakdown-first-year.webp?v=2",
     title: "ROI Breakdown: What Licensees Actually Earn in Year One",
     date: "2026-05-14",
     tags: ["ROI", "Licensee", "Earnings"],
@@ -29,7 +29,7 @@ const PFX_BLOG_POSTS = [
   },
   {
     slug: "indoor-vs-outdoor-kiosk",
-    image: "Images/blog/indoor-vs-outdoor-kiosk.webp",   /* placeholder — replace with the post's own image */
+    image: "Images/blog/indoor-vs-outdoor-kiosk.webp?v=2",
     title: "Indoor vs. Outdoor Kiosks: Which PFX Model Fits Your Location?",
     date: "2026-04-22",
     tags: ["Kiosk Models", "Site Selection"],
@@ -37,7 +37,7 @@ const PFX_BLOG_POSTS = [
   },
   {
     slug: "pizza13-case-study",
-    image: "Images/blog/pizza13-case-study.webp",   /* placeholder — replace with the post's own image */
+    image: "Images/blog/pizza13-case-study.webp?v=2",
     title: "Case Study: How Pizza13 Sold 2,500 Pizzas in 60 Days",
     date: "2026-03-18",
     tags: ["Case Study", "New Brunswick", "Results"],
@@ -45,7 +45,7 @@ const PFX_BLOG_POSTS = [
   },
   {
     slug: "franchise-fees-explained",
-    image: "Images/blog/franchise-fees-explained.webp",   /* placeholder — replace with the post's own image */
+    image: "Images/blog/franchise-fees-explained.webp?v=2",
     title: "No Franchise Fees: How PFX Licensing Actually Works",
     date: "2026-02-27",
     tags: ["Licensing", "Franchise", "Business Model"],
@@ -53,7 +53,7 @@ const PFX_BLOG_POSTS = [
   },
   {
     slug: "maintenance-and-support",
-    image: "Images/blog/maintenance-and-support.webp",   /* placeholder — replace with the post's own image */
+    image: "Images/blog/maintenance-and-support.webp?v=2",
     title: "What's Included: Warranty, Maintenance & 24/7 Support",
     date: "2026-01-30",
     tags: ["Support", "Maintenance", "Warranty"],
