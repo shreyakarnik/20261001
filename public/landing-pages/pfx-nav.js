@@ -28,7 +28,7 @@
     var dd = links.querySelector('.pfx-dd');
     if (talk && dd) links.insertBefore(talk, dd.nextSibling);
     var contact = document.createElement('a');
-    contact.className = 'pfx-link pfx-link--m'; contact.href = 'index.html#support'; contact.textContent = 'Contact';
+    contact.className = 'pfx-link pfx-link--m'; contact.href = 'support.html'; contact.textContent = 'Contact';
     links.appendChild(contact);
     links.appendChild(pf);
   }
