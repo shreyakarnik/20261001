@@ -1066,6 +1066,30 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
   #faq .faq-grid{ grid-template-columns:1fr; }
   #faq h2{ font-size:32px; }
 }
+/* ---- customer support: the FAQ's ground and type, ruled rows like the kiosk pages */
+#support{ position:relative; z-index:10; margin:0 auto 96px; font-family:'Inter',system-ui,-apple-system,sans-serif; color:#fff; }
+#support::before{ content:''; position:absolute; inset:-20% 0; z-index:-1; pointer-events:none;
+  background:radial-gradient(100% 75% at 45% 50%, rgba(4,7,10,.96), rgba(4,7,10,.86) 60%, rgba(4,7,10,0)); }
+#support .sup-wrap{ max-width:1062px; margin:0 auto; display:grid; grid-template-columns:407px 1fr; gap:24px; align-items:start; }
+#support .eyebrow{ margin-bottom:12px; font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.5); text-shadow:none; }
+#support h2{ font-size:40px; font-weight:700; letter-spacing:-.5px; line-height:1.15; margin:0 0 16px; color:#fff; text-transform:none; }
+#support .sub{ color:rgba(255,255,255,.75); font-size:16px; line-height:1.6; margin:0; max-width:34ch; }
+#support .sup-note{ margin:0 0 28px; font-size:15px; line-height:1.7; color:rgba(223,231,224,.62); max-width:58ch; }
+#support .sup-note a{ color:#fff; border-bottom:1px solid rgba(223,231,224,.4); }
+#support .sup-note a:hover{ border-color:#fff; }
+#support .sup-rows{ margin:0; }
+#support .sup-rows > div{ display:flex; justify-content:space-between; align-items:baseline; gap:18px; padding:20px 0; border-top:1px solid rgba(223,231,224,.16); }
+#support .sup-rows > div:last-child{ border-bottom:1px solid rgba(223,231,224,.16); }
+#support dt{ font-size:13px; color:rgba(223,231,224,.45); }
+#support dd{ margin:0; font-size:20px; letter-spacing:-.01em; }
+#support dd a{ color:#fff; transition:color .2s; }
+#support dd a:hover{ color:#c00022; }
+@media (max-width:900px){
+  #support{ margin-bottom:64px; padding:0 24px; }
+  #support .sup-wrap{ grid-template-columns:1fr; gap:20px; }
+  #support h2{ font-size:32px; }
+  #support dd{ font-size:16px; }
+}
 /* ---- "As Seen On", the PFX home page's rules verbatim; it takes the footer's
    lead row (spanning the grid, ruled off from the index below) */
 .foot .seenon{
@@ -1220,7 +1244,6 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
   #lessons > .k2-copy .hero-badge svg{ color:currentColor !important; }
   #lessons > .k2-copy .btn-talk{ background:#c00022; }
   .hero-ctas, #pathways > .k2-copy .hero-ctas, #lessons > .k2-copy .hero-ctas{ margin-top:16px !important; }
-  /* the buttons a quarter bigger on a phone */
   .hero-ctas .btn-talk{ font-size:14px !important; padding:8px 17px !important; background:#c00022 !important; }
   .hero-ctas .btn-talk:hover{ background:#a80f22 !important; }
   .hero-ctas{ gap:10px !important; flex-wrap:nowrap !important; }
@@ -1264,6 +1287,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     <a class="nav-link" href="#faq" data-cursor><span>FAQ</span><span class="alt" aria-hidden="true">FAQ</span></a>
     <a class="nav-link" href="blog.html" data-cursor><span>Blog</span><span class="alt" aria-hidden="true">Blog</span></a>
     <a class="nav-link" href="about.html" data-cursor><span>About</span><span class="alt" aria-hidden="true">About</span></a>
+    <a class="nav-link nav-link--m" href="#support" data-cursor><span>Contact</span><span class="alt" aria-hidden="true">Contact</span></a>
     <a class="nav-link nav-link--m nav-link--pf" href="https://pizzaforno.com" target="_blank" rel="noopener" data-cursor><span>Become a PizzaForno Licensee</span><span class="alt" aria-hidden="true">Become a PizzaForno Licensee</span></a>
   </nav>
   <div class="nav-actions">
@@ -1462,6 +1486,23 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
   </div>
 </section>
 
+<section class="support" id="support" aria-label="Customer support">
+  <div class="sup-wrap">
+    <div class="sup-head">
+      <div class="eyebrow">Customer Support</div>
+      <h2>Get In Touch</h2>
+      <p class="sub">PFX Customer Support: Assistance for Pizza Vending Machines.</p>
+    </div>
+    <div class="sup-body">
+      <p class="sup-note">Our regular business hours are 9:00 AM to 5:00 PM. Our customer support phone line is available 24/7 for your convenience. If you are looking for licensing information, <a href="contact.html" data-talk-trigger data-cursor>click here</a>.</p>
+      <dl class="sup-rows">
+        <div><dt>By Email</dt><dd><a href="mailto:help@poweredbypfx.com" data-cursor>help@poweredbypfx.com</a></dd></div>
+        <div><dt>By Phone</dt><dd><a href="tel:+18886038363" data-cursor>+1-888-603-8363</a></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
 <!-- ============================================================ footer -->
 <footer class="foot" data-cam="4">
   <div class="foot-grid">
@@ -1519,7 +1560,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
           <a href="#top" data-cursor>Application Form</a>
           <a href="#faq" data-cursor>FAQ</a>
           <a href="#top" data-cursor>Documentation</a>
-          <a href="contact.html" data-cursor>Support</a>
+          <a href="#support" data-cursor>Support</a>
         </div>
         <p class="footer-legal">All trademarks are owned by PFX Canada Inc and used under licence. &copy;2026</p>
       </div>
@@ -5955,7 +5996,7 @@ function applyCamera() {
      of the chapter's copy (0 = nav, .5 = midway), so the gap above and
      below the kiosk follows the copy's real height. */
 const PHONE_FRAME = {
-  hero:   { zoom: 2.44, x: .64, down: .42, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
+  hero:   { zoom: 2.2,  x: .64, down: .55, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
   indoor: { zoom: .55,  x: .5,  down: .5, copy: () => K2 && K2.el },
   atm:    { zoom: 1.9,  x: .5,  down: .5,  copy: () => K3 && K3.el }
 };
@@ -6580,8 +6621,11 @@ function updateWorld(dt) {
   /* the moon only breathes — the haze in front of it is what actually moves */
   /* in daylight the corona is mostly washed out by the sky */
   if (WORLD.moonHalo) WORLD.moonHalo.material.opacity = (.44 + f * .10 + Math.sin(clock * .34) * .05) * .25;
+  /* on a phone the crop hides the lanterns themselves, so their gutter only
+     shows as the kiosk beside one pulsing — hold them steady there */
+  const gut = isPhoneFrame() ? 0 : 1;
   if (WORLD.lanternLights) WORLD.lanternLights.forEach((l, i) => {
-    l.intensity = 2.6 * (1 + f * .55) * (.86 + .22 * Math.sin(clock * (2.3 + i * .7) + i * 2.1) + .1 * pulse);
+    l.intensity = 2.6 * (1 + f * .55) * (.86 + gut * (.22 * Math.sin(clock * (2.3 + i * .7) + i * 2.1) + .1 * pulse) + (1 - gut) * .05);
   });
   if (WORLD.lanternGlows) WORLD.lanternGlows.forEach(g => { g.quaternion.copy(camera.quaternion); });
 

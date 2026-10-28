@@ -11,7 +11,7 @@
   burger.addEventListener('click', function () { set(!nav.classList.contains('menu-open')); });
   /* on phones the search button and the PizzaForno mark leave the bar and
      sit in the menu instead: a search line at the top, and "Become a
-     PizzaForno Licensee" at the end. Let's Talk moves up under the kiosks. */
+     PizzaForno Licensee" at the end, after Contact. Let's Talk moves up under the kiosks. */
   var links = nav.querySelector('.pfx-links'), talk = links && links.querySelector('.pfx-link--talk');
   if (links) {
     var search = document.createElement('button');
@@ -27,6 +27,9 @@
     links.insertBefore(search, links.firstChild);
     var dd = links.querySelector('.pfx-dd');
     if (talk && dd) links.insertBefore(talk, dd.nextSibling);
+    var contact = document.createElement('a');
+    contact.className = 'pfx-link pfx-link--m'; contact.href = 'index.html#support'; contact.textContent = 'Contact';
+    links.appendChild(contact);
     links.appendChild(pf);
   }
   nav.querySelectorAll('.pfx-link').forEach(function (a) { a.addEventListener('click', function () { set(false); }); });
