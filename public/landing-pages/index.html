@@ -2071,7 +2071,8 @@ function texLeaf() {
 
 /* the night sky itself: black at altitude, going to the fog colour at the
    horizon so the backdrop and the depth cue meet without a seam */
-function texSky() {
+function texSky(o) {
+  o = o || {};
   /* Daytime. Painted in display colour, not linear: the sky is written to the
      frame raw and the composite passes it straight through, so SKY.color is
      exactly what lands on screen. */
@@ -2093,10 +2094,12 @@ function texSky() {
       const r = b > .97 ? 2.2 : b > .85 ? 1.5 : 1;
       x.fillRect(sx, sy, r, r);
     }
+    if (o.moon !== false) {                     /* (the ATM terrace's sky leaves it out) */
     const mx = W * .78, my = H * .3, mg = x.createRadialGradient(mx, my, 0, mx, my, 220);
     mg.addColorStop(0, 'rgba(235,240,255,.95)'); mg.addColorStop(.12, 'rgba(225,232,250,.85)');
     mg.addColorStop(.14, 'rgba(180,180,185,.14)'); mg.addColorStop(1, 'rgba(140,140,145,0)');
     x.fillStyle = mg; x.beginPath(); x.arc(mx, my, 220, 0, TAU); x.fill();
+    }
   }
   if (SKY.clouds === false) return c;           /* a plain neutral sky, no weather */
 
@@ -4407,7 +4410,7 @@ function buildOutdoor() {
   /* ---- the original night sky all round: black at altitude, the fog colour
      at the horizon, a scatter of stars; graded with the rest of the frame */
   const sky = new THREE.Mesh(new THREE.SphereGeometry(150, 32, 16),
-    new THREE.MeshBasicMaterial({ color: hdr(.60, .70, .80), map: tx(texSky(), { wrap: THREE.RepeatWrapping, repeat: [4, 1] }),
+    new THREE.MeshBasicMaterial({ color: hdr(.60, .70, .80), map: tx(texSky({ moon: false }), { wrap: THREE.RepeatWrapping, repeat: [4, 1] }),
       side: THREE.BackSide, depthWrite: false, fog: false, toneMapped: false }));
   sky.position.set(40, Y, -44); sky.renderOrder = -2; g.add(sky);
 
