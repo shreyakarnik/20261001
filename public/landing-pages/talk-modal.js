@@ -51,7 +51,7 @@
     + '        <div class="tm-extra">'
     + '          <div class="tm-row">'
     + '            <div class="tm-group"><label>Company Name</label><input type="text" name="company"></div>'
-    + '            <div class="tm-group"><label>Employment Role</label><select name="role"><option value="">Please Select</option><option value="accounting">Accounting</option><option value="administrative">Administrative</option><option value="business_development">Business Development</option><option value="communications">Communications</option><option value="consulting">Consulting</option><option value="customer_service">Customer Service</option><option value="design">Design</option><option value="education">Education</option><option value="engineering">Engineering</option><option value="entrepreneurship">Entrepreneurship</option><option value="finance">Finance</option><option value="health_professional">Health Professional</option><option value="human_resources">Human Resources</option><option value="information_technology">Information Technology</option><option value="legal">Legal</option><option value="marketing">Marketing</option><option value="operations">Operations</option><option value="product">Product</option><option value="project_management">Project Management</option><option value="public_relations">Public Relations</option><option value="quality_assurance">Quality Assurance</option><option value="real_estate">Real Estate</option><option value="recruiting">Recruiting</option><option value="research">Research</option><option value="sales">Sales</option><option value="support">Support</option><option value="retired">Retired</option></select></div>'
+    + '            <div class="tm-group"><label>Employment Role</label><input type="text" name="role" autocomplete="organization-title"></div>'
     + '          </div>'
     + '          <div class="tm-row">'
     + '            <div class="tm-group"><label>Address</label><input type="text" name="address"></div>'
@@ -158,7 +158,7 @@
         email: "email",
         country: "country",
         company: "company",
-        role: "hs_role",
+        role: "job_function",
         address: "address",
         city: "city",
         province: "state",
