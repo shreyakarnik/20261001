@@ -844,6 +844,7 @@ body[data-layout-hero] .hero .hero-top{ padding-top:calc(var(--nav-h) * .6); mar
   .nav-dd-menu a{ padding:10px 0 !important; font-size:15px; }
 }
 /* the PizzaForno logomark, between the links and the search button */
+.nav-link--m{ display:none; }
 .nav-pf{ display:inline-flex; align-items:center; flex:0 0 auto; opacity:.92; transition:transform .3s, opacity .3s; }
 .nav-pf img{ width:34px; height:34px; display:block; }
 .nav-pf:hover{ opacity:1; transform:translateY(-1px); }
@@ -863,6 +864,10 @@ body[data-layout-hero] .hero .hero-top{ padding-top:calc(var(--nav-h) * .6); mar
   .nav-talk{ display:none; }
   .nav-burger{ margin-left:12px; }
   .nav-links .nav-link--talk{ display:block !important; color:#e2565b; }
+  .nav-links .nav-link--m{ display:block !important; width:100%; background:none; border:0; border-radius:0; font-family:inherit; text-align:left; cursor:pointer; }
+  /* the bar keeps just the logo and the menu button */
+  .nav .nav-search, .nav .nav-pf{ display:none !important; }
+  .brand-logo{ height:22px; }
   .nav-links .nav-link{ font-size:17px; height:auto; }
 }
 @media (max-width:820px){
@@ -1178,11 +1183,11 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
   .hero::before{ background:linear-gradient(rgba(3,3,4,.82) 0%, rgba(3,3,4,.66) 62%, rgba(3,3,4,0) 100%) !important; }
 }
 /* ---- phones: one layout for all three kiosks. The scene is re-aimed so the
-   kiosk sits top-centre (frameKioskOnPhone), and the copy sits at the bottom,
-   above the sticky call-to-action bar, on a black layer that fades up into
-   the scene. Same type size, colours and spacing in all three. */
+   kiosk sits top-centre (frameKioskOnPhone), and the copy sits at the bottom
+   on a black layer that fades up into the scene, with the kiosk centred in
+   the space between the nav and the copy. Same type size, colours and spacing in all three. */
 @media (max-width:820px){
-  :root{ --m-cta:calc(78px + env(safe-area-inset-bottom, 0px)); }
+  :root{ --m-cta:calc(env(safe-area-inset-bottom, 0px) + 10px); }   /* room kept at the bottom (just the home-bar inset) */
   /* hero */
   .hero{ justify-content:flex-end !important; }
   body[data-layout-hero] .hero .hero-top{ padding-top:0; padding-bottom:calc(var(--m-cta) + 18px); }
@@ -1206,10 +1211,14 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
   #lessons > .k2-copy .hero-badge svg{ color:currentColor !important; }
   #lessons > .k2-copy .btn-talk{ background:#b3242a; }
   .hero-ctas, #pathways > .k2-copy .hero-ctas, #lessons > .k2-copy .hero-ctas{ margin-top:16px !important; }
+  /* "As Seen On": the PizzaForno mark sits above the heading */
+  .seenon-mark--top{ display:block !important; width:42px; margin:0 auto 14px; }
+  .seenon-card .seenon-mark{ display:none; }
 }
+.seenon-mark--top{ display:none; }
 </style>
 <link rel="stylesheet" href="talk-modal.css?v=4">
-<link rel="stylesheet" href="pfx-site.css?v=5">
+<link rel="stylesheet" href="pfx-site.css?v=6">
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
       data-layout-curriculum="b" data-layout-closing="b" data-layout-footer="b">
@@ -1237,11 +1246,13 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     <a class="nav-link" href="roi_calculator.html" data-cursor><span>ROI Calculator</span><span class="alt" aria-hidden="true">ROI Calculator</span></a>
     <a class="nav-link" href="#faq" data-cursor><span>FAQ</span><span class="alt" aria-hidden="true">FAQ</span></a>
     <a class="nav-link" href="blog.html" data-cursor><span>Blog</span><span class="alt" aria-hidden="true">Blog</span></a>
+    <button class="nav-link nav-link--m nav-msearch" type="button" data-cursor><span>Search</span><span class="alt" aria-hidden="true">Search</span></button>
+    <a class="nav-link nav-link--m" href="https://pizzaforno.com" target="_blank" rel="noopener" data-cursor><span>Become a PizzaForno Licensee</span><span class="alt" aria-hidden="true">Become a PizzaForno Licensee</span></a>
     <a class="nav-link nav-link--talk" href="contact.html" data-talk-trigger data-cursor><span>Let&rsquo;s Talk</span><span class="alt" aria-hidden="true">Let&rsquo;s Talk</span></a>
   </nav>
   <div class="nav-actions">
     <a class="nav-pf" href="https://pizzaforno.com" target="_blank" rel="noopener" aria-label="PizzaForno (opens in a new tab)" title="PizzaForno"><img src="Images/pizzaforno-mark.png?v=2" alt="PizzaForno" width="34" height="34"></a>
-    <button class="nav-search" type="button" aria-label="Search" data-cursor>
+    <button class="nav-search" id="siteSearchBtn" type="button" aria-label="Search" data-cursor>
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
     </button>
     <a class="nav-talk" href="contact.html" data-talk-trigger data-cursor>Let&rsquo;s Talk</a>
@@ -1330,7 +1341,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     </div>
   </div>
   <div class="k2-copy" id="k2Copy" aria-hidden="true">
-    <h2 class="k2-title">Bring Your Pizzeria Indoors.</h2>
+    <h2 class="k2-title">Bring Your Pizzeria Into Any Space.</h2>
     <div class="hero-badge">
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5.6Q10 1.6 17 5.6L10 18.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4.4 7.6Q10 4.6 15.6 7.6" stroke="currentColor" stroke-width="1.3"/><circle cx="8.4" cy="9.6" r="1.2" fill="currentColor"/><circle cx="11.6" cy="11.4" r="1.1" fill="currentColor"/><circle cx="9.8" cy="14" r="1" fill="currentColor"/></svg>
       <span>70 Pizzas &middot; Built for Universities, Offices &amp; Hospitals</span>
@@ -1440,6 +1451,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
   <div class="foot-grid">
     <!-- "As Seen On", exactly as on the PFX home page (markup, logos and loop script) -->
     <div class="seenon" id="case-study">
+      <img class="seenon-mark seenon-mark--top" src="Images/pizzaforno-mark.png?v=2" alt="" aria-hidden="true">
       <h2 class="seenon-eyebrow">As Seen On</h2>
       <div class="seenon-card">
         <img class="seenon-mark" src="Images/pizzaforno-mark.png?v=2" alt="PizzaForno">
@@ -5912,60 +5924,99 @@ function applyCamera() {
   frameKioskOnPhone();
 }
 
-/* Phones: each chapter's copy sits at the bottom of the screen, so slide the
-   picture (a view offset: the camera itself doesn't move) until that
-   chapter's kiosk sits top-centre. Weighted by how far each chapter is in
-   view, so the frame eases between kiosks and is untouched in between. */
+/* Phones: each chapter's copy sits at the bottom of the screen, so crop the
+   picture (a view offset: the camera itself doesn't move) to put that
+   chapter's kiosk where it should be, at the size it should be. Weighted by
+   how far each chapter is in view, so the frame eases between kiosks and is
+   untouched in between.
+     zoom: how much bigger than the plain frame; x: where its middle sits
+     across the screen (a fraction); down: where between the nav and the top
+     of the chapter's copy (0 = nav, .5 = midway), so the gap above and
+     below the kiosk follows the copy's real height. */
+const PHONE_FRAME = {
+  hero:   { zoom: 1.32, x: .57, down: .6, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
+  indoor: { zoom: 1.4,  x: .5,  down: .5, copy: () => K2 && K2.el },
+  atm:    { zoom: 1.4,  x: .5,  down: .55, copy: () => K3 && K3.el }
+};
+function phoneTarget(f, W, H) {
+  const navEl = document.getElementById('nav'), el = f.copy();
+  const top = navEl ? navEl.getBoundingClientRect().bottom : 0;
+  const bot = el ? el.getBoundingClientRect().top : H * .6;
+  return [f.x * W, top + (bot - top) * f.down];
+}
+/* the indoor kiosk turns to face the lens on a phone (desktop's three-quarter
+   view shows mostly its side from the phone's camera). Its front is local +z;
+   a small angle is kept so it still reads as a box */
+const PHONE_INDOOR_TURN = .16;
 const PHONE_CAM = new THREE.PerspectiveCamera();
-const PHONE_AT = .42;                     /* kiosk centre: about 29% down the screen (NDC y) */
-const _kb = new THREE.Box3(), _kp = new THREE.Vector3();
+const _kb = new THREE.Box3();
 const KCEN = {};
 function kioskCentre(key, obj) {
-  /* the kiosk's middle, relative to its group, measured once from its solid
-     parts (flat floor glows and reflections would drag it down) */
+  /* the kiosk's middle in its own (group) space, measured once from its solid
+     parts (flat floor glows, reflections and halos would pull it off); returned in
+     world space, so it follows the group as it moves and turns */
   if (!KCEN[key]) {
     _kb.makeEmpty(); obj.updateMatrixWorld(true);
+    const inv = new THREE.Matrix4().copy(obj.matrixWorld).invert(), rel = new THREE.Matrix4();
     obj.traverse(o => {
-      if (!o.isMesh || !o.geometry) return;
+      if (!o.isMesh || !o.geometry || (o.material && o.material.transparent)) return;   /* glows and halos are bigger than the kiosk */
       if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
-      const b = o.geometry.boundingBox.clone().applyMatrix4(o.matrixWorld);
+      const b = o.geometry.boundingBox.clone().applyMatrix4(rel.multiplyMatrices(inv, o.matrixWorld));
       if (b.max.y - b.min.y > .3) _kb.union(b);
     });
     if (_kb.isEmpty()) return null;
-    KCEN[key] = _kb.getCenter(new THREE.Vector3()).sub(obj.position);
+    KCEN[key] = _kb.getCenter(new THREE.Vector3());
   }
-  return KCEN[key];
+  obj.updateMatrixWorld(true);
+  return obj.localToWorld(KCEN[key].clone());
 }
 function frameKioskOnPhone() {
-  const W = vpW(), H = vpH();
-  if (W > 820 || W / H >= 1) { if (camera.view && camera.view.enabled) { camera.clearViewOffset(); } return; }
+  const W = vpW(), H = vpH(), phone = W <= 820 && W / H < 1;
+  /* the indoor kiosk's turn, eased in with its copy */
+  if (WORLD.kioskIn) {
+    let ry = KIOSK_IN.ry;
+    if (phone && K2 && K2.k > 0) {
+      const k = WORLD.kioskIn.position;
+      const face = Math.atan2(camera.position.x - k.x, camera.position.z - k.z) + PHONE_INDOOR_TURN;
+      let d = face - KIOSK_IN.ry; d = Math.atan2(Math.sin(d), Math.cos(d));
+      ry = KIOSK_IN.ry + d * K2.k;
+    }
+    WORLD.kioskIn.rotation.y = ry;
+  }
+  if (!phone) { if (camera.view && camera.view.enabled) camera.clearViewOffset(); return; }
   const picks = [];
   const wHero = 1 - smooth(.3, .75, RIG.smooth);
   if (wHero > .001 && WORLD.kiosk) {
     const c = kioskCentre('hero', WORLD.kiosk);
-    if (c) picks.push([wHero, _kp.copy(c).add(WORLD.kiosk.position).setX(c.x + (WORLD.kioskX !== undefined ? WORLD.kioskX : WORLD.kiosk.position.x)).clone()]);
+    if (c) picks.push([wHero, PHONE_FRAME.hero, c.setX(c.x - WORLD.kiosk.position.x + (WORLD.kioskX !== undefined ? WORLD.kioskX : WORLD.kiosk.position.x))]);   /* at its resting x, not where the scroll slides it */
   }
   if (K2 && K2.k > .001 && WORLD.kioskIn) {
     const c = kioskCentre('indoor', WORLD.kioskIn);
-    if (c) picks.push([K2.k, c.clone().add(WORLD.kioskIn.position)]);
+    if (c) picks.push([K2.k, PHONE_FRAME.indoor, c]);
   }
   if (K3 && K3.k > .001 && WORLD.outdoor) {
-    picks.push([K3.k, new THREE.Vector3(OUT.x, OUT.y + 1.35, OUT.kz)]);   /* the ATM kiosk's face, mid-height, in the side wall */
+    picks.push([K3.k, PHONE_FRAME.atm, new THREE.Vector3(OUT.x, OUT.y + 1.35, OUT.kz)]);   /* the ATM kiosk's face, mid-height, in the side wall */
   }
-  let ox = 0, oy = 0;
+  /* blend: zoom, where the kiosk is in the plain frame, and where it should go */
+  let ws = 0, zoom = 0, px = 0, py = 0, tx = 0, ty = 0;
   if (picks.length) {
     PHONE_CAM.position.copy(camera.position); PHONE_CAM.quaternion.copy(camera.quaternion);
     PHONE_CAM.fov = camera.fov; PHONE_CAM.aspect = W / H; PHONE_CAM.near = camera.near; PHONE_CAM.far = camera.far;
     PHONE_CAM.updateProjectionMatrix(); PHONE_CAM.updateMatrixWorld(true);
-    picks.forEach(([w, p]) => {
+    picks.forEach(([w, f, p]) => {
       p.project(PHONE_CAM);
       if (p.z > 1 || Math.abs(p.x) > 1.6 || Math.abs(p.y) > 1.6) return;   /* behind the lens, or nowhere near the frame */
-      ox += w * clamp(p.x, -.7, .7) * .5 * W;
-      oy += w * clamp(PHONE_AT - p.y, -.7, .7) * .5 * H;
+      ws += w; zoom += w * f.zoom;
+      px += w * (clamp(p.x, -1.2, 1.2) + 1) * .5 * W; py += w * (1 - clamp(p.y, -1.2, 1.2)) * .5 * H;
+      const t = phoneTarget(f, W, H); tx += w * t[0]; ty += w * t[1];
     });
   }
-  if (Math.abs(ox) < .5 && Math.abs(oy) < .5) { if (camera.view && camera.view.enabled) camera.clearViewOffset(); return; }
-  camera.setViewOffset(W, H, ox, oy, W, H);
+  if (ws > 1) { zoom /= ws; px /= ws; py /= ws; tx /= ws; ty /= ws; ws = 1; }
+  const rest = 1 - ws;
+  zoom += rest; px += rest * W / 2; py += rest * H / 2; tx += rest * W / 2; ty += rest * H / 2;
+  const ox = px - tx / zoom, oy = py - ty / zoom;
+  if (Math.abs(ox) < .5 && Math.abs(oy) < .5 && Math.abs(zoom - 1) < .002) { if (camera.view && camera.view.enabled) camera.clearViewOffset(); return; }
+  camera.setViewOffset(W, H, ox, oy, W / zoom, H / zoom);
 }
 
 /* ============================================== 9 · scroll ↔ chapters */
@@ -6272,6 +6323,8 @@ function wireNav() {
     setMenu(!nav.classList.contains('menu-open'));
   });
   links.forEach(link => link.addEventListener('click', closeMenu));
+  const mSearch = $('.nav-msearch');
+  if (mSearch) mSearch.addEventListener('click', () => { if (window.PFXSearch) window.PFXSearch.open(); });
   addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
   addEventListener('resize', () => { if (vpW() > 820) closeMenu(); }, { passive:true });
   /* Which chapter each link actually points at, read off its href. The old
@@ -6864,7 +6917,9 @@ else addEventListener('DOMContentLoaded', boot);
     });
   });
 </script>
+<script src="blog-data.js"></script>
+<script src="site-search.js"></script>
 <script src="talk-modal.js?v=5"></script>
-<script src="pfx-site.js?v=2"></script>
+<script src="pfx-site.js?v=3"></script>
 </body>
 </html>
