@@ -72,3 +72,13 @@
 /* --------------------------------------------- footer on phones */
 /* the shared footer keeps desktop's 80px side padding otherwise */
 @media (max-width:820px){ footer:not(.foot){ padding:40px 24px; } }
+
+/* ---- buttons, site-wide: square corners, half the old padding */
+.btn-primary, .gate-form .btn-primary, form.inquiry-form .btn-primary, nav.links a.talk, .btn-talk{ border-radius:0 !important; padding:8px 17px !important; }
+.tm-submit, .tm-overlay .tm-submit{ border-radius:0 !important; padding:8px 12px !important; }
+.pfx-talk, .nav-talk{ border-radius:0 !important; padding:6px 11px !important; }
+.btn-outline, .lock-btn, .pfx-btn-ghost{ border-radius:0 !important; padding:7px 12px !important; }
+.cta{ border-radius:0 !important; padding:9px 15px !important; }
+.mbtn{ border-radius:0 !important; padding:6px 3px !important; }
+.pfx-cookie button{ border-radius:0 !important; min-height:32px; }
+.pfx-mcta a{ border-radius:0 !important; min-height:40px; }

@@ -302,6 +302,7 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .arrowlink:hover .ar{ background:var(--bone); border-color:var(--bone); }
 .arrowlink:hover .ar svg{ transform:translate3d(2px,-2px,0); }
 .arrowlink:hover .ar svg path{ stroke:#05070a; }
+.hero-ctas .arrowlink{ margin-top:0; white-space:nowrap; }
 .gate-stats{ display:flex; gap:clamp(24px,4vw,62px); margin-top:clamp(46px,8vh,96px); border-top:1px solid var(--line-soft); padding-top:24px; }
 .gate-stats div b{ display:block; font-size:clamp(22px,2.1vw,32px); font-weight:300; letter-spacing:-.02em; }
 .gate-stats div span{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
@@ -1177,7 +1178,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 }
 </style>
 <link rel="stylesheet" href="talk-modal.css?v=4">
-<link rel="stylesheet" href="pfx-site.css?v=4">
+<link rel="stylesheet" href="pfx-site.css?v=5">
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
       data-layout-curriculum="b" data-layout-closing="b" data-layout-footer="b">
@@ -1234,8 +1235,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
       a white-label pizza vending platform, your recipes, your brand, your pricing, 24/7.</p>
     <div class="hero-ctas" data-rv="up">
       <a class="btn-talk" href="contact.html" data-talk-trigger data-cursor>Let&rsquo;s Talk!</a>
-      <a class="btn-explore" href="kiosk-outdoor.html" data-cursor>Explore Kiosks
-        <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      <a class="arrowlink" href="kiosk-outdoor.html" data-cursor><span>Explore Kiosks</span><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span></a>
     </div>
   </div>
 
@@ -1308,8 +1308,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
       workplaces, and hospitals, with a 32&Prime; touchscreen and campus meal plan payments.</p>
     <div class="hero-ctas">
       <a class="btn-talk" href="contact.html" data-talk-trigger data-cursor>Let&rsquo;s Talk!</a>
-      <a class="btn-explore" href="kiosk-indoor.html" data-cursor>Explore Indoor Kiosk
-        <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      <a class="arrowlink" href="kiosk-indoor.html" data-cursor><span>Explore Indoor Kiosk</span><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -1326,8 +1325,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
       while you restock from inside. Ready in under 5 minutes, open 24/7.</p>
     <div class="hero-ctas">
       <a class="btn-talk" href="contact.html" data-talk-trigger data-cursor>Let&rsquo;s Talk!</a>
-      <a class="btn-explore" href="kiosk-atm.html" data-cursor>Explore ATM Kiosk
-        <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      <a class="arrowlink" href="kiosk-atm.html" data-cursor><span>Explore ATM Kiosk</span><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -4180,16 +4178,15 @@ function buildOutdoor() {
   WORLD.haze = WORLD.haze || [];
   const add = (geo, m) => { const o = new THREE.Mesh(geo, m); g.add(o); return o; };
   /* The terrace is the night set: lit, fogged and graded like the front court,
-     in the campus's own materials — charred cedar for the wall,
-     rust-brown timber for every sill, lintel and course, black lacquer for the
-     frames, lit paper in the windows and wet slate underfoot. Only the kiosk
-     keeps its own photographed face; its surround and hood are cut from the wall's own charred cedar. */
-  const brick = surface(wallWood(), [.8, .8], { color: 0x565150, normal: 1.5 });
-  const stoneL = surface(postWood(), [1.1, 1.0], { color: 0x8a746d, normal: 1.05, metalness: .03 });
+     in dark running-bond brick for the wall (kept dim so it recedes behind the
+     kiosk), plain near-black stone for every sill, lintel and course, black
+     lacquer for the frames, lit paper in the windows and wet slate underfoot.
+     Only the kiosk keeps its own photographed face; its surround and hood are near-black. */
+  const brick = surface(lib('darkBrick', texBrick), [.8, .8], { color: 0x302a2a, normal: 1.1 });   /* dark running-bond brick, meant to recede */
+  const stoneL = new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 1, metalness: 0 });   /* sills, lintels, cornice: plain dark stone, no grain */
   const lacquer = new THREE.MeshStandardMaterial({ color: 0x120c0c, roughness: .42, metalness: .14 });
-  /* the kiosk's surround and hood: the wall's charred cedar in its own tone, as single
-     timbers (no board joints) so the grain runs cleanly down each narrow piece */
-  const metal = surface(postWood(), [.3, 1.2], { color: 0x565150, normal: 1.3, metalness: .03 });
+  /* the kiosk's surround and hood: plain near-black, so the kiosk is the only thing that reads */
+  const metal = new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 1, metalness: 0 });
   const white = new THREE.MeshBasicMaterial({ color: 0x000000, fog: false });   /* the side doorway: pure black (no fog to lift it), so it doesn't pull focus from the kiosk */
   const shTex = tx(texSoftShadow(), { srgb: false });
   const shadow = (w, d, x0, z0, a, rot) => {
@@ -4226,7 +4223,7 @@ function buildOutdoor() {
   /* windows: deep timber reveals, black lacquer frames, the hall's lit paper
      behind the glass, timber sill and lintel */
   const glass = new THREE.MeshBasicMaterial({ map: tx(texWindow(), { aniso: 16 }), color: hdr(.22, .28, .37), fog: true, toneMapped: false });   /* cool, dim */
-  const reveal = surface(postWood(), [.6, .6], { color: 0x565150, normal: 1.0, metalness: .03 });
+  const reveal = new THREE.MeshStandardMaterial({ color: 0x060505, roughness: .9, metalness: .02 });
   reveal.side = THREE.DoubleSide;
   wins.forEach(([z, v]) => {
     const cy = Y + v + WH2 / 2, R = .2;
@@ -4267,7 +4264,7 @@ function buildOutdoor() {
   const hoodSh = new THREE.Mesh(new THREE.PlaneGeometry(OW + .6, .7).rotateY(Math.PI / 2),
     new THREE.MeshBasicMaterial({ map: shTex, transparent: true, depthWrite: false, opacity: .22, color: 0x000000 }));
   hoodSh.position.set(X + .015, Y + OH + .02, kz); hoodSh.renderOrder = 3; g.add(hoodSh);
-  const rev = surface(postWood(), [.2, 1], { color: 0x3a3634, normal: 1.0, metalness: .03 }), RD = .14;   /* the reveal: the same timber, in shadow */
+  const rev = new THREE.MeshStandardMaterial({ color: 0x040303, roughness: .9, metalness: .02 }), RD = .14;   /* the reveal: the same timber, in shadow */
   rev.side = THREE.DoubleSide;
   [-1, 1].forEach(sd => add(new THREE.PlaneGeometry(RD, KH).rotateY(sd > 0 ? Math.PI : 0), rev).position.set(X - RD / 2, Y + KH / 2, kz - sd * KW / 2));
   /* the head of the reveal: RD deep into the wall, KW across it (an extra quarter-turn here once stood it 1.9 m out of the wall) */
