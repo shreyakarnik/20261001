@@ -157,3 +157,30 @@ form.tm-form{max-width:1016px; margin:0 auto;}
   .tm-actions{flex-direction:column; align-items:stretch; gap:14px;}
   .tm-actions .tm-add-more{text-align:center;}
 }
+
+/* ------------------------------------------------------ form fields: the line style
+   (as on the Support page): a quiet label, no box, one rule under the field */
+.tm-group label{
+  font-size:13px !important; font-weight:400 !important; letter-spacing:0 !important; text-transform:none !important;
+  color:rgba(223,231,224,.45) !important; margin-bottom:4px; line-height:1.4;
+}
+.tm-group label .hint{ font-size:12px !important; color:rgba(223,231,224,.3) !important; text-transform:none !important; letter-spacing:0 !important; }
+.tm-group input[type="text"], .tm-group input[type="email"], .tm-group input[type="tel"], .tm-group input[type="number"], .tm-group select, .tm-group textarea{
+  width:100%; box-sizing:border-box; padding:10px 0 !important; background:transparent !important;
+  border:0 !important; border-bottom:1px solid rgba(223,231,224,.22) !important; border-radius:0 !important;
+  color:#fff !important; font-family:inherit; font-size:16px !important; font-weight:400 !important; outline:0 !important;
+  box-shadow:none !important; transition:border-color .2s;
+}
+.tm-group select{
+  appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:22px !important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23dfe7e0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 2px center !important;
+}
+.tm-group select option{ background:#0d0e10; color:#fff; }
+.tm-group textarea{ resize:vertical; min-height:110px; }
+.tm-group input:focus, .tm-group select:focus, .tm-group textarea:focus{ border-bottom-color:#fff !important; outline:0 !important; }
+.tm-group input::placeholder, .tm-group textarea::placeholder{ color:rgba(223,231,224,.3) !important; }
+.tm-row{ gap:18px 28px; margin-bottom:18px; }
+.tm-group{ gap:0; }
+.tm-checkbox-row input[type="checkbox"]{ width:18px; height:18px; border-radius:0; background:transparent; border:1px solid rgba(223,231,224,.4); }
+.tm-checkbox-row input[type="checkbox"]::after{ width:4px; height:9px; }
+.tm-checkbox-row{ gap:12px; align-items:center; }

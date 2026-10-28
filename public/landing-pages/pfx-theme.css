@@ -61,6 +61,9 @@ html body.kiosk-spec.no-campus::before{ background:#05070a; }
 html body.kiosk-spec.no-campus::after{ background:radial-gradient(ellipse at 50% 0%, rgba(210,223,230,.05), transparent 60%); }
 /* plain pages (the privacy policy): no campus behind the text, just the ink */
 html body.plain-bg::before, html body.plain-bg::after{ display:none; }
+/* every page but the landing: a plain black ground — no campus, no glow */
+html body{ background:#000 !important; }
+html body::before, html body::after{ display:none !important; }
 ::selection{ background:var(--k-verm); color:#fff; }
 
 /* -------------------------------------------------------- type */
@@ -446,3 +449,31 @@ html body .model-tabs a.on{ color:#fff; font-weight:400; border-bottom-color:#ff
 .kp-row-head{ position:relative; border-top-color:var(--kp-rule); }
 .kp-row-head::before{ content:""; position:absolute; left:0; right:0; top:-1px; height:1px; background:#fff; transform:scaleX(0); transform-origin:left; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
 .kp-row:hover .kp-row-head::before{ transform:scaleX(1); }
+
+/* ------------------------------------------------------ form fields: the line style
+   (as on the Support page): a quiet label, no box, one rule under the field */
+.tm-group label, form.inquiry-form .form-group label, .gate-form .form-group label{
+  font-size:13px !important; font-weight:400 !important; letter-spacing:0 !important; text-transform:none !important;
+  color:rgba(223,231,224,.45) !important; margin-bottom:4px; line-height:1.4;
+}
+.tm-group label .hint, form.inquiry-form .form-group label .hint, .gate-form .form-group label .hint{ font-size:12px !important; color:rgba(223,231,224,.3) !important; text-transform:none !important; letter-spacing:0 !important; }
+.tm-group input[type="text"], .tm-group input[type="email"], .tm-group input[type="tel"], .tm-group input[type="number"], form.inquiry-form .form-group input[type="text"], form.inquiry-form .form-group input[type="email"], form.inquiry-form .form-group input[type="tel"], form.inquiry-form .form-group input[type="number"], .gate-form .form-group input[type="text"], .gate-form .form-group input[type="email"], .gate-form .form-group input[type="tel"], .gate-form .form-group input[type="number"], .tm-group select, form.inquiry-form .form-group select, .gate-form .form-group select, .tm-group textarea, form.inquiry-form .form-group textarea, .gate-form .form-group textarea{
+  width:100%; box-sizing:border-box; padding:10px 0 !important; background:transparent !important;
+  border:0 !important; border-bottom:1px solid rgba(223,231,224,.22) !important; border-radius:0 !important;
+  color:#fff !important; font-family:inherit; font-size:16px !important; font-weight:400 !important; outline:0 !important;
+  box-shadow:none !important; transition:border-color .2s;
+}
+.tm-group select, form.inquiry-form .form-group select, .gate-form .form-group select{
+  appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:22px !important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23dfe7e0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 2px center !important;
+}
+.tm-group select, form.inquiry-form .form-group select, .gate-form .form-group select option{ background:#0d0e10; color:#fff; }
+.tm-group textarea, form.inquiry-form .form-group textarea, .gate-form .form-group textarea{ resize:vertical; min-height:110px; }
+.tm-group input:focus, .tm-group select:focus, .tm-group textarea:focus, form.inquiry-form .form-group input:focus, form.inquiry-form .form-group select:focus, form.inquiry-form .form-group textarea:focus, .gate-form .form-group input:focus, .gate-form .form-group select:focus, .gate-form .form-group textarea:focus{ border-bottom-color:#fff !important; outline:0 !important; }
+.tm-group input::placeholder, .tm-group textarea::placeholder, form.inquiry-form .form-group input::placeholder, form.inquiry-form .form-group textarea::placeholder, .gate-form .form-group input::placeholder, .gate-form .form-group textarea::placeholder{ color:rgba(223,231,224,.3) !important; }
+.tm-row{ gap:18px 28px !important; margin-bottom:18px !important; }
+/* consent tick: a plain square, red when ticked */
+.tm-checkbox-row input[type="checkbox"]{ width:18px !important; height:18px !important; border-radius:0 !important; background:transparent !important; border:1px solid rgba(223,231,224,.4) !important; }
+.tm-checkbox-row input[type="checkbox"]:checked{ background:#c00022 !important; border-color:#c00022 !important; }
+.tm-checkbox-row input[type="checkbox"]::after{ width:4px !important; height:9px !important; }
+.tm-checkbox-row{ gap:12px !important; align-items:center !important; }
