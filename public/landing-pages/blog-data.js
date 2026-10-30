@@ -120,7 +120,7 @@ const PFX_BLOG_POSTS = [
 <h2>ATM Kiosk: turn a wall into a storefront</h2>
 <p>The ATM Kiosk is recessed into a building's exterior. Customers order from the street while you restock from inside, out of the weather. A side window shows the robotic arm at work, which turns the kiosk into a bit of a show.</p>
 <ul>
-<li><b>Footprint:</b> 8'0" L × 7'0" W × 8'0" H</li>
+<li><b>Footprint:</b> 8'0" L × 5'0" W × 8'0" H</li>
 <li><b>Best for:</b> existing restaurants and retail spaces that want street-facing, after-hours sales</li>
 </ul>
 

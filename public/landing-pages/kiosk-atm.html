@@ -189,7 +189,7 @@
   }
 </style>
 <link rel="stylesheet" href="pfx-nav.css?v=9">
-<link rel="stylesheet" href="pfx-theme.css?v=29">
+<link rel="stylesheet" href="pfx-theme.css?v=45">
 <link rel="stylesheet" href="pfx-site.css?v=10">
 </head>
 <body class="kiosk-spec no-campus">
@@ -214,64 +214,97 @@
 </header>
 
 
-<main class="kp">
-  <header class="kp-head">
-    <h1>ATM Kiosk</h1>
-    <p class="kp-lede">ATM Kiosk represents the pinnacle of innovation in the automated pizza vending industry, specifically crafted for integration into urban and retail environments. This unit's unique wall-recessed design blends seamlessly into building exteriors while providing convenient indoor access for restocking. A side window also lets customers watch the robotic arm prepare their pizza, adding an engaging visual element to the pizza vending experience.</p>
-  </header>
+<main class="kp pp">
+  <!-- photo slots: drop an <img> inside a .kshow-ph to replace its label -->
+  <section class="pp-hero" aria-label="ATM Kiosk">
+    <div class="pp-hero-copy">
+      <p class="pp-eyebrow">ATM Kiosk</p>
+      <h1 class="pp-title">A Pizzeria Built Into Your Wall.</h1>
+      <p class="pp-lede">Recessed into a building&rsquo;s exterior, it serves customers outside while you restock it from inside, 24/7, without giving up any floor space.</p>
+      <dl class="pp-facts">
+        <div><dt>Capacity</dt><dd>70 Pizzas</dd></div>
+        <div><dt>Ready In</dt><dd>3&ndash;4 Minutes</dd></div>
+        <div><dt>Footprint</dt><dd>8&#x27;0&quot; &times; 5&#x27;0&quot;</dd></div>
+      </dl>
+      <p class="pp-price"><span>Equipment From</span>$86,078 <small>USD</small></p>
+      <div class="kp-actions">
+        <a class="btn-primary" href="/contact" data-talk-trigger>Let&rsquo;s Talk!</a>
+        <a class="kp-link" href="/roicalculator">See The ROI <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+    <figure class="pp-img pp-img--tall"><div class="kshow-ph"><img src="Images/kiosks/atm-night.jpg" alt="An ATM Kiosk set into a wall, its edge light and backlit sign glowing at night"><span>Vertical &middot; the kiosk in its wall, full height</span></div><figcaption class="pp-credit"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg><span><b>24Seven Pizza</b>Quebec, Canada</span></figcaption></figure>
+  </section>
 
+  <section class="kp-row" aria-label="Why the ATM Kiosk">
+    <div class="kp-row-head"><h2>Why The ATM Kiosk</h2><p>Your building becomes the storefront.</p></div>
+    <ul class="pp-why">
+      <li><h3>Set Into The Wall</h3><p>The unit recesses into a building&rsquo;s exterior, so only its face shows on the street.</p></li>
+      <li><h3>Restocked From Inside</h3><p>Your team loads it from inside the building, out of the weather and out of sight.</p></li>
+      <li><h3>A Window On The Robot</h3><p>A side window lets customers watch the robotic arm prepare their pizza.</p></li>
+      <li><h3>The Most Affordable</h3><p>At $86,078 USD it is the lowest-priced of the three kiosks, with the same 70-pizza capacity.</p></li>
+    </ul>
+  </section>
 
-<!-- image slots: put an <img> inside each .kshow-ph to replace its placeholder -->
-  <section class="kb" aria-label="ATM Kiosk highlights">
-    <figure class="kb-t">
-      <div class="kshow-ph"><img src="Images/kiosks/atm-night.jpg" alt="ATM Kiosk set into a wall, its edge light and backlit sign glowing at night" loading="lazy"></div>
-      <figcaption><h3>The Whole Kiosk</h3><span class="kshow-rule"><i></i></span><p>Recessed into the wall, it blends into the building with restocking from inside.</p></figcaption>
-    </figure>
-    <figure class="kb-t">
-      <div class="kshow-ph"><img src="Images/kiosks/indoor-payment.jpg?v=2" alt="Customer tapping a phone on the payment terminal" loading="lazy"></div>
-      <figcaption><h3>Tap And Go</h3><span class="kshow-rule"><i></i></span><p>Tap, insert or swipe. Accepts cards, mobile wallets and campus meal plans.</p></figcaption>
-    </figure>
-    <figure class="kb-t">
-      <div class="kshow-ph"><img src="Images/kiosks/indoor-screen.jpg?v=3" alt="Customer using the touchscreen" loading="lazy"></div>
-      <figcaption><h3>Ad Revenue, Built In</h3><span class="kshow-rule"><i></i></span><p>Run ads on the 32&quot; display between orders and turn every kiosk into a media channel.</p></figcaption>
-    </figure>
-    <figure class="kb-t">
-      <div class="kshow-ph"><img src="Images/kiosks/indoor-interior.jpg?v=2" alt="Close-up of the pizza storage racks and robotic lift inside the kiosk" loading="lazy"></div>
-      <figcaption><h3>Always Fresh</h3><span class="kshow-rule"><i></i></span><p>70 pizzas on board, tracked by best-before date and served first in, first out.</p></figcaption>
-    </figure>
-    <figure class="kb-t">
-      <div class="kshow-ph"><img src="Images/kiosks/indoor-pizza.jpg?v=3" alt="Freshly baked pizza in its box at the kiosk" loading="lazy"></div>
-      <figcaption><h3>Hot In Under 5 Minutes</h3><span class="kshow-rule"><i></i></span><p>Baked in its box by a pulsed-air convection oven and served through the hatch.</p></figcaption>
-    </figure>
+  <section class="kp-row" aria-label="How it works">
+    <div class="kp-row-head"><h2>How It Works</h2><p>From tap to hot pizza in minutes.</p></div>
+    <ol class="pp-steps">
+      <li><h3>Tap</h3><p>Customers pick a pizza on the 32&quot; touchscreen and add coupon or loyalty codes.</p></li>
+      <li><h3>Pay</h3><p>Cards, mobile wallets and NFC, plus campus meal plans.</p></li>
+      <li><h3>Bake</h3><p>A robotic arm moves the pizza to a patented convection oven, where it bakes in its box.</p></li>
+      <li><h3>Collect</h3><p>Out through the hatch in 3&ndash;4 minutes, with a disposable knife on the side.</p></li>
+    </ol>
+  </section>
+
+  <section class="kp-row" aria-label="Where it fits">
+    <div class="kp-row-head"><h2>Where It Fits</h2><p>Buildings that face the street.</p></div>
+    <ul class="pp-places">
+      <li><figure class="pp-img"><div class="kshow-ph"><span>Photo &middot; set into a storefront</span></div></figure><h3>Storefronts</h3></li>
+      <li><figure class="pp-img"><div class="kshow-ph"><span>Photo &middot; in a campus building wall</span></div></figure><h3>Campuses</h3></li>
+      <li><figure class="pp-img"><div class="kshow-ph"><span>Photo &middot; at a resort</span></div></figure><h3>Resorts</h3></li>
+      <li><figure class="pp-img"><div class="kshow-ph"><span>Photo &middot; in a gas station wall</span></div></figure><h3>Gas Stations</h3></li>
+    </ul>
   </section>
 
   <section class="kp-row kp-specs" aria-label="Specifications">
-    <div class="kp-row-head"><h2>Specifications</h2></div>
+    <div class="kp-row-head"><h2>Specifications</h2><p>Every ATM Kiosk, as standard.</p></div>
     <dl class="kp-stats">
-      <div class="kp-stat"><dt>Bake Time</dt><dd>Under 5 min</dd></div>
       <div class="kp-stat"><dt>Capacity</dt><dd>70 Pizzas</dd></div>
-      <div class="kp-stat"><dt>Dimensions</dt><dd>8&#x27;0&quot; L x 7&#x27;0&quot; W x 8&#x27;0&quot; H</dd></div>
+      <div class="kp-stat"><dt>Ready In</dt><dd>3&ndash;4 Minutes</dd></div>
+      <div class="kp-stat"><dt>Dimensions</dt><dd>8&#x27;0&quot; L &times; 5&#x27;0&quot; W &times; 8&#x27;0&quot; H</dd></div>
       <div class="kp-stat"><dt>Weight</dt><dd>750 kg / 1,654 lbs</dd></div>
       <div class="kp-stat"><dt>Power</dt><dd>208V 20A Single Phase, 120V Receptacle</dd></div>
+      <div class="kp-stat"><dt>Service Access</dt><dd>From Inside The Building</dd></div>
+      <div class="kp-stat"><dt>Exterior</dt><dd>16-Gauge Carbon Steel Paneling</dd></div>
+      <div class="kp-stat"><dt>Oven</dt><dd>Pulsed-Air Convection</dd></div>
+      <div class="kp-stat"><dt>Interface</dt><dd>32&quot; Touchscreen</dd></div>
+      <div class="kp-stat"><dt>Connectivity</dt><dd>4G Cellular, Remote Monitoring</dd></div>
+      <div class="kp-stat"><dt>Uptime</dt><dd>99%</dd></div>
+      <div class="kp-stat"><dt>Warranty</dt><dd>2 Years</dd></div>
     </dl>
   </section>
 
-
-  <section class="kp-row kp-features" aria-label="Features">
-    <div class="kp-row-head"><h2>Features</h2><p>Standard on every unit.</p></div>
+  <section class="kp-row kp-features" aria-label="Standard features">
+    <div class="kp-row-head"><h2>Standard Features</h2><p>On every unit.</p></div>
     <ol class="kp-list">
-        <li><span class="kp-n">01</span>Epoxy Anti-Rust Protection</li>
-        <li><span class="kp-n">02</span>Checkered Entrance Plate</li>
-        <li><span class="kp-n">03</span>Photocell-Controlled Exterior Lighting</li>
-        <li><span class="kp-n">04</span>Roof-Mounted Sign With Tubed LED Lighting</li>
-        <li><span class="kp-n">05</span>32&quot; Interactive Digital Interface</li>
-        <li><span class="kp-n">06</span>Payment Terminal</li>
-        <li><span class="kp-n">07</span>Accepts Campus Meal Plans</li>
-        <li><span class="kp-n">08</span>Disposable Knife Dispenser</li>
-        <li><span class="kp-n">09</span>IoT: 4G Cellular</li>
-        <li><span class="kp-n">10</span>Pulsed-Air Convection Oven</li>
-        <li class="kp-sec"><span class="kp-n">11</span><span>Tamper-Proof Locks And Integrated Security Systems</span></li>
+        <li>See-Through Side Window</li>
+        <li>32&quot; Interactive Digital Interface</li>
+        <li>Payment Terminal</li>
+        <li>Accepts Campus Meal Plans</li>
+        <li>Disposable Knife Dispenser</li>
+        <li>IoT: 4G Cellular</li>
+        <li>Pulsed-Air Convection Oven</li>
+        <li>Tamper-Proof Locks</li>
+        <li>Integrated Security Systems</li>
     </ol>
+  </section>
+
+  <section class="kp-row" aria-label="Inside the kiosk">
+    <div class="kp-row-head"><h2>Inside The Kiosk</h2><p>The parts that do the work.</p></div>
+    <ul class="pp-places pp-places--3">
+      <li><figure class="pp-img"><div class="kshow-ph"><img src="Images/kiosks/indoor-screen.jpg?v=3" alt="A customer ordering on the 32-inch touchscreen" loading="lazy"><span>Photo &middot; the 32&quot; touchscreen, close up</span></div></figure><h3>The Touchscreen</h3></li>
+      <li><figure class="pp-img"><div class="kshow-ph"><img src="Images/kiosks/indoor-interior.jpg?v=2" alt="The refrigerated pizza racks and lift inside the kiosk" loading="lazy"><span>Photo &middot; the refrigerated pizza racks</span></div></figure><h3>The Pizza Racks</h3></li>
+      <li><figure class="pp-img"><div class="kshow-ph"><img src="Images/kiosks/indoor-window.jpg?v=2" alt="A child watching the arm and oven through the kiosk window" loading="lazy"><span>Photo &middot; the robotic arm and oven</span></div></figure><h3>The Arm And Oven</h3></li>
+    </ul>
   </section>
 
   <section class="kp-row kp-cert" aria-label="Certifications">
@@ -296,16 +329,37 @@
     </ul>
   </section>
 
-  <section class="kp-row kp-deploy" aria-label="Deployment">
-    <div class="kp-row-head"><h2>Deployment</h2><p>From college campuses to parks and rec centres.</p></div>
-    <ul class="kp-tags">
-        <li>Campus</li>
-        <li>Parks</li>
-        <li>Beaches</li>
-        <li>Resorts</li>
-        <li>Stadiums</li>
-        <li>Gas Stations</li>
-    </ul>
+  <section class="kp-row" aria-label="Pricing">
+    <div class="kp-row-head"><h2>Pricing</h2><p>A one-time purchase. No franchise fees.</p></div>
+    <div>
+      <dl class="kp-stats">
+        <div class="kp-stat"><dt>ATM Kiosk</dt><dd>$86,078 USD</dd></div>
+        <div class="kp-stat"><dt>Installation</dt><dd>$2,999 USD</dd></div>
+        <div class="kp-stat"><dt>Warranty</dt><dd>2 Years, Included</dd></div>
+        <div class="kp-stat"><dt>Franchise Fees</dt><dd>None</dd></div>
+      </dl>
+      <div class="kp-actions pp-gap">
+        <a class="kp-link" href="/roicalculator">Model Your Payback In The ROI Calculator <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="kp-row" aria-label="Compare the kiosks">
+    <div class="kp-row-head"><h2>Compare The Kiosks</h2><p>Same pizzas and technology, three ways to place them.</p></div>
+    <div class="pp-compare-wrap">
+      <table class="pp-compare">
+        <thead><tr><th></th><th><a href="/kiosk-outdoor">Outdoor</a></th><th><a href="/kiosk-indoor">Indoor</a></th><th class="on">ATM</th></tr></thead>
+        <tbody>
+          <tr><td>Best For</td><td>Open-air sites, parking lots</td><td>Lobbies, cafeterias, hospitals</td><td class="on">Building exteriors, storefronts</td></tr>
+          <tr><td>Equipment (USD)</td><td>$109,617</td><td>$98,216</td><td class="on">$86,078</td></tr>
+          <tr><td>Dimensions</td><td>10&#x27;8&quot; &times; 8&#x27;0&quot; &times; 8&#x27;7&quot;</td><td>9&#x27;5&quot; &times; 4&#x27;5&quot; &times; 8&#x27;0&quot;</td><td class="on">8&#x27;0&quot; &times; 5&#x27;0&quot; &times; 8&#x27;0&quot;</td></tr>
+          <tr><td>Weight</td><td>1,952 kg</td><td>750 kg</td><td class="on">750 kg</td></tr>
+          <tr><td>Power</td><td>208&ndash;240V 50A</td><td>208V 20A</td><td class="on">208V 20A</td></tr>
+          <tr><td>Restocked From</td><td>Inside the kiosk</td><td>The side</td><td class="on">Inside the building</td></tr>
+          <tr><td>Capacity</td><td>70 pizzas</td><td>70 pizzas</td><td class="on">70 pizzas</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 </main>
 
