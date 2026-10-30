@@ -1475,6 +1475,12 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
             <div class="faq-a"><p>Returns vary by location, foot traffic, and pricing — use our <a href="/roicalculator" style="color:var(--red); text-decoration:underline;">ROI Calculator</a> to model projected earnings, payback period, and lifetime ROI for your specific setup.</p></div>
           </div>
           <div class="faq-item">
+            <button type="button" class="faq-q">How Long Does It Take To Fulfil An Order?
+              <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-a"><p>As each kiosk is custom-built to order, the minimum lead time for fulfilment is approximately 3 weeks. This allows us the time needed to manufacture and prepare your kiosk before delivery.</p></div>
+          </div>
+          <div class="faq-item">
             <button type="button" class="faq-q">PFX or PizzaForno?
               <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </button>
@@ -3243,21 +3249,48 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
        grey, that swing out onto the terrace as the walk reaches them
        (WORLD.hallDoors, driven from updateWorld) */
     const leafM = new THREE.MeshBasicMaterial({ color: ungrade('#858585'), fog: false, toneMapped: false, side: THREE.DoubleSide });
-    const panelM = new THREE.MeshBasicMaterial({ color: ungrade('#949494'), fog: false, toneMapped: false });
-    const handleM = new THREE.MeshBasicMaterial({ color: ungrade('#4a4a4a'), fog: false, toneMapped: false });
+    /* modelled on a classic three-panel double door: on each leaf a tall upper
+       panel, a short middle one and a lower one, each a slightly raised field in
+       a moulding lit from the upper left; silver levers on round roses by the
+       meeting edge. Flat greys carried through the grade (ungrade), as the walls. */
+    const flat = h => new THREE.MeshBasicMaterial({ color: ungrade(h), fog: false, toneMapped: false });
+    const fieldM = flat('#8b8b8b'), hiM = flat('#a2a2a2'), loM = flat('#686868'), midM = flat('#7a7a7a');
+    const roseM = flat('#8f8f8f'), leverM = flat('#c4c4c4'), leverSh = flat('#7e7e7e');
     const LW = HALL_DOOR.w / 2, LH = HALL_DOOR.h;
+    /* the panels as fractions of the leaf: [bottom, top] up the height; the side margins */
+    const PANELS = [[.542, .935], [.363, .462], [.087, .300]], MX = .16;
     WORLD.hallDoors = [-1, 1].map(sd => {
       const hinge = new THREE.Group();
       hinge.position.set(x1, y0, HALL_DOOR.z + sd * LW);
-      const leaf = new THREE.Mesh(new THREE.BoxGeometry(.05, LH, LW - .01), leafM);
-      leaf.position.set(0, LH / 2, -sd * LW / 2); hinge.add(leaf);
-      [[LH * .70, LH * .42], [LH * .26, LH * .34]].forEach(([cy, ph]) => [-1, 1].forEach(face => {   /* raised panels, both faces */
-        const pn = new THREE.Mesh(new THREE.BoxGeometry(.012, ph, LW - .26), panelM);
-        pn.position.set(face * .031, cy, -sd * LW / 2); hinge.add(pn);
-      }));
-      [-1, 1].forEach(face => {                                     /* a dark pull on each face */
-        const h = new THREE.Mesh(new THREE.BoxGeometry(.03, .26, .03), handleM);
-        h.position.set(face * .05, LH * .48, -sd * (LW - .11)); hinge.add(h);
+      const LWi = LW - .01, cz = -sd * LW / 2;
+      const leaf = new THREE.Mesh(new THREE.BoxGeometry(.05, LH, LWi), leafM);
+      leaf.position.set(0, LH / 2, cz); hinge.add(leaf);
+      const pw = LWi * (1 - MX * 2), M = .022;                     /* panel width; moulding width */
+      [-1, 1].forEach(face => {
+        /* the viewer's left on this face: the hall side (-x) sees +z to its right */
+        const leftZ = face < 0 ? -1 : 1;
+        PANELS.forEach(([b0, t0]) => {
+          const yb = LH * b0, yt = LH * t0, ph = yt - yb, ym = (yb + yt) / 2;
+          const at = (dx, y, dz, w, h, mat) => { const m = new THREE.Mesh(new THREE.BoxGeometry(.006 + dx, h, w), mat);
+            m.position.set(face * (.025 + (.006 + dx) / 2), y, cz + dz); hinge.add(m); };
+          at(.004, ym, 0, pw - M * 2, ph - M * 2, fieldM);                                   /* the raised field */
+          at(.008, yt - M / 2, 0, pw, M, hiM);                                                /* top moulding, lit */
+          at(.008, yb + M / 2, 0, pw, M, loM);                                                /* bottom, in shade */
+          at(.008, ym, leftZ * -(pw / 2 - M / 2), M, ph, hiM);                                /* left side, lit */
+          at(.008, ym, leftZ * (pw / 2 - M / 2), M, ph, loM);                                 /* right side, shade */
+          at(.002, yt + .006, 0, pw + .012, .006, midM);                                      /* a fine shadow line round it */
+          at(.002, yb - .006, 0, pw + .012, .006, midM);
+        });
+        /* lever handle by the meeting edge, pointing back toward the hinge */
+        const zh = cz - sd * (LWi / 2 - .085), yh = LH * .5;
+        const rose = new THREE.Mesh(new THREE.CylinderGeometry(.032, .032, .012, 24).rotateZ(Math.PI / 2), roseM);
+        rose.position.set(face * .031, yh, zh); hinge.add(rose);
+        const neck = new THREE.Mesh(new THREE.CylinderGeometry(.01, .01, .045, 12).rotateZ(Math.PI / 2), leverM);
+        neck.position.set(face * .058, yh, zh); hinge.add(neck);
+        const lever = new THREE.Mesh(new THREE.BoxGeometry(.02, .02, .13), leverM);
+        lever.position.set(face * .08, yh, zh + sd * .062); hinge.add(lever);
+        const under = new THREE.Mesh(new THREE.BoxGeometry(.021, .006, .13), leverSh);    /* the lever's shaded underside */
+        under.position.set(face * .08, yh - .011, zh + sd * .062); hinge.add(under);
       });
       hinge.userData.side = sd; hall.add(hinge); return hinge;
     });
