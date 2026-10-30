@@ -4352,7 +4352,7 @@ function buildOutdoor() {
   };
 
   /* ---- the building's side, straight outside the hall's right-hand door */
-  const FL = 90, FH = 9.2, z0 = -30;                     /* z = -30 … -120; the building ends at z = -30 */
+  const FL = 26, FH = 9.2, z0 = -30;                     /* z = -30 … -56: a short block that ends just past the bench, so the terrace stays small */
   const U = z => z0 - z;
   const s = new THREE.Shape();
   s.moveTo(0, 0); s.lineTo(FL, 0); s.lineTo(FL, FH); s.lineTo(0, FH); s.closePath();
@@ -4361,7 +4361,7 @@ function buildOutdoor() {
   const KW = 1.8, KH = 2.6, FR = .2, OW = KW + 2 * FR, OH = KH + FR;   /* the artwork's own proportions */
   hole(U(OUT.kz) - OW / 2, U(OUT.kz) + OW / 2, 0, OH);
   const WW2 = 1.25, WH2 = 2.1, wins = [];
-  for (let z = -34.2; z > -118; z -= 3.6) {
+  for (let z = -34.2; z > z0 - FL + 2; z -= 3.6) {
     [1.05, 4.55].forEach(v => {
       if (v < 3 && (Math.abs(z - D.z) < 2.2 || Math.abs(z - OUT.kz) < 2.6)) return;
       wins.push([z, v]);
@@ -4375,6 +4375,7 @@ function buildOutdoor() {
   const ret = new THREE.PlaneGeometry(30, FH), rp = ret.attributes.position, ruv = ret.attributes.uv;
   for (let i = 0; i < rp.count; i++) ruv.setXY(i, rp.getX(i) / 1.35, (rp.getY(i) + FH / 2) / 1.35);
   add(ret, brick).position.set(X - 15, Y + FH / 2, z0);
+  add(ret.clone(), brick).position.set(X - 15, Y + FH / 2, z0 - FL);   /* and the far end, returning the same way */
 
   /* windows: deep timber reveals, black lacquer frames, the hall's lit paper
      behind the glass, timber sill and lintel */
@@ -4400,6 +4401,7 @@ function buildOutdoor() {
   add(new THREE.BoxGeometry(.36, .32, FL + .36), stoneL).position.set(X + .18, Y + FH + .16, z0 - FL / 2 + .18);
   add(new THREE.BoxGeometry(.22, .14, FL + .2), stoneL).position.set(X + .11, Y + FH - .07, z0 - FL / 2 + .1);
   add(new THREE.BoxGeometry(30.4, .32, .36), stoneL).position.set(X - 15 + .2, Y + FH + .16, z0 + .18);
+  add(new THREE.BoxGeometry(30.4, .32, .36), stoneL).position.set(X - 15 + .2, Y + FH + .16, z0 - FL - .18);
 
   /* the doorway back into the hall: stone surround, and the bright hall beyond */
   [-1, 1].forEach(sd => add(new THREE.BoxGeometry(.06, D.h + .12, .14), stoneL).position.set(X + .03, Y + (D.h + .12) / 2, D.z + sd * (D.w / 2 + .07)));
