@@ -1079,16 +1079,16 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
   #faq .faq-grid{ grid-template-columns:1fr; }
   #faq h2{ font-size:32px; }
 }
-/* ---- UL / NAMA: the white certification seal, fixed on screen, shown only
+/* ---- UL / NAMA: the white certification badge, fixed on screen, shown only
    while one of the kiosks holds the shot */
-.certs{ position:fixed; left:var(--certs-x, auto); right:auto; bottom:calc(28px + 7vh); z-index:44; width:112px; transform:translateX(-50%);   /* centred under the search button (--certs-x, set by script) */
+.certs{ position:fixed; left:var(--certs-x, auto); right:auto; bottom:calc(28px + 7vh); z-index:44; width:84px; transform:translateX(-50%);   /* centred under the search button (--certs-x, set by script) */
   opacity:0; visibility:hidden; pointer-events:none; transition:opacity .45s, visibility 0s .45s; }
 .certs.on{ opacity:1; visibility:visible; transition:opacity .45s, visibility 0s; }
 /* the cookie banner takes the same corner: the seal waits until it has been answered */
 body:has(.pfx-cookie.on) .certs{ opacity:0; visibility:hidden; }
 .certs img{ width:100%; height:auto; display:block; filter:drop-shadow(0 2px 10px rgba(0,0,0,.45)); }
 @media (max-width:820px){
-  .certs{ top:calc(var(--nav-h) + 10px); bottom:auto; left:auto; right:16px; width:76px; transform:none; }
+  .certs{ top:calc(var(--nav-h) + 10px); bottom:auto; left:auto; right:16px; width:54px; transform:none; }
 }
 /* ---- "As Seen On", the PFX home page's rules verbatim; it takes the footer's
    lead row (spanning the grid, ruled off from the index below) */
@@ -1566,7 +1566,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 
 <div class="rail" id="rail"></div>
 <!-- UL and NAMA, held in the corner while a kiosk is in focus -->
-<div class="certs" id="certs"><img src="assets/cert-seal.png" alt="Certified: NAMA and UL" width="590" height="607"></div>
+<div class="certs" id="certs"><img src="assets/cert-badge.png" alt="Built to last: NAMA Certified and UL Listed, tested and proven" width="321" height="693"></div>
 
 <script src="assets/three.min.js"></script>
 <script src="assets/kiosk-photo.js?v=3"></script>
@@ -6076,7 +6076,7 @@ function applyCamera() {
      of the chapter's copy (0 = nav, .5 = midway), so the gap above and
      below the kiosk follows the copy's real height. */
 const PHONE_FRAME = {
-  hero:   { zoom: 2.2,  x: .64, down: .55, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
+  hero:   { zoom: 2.2,  x: .7,  down: .55, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
   indoor: { zoom: .55,  x: .5,  down: .5, copy: () => K2 && K2.el },
   atm:    { zoom: 1.5,  x: .5,  down: .5,  copy: () => K3 && K3.el }   /* the wider face and its sign, both in frame */
 };

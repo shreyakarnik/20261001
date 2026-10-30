@@ -477,6 +477,7 @@ main.pp + footer{ margin-top:0 !important; }
    bottom-right corner over a soft fade (no box) */
 .pp-img--tall::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:34%; pointer-events:none;
   background:linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0)); }
+.pp-badge{ position:absolute; left:20px; bottom:18px; z-index:1; width:54px; height:auto; display:block; }   /* NAMA / UL, bottom-left, on the credit's line */
 .pp-credit{ position:absolute; right:20px; bottom:18px; z-index:1; display:flex; align-items:flex-start; gap:8px; text-align:right; color:#fff; }
 .pp-credit svg{ margin-top:2px; flex:0 0 auto; color:#fff; }
 .pp-credit span{ font-size:12.5px; line-height:1.4; color:rgba(255,255,255,.7); letter-spacing:.01em; }
@@ -515,6 +516,7 @@ main.pp + footer{ margin-top:0 !important; }
   .pp-hero{ grid-template-columns:1fr; padding-top:32px; gap:28px; }
   .pp-img--tall{ order:-1; }
   .pp-img--tall .kshow-ph{ max-height:none; aspect-ratio:4 / 4; }
+  .pp-badge{ left:14px; bottom:14px; width:42px; }
   .pp-facts dd{ font-size:16px; }
   .pp-price{ font-size:24px; }
   .pp-why, .pp-steps{ grid-template-columns:1fr; }
