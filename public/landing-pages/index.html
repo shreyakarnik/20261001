@@ -4486,39 +4486,11 @@ function buildOutdoor() {
     tent.position.set(BENCH.x, Y + .785, BENCH.z); tent.rotation.y = BENCH.r;   /* a face turned to the terrace, where the camera comes round */
     g.add(tent); }
 
-  /* ---- the original night sky all round: black at altitude, the fog colour
-     at the horizon, a scatter of stars; graded with the rest of the frame */
-  const sky = new THREE.Mesh(new THREE.SphereGeometry(150, 32, 16),
-    new THREE.MeshBasicMaterial({ color: hdr(.60, .70, .80), map: tx(texSky({ moon: false }), { wrap: THREE.RepeatWrapping, repeat: [4, 1] }),
-      side: THREE.BackSide, depthWrite: false, fog: false, toneMapped: false }));
+  /* ---- behind the terrace: plain black. No sky gradient, stars, skyline or
+     drifting haze, so nothing reads as distance beyond the wall, kiosk and bench */
+  const sky = new THREE.Mesh(new THREE.SphereGeometry(150, 16, 8),
+    new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide, depthWrite: false, fog: false, toneMapped: false }));
   sky.position.set(40, Y, -44); sky.renderOrder = -2; g.add(sky);
-
-  /* the city skyline closing the view, standing where the wooded ridge was:
-     two far rows and a nearer, slightly lifted one for depth */
-  const cityMap = tx(texSkyline(1207, { tone: [0, 0, 0], grey: 130 }), { wrap: THREE.RepeatWrapping, repeat: [1.7, 1] });   /* pitch black, grey windows: as the hero's */
-  cityMap.wrapT = THREE.ClampToEdgeWrapping;
-  [[40, 60, Math.PI, 280, 26], [128, -44, -Math.PI / 2, 300, 24], [70, 36, Math.PI * .85, 180, 18]]
-    .forEach(([rx, rz, ry, w, h], i) => {
-      const map = i === 2 ? tx(texSkyline(1311, { tone: [0, 0, 0], lit: .04, grey: 120 })) : cityMap;
-      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h),
-        new THREE.MeshBasicMaterial({ map: map, transparent: true, depthWrite: false, fog: false }));
-      m.position.set(rx, Y + h * .36, rz); m.rotation.y = ry; m.renderOrder = 1.5; g.add(m);   /* after the haze (1), before the lamps' glows (2): nothing lifts it off black */
-    });
-
-
-  /* drifting haze over the terrace (billboarded and slid by updateWorld) */
-  const hazeTex = tx(texGlow('rgba(160,205,210,.55)', 'rgba(110,165,175,.18)'));
-  const hrnd = mulberry32(6611);
-  for (let i = 0; i < (LOW ? 4 : 6); i++) {
-    const s2 = 12 + hrnd() * 15;
-    const h = new THREE.Mesh(new THREE.PlaneGeometry(s2, s2 * .55),
-      new THREE.MeshBasicMaterial({ map: hazeTex, transparent: true, blending: THREE.AdditiveBlending,
-        depthWrite: false, fog: false, opacity: .05 + hrnd() * .07 }));
-    h.position.set(12 + hrnd() * 30, Y + 1.5 + hrnd() * 8, -68 + hrnd() * 40);
-    h.renderOrder = 1;
-    h.userData = { sp: .06 + hrnd() * .12, ph: hrnd() * TAU, x0: h.position.x };
-    g.add(h); WORLD.haze.push(h);
-  }
 
   g.traverse(o => { if (o.isMesh) { o.frustumCulled = o !== sky; o.castShadow = o.receiveShadow = false; } });
 
