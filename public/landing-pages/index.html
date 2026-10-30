@@ -4462,7 +4462,10 @@ function buildOutdoor() {
     const tentMap = tx(tc); tentMap.anisotropy = Math.min(8, maxAniso);
     const logo = new Image();
     logo.onload = () => { const w = 300, h = w * logo.height / logo.width;
-      tx2.drawImage(logo, (512 - w) / 2, (320 - h) / 2, w, h); tentMap.needsUpdate = true; };
+      /* the whole mark in white: its own red X would vanish into the tent */
+      const wc = cvs(w, Math.ceil(h)), wx = wc.getContext('2d');
+      wx.drawImage(logo, 0, 0, w, h); wx.globalCompositeOperation = 'source-in'; wx.fillStyle = '#fff'; wx.fillRect(0, 0, w, h);
+      tx2.drawImage(wc, (512 - w) / 2, (320 - h) / 2); tentMap.needsUpdate = true; };
     logo.src = 'assets/pfx-light.png';
     const tentMat = new THREE.MeshStandardMaterial({ map: tentMap, roughness: .55, metalness: 0, emissive: 0xffffff, emissiveMap: tentMap, emissiveIntensity: .18 });
     const tent = new THREE.Group(), W2 = .44, H2 = .28, lean = .3;
