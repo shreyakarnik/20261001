@@ -4451,9 +4451,29 @@ function buildOutdoor() {
     });
     shadow(2.6, 2.2, px, pz, .22, rot);
   };
-  [[14.6, -57.6, .1], [19.2, -55.0, -.15], [21.6, -61.0, .2], [19.8, -46.6, -.05], [26.5, -46.0, .05], [25.0, -55.5, .1],
-   [21.5, -37.5, .12], [23.8, -33.5, -.15], [29.0, -30.5, .1], [30.5, -40.5, -.1]].forEach(([a, b, r]) => picnic(a, b, r));
+  /* just the one, set at an angle beside the ATM kiosk */
+  const BENCH = { x: 11.1, z: -49.8, r: .55 };
+  picnic(BENCH.x, BENCH.z, BENCH.r);
   add(mergeGeos(tops), wood); add(mergeGeos(legs), frame);
+
+  /* ---- a red table tent on it, the PFX mark on both faces */
+  { const tc = cvs(512, 320), tx2 = tc.getContext('2d');
+    tx2.fillStyle = '#c00022'; tx2.fillRect(0, 0, 512, 320);
+    const tentMap = tx(tc); tentMap.anisotropy = Math.min(8, maxAniso);
+    const logo = new Image();
+    logo.onload = () => { const w = 300, h = w * logo.height / logo.width;
+      tx2.drawImage(logo, (512 - w) / 2, (320 - h) / 2, w, h); tentMap.needsUpdate = true; };
+    logo.src = 'assets/pfx-light.png';
+    const tentMat = new THREE.MeshStandardMaterial({ map: tentMap, roughness: .55, metalness: 0, emissive: 0xffffff, emissiveMap: tentMap, emissiveIntensity: .18 });
+    const tent = new THREE.Group(), W2 = .44, H2 = .28, lean = .3;
+    [-1, 1].forEach(sd => {
+      const face = new THREE.Mesh(new THREE.PlaneGeometry(W2, H2), tentMat);
+      face.position.set(0, H2 / 2 * Math.cos(lean), sd * H2 / 2 * Math.sin(lean));
+      face.rotation.set(-sd * lean, sd < 0 ? Math.PI : 0, 0);
+      tent.add(face);
+    });
+    tent.position.set(BENCH.x, Y + .785, BENCH.z); tent.rotation.y = BENCH.r;   /* a face turned to the terrace, where the camera comes round */
+    g.add(tent); }
 
   /* ---- the original night sky all round: black at altitude, the fog colour
      at the horizon, a scatter of stars; graded with the rest of the frame */
@@ -4501,28 +4521,8 @@ function buildOutdoor() {
   const lamp = new THREE.PointLight(0xffa049, 2.6, 12, 2); lamp.position.set(10.6, Y + 3.4, -47.4); L.add(lamp);
   L.visible = false; g.add(L); WORLD.outdoorLights = L;
 
-  /* European street lamps along the wall and among the tables, and maples in
-     place of the model trees (the original's own builder, moved into this set) */
-  /* (the lamp that stood between the side door and the kiosk is gone: it split the kiosk view down the middle) */
-  [[10.3, -40.6, .9], [16.6, -51.6, 1.0], [23.4, -42.0, 1.05], [27.6, -51.2, 1.0], [17.6, -34.2, .95]]
-    .forEach(([lx2, lz, sc]) => g.add(buildStreetLamp(lx2, lz, sc, Y)));
-  [[17.5, -59.5, 1.0, 81], [23.5, -49.5, .9, 82], [28.0, -36.0, 1.1, 83], [12.6, -65.0, .95, 84], [31.0, -57.0, 1.05, 85]]
-    .forEach(([mx, mz, sc, seed]) => {
-      const o = buildMaple(seed, mx, mz, sc); o.position.y = Y; scene.remove(o); g.add(o);
-      /* in shadow: unlit dark silhouettes, so no lamp light catches them —
-         a near-black trunk and a very dark green canopy (leaves keep their sway) */
-      o.traverse(m => {
-        /* drawn after the drifting haze (an additive layer) so it can't lift them */
-        if (m.isMesh) { m.renderOrder = 1.6; }
-        if (m.isInstancedMesh) { m.material.color.setHex(0x010301); m.material.emissive.setHex(0x000000);
-          m.material.transparent = true; m.material.fog = false;
-          m.material.onBeforeCompile = (prev => sh => { prev(sh);
-            sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>',
-              '#include <dithering_fragment>\n gl_FragColor.rgb = diffuseColor.rgb;'); })(m.material.onBeforeCompile);
-          m.material.needsUpdate = true; }
-        else if (m.isMesh) m.material = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide, transparent: true, fog: false });
-      });
-    });
+  /* (the street lamps and maples that stood out here are gone: the terrace is
+     left open, just the bench by the kiosk) */
 
   /* snow over the terrace: soft round flakes drifting down through the lamp
      light. It replaces the falling leaves, and the rain and embers with them —
