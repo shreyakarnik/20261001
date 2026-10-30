@@ -3242,19 +3242,52 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
     hole.lineTo(dz + HALL_DOOR.w / 2, -HH / 2 + HALL_DOOR.h); hole.lineTo(dz + HALL_DOOR.w / 2, -HH / 2); hole.closePath();
     s.holes.push(hole);
     put(new THREE.ShapeGeometry(s), wall, x1, (y0 + y1) / 2, (zf + zb) / 2, 0, -Math.PI / 2);
-    const fr = new THREE.MeshBasicMaterial({ color: ungrade('#7c7c7c'), fog: false, toneMapped: false });   /* door frame, a shade under the wall */
-    put(new THREE.BoxGeometry(.06, .08, HALL_DOOR.w + .16), fr, x1 - .03, y0 + HALL_DOOR.h + .04, HALL_DOOR.z);
-    [-1, 1].forEach(sd => put(new THREE.BoxGeometry(.06, HALL_DOOR.h, .08), fr, x1 - .03, y0 + HALL_DOOR.h / 2, HALL_DOOR.z + sd * (HALL_DOOR.w / 2 + .04)));
+    /* a fine painted-wood grain for the door and its frame: a soft speckle and a few
+       faint vertical streaks, multiplied over the flat greys (lightly, so they keep their tone) */
+    const grainTex = (() => { const N = 256, c = cvs(N, N), x = c.getContext('2d'), r = mulberry32(3307);
+      const im = x.createImageData(N, N), d = im.data;
+      for (let i = 0; i < N * N; i++) { const v = 247 + (r() - .5) * 12; d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v; d[i * 4 + 3] = 255; }
+      x.putImageData(im, 0, 0);
+      for (let i = 0; i < 28; i++) { x.fillStyle = 'rgba(0,0,0,' + (.008 + r() * .014) + ')'; x.fillRect(r() * N, 0, .6 + r() * 1.4, N); }
+      return tx(c, { wrap: THREE.RepeatWrapping, aniso: 16 }); })();
+    const grained = (hex, rep, o) => { const t = grainTex.clone(); t.repeat.set(rep[0], rep[1]); t.needsUpdate = true;
+      return new THREE.MeshBasicMaterial(Object.assign({ color: ungrade(hex), map: t, fog: false, toneMapped: false }, o || {})); };
+    /* the frame: a casing with a flat face between two chamfers — the ones turned up
+       or to the left catch the light, the others fall into shade */
+    const frFlat = grained('#7e7e7e', [.4, 6]), frLit = grained('#9a9a9a', [.2, 6]), frShade = grained('#5c5c5c', [.2, 6]);
+    const CW = .12, BV = .025, FD = .05, BD = .034;                   /* casing width, chamfer width, face and chamfer depth */
+    const zL = HALL_DOOR.z - HALL_DOOR.w / 2, zR = HALL_DOOR.z + HALL_DOOR.w / 2, yTop = y0 + HALL_DOOR.h;
+    [[zL, -1], [zR, 1]].forEach(([ze, sd]) => {                       /* the two jambs (sd -1: the viewer's left) */
+      const cz = ze + sd * CW / 2, H2 = HALL_DOOR.h + CW;
+      put(new THREE.BoxGeometry(FD, H2, CW - BV * 2), frFlat, x1 - FD / 2, y0 + H2 / 2, cz);
+      put(new THREE.BoxGeometry(BD, H2, BV), sd < 0 ? frShade : frLit, x1 - BD / 2, y0 + H2 / 2, ze + sd * BV / 2);              /* inner chamfer */
+      put(new THREE.BoxGeometry(BD, H2, BV), sd < 0 ? frLit : frShade, x1 - BD / 2, y0 + H2 / 2, ze + sd * (CW - BV / 2));       /* outer chamfer */
+    });
+    put(new THREE.BoxGeometry(FD, CW - BV * 2, HALL_DOOR.w + CW * 2), frFlat, x1 - FD / 2, yTop + CW / 2, HALL_DOOR.z);          /* the head */
+    put(new THREE.BoxGeometry(BD, BV, HALL_DOOR.w), frShade, x1 - BD / 2, yTop + BV / 2, HALL_DOOR.z);                          /* its underside, in shade */
+    put(new THREE.BoxGeometry(BD, BV, HALL_DOOR.w + CW * 2), frLit, x1 - BD / 2, yTop + CW - BV / 2, HALL_DOOR.z);              /* its top, lit */
+    /* hinges: three on each outer edge — a barrel on the line of the swing and a
+       plate on the casing */
+    { const barM = new THREE.MeshBasicMaterial({ color: ungrade('#4c4c4c'), fog: false, toneMapped: false });
+      const barHi = new THREE.MeshBasicMaterial({ color: ungrade('#9c9c9c'), fog: false, toneMapped: false });
+      const plateM = new THREE.MeshBasicMaterial({ color: ungrade('#606060'), fog: false, toneMapped: false });
+      [zL, zR].forEach(ze => [.12, .5, .88].forEach(f => {
+        const yh = y0 + HALL_DOOR.h * f;
+        put(new THREE.CylinderGeometry(.013, .013, .11, 14), barM, x1 - .03, yh, ze);
+        put(new THREE.BoxGeometry(.004, .11, .004), barHi, x1 - .043, yh, ze - .005);                                              /* a glint down the barrel */
+        [-1, 1].forEach(e => put(new THREE.CylinderGeometry(.015, .015, .01, 14), barM, x1 - .03, yh + e * .06, ze));             /* the end caps */
+        put(new THREE.BoxGeometry(.004, .1, .034), plateM, x1 - FD - .002, yh, ze + Math.sign(ze - HALL_DOOR.z) * .03);
+      })); }
     /* the doors: a pair of panelled leaves like the entrance's, in the walls'
        grey, that swing out onto the terrace as the walk reaches them
        (WORLD.hallDoors, driven from updateWorld) */
-    const leafM = new THREE.MeshBasicMaterial({ color: ungrade('#858585'), fog: false, toneMapped: false, side: THREE.DoubleSide });
+    const leafM = grained('#858585', [2, 6], { side: THREE.DoubleSide });
     /* modelled on a classic three-panel double door: on each leaf a tall upper
        panel, a short middle one and a lower one, each a slightly raised field in
        a moulding lit from the upper left; silver levers on round roses by the
        meeting edge. Flat greys carried through the grade (ungrade), as the walls. */
     const flat = h => new THREE.MeshBasicMaterial({ color: ungrade(h), fog: false, toneMapped: false });
-    const fieldM = flat('#8b8b8b'), hiM = flat('#a2a2a2'), loM = flat('#686868'), midM = flat('#7a7a7a');
+    const fieldM = grained('#8b8b8b', [1.4, 2]), hiM = grained('#a2a2a2', [.3, 2]), loM = grained('#686868', [.3, 2]), midM = flat('#7a7a7a');
     const roseM = flat('#8f8f8f'), leverM = flat('#c4c4c4'), leverSh = flat('#7e7e7e');
     const LW = HALL_DOOR.w / 2, LH = HALL_DOOR.h;
     /* the panels as fractions of the leaf: [bottom, top] up the height; the side margins */
