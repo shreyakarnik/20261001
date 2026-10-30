@@ -1,87 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/index.html</loc>
+    <loc>https://www.poweredbypfx.com/</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/kiosk-outdoor.html</loc>
+    <loc>https://www.poweredbypfx.com/kiosk-outdoor</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/kiosk-indoor.html</loc>
+    <loc>https://www.poweredbypfx.com/kiosk-indoor</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/kiosk-atm.html</loc>
+    <loc>https://www.poweredbypfx.com/kiosk-atm</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/testimonials.html</loc>
+    <loc>https://www.poweredbypfx.com/testimonials</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/roi_calculator.html</loc>
+    <loc>https://www.poweredbypfx.com/roicalculator</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/blog.html</loc>
+    <loc>https://www.poweredbypfx.com/blog</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/post.html?p=why-pizza-vending-is-the-future</loc>
+    <loc>https://www.poweredbypfx.com/post?p=why-pizza-vending-is-the-future</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/post.html?p=roi-breakdown-first-year</loc>
+    <loc>https://www.poweredbypfx.com/post?p=roi-breakdown-first-year</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/post.html?p=indoor-vs-outdoor-kiosk</loc>
+    <loc>https://www.poweredbypfx.com/post?p=indoor-vs-outdoor-kiosk</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/post.html?p=pizza13-case-study</loc>
+    <loc>https://www.poweredbypfx.com/post?p=pizza13-case-study</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/post.html?p=franchise-fees-explained</loc>
+    <loc>https://www.poweredbypfx.com/post?p=franchise-fees-explained</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/post.html?p=maintenance-and-support</loc>
+    <loc>https://www.poweredbypfx.com/post?p=maintenance-and-support</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/contact.html</loc>
+    <loc>https://www.poweredbypfx.com/contact</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://shreyakarnik.github.io/20261001/public/landing-pages/privacy-policy.html</loc>
+    <loc>https://www.poweredbypfx.com/privacy-policy</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.poweredbypfx.com/about</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.poweredbypfx.com/support</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

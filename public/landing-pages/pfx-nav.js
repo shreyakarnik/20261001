@@ -46,7 +46,7 @@
     }
     if (talk && dd) links.insertBefore(talk, dd.nextSibling);
     var contact = document.createElement('a');
-    contact.className = 'pfx-link pfx-link--m'; contact.href = 'support.html'; contact.textContent = 'Contact';
+    contact.className = 'pfx-link pfx-link--m'; contact.href = '/support'; contact.textContent = 'Contact';
     links.appendChild(contact);
     links.appendChild(pf);
   }

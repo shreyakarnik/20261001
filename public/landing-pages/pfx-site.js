@@ -16,7 +16,7 @@
     var b = make(
       '<div class="pfx-cookie" role="region" aria-label="Cookie consent">' +
         '<p>We use cookies to understand how visitors use this site and to improve it. ' +
-        'See our <a href="privacy-policy.html">Privacy Policy</a>.</p>' +
+        'See our <a href="/privacy-policy">Privacy Policy</a>.</p>' +
         '<div class="pfx-cookie-btns">' +
           '<button type="button" class="pfx-cookie-no">Decline</button>' +
           '<button type="button" class="pfx-cookie-yes">Accept</button>' +

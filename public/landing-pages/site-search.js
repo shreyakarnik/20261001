@@ -4,7 +4,7 @@
    Powers the search button in the shared nav on every page.
    Reads posts from PFX_BLOG_POSTS (blog-data.js, must be
    loaded BEFORE this file) and matches against title, tags,
-   and excerpt. Results open the post at post.html?p=<slug>.
+   and excerpt. Results open the post at /post?p=<slug>.
 
    Include on every page as:
      <script src="blog-data.js"></script>
@@ -100,7 +100,7 @@
       return;
     }
     results.innerHTML = list.map(function (p) {
-      return '<a class="search-result" href="post.html?p=' + encodeURIComponent(p.slug) + '">' +
+      return '<a class="search-result" href="/post?p=' + encodeURIComponent(p.slug) + '">' +
         '<h4>' + escapeHtml(p.title) + '</h4>' +
         '<p>' + escapeHtml(p.excerpt) + '</p>' +
         '<div class="tags">' + p.tags.map(function (t) { return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('') + '</div>' +

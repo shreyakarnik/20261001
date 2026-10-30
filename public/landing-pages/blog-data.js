@@ -2,12 +2,12 @@
    PFX BLOG DATA
    -------------------------------------------------------
    Single source of truth for blog posts used by:
-     - blog.html      (renders the post cards)
-     - post.html      (renders one post: post.html?p=<slug>)
+     - /blog      (renders the post cards)
+     - /post      (renders one post: /post?p=<slug>)
      - site-search.js (powers the nav search button)
 
    To add/edit a post, edit this array, or write it in the
-   admin tool (admin.html) and press Publish: it downloads a
+   admin tool (/admin) and press Publish: it downloads a
    new copy of this file with the post included. Replace this
    file with it and push, and the post is live.
    `slug` must be unique; it's the post's address.
@@ -44,7 +44,7 @@ const PFX_BLOG_POSTS = [
 
 <h2>What this means for operators</h2>
 <p>Automation doesn't replace a great pizzeria. It extends one. Your brand, your recipes and your pricing stay yours; the kiosk simply lets you sell them in more places, for more hours, at a lower cost per pizza. That's why we think vending is where quick service is heading.</p>
-<p>Want to see the numbers for your own site? <a href="roi_calculator.html">Try the ROI calculator</a> or <a href="contact.html">talk to our team</a>.</p>
+<p>Want to see the numbers for your own site? <a href="/roicalculator">Try the ROI calculator</a> or <a href="/contact">talk to our team</a>.</p>
 `
   },
   {
@@ -87,7 +87,7 @@ const PFX_BLOG_POSTS = [
 
 <h2>Year one in practice</h2>
 <p>Most kiosks don't open at full volume. Expect a ramp as customers discover you, then a steady level that depends on foot traffic and pricing. The best way to plan is to model a conservative volume first, then see what the upside looks like.</p>
-<p>This model is illustrative: outcomes depend on your site, your operations and your local market. Plug in your own numbers with the <a href="roi_calculator.html">ROI calculator</a>, or <a href="contact.html">talk to us</a> about a specific location.</p>
+<p>This model is illustrative: outcomes depend on your site, your operations and your local market. Plug in your own numbers with the <a href="/roicalculator">ROI calculator</a>, or <a href="/contact">talk to us</a> about a specific location.</p>
 `
   },
   {
@@ -128,7 +128,7 @@ const PFX_BLOG_POSTS = [
 <p><b>Follow the foot traffic.</b> A kiosk sells to the people who walk past it, so start where crowds already are, at the times your kitchen is usually closed.</p>
 <p><b>Think about climate and access.</b> If you can restock from inside a building, the ATM or Indoor Kiosk keeps that work out of the rain and snow. If there's no building, the Outdoor Kiosk is designed to stand up to the elements.</p>
 <p><b>Check your power and space.</b> The Outdoor Kiosk needs a 50A supply and room for a full container; the Indoor Kiosk runs on 20A.</p>
-<p>Not sure which fits? <a href="contact.html">Tell us about your site</a> and we'll help you decide, or compare the full specs on the <a href="kiosk-outdoor.html">Outdoor</a>, <a href="kiosk-indoor.html">Indoor</a> and <a href="kiosk-atm.html">ATM</a> kiosk pages.</p>
+<p>Not sure which fits? <a href="/contact">Tell us about your site</a> and we'll help you decide, or compare the full specs on the <a href="/kiosk-outdoor">Outdoor</a>, <a href="/kiosk-indoor">Indoor</a> and <a href="/kiosk-atm">ATM</a> kiosk pages.</p>
 `
   },
   {
@@ -161,8 +161,8 @@ const PFX_BLOG_POSTS = [
 </ul>
 
 <h2>Hear it from Antoine</h2>
-<p>Antoine Attard of Pizza 13 talks through the switch to automation in his own words on our <a href="testimonials.html#pizza-13">Testimonials page</a>.</p>
-<p>Thinking about launching your own brand on PFX? <a href="contact.html">Let's talk</a>.</p>
+<p>Antoine Attard of Pizza 13 talks through the switch to automation in his own words on our <a href="/testimonials#pizza-13">Testimonials page</a>.</p>
+<p>Thinking about launching your own brand on PFX? <a href="/contact">Let's talk</a>.</p>
 `
   },
   {
@@ -194,7 +194,7 @@ const PFX_BLOG_POSTS = [
 
 <h2>Who it's for</h2>
 <p>The model is built for independent operators, regional chains, franchisors and even convenience stores: anyone with a pizza people already love who wants to sell it in more places, for more hours.</p>
-<p>See how the numbers work on the <a href="roi_calculator.html">ROI calculator</a>, or <a href="contact.html">talk to our team</a> about licensing.</p>
+<p>See how the numbers work on the <a href="/roicalculator">ROI calculator</a>, or <a href="/contact">talk to our team</a> about licensing.</p>
 `
   },
   {
@@ -225,7 +225,7 @@ const PFX_BLOG_POSTS = [
 
 <h2>What you take care of</h2>
 <p>Operators handle routine restocking and cleaning. In our ROI model, restocking takes about 20 minutes a day. Regular cleaning of the interior and exterior keeps the kiosk looking as good as your pizza.</p>
-<p>Questions about support for a specific site? <a href="contact.html">Get in touch</a>.</p>
+<p>Questions about support for a specific site? <a href="/contact">Get in touch</a>.</p>
 `
   }
 ];

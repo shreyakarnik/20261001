@@ -6,7 +6,7 @@
 
 /* --------------------------------------------------- cookie banner */
 .pfx-cookie{
-  position:fixed; z-index:960; left:16px; bottom:16px; width:min(440px, calc(100vw - 32px));
+  position:fixed; z-index:960; right:16px; bottom:16px; width:min(440px, calc(100vw - 32px));
   padding:18px 20px; background:rgba(9,12,16,.96); border:1px solid rgba(223,231,224,.14);
   border-radius:14px; box-shadow:0 24px 60px -20px rgba(0,0,0,.8); color:#dfe7e0;
   font:400 14px/1.6 'Inter', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;

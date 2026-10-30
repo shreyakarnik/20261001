@@ -6,7 +6,7 @@
       data-talk-trigger (nav "Let's Talk!" pill, hero CTA, kiosk
       page CTAs, ...) opens it instead of navigating to
       contact.html. The anchors keep their normal
-      href="contact.html" as a no-JS fallback.
+      href="/contact" as a no-JS fallback.
    2. Inline on the page, wherever an element carries
       data-talk-inline (e.g. the home page, after "What's Included?").
 
@@ -206,7 +206,7 @@
           collapse();
           if(opts.onSuccess) opts.onSuccess();
           /* every successful inquiry lands on the thank-you page */
-          window.location.href = 'thank-you.html';
+          window.location.href = '/thank-you';
         } else {
           alert("Something went wrong submitting the form. Please try again.");
         }

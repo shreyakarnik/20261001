@@ -1,0 +1,8 @@
+# PFX — robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /thank-you
+
+Sitemap: https://www.poweredbypfx.com/sitemap.xml

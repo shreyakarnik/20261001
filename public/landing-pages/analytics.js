@@ -24,8 +24,8 @@
         the numeric ID from the script URL shown there (it looks
         like //js.hs-scripts.com/12345678.js — the number is your
         ID). This is the SAME number as the HUBSPOT_PORTAL_ID /
-        GATE_HUBSPOT_PORTAL_ID placeholders already in index.html,
-        contact.html, and roi_calculator.html — once you know it,
+        GATE_HUBSPOT_PORTAL_ID placeholders already in /,
+        /contact, and /roicalculator — once you know it,
         you can fill in all of those with the same number too.
      Paste all three below. Until you do, this file safely does
      nothing — no broken requests, no console errors.

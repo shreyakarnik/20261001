@@ -5,7 +5,7 @@
   /* Gate this page behind the placeholder login. Real session checks
      will replace this once Supabase auth is wired up. */
   if (sessionStorage.getItem('pfx_admin_logged_in') !== 'true') {
-    window.location.replace('login.html');
+    window.location.replace('/login');
   }
 </script>
 <meta charset="UTF-8">
@@ -14,7 +14,7 @@
 <title>Write a Post | PFX Admin</title>
 <meta name="description" content="PFX blog administration.">
 <meta name="robots" content="noindex, nofollow">
-<link rel="canonical" href="https://shreyakarnik.github.io/20261001/public/landing-pages/admin.html">
+<link rel="canonical" href="https://www.poweredbypfx.com/admin">
 <meta name="theme-color" content="#05070a">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -26,15 +26,15 @@
 <meta property="og:site_name" content="PFX">
 <meta property="og:title" content="Write a Post | PFX Admin">
 <meta property="og:description" content="PFX blog administration.">
-<meta property="og:url" content="https://shreyakarnik.github.io/20261001/public/landing-pages/admin.html">
-<meta property="og:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg?v=2">
+<meta property="og:url" content="https://www.poweredbypfx.com/admin">
+<meta property="og:image" content="https://www.poweredbypfx.com/assets/og-image.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="PFX: Your Pizzeria, Now Automated. A white-label pizza vending kiosk at night.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Write a Post | PFX Admin">
 <meta name="twitter:description" content="PFX blog administration.">
-<meta name="twitter:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg?v=2">
+<meta name="twitter:image" content="https://www.poweredbypfx.com/assets/og-image.jpg?v=2">
 <!-- /pfx:head -->
 <script src="analytics.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -247,25 +247,25 @@
 </style>
 <link rel="stylesheet" href="pfx-nav.css?v=9">
 <link rel="stylesheet" href="pfx-theme.css?v=29">
-<link rel="stylesheet" href="pfx-site.css?v=8">
+<link rel="stylesheet" href="pfx-site.css?v=9">
 </head>
 <body>
 
 <header class="pfx-nav" id="pfxNav">
-  <a class="pfx-brand" href="index.html" aria-label="PFX home"><img src="assets/pfx-light.png" alt="PFX"></a>
+  <a class="pfx-brand" href="/" aria-label="PFX home"><img src="assets/pfx-light.png" alt="PFX"></a>
   <nav class="pfx-links" id="pfxLinks">
-    <div class="pfx-dd"><a class="pfx-link" aria-haspopup="true" href="kiosk-outdoor.html">Explore Kiosks</a><div class="pfx-dd-menu" role="menu"><a role="menuitem" href="kiosk-outdoor.html">Outdoor Kiosk</a><a role="menuitem" href="kiosk-indoor.html">Indoor Kiosk</a><a role="menuitem" href="kiosk-atm.html">ATM Kiosk</a></div></div>
-    <a class="pfx-link" href="testimonials.html">Testimonials</a>
-    <a class="pfx-link" href="roi_calculator.html">ROI Calculator</a>
-    <a class="pfx-link" href="index.html#faq">FAQ</a>
-    <a class="pfx-link" href="blog.html">Blog</a>
-    <a class="pfx-link" href="about.html">About</a>
-    <a class="pfx-link pfx-link--talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <div class="pfx-dd"><a class="pfx-link" aria-haspopup="true" href="/kiosk-outdoor">Explore Kiosks</a><div class="pfx-dd-menu" role="menu"><a role="menuitem" href="/kiosk-outdoor">Outdoor Kiosk</a><a role="menuitem" href="/kiosk-indoor">Indoor Kiosk</a><a role="menuitem" href="/kiosk-atm">ATM Kiosk</a></div></div>
+    <a class="pfx-link" href="/testimonials">Testimonials</a>
+    <a class="pfx-link" href="/roicalculator">ROI Calculator</a>
+    <a class="pfx-link" href="/#faq">FAQ</a>
+    <a class="pfx-link" href="/blog">Blog</a>
+    <a class="pfx-link" href="/about">About</a>
+    <a class="pfx-link pfx-link--talk" href="/contact" data-talk-trigger>Let&rsquo;s Talk</a>
   </nav>
   <div class="pfx-actions">
     <a class="pfx-pf" href="https://pizzaforno.com" target="_blank" rel="noopener" aria-label="PizzaForno (opens in a new tab)" title="PizzaForno"><img src="Images/pizzaforno-mark.png?v=2" alt="PizzaForno" width="34" height="34"></a>
     <button type="button" class="pfx-search" id="siteSearchBtn" aria-label="Search"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-    <a class="pfx-talk" href="contact.html" data-talk-trigger>Let&rsquo;s Talk</a>
+    <a class="pfx-talk" href="/contact" data-talk-trigger>Let&rsquo;s Talk</a>
     <button type="button" class="pfx-burger" aria-label="Menu" aria-controls="pfxLinks" aria-expanded="false"><i></i><i></i></button>
   </div>
 </header>
@@ -353,7 +353,7 @@
           <button type="button" class="gen-btn" id="genSlugBtn">Generate</button>
         </div>
         <input type="text" id="fSlug" placeholder="e.g. introducing-pfx">
-        <div class="hint">The post's address — it opens at post.html?p=your-slug</div>
+        <div class="hint">The post's address — it opens at /post?p=your-slug</div>
         <div class="counter-row">
           <span class="status-pill" id="slugPill">—</span>
           <span class="char-count" id="slugCount">0/10-50 chars</span>
@@ -416,12 +416,12 @@
       <div>
         <h4>Explore PizzaForno</h4>
         <a href="#">Locations</a>
-        <a href="blog.html">Blog</a>
+        <a href="/blog">Blog</a>
         <a href="#">About</a>
       </div>
       <div>
         <h4>Support</h4>
-        <a href="contact.html">Contact</a>
+        <a href="/contact">Contact</a>
         <a href="#">Email</a>
         <a href="#">Legal</a>
       </div>
@@ -442,14 +442,14 @@
      (key: pfx_blog_drafts) so the editor is testable end to
      end. Once Supabase is wired up, replace saveDraft() below
      with a real insert into your blog_posts table, and update
-     blog.html + site-search.js to read from Supabase instead
+     /blog + site-search.js to read from Supabase instead
      of blog-data.js.
      ========================================================= */
 
   document.getElementById('logoutLink').addEventListener('click', function(e){
     e.preventDefault();
     sessionStorage.removeItem('pfx_admin_logged_in');
-    window.location.href = 'login.html';
+    window.location.href = '/login';
   });
 
   // ---- character-count validators ----
@@ -488,7 +488,7 @@
   function updateSerp(){
     document.getElementById('serpTitle').textContent = fTitle.value || 'Your post title';
     document.getElementById('serpDesc').textContent = fDesc.value || 'Your meta description will preview here as you type.';
-    document.getElementById('serpUrl').textContent = window.location.origin.replace(/^https?:\/\//,'') + window.location.pathname.replace(/admin\.html$/, '') + 'post.html?p=' + (fSlug.value || 'your-post');
+    document.getElementById('serpUrl').textContent = window.location.origin.replace(/^https?:\/\//,'') + '/post?p=' + (fSlug.value || 'your-post');
   }
   function updatePreviewTitle(){
     document.getElementById('previewTitle').textContent = fTitle.value;
@@ -658,7 +658,7 @@
   // The site is static, so publishing means updating blog-data.js: Publish
   // downloads a new copy of it with this post added (or updated, if the slug
   // already exists). Replace public/landing-pages/blog-data.js with it and
-  // push, and the post appears on blog.html and opens at post.html?p=<slug>.
+  // push, and the post appears on /blog and opens at /post?p=<slug>.
   var publishMsg = document.getElementById('publishMsg');
   var publishedThisSession = null;   // so a second Publish keeps the first
   function say(html, warn){
@@ -686,7 +686,7 @@
     if(!p.slug){ say('Add a title or slug first, so the preview has an address.', true); return; }
     fSlug.value = p.slug; fSlug.dispatchEvent(new Event('input'));
     saveDraft();
-    window.open('post.html?p=' + encodeURIComponent(p.slug) + '&preview=1', '_blank');
+    window.open('/post?p=' + encodeURIComponent(p.slug) + '&preview=1', '_blank');
   });
   document.getElementById('publishBtn').addEventListener('click', function(){
     var p = currentPost(), missing = [];
@@ -703,10 +703,10 @@
     var head = '/* =========================================================\n' +
       '   PFX BLOG DATA\n' +
       '   -------------------------------------------------------\n' +
-      '   Single source of truth for blog posts used by blog.html (the cards),\n' +
-      '   post.html (one post: post.html?p=<slug>) and site-search.js.\n' +
+      '   Single source of truth for blog posts used by /blog (the cards),\n' +
+      '   /post (one post: /post?p=<slug>) and site-search.js.\n' +
       '   Written by the admin tool\'s Publish button. To add or edit a post,\n' +
-      '   publish it from admin.html, or edit this array by hand.\n' +
+      '   publish it from /admin, or edit this array by hand.\n' +
       '   ========================================================= */\n';
     var file = head + 'const PFX_BLOG_POSTS = ' + JSON.stringify(posts, null, 2) + ';\n';
     var a = document.createElement('a');
@@ -718,7 +718,7 @@
     publishedThisSession = posts;
     say('✓ <b>' + (at > -1 ? 'Updated' : 'Ready to publish') + ':</b> a new <code>blog-data.js</code> was downloaded with this post in it. ' +
         'Replace <code>public/landing-pages/blog-data.js</code> with it and push. The post will then open at ' +
-        '<code>post.html?p=' + p.slug + '</code>.');
+        '<code>/post?p=' + p.slug + '</code>.');
   });
 
   updateSerp();

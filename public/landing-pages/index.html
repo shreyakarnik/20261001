@@ -8,7 +8,7 @@
 <title>PFX — Pizza Automation Experts</title>
 <meta name="description" content="PFX is a white-label pizza vending platform: automated kiosks for independent operators, regional chains and franchisors. Your recipes, your brand, your pricing, 24/7.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://shreyakarnik.github.io/20261001/public/landing-pages/index.html">
+<link rel="canonical" href="https://www.poweredbypfx.com/">
 <meta name="theme-color" content="#05070a">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -20,15 +20,15 @@
 <meta property="og:site_name" content="PFX">
 <meta property="og:title" content="PFX — Pizza Automation Experts">
 <meta property="og:description" content="PFX is a white-label pizza vending platform: automated kiosks for independent operators, regional chains and franchisors. Your recipes, your brand, your pricing, 24/7.">
-<meta property="og:url" content="https://shreyakarnik.github.io/20261001/public/landing-pages/index.html">
-<meta property="og:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg?v=2">
+<meta property="og:url" content="https://www.poweredbypfx.com/">
+<meta property="og:image" content="https://www.poweredbypfx.com/assets/og-image.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="PFX: Your Pizzeria, Now Automated. A white-label pizza vending kiosk at night.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PFX — Pizza Automation Experts">
 <meta name="twitter:description" content="PFX is a white-label pizza vending platform: automated kiosks for independent operators, regional chains and franchisors. Your recipes, your brand, your pricing, 24/7.">
-<meta name="twitter:image" content="https://shreyakarnik.github.io/20261001/public/landing-pages/assets/og-image.jpg?v=2">
+<meta name="twitter:image" content="https://www.poweredbypfx.com/assets/og-image.jpg?v=2">
 <!-- /pfx:head -->
 <link rel="stylesheet" href="assets/fonts.css">
 <style>
@@ -1084,6 +1084,8 @@ body.flat-scene #vignette{ opacity:0 !important; transition:opacity .6s; }
 .certs{ position:fixed; left:var(--certs-x, auto); right:auto; bottom:calc(28px + 7vh); z-index:44; width:112px; transform:translateX(-50%);   /* centred under the search button (--certs-x, set by script) */
   opacity:0; visibility:hidden; pointer-events:none; transition:opacity .45s, visibility 0s .45s; }
 .certs.on{ opacity:1; visibility:visible; transition:opacity .45s, visibility 0s; }
+/* the cookie banner takes the same corner: the seal waits until it has been answered */
+body:has(.pfx-cookie.on) .certs{ opacity:0; visibility:hidden; }
 .certs img{ width:100%; height:auto; display:block; filter:drop-shadow(0 2px 10px rgba(0,0,0,.45)); }
 @media (max-width:820px){
   .certs{ top:calc(var(--nav-h) + 10px); bottom:auto; left:auto; right:16px; width:76px; transform:none; }
@@ -1254,7 +1256,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 .seenon-mark--top{ display:none; }
 </style>
 <link rel="stylesheet" href="talk-modal.css?v=9">
-<link rel="stylesheet" href="pfx-site.css?v=8">
+<link rel="stylesheet" href="pfx-site.css?v=9">
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
       data-layout-curriculum="b" data-layout-closing="b" data-layout-footer="b">
@@ -1278,14 +1280,14 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
   </a>
   <nav class="nav-links" id="navlinks">
     <button class="nav-msearch" type="button" aria-label="Search the site" data-cursor><span>Search</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-    <div class="nav-dd"><a class="nav-link" aria-haspopup="true" href="kiosk-outdoor.html" data-cursor><span>Explore Kiosks</span><span class="alt" aria-hidden="true">Explore Kiosks</span></a><button class="nav-dd-toggle" type="button" aria-label="Show the kiosks" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="nav-dd-menu" role="menu"><a role="menuitem" href="kiosk-outdoor.html">Outdoor Kiosk</a><a role="menuitem" href="kiosk-indoor.html">Indoor Kiosk</a><a role="menuitem" href="kiosk-atm.html">ATM Kiosk</a></div></div>
-    <a class="nav-link nav-link--talk" href="contact.html" data-talk-trigger data-cursor><span>Let&rsquo;s Talk</span><span class="alt" aria-hidden="true">Let&rsquo;s Talk</span></a>
-    <a class="nav-link" href="testimonials.html" data-cursor><span>Testimonials</span><span class="alt" aria-hidden="true">Testimonials</span></a>
-    <a class="nav-link" href="roi_calculator.html" data-cursor><span>ROI Calculator</span><span class="alt" aria-hidden="true">ROI Calculator</span></a>
+    <div class="nav-dd"><a class="nav-link" aria-haspopup="true" href="/kiosk-outdoor" data-cursor><span>Explore Kiosks</span><span class="alt" aria-hidden="true">Explore Kiosks</span></a><button class="nav-dd-toggle" type="button" aria-label="Show the kiosks" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="nav-dd-menu" role="menu"><a role="menuitem" href="/kiosk-outdoor">Outdoor Kiosk</a><a role="menuitem" href="/kiosk-indoor">Indoor Kiosk</a><a role="menuitem" href="/kiosk-atm">ATM Kiosk</a></div></div>
+    <a class="nav-link nav-link--talk" href="/contact" data-talk-trigger data-cursor><span>Let&rsquo;s Talk</span><span class="alt" aria-hidden="true">Let&rsquo;s Talk</span></a>
+    <a class="nav-link" href="/testimonials" data-cursor><span>Testimonials</span><span class="alt" aria-hidden="true">Testimonials</span></a>
+    <a class="nav-link" href="/roicalculator" data-cursor><span>ROI Calculator</span><span class="alt" aria-hidden="true">ROI Calculator</span></a>
     <a class="nav-link" href="#faq" data-cursor><span>FAQ</span><span class="alt" aria-hidden="true">FAQ</span></a>
-    <a class="nav-link" href="blog.html" data-cursor><span>Blog</span><span class="alt" aria-hidden="true">Blog</span></a>
-    <a class="nav-link" href="about.html" data-cursor><span>About</span><span class="alt" aria-hidden="true">About</span></a>
-    <a class="nav-link nav-link--m" href="support.html" data-cursor><span>Contact</span><span class="alt" aria-hidden="true">Contact</span></a>
+    <a class="nav-link" href="/blog" data-cursor><span>Blog</span><span class="alt" aria-hidden="true">Blog</span></a>
+    <a class="nav-link" href="/about" data-cursor><span>About</span><span class="alt" aria-hidden="true">About</span></a>
+    <a class="nav-link nav-link--m" href="/support" data-cursor><span>Contact</span><span class="alt" aria-hidden="true">Contact</span></a>
     <a class="nav-link nav-link--m nav-link--pf" href="https://pizzaforno.com" target="_blank" rel="noopener" data-cursor><span>Become a PizzaForno Licensee</span><span class="alt" aria-hidden="true">Become a PizzaForno Licensee</span></a>
   </nav>
   <div class="nav-actions">
@@ -1293,7 +1295,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     <button class="nav-search" id="siteSearchBtn" type="button" aria-label="Search" data-cursor>
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.6" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
     </button>
-    <a class="nav-talk" href="contact.html" data-talk-trigger data-cursor>Let&rsquo;s Talk</a>
+    <a class="nav-talk" href="/contact" data-talk-trigger data-cursor>Let&rsquo;s Talk</a>
   </div>
   <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>
 </header>
@@ -1314,8 +1316,8 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     <p class="hero-sub body" data-rv="up">PFX gives independent operators, regional chains, and franchisors
       a white-label pizza vending platform, your recipes, your brand, your pricing, 24/7.</p>
     <div class="hero-ctas" data-rv="up">
-      <a class="btn-talk" href="contact.html" data-talk-trigger data-cursor>Let&rsquo;s Talk!</a>
-      <a class="arrowlink" href="kiosk-outdoor.html" data-cursor><span>Explore Kiosks</span><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span></a>
+      <a class="btn-talk" href="/contact" data-talk-trigger data-cursor>Let&rsquo;s Talk!</a>
+      <a class="arrowlink" href="/kiosk-outdoor" data-cursor><span>Explore Kiosks</span><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span></a>
     </div>
   </div>
 
@@ -1336,7 +1338,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
       <h2 class="display h-sec gate-title" data-rv="up">Complete Control of Your Brand</h2>
       <p class="gate-body" data-rv="up">Unlike franchise programs, you own the equipment and keep full control. We&rsquo;re built for
         Independent Operators, Regional Chains, Franchisors, and even Convenience Stores.</p>
-      <a class="arrowlink" href="kiosk-outdoor.html" data-rv="fade" data-cursor>
+      <a class="arrowlink" href="/kiosk-outdoor" data-rv="fade" data-cursor>
         <span>Explore Specs</span>
         <span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
       </a>
@@ -1365,7 +1367,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
         </div>
         <h2 class="tk-title">What&rsquo;s Included?</h2>
         <p class="tk-body">From setup to seamless operation, we&rsquo;ve got you covered every step of the way.</p>
-        <a class="arrowlink" href="kiosk-outdoor.html" data-cursor>
+        <a class="arrowlink" href="/kiosk-outdoor" data-cursor>
           <span>Explore Specs</span>
           <span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         </a>
@@ -1387,8 +1389,8 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     <p class="k2-sub">The Indoor Kiosk is a sleek, freestanding unit built for high-traffic indoor spaces like universities,
       workplaces, and hospitals, with a 32&Prime; touchscreen and campus meal plan payments.</p>
     <div class="hero-ctas">
-      <a class="btn-talk" href="contact.html" data-talk-trigger data-cursor>Let&rsquo;s Talk!</a>
-      <a class="arrowlink" href="kiosk-indoor.html" data-cursor><span>Indoor Kiosk</span><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span></a>
+      <a class="btn-talk" href="/contact" data-talk-trigger data-cursor>Let&rsquo;s Talk!</a>
+      <a class="arrowlink" href="/kiosk-indoor" data-cursor><span>Indoor Kiosk</span><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -1404,8 +1406,8 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
     <p class="k2-sub">The ATM Kiosk is recessed into a building&rsquo;s exterior, so customers order from outside
       while you restock from inside. Ready in under 5 minutes, open 24/7.</p>
     <div class="hero-ctas">
-      <a class="btn-talk" href="contact.html" data-talk-trigger data-cursor>Let&rsquo;s Talk!</a>
-      <a class="arrowlink" href="kiosk-atm.html" data-cursor><span>ATM Kiosk</span><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span></a>
+      <a class="btn-talk" href="/contact" data-talk-trigger data-cursor>Let&rsquo;s Talk!</a>
+      <a class="arrowlink" href="/kiosk-atm" data-cursor><span>ATM Kiosk</span><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -1425,7 +1427,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
           <div class="eyebrow">Learn More</div>
           <h2>FAQ&rsquo;s</h2>
           <p class="sub">Read Through Some of Our Frequently Asked Questions</p>
-          <a href="kiosk-outdoor.html" class="explore-link" data-cursor>Explore Specs
+          <a href="/kiosk-outdoor" class="explore-link" data-cursor>Explore Specs
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>
           </a>
         </div>
@@ -1470,7 +1472,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
             <button type="button" class="faq-q">What is the ROI On These Kiosks?
               <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </button>
-            <div class="faq-a"><p>Returns vary by location, foot traffic, and pricing — use our <a href="roi_calculator.html" style="color:var(--red); text-decoration:underline;">ROI Calculator</a> to model projected earnings, payback period, and lifetime ROI for your specific setup.</p></div>
+            <div class="faq-a"><p>Returns vary by location, foot traffic, and pricing — use our <a href="/roicalculator" style="color:var(--red); text-decoration:underline;">ROI Calculator</a> to model projected earnings, payback period, and lifetime ROI for your specific setup.</p></div>
           </div>
           <div class="faq-item">
             <button type="button" class="faq-q">PFX or PizzaForno?
@@ -1536,12 +1538,12 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
       </div>
       <div class="footer-right">
         <div class="footer-links">
-          <a href="privacy-policy.html" data-cursor>Privacy Policy</a>
+          <a href="/privacy-policy" data-cursor>Privacy Policy</a>
           <a href="#top" data-cursor>Terms</a>
           <a href="#top" data-cursor>Application Form</a>
           <a href="#faq" data-cursor>FAQ</a>
           <a href="#top" data-cursor>Documentation</a>
-          <a href="support.html" data-cursor>Support</a>
+          <a href="/support" data-cursor>Support</a>
         </div>
         <p class="footer-legal">All trademarks are owned by PFX Canada Inc and used under licence. &copy;2026</p>
       </div>
@@ -6960,7 +6962,7 @@ function start() {
       document.body.classList.remove('is-locked');
       $('#hero').querySelectorAll('[data-rv], .mask-line').forEach((e, i) =>
         setTimeout(() => e.classList.add('rv-in'), REDUCE ? 0 : 120 + i * 95));
-      /* arriving from another page on a link like index.html#faq: the page was
+      /* arriving from another page on a link like /#faq: the page was
          scroll-locked while the scene loaded, so take the reader there now */
       const target = location.hash.length > 1 && document.getElementById(location.hash.slice(1));
       if (target) {
