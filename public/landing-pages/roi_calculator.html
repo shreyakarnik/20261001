@@ -619,9 +619,8 @@ calc();
      3. Note: the honeypot stops simple bots that fill every field,
         but not a determined one. Server-side verification (e.g. via
         Supabase) can be added later if spam becomes a problem.
-     4. Access is remembered per-browser (localStorage) so a
-        visitor who already submitted isn't asked again — clear
-        "pfx_roi_unlocked" in dev tools to test the gate again.
+     4. Nothing is remembered: the form is asked for on every visit,
+        even from someone who has filled it in before.
      5. The calculator is always rendered on the page — while the
         gate is up, a dark overlay dims it and the lead form floats
         on top as a modal card, so visitors can see the calculator
@@ -634,12 +633,9 @@ calc();
   var GATE_HUBSPOT_FORM_GUID = "8eea1b28-f409-476f-95c0-48d769f516ae";   /* https://8moiu.share.hsforms.com/2juobKPQJR2-VwEjXafUWrg */
   var GATE_HUBSPOT_SUBSCRIPTION_ID = 11922088;   /* the form's required consent box */
 
+  /* the form is asked for on every visit, even after it's been filled in once */
   document.addEventListener('DOMContentLoaded', function(){
-    if (localStorage.getItem('pfx_roi_unlocked') === 'true') {
-      unlockCalculator();
-    } else {
-      document.body.classList.add('gate-locked');
-    }
+    document.body.classList.add('gate-locked');
   });
 
   function unlockCalculator(){
@@ -701,7 +697,6 @@ calc();
     })
     .then(function(res){
       if (res.ok) {
-        localStorage.setItem('pfx_roi_unlocked', 'true');
         unlockCalculator();
       } else {
         errorBox.textContent = 'Something went wrong submitting the form. Please try again.';
