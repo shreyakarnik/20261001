@@ -4581,27 +4581,92 @@ function buildOutdoor() {
   picnic(BENCH.x, BENCH.z, BENCH.r);
   add(mergeGeos(tops), wood); add(mergeGeos(legs), frame);
 
-  /* ---- a red table tent on it, the PFX mark on both faces */
-  { const tc = cvs(512, 320), tx2 = tc.getContext('2d');
-    tx2.fillStyle = '#c00022'; tx2.fillRect(0, 0, 512, 320);
-    const tentMap = tx(tc); tentMap.anisotropy = Math.min(8, maxAniso);
+  /* ---- on the bench: a menu tent card at the right end and, at the left, a
+     meat lovers pizza in an open white box, still steaming. Along the table,
+     +u is the camera's right as it comes round to the wall */
+  const bc = Math.cos(BENCH.r), bs = Math.sin(BENCH.r), TOP = Y + .785;
+  const onTable = (u, w) => [BENCH.x + u * bc + w * bs, BENCH.z - u * bs + w * bc];
+  { /* the menu: a red card, the PFX mark small at the top and six pizzas */
+    const c = cvs(400, 600), x2 = c.getContext('2d');
+    x2.fillStyle = '#c00022'; x2.fillRect(0, 0, 400, 600);
+    x2.strokeStyle = 'rgba(255,255,255,.5)'; x2.lineWidth = 3; x2.strokeRect(14, 14, 372, 572);
+    x2.fillStyle = '#fff'; x2.textAlign = 'center'; x2.textBaseline = 'middle';
+    x2.font = '600 34px Inter, "Helvetica Neue", Arial, sans-serif';
+    if (x2.letterSpacing !== undefined) x2.letterSpacing = '8px';
+    x2.fillText('MENU', 204, 150);
+    if (x2.letterSpacing !== undefined) x2.letterSpacing = '0px';
+    x2.fillRect(150, 178, 100, 2);
+    x2.font = '500 30px Inter, "Helvetica Neue", Arial, sans-serif';
+    ['Margherita', 'Pepperoni', 'Meat Lovers', 'Hawaiian', 'Veggie', 'BBQ Chicken'].forEach((n, i) => x2.fillText(n, 200, 236 + i * 56));
+    const menuMap = tx(c); menuMap.anisotropy = Math.min(8, maxAniso);
     const logo = new Image();
-    logo.onload = () => { const w = 300, h = w * logo.height / logo.width;
-      /* the whole mark in white: its own red X would vanish into the tent */
-      const wc = cvs(w, Math.ceil(h)), wx = wc.getContext('2d');
-      wx.drawImage(logo, 0, 0, w, h); wx.globalCompositeOperation = 'source-in'; wx.fillStyle = '#fff'; wx.fillRect(0, 0, w, h);
-      tx2.drawImage(wc, (512 - w) / 2, (320 - h) / 2); tentMap.needsUpdate = true; };
+    logo.onload = () => { const w = 120, h = w * logo.height / logo.width, lc = cvs(w, Math.ceil(h)), lx = lc.getContext('2d');
+      lx.drawImage(logo, 0, 0, w, h); lx.globalCompositeOperation = 'source-in'; lx.fillStyle = '#fff'; lx.fillRect(0, 0, w, h);
+      x2.drawImage(lc, (400 - w) / 2, 50); menuMap.needsUpdate = true; };
     logo.src = 'assets/pfx-light.png';
-    const tentMat = new THREE.MeshStandardMaterial({ map: tentMap, roughness: .55, metalness: 0, emissive: 0xffffff, emissiveMap: tentMap, emissiveIntensity: .18 });
-    const tent = new THREE.Group(), W2 = .44, H2 = .28, lean = .3;
+    const menuMat = new THREE.MeshStandardMaterial({ map: menuMap, roughness: .55, metalness: 0, emissive: 0xffffff, emissiveMap: menuMap, emissiveIntensity: .18 });
+    const tent = new THREE.Group(), W2 = .2, H2 = .3, lean = .2;
     [-1, 1].forEach(sd => {
-      const face = new THREE.Mesh(new THREE.PlaneGeometry(W2, H2), tentMat);
+      const face = new THREE.Mesh(new THREE.PlaneGeometry(W2, H2), menuMat);
       face.position.set(0, H2 / 2 * Math.cos(lean), sd * H2 / 2 * Math.sin(lean));
       face.rotation.set(-sd * lean, sd < 0 ? Math.PI : 0, 0);
       tent.add(face);
     });
-    tent.position.set(BENCH.x, Y + .785, BENCH.z); tent.rotation.y = BENCH.r;   /* a face turned to the terrace, where the camera comes round */
+    const tp = onTable(.5, 0); tent.position.set(tp[0], TOP, tp[1]); tent.rotation.y = BENCH.r - .2;   /* a face turned to the camera's way in */
     g.add(tent); }
+  { /* the pizza: crust, sauce, cheese, and the meats */
+    const c = cvs(512, 512), x2 = c.getContext('2d'), r = mulberry32(5150);
+    x2.fillStyle = '#b8752f'; x2.beginPath(); x2.arc(256, 256, 254, 0, TAU); x2.fill();                 /* crust */
+    x2.fillStyle = '#9c3a1c'; x2.beginPath(); x2.arc(256, 256, 222, 0, TAU); x2.fill();                 /* sauce */
+    for (let i = 0; i < 26; i++) { x2.fillStyle = 'rgba(244,214,140,' + (.55 + r() * .35) + ')';      /* melted cheese */
+      x2.beginPath(); x2.arc(256 + (r() - .5) * 360, 256 + (r() - .5) * 360, 30 + r() * 46, 0, TAU); x2.fill(); }
+    x2.globalCompositeOperation = 'destination-in'; x2.beginPath(); x2.arc(256, 256, 254, 0, TAU); x2.fill();
+    x2.globalCompositeOperation = 'source-over';
+    x2.fillStyle = '#b8752f'; x2.beginPath(); x2.arc(256, 256, 254, 0, TAU); x2.arc(256, 256, 224, 0, TAU, true); x2.fill();   /* crust over the cheese */
+    const inPie = () => { let a, d; do { a = r() * TAU; d = Math.sqrt(r()) * 190; } while (false); return [256 + Math.cos(a) * d, 256 + Math.sin(a) * d]; };
+    for (let i = 0; i < 16; i++) { const [px, py] = inPie(); x2.fillStyle = '#8e1f16'; x2.beginPath(); x2.arc(px, py, 22, 0, TAU); x2.fill();   /* pepperoni */
+      x2.fillStyle = 'rgba(60,8,4,.35)'; x2.beginPath(); x2.arc(px + 3, py + 3, 22, 0, TAU); x2.arc(px, py, 22, 0, TAU, true); x2.fill(); }
+    for (let i = 0; i < 22; i++) { const [px, py] = inPie(); x2.fillStyle = '#5a3420'; x2.beginPath();                       /* sausage */
+      x2.ellipse(px, py, 9 + r() * 5, 7 + r() * 4, r() * TAU, 0, TAU); x2.fill(); }
+    for (let i = 0; i < 10; i++) { const [px, py] = inPie(); x2.save(); x2.translate(px, py); x2.rotate(r() * TAU);          /* bacon */
+      x2.fillStyle = '#a8452f'; x2.fillRect(-20, -5, 40, 10); x2.fillStyle = '#e8b8a0'; x2.fillRect(-20, -1, 40, 3); x2.restore(); }
+    for (let i = 0; i < 9; i++) { const [px, py] = inPie(); x2.save(); x2.translate(px, py); x2.rotate(r() * TAU);           /* ham */
+      x2.fillStyle = '#d9806f'; x2.fillRect(-11, -11, 22, 22); x2.restore(); }
+    const pizzaMat = new THREE.MeshStandardMaterial({ map: tx(c), roughness: .7, metalness: 0, emissive: 0xffffff, emissiveMap: tx(c), emissiveIntensity: .12 });
+    const boxM = new THREE.MeshStandardMaterial({ color: 0xf1efe9, roughness: .9, metalness: 0, emissive: 0xffffff, emissiveIntensity: .05 });
+    const pb = new THREE.Group(), S = .38, Hb = .024, T = .006;   /* low walls, so the pie shows from the camera's height */
+    pb.add(new THREE.Mesh(new THREE.BoxGeometry(S, T, S), boxM));                                            /* the box: floor and four low walls */
+    [[0, S / 2], [0, -S / 2], [S / 2, 0], [-S / 2, 0]].forEach(([dx, dz]) => {
+      const wall = new THREE.Mesh(new THREE.BoxGeometry(dx ? T : S, Hb, dx ? S : T), boxM); wall.position.set(dx, Hb / 2, dz); pb.add(wall); });
+    const lid = new THREE.Mesh(new THREE.BoxGeometry(S, T, S), boxM);                                         /* the lid, open and leaning back */
+    lid.geometry.translate(0, 0, S / 2); const hinge = new THREE.Group(); hinge.position.set(0, Hb, -S / 2); hinge.rotation.x = Math.PI - Math.asin((Hb - T) / S); hinge.add(lid); pb.add(hinge);   /* folded right back, lying flat on the table behind the box */
+    const pie = new THREE.Mesh(new THREE.CylinderGeometry(.165, .165, .014, 40), [boxM, pizzaMat, boxM]); pie.position.y = T + .008; pb.add(pie);
+    const pp = onTable(-.2, .02); pb.position.set(pp[0], TOP - .002, pp[1]); pb.rotation.y = BENCH.r + Math.PI / 2 + .14;   /* turned so the open lid lies along the table toward its end; a little askew, not squared to the boards */
+    g.add(pb);
+    /* steam: thin separate wisps, each its own curling ribbon, rising and fading (driven in updateWorld) */
+    const wispTex = [0, 1, 2].map(v => {
+      const c = cvs(64, 256), x = c.getContext('2d');
+      const gr = x.createLinearGradient(0, 256, 0, 0);
+      gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(.25, 'rgba(255,255,255,.9)');
+      gr.addColorStop(.7, 'rgba(255,255,255,.5)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+      x.strokeStyle = gr; x.lineCap = 'round'; x.filter = 'blur(3px)';
+      [[7, 1], [3, .9]].forEach(([w, al]) => {
+        x.lineWidth = w; x.globalAlpha = al; x.beginPath();
+        for (let y = 250; y >= 6; y -= 4) {
+          const t = (250 - y) / 244, amp = 4 + t * 14;
+          const px = 32 + Math.sin(t * (5 + v) + v * 2.1) * amp;
+          y === 250 ? x.moveTo(px, y) : x.lineTo(px, y);
+        }
+        x.stroke(); });
+      return tx(c); });
+    WORLD.steam = [];
+    for (let i = 0; i < 5; i++) {
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: wispTex[i % 3], transparent: true, depthWrite: false, opacity: 0, fog: false }));
+      const off = (i - 2) * .06;
+      sp.userData = { x: pp[0] + off * Math.cos(BENCH.r) + (Math.random() - .5) * .04, z: pp[1] - off * Math.sin(BENCH.r) + (Math.random() - .5) * .08,
+                      y: TOP + .03, ph: i / 5 + Math.random() * .1, sp: .26 + Math.random() * .1, sway: Math.random() * TAU };
+      sp.renderOrder = 6; g.add(sp); WORLD.steam.push(sp);
+    } }
 
   /* ---- behind the terrace: plain black. No sky gradient, stars, skyline or
      drifting haze, so nothing reads as distance beyond the wall, kiosk and bench */
@@ -5105,6 +5170,7 @@ function buildAtmosphere() {
     rain.frustumCulled = false; rain.renderOrder = 6;
     scene.add(rain); WORLD.rain = rain;
   }
+
 
   /* ripples on the standing water */
   const ringC = cvs(256, 256), rx2 = ringC.getContext('2d');
@@ -6005,8 +6071,9 @@ const PATH = [
   { at: 1.88, p: [  0.0, 9.1, -36.6 ], t: [  0.0, 9.2, -46.0 ], fov: 50 },   /* under the portico       */
   { at: 2,    p: [  0.0, 9.0, -39.8 ], t: [  0.0, 9.5, -49.0 ], fov: 46 },   /* inside: the indoor kiosk */
   { at: 2.36, p: [  5.4, 9.1, -43.6 ], t: [ 14.0, 9.2, -44.0 ], fov: 50 },   /* turn to the side door     */
-  { at: 2.6,  p: [ 10.6, 9.2, -44.2 ], t: [ 14.5, 9.3, -54.0 ], fov: 50 },   /* out the door, already turning left */
-  { at: 2.82, p: [ 13.4, 9.25, -45.0 ], t: [ 9.5, 9.4, -53.0 ], fov: 50 },   /* still turning left, round to the wall (one way, no swing right first) */
+  { at: 2.47, p: [ 10.6, 9.2, -44.2 ], t: [ 14.5, 9.3, -54.0 ], fov: 50 },   /* out the door, already turning left */
+  { at: 2.56, p: [ 13.4, 9.3, -45.0 ], t: [ 9.5, 9.4, -53.0 ], fov: 50 },   /* still turning left, round to the wall (one way, no swing right first) — quickly, so little empty terrace goes by */
+  { at: 2.68, p: [ 14.5, 9.45, -46.3 ], t: [ 9.0, 9.45, -46.3 ], fov: 50 },  /* already on the ATM; it holds here until the copy arrives */
   { at: 3,    p: [ 14.5, 9.45, -46.3 ], t: [ 9.0, 9.45, -46.3 ], fov: 50 },   /* the ATM kiosk, square to the wall: the hero shot, drawn in toward the copy */
   { at: 3.3,  p: [ 14.35, 9.45, -46.3 ], t: [ 9.0, 9.45, -46.3 ], fov: 50 },  /* …a slow push in while the copy reads */
   { at: 4,    p: [ 22.0, 10.4, -37.5 ], t: [  9.2, 8.6, -50.0 ], fov: 56 }   /* the footer: the closing view across the terrace (Afterlight removed) */
@@ -6718,12 +6785,22 @@ addEventListener('load', placeCerts);
 placeCerts();
 function updateCerts() {
   if (!CERTS) return;
-  const hero = 1 - smooth(.3, .75, RIG.smooth);
-  const k = Math.max(hero, K2 && K2.k > 0 ? K2.k : 0, K3 && K3.k > 0 ? K3.k : 0);
-  CERTS.classList.toggle('on', k > .5 && RIG.intro > .9);
+  /* keyed to where the camera is, not to the copy (which lingers past the
+     kiosk): the hero, the indoor kiosk's hold, and the ATM once the turn is done */
+  const sm = RIG.smooth;
+  const onKiosk = sm < .5 || (sm > 1.9 && sm < 2.12) || (sm > 2.64 && sm < 3.42);
+  CERTS.classList.toggle('on', onKiosk && RIG.intro > .9);
 }
 function updateWorld(dt) {
   WORLD.uT.value = clock;
+
+  /* steam off the pizza on the terrace bench: each wisp rises, spreads and fades on its own loop */
+  if (WORLD.steam && WORLD.outdoor && WORLD.outdoor.visible) WORLD.steam.forEach(sp => {
+    const u = sp.userData, k = (clock * u.sp + u.ph) % 1;
+    sp.position.set(u.x + Math.sin(clock * .8 + u.sway) * .025 * k, u.y + .1 + k * .2, u.z + Math.cos(clock * .6 + u.sway) * .025 * k);
+    sp.scale.set(.07 + k * .04, .2 + k * .1, 1);
+    sp.material.opacity = Math.sin(k * Math.PI) * .45;
+  });
 
   /* the focused chapter warms the lanterns and swells the disc */
   RIG.focusAmt = damp(RIG.focusAmt, RIG.focus >= 0 ? 1 : 0, 5, dt);
