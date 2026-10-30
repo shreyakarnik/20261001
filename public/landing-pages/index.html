@@ -4536,9 +4536,12 @@ function buildOutdoor() {
   /* snow over the terrace: soft round flakes drifting down through the lamp
      light. It replaces the falling leaves, and the rain and embers with them —
      neither belongs in a snowfall. */
-  const N = LOW ? 700 : 1800, rnd2 = mulberry32(6612);   /* a light fall, well under half the earlier count */
+  /* only close by: it falls in a small box around the kiosk, the bench and the
+     camera's way in, and fades out with distance, so no far-off flakes open
+     the terrace up into a wide space */
+  const N = LOW ? 180 : 380, rnd2 = mulberry32(6612);
   const sp = new Float32Array(N * 3), ss = new Float32Array(N);
-  for (let i = 0; i < N; i++) { sp[i * 3] = 9.4 + rnd2() * 32; sp[i * 3 + 1] = rnd2() * 16; sp[i * 3 + 2] = -72 + rnd2() * 50; ss[i] = rnd2(); }
+  for (let i = 0; i < N; i++) { sp[i * 3] = 9.4 + rnd2() * 8.5; sp[i * 3 + 1] = rnd2() * 8; sp[i * 3 + 2] = -55 + rnd2() * 16; ss[i] = rnd2(); }
   const sg = new THREE.BufferGeometry();
   sg.setAttribute('position', new THREE.BufferAttribute(sp, 3));
   sg.setAttribute('aSeed', new THREE.BufferAttribute(ss, 1));
@@ -4548,11 +4551,11 @@ function buildOutdoor() {
     vertexShader:
       'attribute float aSeed; uniform float uT; uniform float uSize; varying float vA;\n' +
       'void main(){ vec3 p=position;\n' +
-      ' p.y = mod(p.y - uT*(0.45+aSeed*0.55), 16.0);\n' +
+      ' p.y = mod(p.y - uT*(0.45+aSeed*0.55), 8.0);\n' +
       ' p.x += sin(uT*(0.4+aSeed*0.5) + aSeed*31.0)*0.55;\n' +
       ' p.z += cos(uT*(0.33+aSeed*0.4) + aSeed*19.0)*0.45;\n' +
       ' vec4 mv = modelViewMatrix * vec4(p,1.0);\n' +
-      ' vA = (0.45+aSeed*0.55) * smoothstep(0.0,0.5,p.y) * smoothstep(16.0,12.5,p.y);\n' +
+      ' vA = (0.45+aSeed*0.55) * smoothstep(0.0,0.5,p.y) * smoothstep(8.0,6.5,p.y) * smoothstep(9.0,4.5,-mv.z);\n' +
       ' gl_PointSize = min(uSize*(0.05+aSeed*0.06)/max(-mv.z,0.6), 40.0);\n' +
       ' gl_Position = projectionMatrix * mv; }',
     fragmentShader:
