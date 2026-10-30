@@ -1571,7 +1571,7 @@ body[data-layout-hero="b"] .hero-side .v{ color:rgba(238,243,247,.55); }
 <script src="assets/three.min.js"></script>
 <script src="assets/kiosk-photo.js?v=3"></script>
 <script src="assets/kiosk-indoor-photo.js?v=7"></script>
-<script src="assets/kiosk-atm-photo.js?v=5"></script>
+<script src="assets/kiosk-atm-photo.js?v=7"></script>
 <script>
 /* =====================================================================
    PFX — the campus walk, rendered live in WebGL.
@@ -3217,7 +3217,7 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   tcx.fillStyle = '#c4c4c4'; tcx.fillRect(0, 0, 256, 2); tcx.fillRect(0, 0, 2, 256);   /* grout, one tile per repeat */
   /* the floor: one plain grey, no texture (the terrazzo's tone) */
   const BOX = { x0: x0, x1: x1, zb: zb, zf: zf, y0: y0, y1: y1 };
-  const TABLES = [[-7.4, -47.6], [-7.4, -44.4], [5.6, -46.6]];   /* each with a pendant over it */
+  const TABLES = [[-7.4, -47.6], [-7.4, -44.4], [4.3, -47.4]];   /* each with a pendant over it; the right-hand one drawn in toward the kiosk */
   const floor = hallMat('#868686', BOX, TABLES);
   const wallTex = tx(texHallWall(), { wrap: THREE.RepeatWrapping, repeat: [4, 2] });
   const wall = hallMat('#8e8e8e', BOX, TABLES);   /* mid neutral grey */
@@ -3227,6 +3227,16 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
 
   put(new THREE.PlaneGeometry(HW, HD), floor, 0, y0 + .002, (zf + zb) / 2, -Math.PI / 2);
   put(new THREE.PlaneGeometry(HW, HD), ceilFlat, 0, y1, (zf + zb) / 2, Math.PI / 2);
+  /* a cafeteria's ceiling, 12 ft up (the shell above stays, out of sight): plain
+     grey with a few flush light panels, so the 8 ft kiosk sits in a room of its scale */
+  const CH = 3.66;
+  put(new THREE.PlaneGeometry(HW, HD), ceilFlat, 0, y0 + CH, (zf + zb) / 2, Math.PI / 2);
+  { const panelM = new THREE.MeshBasicMaterial({ color: hdr(1.5, 1.5, 1.5), toneMapped: false });
+    const rimM = hallMat('#6e6e6e', BOX, TABLES);
+    [[-4.2, -42.2], [1.2, -42.2], [-4.2, -46.2], [6.0, -41.8]].forEach(([px, pz]) => {
+      put(new THREE.PlaneGeometry(1.24, 1.24), rimM, px, y0 + CH - .004, pz, Math.PI / 2);
+      put(new THREE.PlaneGeometry(1.2, 1.2), panelM, px, y0 + CH - .006, pz, Math.PI / 2);
+    }); }
   put(new THREE.PlaneGeometry(HW, HH), wall, 0, (y0 + y1) / 2, zb);                         /* back */
   /* the back wall's feature: a fluted dado, tone on tone, no trim */
   const fluteH = 2.7;
@@ -3254,7 +3264,7 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
       return new THREE.MeshBasicMaterial(Object.assign({ color: ungrade(hex), map: t, fog: false, toneMapped: false }, o || {})); };
     /* the frame: a casing with a flat face between two chamfers — the ones turned up
        or to the left catch the light, the others fall into shade */
-    const frFlat = grained('#7e7e7e', [.4, 6]), frLit = grained('#9a9a9a', [.2, 6]), frShade = grained('#5c5c5c', [.2, 6]);
+    const frFlat = grained('#717171', [.4, 6]), frLit = grained('#7c7c7c', [.2, 6]), frShade = grained('#666666', [.2, 6]);   /* soft: a step either side of the face */
     const CW = .12, BV = .025, FD = .05, BD = .034;                   /* casing width, chamfer width, face and chamfer depth */
     const zL = HALL_DOOR.z - HALL_DOOR.w / 2, zR = HALL_DOOR.z + HALL_DOOR.w / 2, yTop = y0 + HALL_DOOR.h;
     [[zL, -1], [zR, 1]].forEach(([ze, sd]) => {                       /* the two jambs (sd -1: the viewer's left) */
@@ -3269,7 +3279,7 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
     /* hinges: three on each outer edge — a barrel on the line of the swing and a
        plate on the casing */
     { const barM = new THREE.MeshBasicMaterial({ color: ungrade('#4c4c4c'), fog: false, toneMapped: false });
-      const barHi = new THREE.MeshBasicMaterial({ color: ungrade('#9c9c9c'), fog: false, toneMapped: false });
+      const barHi = new THREE.MeshBasicMaterial({ color: ungrade('#6c6c6c'), fog: false, toneMapped: false });
       const plateM = new THREE.MeshBasicMaterial({ color: ungrade('#606060'), fog: false, toneMapped: false });
       [zL, zR].forEach(ze => [.12, .5, .88].forEach(f => {
         const yh = y0 + HALL_DOOR.h * f;
@@ -3281,14 +3291,14 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
     /* the doors: a pair of panelled leaves like the entrance's, in the walls'
        grey, that swing out onto the terrace as the walk reaches them
        (WORLD.hallDoors, driven from updateWorld) */
-    const leafM = grained('#858585', [2, 6], { side: THREE.DoubleSide });
+    const leafM = grained('#777777', [2, 6], { side: THREE.DoubleSide });   /* a little darker than the wall */
     /* modelled on a classic three-panel double door: on each leaf a tall upper
        panel, a short middle one and a lower one, each a slightly raised field in
        a moulding lit from the upper left; silver levers on round roses by the
        meeting edge. Flat greys carried through the grade (ungrade), as the walls. */
     const flat = h => new THREE.MeshBasicMaterial({ color: ungrade(h), fog: false, toneMapped: false });
-    const fieldM = grained('#8b8b8b', [1.4, 2]), hiM = grained('#a2a2a2', [.3, 2]), loM = grained('#686868', [.3, 2]), midM = flat('#7a7a7a');
-    const roseM = flat('#8f8f8f'), leverM = flat('#c4c4c4'), leverSh = flat('#7e7e7e');
+    const fieldM = grained('#7b7b7b', [1.4, 2]), hiM = grained('#838383', [.3, 2]), loM = grained('#6c6c6c', [.3, 2]), midM = flat('#717171');   /* the mouldings a soft step lighter above, darker below */
+    const roseM = flat('#7e7e7e'), leverM = flat('#9e9e9e'), leverSh = flat('#727272');
     const LW = HALL_DOOR.w / 2, LH = HALL_DOOR.h;
     /* the panels as fractions of the leaf: [bottom, top] up the height; the side margins */
     const PANELS = [[.542, .935], [.363, .462], [.087, .300]], MX = .16;
@@ -3363,7 +3373,7 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
   sx.fillText('CAFETERIA', 1024 + 21, 128);
   const signMat = new THREE.MeshBasicMaterial({ map: tx(sC, { aniso: 16 }), transparent: true, color: ungrade('#4a4a4a'), fog: false, toneMapped: false });
   /* the lettering sits on the white wall above the kiosk, the first thing the walk-in frames */
-  put(new THREE.PlaneGeometry(4.0, .5), signMat, 1.9, y0 + 3.95, zb + .02);
+  put(new THREE.PlaneGeometry(4.0, .5), signMat, 1.9, y0 + 3.05, zb + .02);   /* under the 12 ft ceiling */
   /* contact shadows, so the furniture sits on the floor */
   const shC = cvs(128, 128), shx = shC.getContext('2d'), shg = shx.createRadialGradient(64, 64, 4, 64, 64, 64);
   shg.addColorStop(0, 'rgba(0,0,0,.55)'); shg.addColorStop(.55, 'rgba(0,0,0,.25)'); shg.addColorStop(1, 'rgba(0,0,0,0)');
@@ -3418,6 +3428,39 @@ function buildHall(g, F, Z, MW, MD, MH, DW, DH, stone) {
      so the camera never passes through furniture on its way out) */
   TABLES.forEach(([tx2, tz2]) => table(tx2, tz2, 0));
   [[mergeGeos(tparts), top], [mergeGeos(sparts), steel], [mergeGeos(cparts), seat]].forEach(([geo, m]) => put(geo, m, 0, 0, 0));
+
+  /* the ATM kiosk's service side: the box the ATM is loaded from, standing
+     against the right-hand wall left of the side door — 5 ft along the wall,
+     6 ft deep into the room, 8 ft tall, in the room's greys: a service door
+     outlined in it, panel seams and a small recessed pull */
+  { const L5 = 1.219, DP = 1.83, HT = 2.44, xc = x1 - DP / 2;   /* 4 ft across its face */
+    /* the same gap from the side door as the ATM's frame has outside (it's the
+       same wall), so the box stands right behind the kiosk it loads */
+    const atmEdge = OUT.kz + (window.KIOSK_ATM_PHOTO ? KIOSK_ATM_PHOTO.dims.W : 1.8) / 2 + .065, zc = atmEdge - L5 / 2;
+    const bodyM = hallMat('#a6a6a6', BOX, TABLES), seamM = hallMat('#7c7c7c', BOX, TABLES), pullM = hallMat('#5c5c5c', BOX, TABLES);
+    put(new THREE.BoxGeometry(DP, HT, L5), bodyM, xc, y0 + HT / 2, zc);
+    put(new THREE.BoxGeometry(DP + .02, .05, L5 + .02), seamM, xc, y0 + .025, zc);                 /* a dark plinth at the floor */
+    const fx = x1 - DP - .002;                                                                      /* the face toward the room */
+    const strip = (h, w, y, z) => put(new THREE.BoxGeometry(.006, h, w), seamM, fx, y, z);
+    const dw = L5 - .3, dh = HT - .5, dy = y0 + .1 + dh / 2;                                        /* the service door */
+    strip(dh, .012, dy, zc - dw / 2); strip(dh, .012, dy, zc + dw / 2);
+    strip(.012, dw, dy + dh / 2, zc); strip(.012, dw, dy - dh / 2, zc);
+    put(new THREE.BoxGeometry(.02, .128, .025), pullM, fx - .006, dy, zc + dw / 2 - .12);         /* recessed pull */
+    /* "POWERED BY" and the PFX mark above the door, in the room's grey */
+    { const c = cvs(1024, 360), x = c.getContext('2d');
+      x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.font = '600 92px Inter, "Helvetica Neue", Arial, sans-serif';
+      if (x.letterSpacing !== undefined) x.letterSpacing = '16px';
+      x.fillText('POWERED BY', 512 + 8, 72);
+      const markMat = new THREE.MeshBasicMaterial({ map: tx(c, { aniso: 16 }), transparent: true, color: ungrade('#6a6a6a'), fog: false, toneMapped: false });
+      const logo = new Image();
+      logo.onload = () => { const h = 180, w = h * logo.width / logo.height, lc = cvs(Math.ceil(w), h), lx = lc.getContext('2d');
+        lx.drawImage(logo, 0, 0, w, h); lx.globalCompositeOperation = 'source-in'; lx.fillStyle = '#fff'; lx.fillRect(0, 0, w, h);   /* one flat tone */
+        x.drawImage(lc, (1024 - w) / 2, 160); markMat.map.needsUpdate = true; };
+      logo.src = 'assets/pfx-light.png';
+      put(new THREE.PlaneGeometry(.74, .74 * 360 / 1024), markMat, fx - .003, y0 + .1 + dh + .19, zc, 0, -Math.PI / 2); }
+    [-1, 1].forEach(sd => put(new THREE.BoxGeometry(DP, HT, .006), seamM, xc, y0 + HT / 2, zc + sd * (L5 / 2 + .001)));   /* edge seams on its sides */
+    const sh = put(new THREE.PlaneGeometry(DP + .5, L5 + .5), footShTable, xc, y0 + .007, zc, -Math.PI / 2); sh.renderOrder = 2; }
 
   g.add(hall); WORLD.hall = hall;
   WORLD.hallBox = { x0: x0, x1: x1, zb: zb, zf: zf, y0: y0, y1: y1 };
@@ -4358,7 +4401,7 @@ function buildOutdoor() {
   s.moveTo(0, 0); s.lineTo(FL, 0); s.lineTo(FL, FH); s.lineTo(0, FH); s.closePath();
   const hole = (u0, u1, v0, v1) => { const h = new THREE.Path(); h.moveTo(u0, v0); h.lineTo(u0, v1); h.lineTo(u1, v1); h.lineTo(u1, v0); h.closePath(); s.holes.push(h); };
   hole(U(D.z) - D.w / 2, U(D.z) + D.w / 2, 0, D.h);
-  const KW = 1.8, KH = 2.6, FR = .2, OW = KW + 2 * FR, OH = KH + FR;   /* the artwork's own proportions */
+  const KW = window.KIOSK_ATM_PHOTO ? KIOSK_ATM_PHOTO.dims.W : 1.8, KH = 2.6, FR = .065, OW = KW + 2 * FR, OH = KH + FR;   /* the artwork's own proportions; a slim dark surround */
   hole(U(OUT.kz) - OW / 2, U(OUT.kz) + OW / 2, 0, OH);
   const WW2 = 1.25, WH2 = 2.1, wins = [];
   for (let z = -34.2; z > z0 - FL + 2; z -= 3.6) {
@@ -4412,13 +4455,19 @@ function buildOutdoor() {
   const glimpse = add(new THREE.PlaneGeometry(D.w + 2, D.h + 1).rotateY(Math.PI / 2), white);
   glimpse.position.set(7.2, Y + D.h / 2, D.z); WORLD.doorGlimpse = glimpse;
 
-  /* ---- the ATM kiosk, set into the wall: a slim charcoal surround, a thin
-     cantilevered hood, the wrap recessed behind a dark reveal, a concrete pad */
+  /* ---- the ATM kiosk, set into the wall: a grey surround, a lit red ORDER
+     HERE box sign above it, the wrap recessed behind a dark reveal */
   const kz = OUT.kz;
-  [-1, 1].forEach(sd => add(new THREE.BoxGeometry(.12, OH, FR), metal).position.set(X + .06, Y + OH / 2, kz + sd * (KW / 2 + FR / 2)));
-  add(new THREE.BoxGeometry(.12, FR, OW), metal).position.set(X + .06, Y + KH + FR / 2, kz);
-  add(new THREE.BoxGeometry(.5, .07, OW + .5), metal).position.set(X + .25, Y + OH + .2, kz);           /* hood */
-  add(new THREE.BoxGeometry(.04, .2, OW + .5), metal).position.set(X + .01, Y + OH + .1, kz);
+  const surround = new THREE.MeshStandardMaterial({ color: 0x0b0605, roughness: 1, metalness: 0 });   /* a dark brown that, under the kiosk's warm lamp, reads a step darker than the brick */
+  [-1, 1].forEach(sd => add(new THREE.BoxGeometry(.12, OH, FR), surround).position.set(X + .06, Y + OH / 2, kz + sd * (KW / 2 + FR / 2)));
+  add(new THREE.BoxGeometry(.12, FR, OW), surround).position.set(X + .06, Y + KH + FR / 2, kz);
+  { const SW = KW * 601 / 458, SH = KW * 127 / 458, SD = .16;          /* the sign, in the render's proportions */
+    const edge = new THREE.MeshStandardMaterial({ color: 0x8a0d1c, roughness: .6, metalness: .05 });
+    const face = new THREE.MeshBasicMaterial({ color: new THREE.Color(1.25, 1.25, 1.25), fog: false });   /* a lightbox: lit from within */
+    new THREE.TextureLoader().load('assets/atm-order-sign.jpg', t => { t.encoding = THREE.sRGBEncoding; t.anisotropy = Math.min(16, maxAniso); face.map = t; face.needsUpdate = true; });
+    const sign = add(new THREE.BoxGeometry(SD, SH, SW), [face, edge, edge, edge, edge, edge]);
+    sign.position.set(X + SD / 2, Y + OH + .12 + SH / 2, kz);
+    sign.layers.enable(3); }   /* sharp with the kiosk, outside the depth of field */
   const hoodSh = new THREE.Mesh(new THREE.PlaneGeometry(OW + .6, .7).rotateY(Math.PI / 2),
     new THREE.MeshBasicMaterial({ map: shTex, transparent: true, depthWrite: false, opacity: .22, color: 0x000000 }));
   hoodSh.position.set(X + .015, Y + OH + .02, kz); hoodSh.renderOrder = 3; g.add(hoodSh);
@@ -4454,13 +4503,13 @@ function buildOutdoor() {
   });
   add(new THREE.PlaneGeometry(KW, KH).rotateY(Math.PI / 2), faceMat).position.set(FX, Y + KH / 2, kz);
   /* the hardware, raised off the face so it reads as real: the steel ledge,
-     the dispenser slot, the knife slot, the card reader and the two buttons
-     (rects in the artwork's 461 x 667 pixels; [u0, v0, u1, v1, depth]) */
+     the dispenser slot, the knife slot and the card reader
+     (rects in the artwork's 458 x 609 pixels; [u0, v0, u1, v1, depth]) */
   const atmParts = [];
-  [[41, 448, 309, 461, .127],   /* the steel ledge stands 5 in proud */ [177, 417, 293, 430, .008], [373, 353, 427, 367, .008],
-   [386, 386, 415, 419, .025], [371, 433, 429, 454, .012], [371, 462, 429, 493, .012]].forEach(([u0, v0, u1, v1, dep]) => {
-    const z0 = kz + KW / 2 - u0 / 461 * KW, z1 = kz + KW / 2 - u1 / 461 * KW;
-    const y0 = Y + KH * (1 - v1 / 667), y1 = Y + KH * (1 - v0 / 667);
+  [[25, 368, 281, 378, .06],   /* the steel ledge under the display */ [142, 355, 234, 368, .008],
+   [346, 358, 393, 375, .012], [356, 395, 383, 435, .025]].forEach(([u0, v0, u1, v1, dep]) => {
+    const z0 = kz + KW / 2 - u0 / 458 * KW, z1 = kz + KW / 2 - u1 / 458 * KW;
+    const y0 = Y + KH * (1 - v1 / 609), y1 = Y + KH * (1 - v0 / 609);
     const m = add(new THREE.BoxGeometry(dep, y1 - y0, Math.abs(z0 - z1)), faceMat);
     m.position.set(FX + dep / 2, (y0 + y1) / 2, (z0 + z1) / 2); atmParts.push(m);
   });
@@ -4474,9 +4523,9 @@ function buildOutdoor() {
   if (P) { const img = new Image(); img.onload = () => { const t = new THREE.Texture(img); t.anisotropy = Math.min(16, maxAniso);
     t.minFilter = THREE.LinearMipmapLinearFilter; t.needsUpdate = true; faceMat.uniforms.uM.value = t; }; img.src = P.front; }
   /* its ordering screen: the same pizza loop as the other kiosks, over the
-     black display in the artwork (461 x 667 px; the display is 62-292 across,
-     235-384 down, taken 2 px past its edges) */
-  { const aw = 461, ah = 667, L = 60, R = 294, T = 233, B = 386, xs = X - RD + .004;
+     black display in the artwork (458 x 609 px; the display is 45-261 across,
+     168-326 down; the loop sits just inside its bezel) */
+  { const aw = 458, ah = 609, L = 48, R = 258, T = 171, B = 323, xs = X - RD + .004;
     const at = (u, v) => [xs, Y + KH * (1 - v / ah), kz + KW / 2 - u / aw * KW];
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.Float32BufferAttribute([].concat(at(L, B), at(R, B), at(R, T), at(L, T)), 3));
@@ -5958,8 +6007,8 @@ const PATH = [
   { at: 2.36, p: [  5.4, 9.1, -43.6 ], t: [ 14.0, 9.2, -44.0 ], fov: 50 },   /* turn to the side door     */
   { at: 2.6,  p: [ 10.6, 9.2, -44.2 ], t: [ 14.5, 9.3, -54.0 ], fov: 50 },   /* out the door, already turning left */
   { at: 2.82, p: [ 13.4, 9.25, -45.0 ], t: [ 9.5, 9.4, -53.0 ], fov: 50 },   /* still turning left, round to the wall (one way, no swing right first) */
-  { at: 3,    p: [ 13.7, 9.25, -46.3 ], t: [ 9.0, 9.25, -46.3 ], fov: 50 },   /* the ATM kiosk, square to the wall: the hero shot, drawn in toward the copy */
-  { at: 3.3,  p: [ 13.55, 9.25, -46.3 ], t: [ 9.0, 9.25, -46.3 ], fov: 50 },  /* …a slow push in while the copy reads */
+  { at: 3,    p: [ 14.5, 9.45, -46.3 ], t: [ 9.0, 9.45, -46.3 ], fov: 50 },   /* the ATM kiosk, square to the wall: the hero shot, drawn in toward the copy */
+  { at: 3.3,  p: [ 14.35, 9.45, -46.3 ], t: [ 9.0, 9.45, -46.3 ], fov: 50 },  /* …a slow push in while the copy reads */
   { at: 4,    p: [ 22.0, 10.4, -37.5 ], t: [  9.2, 8.6, -50.0 ], fov: 56 }   /* the footer: the closing view across the terrace (Afterlight removed) */
 ];
 const RIG = { prog: 0, smooth: 0, mx: 0, my: 0, tmx: 0, tmy: 0, intro: 0, focus: -1, focusAmt: 0 };
@@ -6029,7 +6078,7 @@ function applyCamera() {
 const PHONE_FRAME = {
   hero:   { zoom: 2.2,  x: .64, down: .55, copy: () => document.querySelector('.hero .hero-top') },   /* a little right of centre, so its side panel isn't dead centre */
   indoor: { zoom: .55,  x: .5,  down: .5, copy: () => K2 && K2.el },
-  atm:    { zoom: 1.9,  x: .5,  down: .5,  copy: () => K3 && K3.el }
+  atm:    { zoom: 1.5,  x: .5,  down: .5,  copy: () => K3 && K3.el }   /* the wider face and its sign, both in frame */
 };
 function phoneTarget(f, W, H) {
   const navEl = document.getElementById('nav'), el = f.copy();
@@ -6074,7 +6123,7 @@ function frameKioskOnPhone() {
     if (c) picks.push([K2.k, PHONE_FRAME.indoor, c]);
   }
   if (K3 && K3.k > .001 && WORLD.outdoor) {
-    picks.push([K3.k, PHONE_FRAME.atm, new THREE.Vector3(OUT.x, OUT.y + 1.35, OUT.kz)]);   /* the ATM kiosk's face, mid-height, in the side wall */
+    picks.push([K3.k, PHONE_FRAME.atm, new THREE.Vector3(OUT.x, OUT.y + 1.75, OUT.kz)]);   /* the ATM kiosk, face and sign together, in the side wall */
   }
   /* blend: zoom, where the kiosk is in the plain frame, and where it should go */
   let ws = 0, zoom = 0, px = 0, py = 0, tx = 0, ty = 0;
