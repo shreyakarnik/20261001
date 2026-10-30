@@ -207,13 +207,16 @@
 .tm-ig:hover, .tm-ig:hover b, .tm-ig:hover svg{ color:#c00022; }
 .kp-row .kp-stats{ margin-top:36px; }
 /* the pull quote at the top of the page: an operator's own words, big and centred */
-.tm-pull{ max-width:1040px; margin:0 auto; padding:88px var(--kp-pad, 80px) 0; text-align:center; }
+.tm-pull{ max-width:1320px; margin:0 auto; padding:clamp(48px, 8vh, 96px) 40px 0; text-align:center; }
 .tm-pull blockquote{ margin:0; }
-.tm-pull p{ margin:0; font-size:clamp(28px, 3.6vw, 50px); line-height:1.18; font-weight:700; letter-spacing:-.025em; color:#fff; text-wrap:balance; }
+/* three set lines on wider screens; on a phone it simply wraps */
+.tm-pull p{ margin:0; font-size:min(2.6vw, 42px); line-height:1.22; font-weight:700; letter-spacing:-.025em; color:#fff; }
+.tm-pull p span{ display:block; white-space:nowrap; }
 .tm-pull figcaption{ display:inline-flex; flex-direction:column; align-items:center; gap:4px; margin-top:34px; padding-top:18px;
   border-top:2px solid #c00022; font-size:14px; line-height:1.5; color:rgba(223,231,224,.55); }
 .tm-pull figcaption b{ font-weight:600; font-size:17px; color:#fff; }
-@media (max-width:900px){ .tm-pull{ padding-top:48px; } .tm-pull p{ font-size:26px; line-height:1.25; } }
+.tm-sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+@media (max-width:900px){ .tm-pull{ padding:40px 24px 0; } .tm-pull p{ font-size:24px; line-height:1.28; } .tm-pull p span{ display:inline; white-space:normal; } }
 /* the street address under a location, linked to the map */
 .kp-stat .tm-addr{ display:block; width:fit-content; margin-top:6px; font-size:13px; line-height:1.5; letter-spacing:0; color:rgba(223,231,224,.45); border-bottom:1px solid rgba(223,231,224,.2); transition:color .2s, border-color .2s; }
 .kp-stat .tm-addr:hover{ color:#fff; border-color:#fff; }
@@ -244,13 +247,9 @@
   </div>
 </header>
 <main class="kp">
-  <header class="kp-head">
-    <h1>Testimonials</h1>
-    <p class="kp-lede">Operators running their own pizza brands on PFX kiosks, in their own words.</p>
-  </header>
-
+  <h1 class="tm-sr">Testimonials</h1>
   <figure class="tm-pull">
-    <blockquote><p>&ldquo;The best way to have more sales is to carry on selling through the night when you&rsquo;re closed. It&rsquo;s like having another restaurant, but not actually having to be there.&rdquo;</p></blockquote>
+    <blockquote><p><span>&ldquo;The best way to have more sales is to carry on selling</span> <span>through the night when you&rsquo;re closed. It&rsquo;s like having</span> <span>another restaurant, but not actually having to be there.&rdquo;</span></p></blockquote>
     <figcaption><b>Antoine Attard</b>Owner of Pizza 13, PFX Operator</figcaption>
   </figure>
 
