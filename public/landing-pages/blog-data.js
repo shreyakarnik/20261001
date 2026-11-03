@@ -229,3 +229,37 @@ const PFX_BLOG_POSTS = [
 `
   }
 ];
+
+/* =========================================================
+   LIVE POSTS FROM SUPABASE
+   -------------------------------------------------------
+   Posts published from the internal tool (/internal) live in
+   Supabase. Once Supabase has any published posts, they
+   REPLACE the list above (use "Import website posts" in the
+   tool to copy these into Supabase first). PFX_POSTS_READY
+   resolves when the list is final, so /blog, /post and the
+   search box can render it. If Supabase can't be reached or
+   has no published posts yet, the posts above still show.
+   The key below is the PUBLISHABLE key: it's meant to be
+   public and can only read published posts.
+   ========================================================= */
+var PFX_SUPABASE = {
+  url: "https://rhzhdtlmzogkfcgocdqk.supabase.co",
+  key: "sb_publishable_sVcjNjTarvQlkZp_vFd2sA_m8YzBC-R"
+};
+var PFX_POSTS_READY = (function () {
+  if (typeof fetch !== "function") return Promise.resolve(PFX_BLOG_POSTS);
+  var timeout = new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 4000); });
+  var load = fetch(PFX_SUPABASE.url + "/rest/v1/posts?status=eq.published" +
+      "&select=slug,title,excerpt,body,image,author,tags,date&order=date.desc",
+      { headers: { apikey: PFX_SUPABASE.key } })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; });
+  return Promise.race([load, timeout]).then(function (live) {
+    if (Array.isArray(live) && live.length) {
+      live.forEach(function (p) { p.tags = p.tags || []; p.excerpt = p.excerpt || ""; });
+      PFX_BLOG_POSTS.splice.apply(PFX_BLOG_POSTS, [0, PFX_BLOG_POSTS.length].concat(live));
+    }
+    return PFX_BLOG_POSTS;
+  });
+})();

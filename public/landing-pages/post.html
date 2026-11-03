@@ -267,8 +267,10 @@
   /* One page for every post: /post?p=<slug> looks the slug up in
      PFX_BLOG_POSTS (blog-data.js). Posts written in the admin tool open
      here too: published ones from blog-data.js, and unpublished drafts as
-     a preview (/post?p=<slug>&preview=1) in the browser that saved them. */
-  (function(){
+     a preview (/post?p=<slug>&preview=1) in the browser that saved them.
+     Waits for PFX_POSTS_READY so posts published from the internal tool
+     (stored in Supabase) are found too. */
+  (typeof PFX_POSTS_READY !== 'undefined' ? PFX_POSTS_READY : Promise.resolve()).then(function(){
     function esc(str){
       return String(str == null ? '' : str).replace(/[&<>"']/g, function(c){
         return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
@@ -285,13 +287,13 @@
     var posts = (typeof PFX_BLOG_POSTS !== 'undefined') ? PFX_BLOG_POSTS : [];
     var post = null, preview = false;
     for (var i = 0; i < posts.length; i++) if (posts[i].slug === slug) { post = posts[i]; break; }
-    if (!post && params.get('preview')) {
+    if (params.get('preview')) {   // a preview shows the draft, even for a post that's already live
       try {
         var drafts = JSON.parse(localStorage.getItem('pfx_blog_drafts') || '[]');
         for (var j = 0; j < drafts.length; j++) if (drafts[j].slug === slug) {
           var d = drafts[j];
           post = { slug: d.slug, title: d.title, excerpt: d.description, author: d.author, image: d.image,
-                   date: (d.savedAt || '').slice(0, 10), tags: d.category ? [d.category] : [], body: d.body };
+                   date: d.date || (d.savedAt || '').slice(0, 10), tags: d.tags || (d.category ? [d.category] : []), body: d.body };
           preview = true; break;
         }
       } catch (e) {}
@@ -326,7 +328,7 @@
         }).join('') + '</ul></section>';
     }
     main.insertAdjacentHTML('beforeend', html);
-  })();
+  });
 </script>
 <script src="site-search.js"></script>
 <script src="talk-modal.js?v=11"></script>

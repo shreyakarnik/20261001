@@ -243,7 +243,8 @@
     return d.toLocaleDateString("en-US", { year:"numeric", month:"long", day:"numeric" });
   }
   const grid = document.getElementById("blogGrid");
-  if (typeof PFX_BLOG_POSTS !== "undefined") {
+  function renderBlogGrid(){
+    if (typeof PFX_BLOG_POSTS === "undefined") return;
     grid.innerHTML = PFX_BLOG_POSTS.map(function(p){
       return '<article class="blog-card" id="' + p.slug + '">' +
         (p.image ? '<div class="blog-thumb"><img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.title || "Blog post image") + '" loading="lazy" decoding="async"></div>' : '') +
@@ -254,11 +255,17 @@
         '</article>';
     }).join('');
   }
+  // Wait for posts published from the internal tool (blog-data.js loads them
+  // from Supabase), and fall back to the built-in list if that fails.
+  if (typeof PFX_POSTS_READY !== "undefined") PFX_POSTS_READY.then(renderBlogGrid, renderBlogGrid);
+  else renderBlogGrid();
 </script>
 <script>
-  if (location.hash.length > 1 && typeof PFX_BLOG_POSTS !== 'undefined' &&
-      PFX_BLOG_POSTS.some(function(p){ return '#' + p.slug === location.hash; }))
-    location.replace('/post?p=' + encodeURIComponent(location.hash.slice(1)));
+  (typeof PFX_POSTS_READY !== 'undefined' ? PFX_POSTS_READY : Promise.resolve()).then(function(){
+    if (location.hash.length > 1 && typeof PFX_BLOG_POSTS !== 'undefined' &&
+        PFX_BLOG_POSTS.some(function(p){ return '#' + p.slug === location.hash; }))
+      location.replace('/post?p=' + encodeURIComponent(location.hash.slice(1)));
+  });
 </script>
 <script src="site-search.js"></script>
 <script src="talk-modal.js?v=11"></script>
