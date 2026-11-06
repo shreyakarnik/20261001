@@ -26,6 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # Writes the text published from the internal tool into the pages.
+      - run: python3 scripts/cms.py build public/landing-pages
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public/landing-pages

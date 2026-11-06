@@ -249,51 +249,53 @@
 <main class="kp">
   <h1 class="tm-sr">Testimonials</h1>
   <figure class="tm-pull">
-    <blockquote><p><span>&ldquo;The best way to have more sales is to carry on selling</span> <span>through the night when you&rsquo;re closed. It&rsquo;s like having</span> <span>another restaurant, but not actually having to be there.&rdquo;</span></p></blockquote>
-    <figcaption><b>Antoine Attard</b>Owner of Pizza 13, PFX Operator</figcaption>
+    <blockquote><p><span data-cms="pull.line1" data-cms-label="Top quote: Line 1" data-cms-max="70">&ldquo;The best way to have more sales is to carry on selling</span> <span data-cms="pull.line2" data-cms-label="Top quote: Line 2" data-cms-max="70">through the night when you&rsquo;re closed. It&rsquo;s like having</span> <span data-cms="pull.line3" data-cms-label="Top quote: Line 3" data-cms-max="70">another restaurant, but not actually having to be there.&rdquo;</span></p></blockquote>
+    <figcaption><b data-cms="pull.name" data-cms-label="Top quote: Name" data-cms-max="40">Antoine Attard</b><bdi data-cms="pull.role" data-cms-label="Top quote: Role" data-cms-max="60">Owner of Pizza 13, PFX Operator</bdi></figcaption>
   </figure>
 
-  <section class="kp-row tm-row" id="pizza-13" aria-label="Pizza 13">
+  <div class="tm-list" style="display:contents" data-cms-list="operators" data-cms-label="Operators" data-cms-min="1">
+  <section class="kp-row tm-row" id="pizza-13" aria-label="Pizza 13" data-cms-fattr="id={slug:name};aria-label={name}">
     <div class="kp-row-head tm-row-head">
-      <h2>Pizza 13</h2>
-      <p>Our first white-label licensee: its own brand on the wrap and its own recipes in the kiosk, baked around the clock.</p>
-      <div class="tm-who"><b>Antoine Attard</b>Pizza 13</div>
-      <a class="tm-ig" href="https://www.instagram.com/p13.bathurst/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Check out their Instagram<b>@p13.bathurst</b></span></a>
+      <h2 data-cms-f="name" data-cms-label="Operator name" data-cms-max="40">Pizza 13</h2>
+      <p data-cms-f="summary" data-cms-label="Summary" data-cms-max="180">Our first white-label licensee: its own brand on the wrap and its own recipes in the kiosk, baked around the clock.</p>
+      <div class="tm-who"><b data-cms-f="person" data-cms-label="Person" data-cms-max="50">Antoine Attard</b><bdi data-cms-f="role" data-cms-label="Their role" data-cms-max="50">Pizza 13</bdi></div>
+      <a class="tm-ig" data-cms-if="instagram" data-cms-fattr="href=https://www.instagram.com/{instagram}/" data-cms-label-instagram="Instagram handle (no @)" href="https://www.instagram.com/p13.bathurst/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Check out their Instagram<b data-cms-tpl="@{instagram}">@p13.bathurst</b></span></a>
     </div>
     <div>
-      <div class="tm-video">
-        <iframe src="https://www.youtube-nocookie.com/embed/STCAMJAnbsk?rel=0" title="How Pizza13 Expanded Their Pizzeria with a 24/7 PFX Vending Machine" loading="lazy"
+      <div class="tm-video" data-cms-if="youtube">
+        <iframe data-cms-fattr="src=https://www.youtube-nocookie.com/embed/{yt:youtube}?rel=0;title={video_title}" data-cms-label-youtube="YouTube link" data-cms-label-video_title="Video title" src="https://www.youtube-nocookie.com/embed/STCAMJAnbsk?rel=0" title="How Pizza13 Expanded Their Pizzeria with a 24/7 PFX Vending Machine" loading="lazy"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
-      <p class="tm-cap"><span>Pizza 13 &times; PFX</span><a href="https://youtu.be/STCAMJAnbsk" target="_blank" rel="noopener">Watch on YouTube</a></p>
+      <p class="tm-cap" data-cms-if="youtube"><span data-cms-tpl="{name} × PFX">Pizza 13 &times; PFX</span><a data-cms-fattr="href=https://youtu.be/{yt:youtube}" href="https://youtu.be/STCAMJAnbsk" target="_blank" rel="noopener">Watch on YouTube</a></p>
       <dl class="kp-stats">
-        <div class="kp-stat"><dt>Since</dt><dd>July 2025</dd></div>
-        <div class="kp-stat"><dt>Kiosk</dt><dd>Outdoor Kiosk</dd></div>
-        <div class="kp-stat"><dt>Location</dt><dd>Bathurst, New Brunswick, Canada<a class="tm-addr" href="https://www.google.com/maps/search/?api=1&amp;query=325%20Murray%20Avenue%2C%20Bathurst%2C%20NB%2C%20Canada" target="_blank" rel="noopener">325 Murray Avenue, Bathurst, NB, Canada</a></dd></div>
+        <div class="kp-stat"><dt>Since</dt><dd data-cms-f="since" data-cms-label="Since" data-cms-max="30">July 2025</dd></div>
+        <div class="kp-stat"><dt>Kiosk</dt><dd data-cms-f="kiosk" data-cms-label="Kiosk" data-cms-max="30">Outdoor Kiosk</dd></div>
+        <div class="kp-stat"><dt>Location</dt><dd><bdi data-cms-f="location" data-cms-label="Location" data-cms-max="60">Bathurst, New Brunswick, Canada</bdi><a class="tm-addr" data-cms-if="address" data-cms-fhref="map" data-cms-label="Google Maps link" href="https://www.google.com/maps/search/?api=1&amp;query=325%20Murray%20Avenue%2C%20Bathurst%2C%20NB%2C%20Canada" target="_blank" rel="noopener"><bdi data-cms-f="address" data-cms-label="Street address" data-cms-max="80">325 Murray Avenue, Bathurst, NB, Canada</bdi></a></dd></div>
       </dl>
     </div>
   </section>
 
-  <section class="kp-row tm-row" id="speedy-pie" aria-label="Speedy Pie">
+  <section class="kp-row tm-row" id="speedy-pie" aria-label="Speedy Pie" data-cms-fattr="id={slug:name};aria-label={name}">
     <div class="kp-row-head tm-row-head">
-      <h2>Speedy Pie</h2>
-      <p>An Outdoor Kiosk busy enough that it was being restocked four times a day.</p>
-      <div class="tm-who"><b>David &amp; Savannah Necker</b>Owners, Speedy Pie</div>
-      <a class="tm-ig" href="https://www.instagram.com/speedypiepizza/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Check out their Instagram<b>@speedypiepizza</b></span></a>
+      <h2 data-cms-f="name" data-cms-label="Operator name" data-cms-max="40">Speedy Pie</h2>
+      <p data-cms-f="summary" data-cms-label="Summary" data-cms-max="180">An Outdoor Kiosk busy enough that it was being restocked four times a day.</p>
+      <div class="tm-who"><b data-cms-f="person" data-cms-label="Person" data-cms-max="50">David &amp; Savannah Necker</b><bdi data-cms-f="role" data-cms-label="Their role" data-cms-max="50">Owners, Speedy Pie</bdi></div>
+      <a class="tm-ig" data-cms-if="instagram" data-cms-fattr="href=https://www.instagram.com/{instagram}/" data-cms-label-instagram="Instagram handle (no @)" href="https://www.instagram.com/speedypiepizza/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Check out their Instagram<b data-cms-tpl="@{instagram}">@speedypiepizza</b></span></a>
     </div>
     <div>
-      <div class="tm-video">
-        <iframe src="https://www.youtube-nocookie.com/embed/rpFps0Y71wo?rel=0" title="They Were Restocking This Pizza Vending Machine 4 Times a Day!" loading="lazy"
+      <div class="tm-video" data-cms-if="youtube">
+        <iframe data-cms-fattr="src=https://www.youtube-nocookie.com/embed/{yt:youtube}?rel=0;title={video_title}" data-cms-label-youtube="YouTube link" data-cms-label-video_title="Video title" src="https://www.youtube-nocookie.com/embed/rpFps0Y71wo?rel=0" title="They Were Restocking This Pizza Vending Machine 4 Times a Day!" loading="lazy"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
-      <p class="tm-cap"><span>Speedy Pie &times; PFX</span><a href="https://youtu.be/rpFps0Y71wo" target="_blank" rel="noopener">Watch on YouTube</a></p>
+      <p class="tm-cap" data-cms-if="youtube"><span data-cms-tpl="{name} × PFX">Speedy Pie &times; PFX</span><a data-cms-fattr="href=https://youtu.be/{yt:youtube}" href="https://youtu.be/rpFps0Y71wo" target="_blank" rel="noopener">Watch on YouTube</a></p>
       <dl class="kp-stats">
-        <div class="kp-stat"><dt>Since</dt><dd>August 2026</dd></div>
-        <div class="kp-stat"><dt>Kiosk</dt><dd>Outdoor Kiosk</dd></div>
-        <div class="kp-stat"><dt>Location</dt><dd>Quad Cities, USA<a class="tm-addr" href="https://www.google.com/maps/search/?api=1&amp;query=5181%20Competition%20Dr%2C%20Bettendorf%2C%20IA%2052722%2C%20United%20States" target="_blank" rel="noopener">5181 Competition Dr, Bettendorf, IA 52722, United States</a></dd></div>
+        <div class="kp-stat"><dt>Since</dt><dd data-cms-f="since" data-cms-label="Since" data-cms-max="30">August 2026</dd></div>
+        <div class="kp-stat"><dt>Kiosk</dt><dd data-cms-f="kiosk" data-cms-label="Kiosk" data-cms-max="30">Outdoor Kiosk</dd></div>
+        <div class="kp-stat"><dt>Location</dt><dd><bdi data-cms-f="location" data-cms-label="Location" data-cms-max="60">Quad Cities, USA</bdi><a class="tm-addr" data-cms-if="address" data-cms-fhref="map" data-cms-label="Google Maps link" href="https://www.google.com/maps/search/?api=1&amp;query=5181%20Competition%20Dr%2C%20Bettendorf%2C%20IA%2052722%2C%20United%20States" target="_blank" rel="noopener"><bdi data-cms-f="address" data-cms-label="Street address" data-cms-max="80">5181 Competition Dr, Bettendorf, IA 52722, United States</bdi></a></dd></div>
       </dl>
     </div>
   </section>
+  </div>
 
 </main>
 <footer>

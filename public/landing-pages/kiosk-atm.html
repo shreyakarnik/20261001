@@ -218,15 +218,15 @@
   <!-- photo slots: drop an <img> inside a .kshow-ph to replace its label -->
   <section class="pp-hero" aria-label="ATM Kiosk">
     <div class="pp-hero-copy">
-      <p class="pp-eyebrow">ATM Kiosk</p>
-      <h1 class="pp-title">Extend Your Pizzeria Into the Night, Right Through Your Wall.</h1>
-      <p class="pp-lede">Recessed into a building&rsquo;s exterior, it serves customers outside while you restock it from inside, 24/7, without giving up any floor space.</p>
-      <dl class="pp-facts">
-        <div><dt>Capacity</dt><dd>70 Pizzas</dd></div>
-        <div><dt>Ready In</dt><dd>3&ndash;4 Minutes</dd></div>
-        <div><dt>Footprint</dt><dd>8&#x27;0&quot; &times; 5&#x27;0&quot;</dd></div>
+      <p class="pp-eyebrow" data-cms="hero.eyebrow" data-cms-label="Top: Small label" data-cms-max="40">ATM Kiosk</p>
+      <h1 class="pp-title" data-cms="hero.title" data-cms-label="Top: Headline" data-cms-max="70">Extend Your Pizzeria Into the Night, Right Through Your Wall.</h1>
+      <p class="pp-lede" data-cms="hero.lede" data-cms-label="Top: Paragraph" data-cms-max="200">Recessed into a building&rsquo;s exterior, it serves customers outside while you restock it from inside, 24/7, without giving up any floor space.</p>
+      <dl class="pp-facts" data-cms-list="hero.facts" data-cms-label="Top: Quick facts" data-cms-mode="fixed">
+        <div><dt data-cms-f="label" data-cms-label="Label" data-cms-max="20">Capacity</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="30">70 Pizzas</dd></div>
+        <div><dt data-cms-f="label" data-cms-label="Label" data-cms-max="20">Ready In</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="30">3&ndash;4 Minutes</dd></div>
+        <div><dt data-cms-f="label" data-cms-label="Label" data-cms-max="20">Footprint</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="30">8&#x27;0&quot; &times; 5&#x27;0&quot;</dd></div>
       </dl>
-      <p class="pp-price"><span>Equipment From</span>$86,078 <small>USD</small></p>
+      <p class="pp-price"><span>Equipment From</span><bdi data-cms="@price.atm" data-cms-label="ATM Kiosk price" data-cms-max="16">$86,078</bdi> <small>USD</small></p>
       <div class="kp-actions">
         <a class="btn-primary" href="/contact" data-talk-trigger>Let&rsquo;s Talk!</a>
         <a class="kp-link" href="/roicalculator">See The ROI <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
@@ -236,97 +236,97 @@
   </section>
 
   <section class="kp-row" aria-label="Why the ATM Kiosk">
-    <div class="kp-row-head"><h2>Why The ATM Kiosk</h2><p>Your building becomes the storefront.</p></div>
-    <ul class="pp-why">
-      <li><h3>Set Into The Wall</h3><p>The unit recesses into a building&rsquo;s exterior, so only its face shows on the street.</p></li>
-      <li><h3>Restocked From Inside</h3><p>Your team loads it from inside the building, out of the weather and out of sight.</p></li>
-      <li><h3>A Window On The Robot</h3><p>A side window lets customers watch the robotic arm prepare their pizza.</p></li>
-      <li><h3>The Most Affordable</h3><p>At $86,078 USD it is the lowest-priced of the three kiosks, with the same 70-pizza capacity.</p></li>
+    <div class="kp-row-head"><h2 data-cms="row1.title" data-cms-label="Why The ATM Kiosk: Heading" data-cms-max="50">Why The ATM Kiosk</h2><p data-cms="row1.sub" data-cms-label="Why The ATM Kiosk: Subheading" data-cms-max="110">Your building becomes the storefront.</p></div>
+    <ul class="pp-why" data-cms-list="why" data-cms-label="Why this kiosk: Cards" data-cms-min="2" data-cms-maxitems="6">
+      <li><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">Set Into The Wall</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">The unit recesses into a building&rsquo;s exterior, so only its face shows on the street.</p></li>
+      <li><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">Restocked From Inside</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">Your team loads it from inside the building, out of the weather and out of sight.</p></li>
+      <li><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">A Window On The Robot</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">A side window lets customers watch the robotic arm prepare their pizza.</p></li>
+      <li><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">The Most Affordable</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">At $86,078 USD it is the lowest-priced of the three kiosks, with the same 70-pizza capacity.</p></li>
     </ul>
   </section>
 
   <section class="kp-row" aria-label="How it works">
-    <div class="kp-row-head"><h2>How It Works</h2><p>From tap to hot pizza in minutes.</p></div>
-    <ol class="pp-steps">
-      <li><h3>Tap</h3><p>Customers pick a pizza on the 32&quot; touchscreen and add coupon or loyalty codes.</p></li>
-      <li><h3>Pay</h3><p>Cards, mobile wallets and NFC, plus campus meal plans.</p></li>
-      <li><h3>Bake</h3><p>A robotic arm moves the pizza to a patented convection oven, where it bakes in its box.</p></li>
-      <li><h3>Collect</h3><p>Out through the hatch in 3&ndash;4 minutes, with a disposable knife on the side.</p></li>
+    <div class="kp-row-head"><h2 data-cms="row2.title" data-cms-label="How It Works: Heading" data-cms-max="50">How It Works</h2><p data-cms="row2.sub" data-cms-label="How It Works: Subheading" data-cms-max="110">From tap to hot pizza in minutes.</p></div>
+    <ol class="pp-steps" data-cms-list="steps" data-cms-label="How it works: Steps" data-cms-mode="fixed">
+      <li><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">Tap</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">Customers pick a pizza on the 32&quot; touchscreen and add coupon or loyalty codes.</p></li>
+      <li><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">Pay</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">Cards, mobile wallets and NFC, plus campus meal plans.</p></li>
+      <li><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">Bake</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">A robotic arm moves the pizza to a patented convection oven, where it bakes in its box.</p></li>
+      <li><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">Collect</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">Out through the hatch in 3&ndash;4 minutes, with a disposable knife on the side.</p></li>
     </ol>
   </section>
 
   <section class="kp-row" aria-label="Built to sell">
-    <div class="kp-row-head"><h2>Built To Sell</h2><p>What every kiosk does for you.</p></div>
-    <ul class="pp-places pp-places--3 pp-sell">
-      <li><figure class="pp-img"><div class="kshow-ph"><img src="Images/kiosks/indoor-payment.jpg?v=2" alt="A customer tapping a phone on the payment terminal" loading="lazy"></div></figure><h3>Tap To Pay</h3><p>Cards, mobile wallets and NFC, plus campus meal plans, on the built-in terminal.</p></li>
-      <li><figure class="pp-img"><div class="kshow-ph"><img src="Images/kiosks/indoor-screen.jpg?v=3" alt="A customer using the 32-inch touchscreen" loading="lazy"></div></figure><h3>Ad Revenue On Screen</h3><p>Run ads on the 32&quot; touchscreen between orders: a second income from every kiosk.</p></li>
-      <li><figure class="pp-img"><div class="kshow-ph"><img src="Images/kiosks/indoor-pizza.jpg?v=3" alt="A freshly baked pizza in its box" loading="lazy"></div></figure><h3>Consistent Pizza, Every Time</h3><p>Bake time and temperature are set for each pizza, so every one comes out the same.</p></li>
+    <div class="kp-row-head"><h2 data-cms="row3.title" data-cms-label="Built To Sell: Heading" data-cms-max="50">Built To Sell</h2><p data-cms="row3.sub" data-cms-label="Built To Sell: Subheading" data-cms-max="110">What every kiosk does for you.</p></div>
+    <ul class="pp-places pp-places--3 pp-sell" data-cms-list="sell" data-cms-label="Built to sell: Cards" data-cms-mode="fixed">
+      <li><figure class="pp-img"><div class="kshow-ph"><img src="Images/kiosks/indoor-payment.jpg?v=2" alt="A customer tapping a phone on the payment terminal" loading="lazy"></div></figure><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">Tap To Pay</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">Cards, mobile wallets and NFC, plus campus meal plans, on the built-in terminal.</p></li>
+      <li><figure class="pp-img"><div class="kshow-ph"><img src="Images/kiosks/indoor-screen.jpg?v=3" alt="A customer using the 32-inch touchscreen" loading="lazy"></div></figure><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">Ad Revenue On Screen</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">Run ads on the 32&quot; touchscreen between orders: a second income from every kiosk.</p></li>
+      <li><figure class="pp-img"><div class="kshow-ph"><img src="Images/kiosks/indoor-pizza.jpg?v=3" alt="A freshly baked pizza in its box" loading="lazy"></div></figure><h3 data-cms-f="title" data-cms-label="Title" data-cms-max="50">Consistent Pizza, Every Time</h3><p data-cms-f="text" data-cms-label="Text" data-cms-max="200">Bake time and temperature are set for each pizza, so every one comes out the same.</p></li>
     </ul>
   </section>
 
   <section class="kp-row kp-specs" aria-label="Specifications">
-    <div class="kp-row-head"><h2>Specifications</h2><p>Every ATM Kiosk, as standard.</p></div>
-    <dl class="kp-stats">
-      <div class="kp-stat"><dt>Capacity</dt><dd>70 Pizzas</dd></div>
-      <div class="kp-stat"><dt>Ready In</dt><dd>3&ndash;4 Minutes</dd></div>
-      <div class="kp-stat"><dt>Dimensions</dt><dd>8&#x27;0&quot; L &times; 5&#x27;0&quot; W &times; 8&#x27;0&quot; H</dd></div>
-      <div class="kp-stat"><dt>Weight</dt><dd>750 kg / 1,654 lbs</dd></div>
-      <div class="kp-stat"><dt>Power</dt><dd>208V 20A Single Phase, 120V Receptacle</dd></div>
-      <div class="kp-stat"><dt>Service Access</dt><dd>From Inside The Building</dd></div>
-      <div class="kp-stat"><dt>Exterior</dt><dd>16-Gauge Carbon Steel Paneling</dd></div>
-      <div class="kp-stat"><dt>Oven</dt><dd>Pulsed-Air Convection</dd></div>
-      <div class="kp-stat"><dt>Interface</dt><dd>32&quot; Touchscreen</dd></div>
-      <div class="kp-stat"><dt>Connectivity</dt><dd>4G Cellular, Remote Monitoring</dd></div>
-      <div class="kp-stat"><dt>Uptime</dt><dd>99%</dd></div>
-      <div class="kp-stat"><dt>Warranty</dt><dd>2 Years</dd></div>
+    <div class="kp-row-head"><h2 data-cms="row4.title" data-cms-label="Specifications: Heading" data-cms-max="50">Specifications</h2><p data-cms="row4.sub" data-cms-label="Specifications: Subheading" data-cms-max="110">Every ATM Kiosk, as standard.</p></div>
+    <dl class="kp-stats" data-cms-list="specs" data-cms-label="Specifications" data-cms-min="1">
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Capacity</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">70 Pizzas</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Ready In</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">3&ndash;4 Minutes</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Dimensions</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">8&#x27;0&quot; L &times; 5&#x27;0&quot; W &times; 8&#x27;0&quot; H</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Weight</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">750 kg / 1,654 lbs</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Power</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">208V 20A Single Phase, 120V Receptacle</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Service Access</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">From Inside The Building</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Exterior</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">16-Gauge Carbon Steel Paneling</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Oven</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">Pulsed-Air Convection</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Interface</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">32&quot; Touchscreen</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Connectivity</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">4G Cellular, Remote Monitoring</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Uptime</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">99%</dd></div>
+      <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Warranty</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="70">2 Years</dd></div>
     </dl>
   </section>
 
   <section class="kp-row kp-features" aria-label="Standard features">
-    <div class="kp-row-head"><h2>Standard Features</h2><p>On every unit.</p></div>
-    <ol class="kp-list">
-        <li>See-Through Side Window</li>
-        <li>32&quot; Interactive Digital Interface</li>
-        <li>Payment Terminal</li>
-        <li>Accepts Campus Meal Plans</li>
-        <li>Disposable Knife Dispenser</li>
-        <li>IoT: 4G Cellular</li>
-        <li>Pulsed-Air Convection Oven</li>
-        <li>Tamper-Proof Locks</li>
-        <li>Integrated Security Systems</li>
+    <div class="kp-row-head"><h2 data-cms="row5.title" data-cms-label="Standard Features: Heading" data-cms-max="50">Standard Features</h2><p data-cms="row5.sub" data-cms-label="Standard Features: Subheading" data-cms-max="110">On every unit.</p></div>
+    <ol class="kp-list" data-cms-list="features" data-cms-label="Standard features" data-cms-min="1">
+        <li data-cms-f="text" data-cms-label="Feature" data-cms-max="60">See-Through Side Window</li>
+        <li data-cms-f="text" data-cms-label="Feature" data-cms-max="60">32&quot; Interactive Digital Interface</li>
+        <li data-cms-f="text" data-cms-label="Feature" data-cms-max="60">Payment Terminal</li>
+        <li data-cms-f="text" data-cms-label="Feature" data-cms-max="60">Accepts Campus Meal Plans</li>
+        <li data-cms-f="text" data-cms-label="Feature" data-cms-max="60">Disposable Knife Dispenser</li>
+        <li data-cms-f="text" data-cms-label="Feature" data-cms-max="60">IoT: 4G Cellular</li>
+        <li data-cms-f="text" data-cms-label="Feature" data-cms-max="60">Pulsed-Air Convection Oven</li>
+        <li data-cms-f="text" data-cms-label="Feature" data-cms-max="60">Tamper-Proof Locks</li>
+        <li data-cms-f="text" data-cms-label="Feature" data-cms-max="60">Integrated Security Systems</li>
     </ol>
   </section>
 
   <section class="kp-row kp-cert" aria-label="Certifications">
-    <div class="kp-row-head"><h2>Certified</h2><p>Industry-leading standards.</p></div>
-    <ul class="kp-certs">
+    <div class="kp-row-head"><h2 data-cms="row6.title" data-cms-label="Certified: Heading" data-cms-max="50">Certified</h2><p data-cms="row6.sub" data-cms-label="Certified: Subheading" data-cms-max="110">Industry-leading standards.</p></div>
+    <ul class="kp-certs" data-cms-list="certs" data-cms-label="Certifications" data-cms-mode="fixed">
       <li>
         <img src="nama-logo.png?v=2" alt="NAMA" onerror="this.style.display='none'">
-        <h3>NAMA Listed</h3>
+        <h3 data-cms-f="title" data-cms-label="Title" data-cms-max="40">NAMA Listed</h3>
         <dl>
-          <dt>What It Covers</dt><dd>Sanitary design, food temperature control and FDA compliance.</dd>
-          <dt>Why It Matters</dt><dd>Local health inspectors require it before they grant operating permits.</dd>
+          <dt>What It Covers</dt><dd data-cms-f="covers" data-cms-label="What it covers" data-cms-max="160">Sanitary design, food temperature control and FDA compliance.</dd>
+          <dt>Why It Matters</dt><dd data-cms-f="matters" data-cms-label="Why it matters" data-cms-max="160">Local health inspectors require it before they grant operating permits.</dd>
         </dl>
       </li>
       <li>
         <img src="ul-certified.png" alt="UL Certified" onerror="this.style.display='none'">
-        <h3>UL Certified</h3>
+        <h3 data-cms-f="title" data-cms-label="Title" data-cms-max="40">UL Certified</h3>
         <dl>
-          <dt>What It Covers</dt><dd>Electrical safety, fire risk mitigation and component reliability.</dd>
-          <dt>Why It Matters</dt><dd>Building inspectors and insurance companies require it before the kiosk can be plugged into a commercial space.</dd>
+          <dt>What It Covers</dt><dd data-cms-f="covers" data-cms-label="What it covers" data-cms-max="160">Electrical safety, fire risk mitigation and component reliability.</dd>
+          <dt>Why It Matters</dt><dd data-cms-f="matters" data-cms-label="Why it matters" data-cms-max="160">Building inspectors and insurance companies require it before the kiosk can be plugged into a commercial space.</dd>
         </dl>
       </li>
     </ul>
   </section>
 
   <section class="kp-row" aria-label="Pricing">
-    <div class="kp-row-head"><h2>Pricing</h2><p>A one-time purchase. No franchise fees.</p></div>
+    <div class="kp-row-head"><h2 data-cms="row7.title" data-cms-label="Pricing: Heading" data-cms-max="50">Pricing</h2><p data-cms="row7.sub" data-cms-label="Pricing: Subheading" data-cms-max="110">A one-time purchase. No franchise fees.</p></div>
     <div>
-      <dl class="kp-stats">
-        <div class="kp-stat"><dt>ATM Kiosk</dt><dd>$86,078 USD</dd></div>
-        <div class="kp-stat"><dt>Installation</dt><dd>$2,999 USD</dd></div>
-        <div class="kp-stat"><dt>Warranty</dt><dd>2 Years, Included</dd></div>
-        <div class="kp-stat"><dt>Franchise Fees</dt><dd>None</dd></div>
+      <dl class="kp-stats" data-cms-list="pricing" data-cms-label="Pricing: Rows" data-cms-mode="fixed">
+        <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">ATM Kiosk</dt><dd><bdi data-cms="@price.atm" data-cms-label="ATM Kiosk price" data-cms-max="16">$86,078</bdi> USD</dd></div>
+        <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Installation</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="40">$2,999 USD</dd></div>
+        <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Warranty</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="40">2 Years, Included</dd></div>
+        <div class="kp-stat"><dt data-cms-f="label" data-cms-label="Label" data-cms-max="30">Franchise Fees</dt><dd data-cms-f="value" data-cms-label="Value" data-cms-max="40">None</dd></div>
       </dl>
       <div class="kp-actions pp-gap">
         <a class="kp-link" href="/roicalculator">Model Your Payback In The ROI Calculator <svg viewBox="0 0 14 14" fill="none" width="13" height="13" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a>
@@ -335,18 +335,18 @@
   </section>
 
   <section class="kp-row" aria-label="Compare the kiosks">
-    <div class="kp-row-head"><h2>Compare The Kiosks</h2><p>Same pizzas and technology, three ways to place them.</p></div>
+    <div class="kp-row-head"><h2 data-cms="row8.title" data-cms-label="Compare The Kiosks: Heading" data-cms-max="50">Compare The Kiosks</h2><p data-cms="row8.sub" data-cms-label="Compare The Kiosks: Subheading" data-cms-max="110">Same pizzas and technology, three ways to place them.</p></div>
     <div class="pp-compare-wrap">
       <table class="pp-compare">
         <thead><tr><th></th><th><a href="/kiosk-outdoor">Outdoor</a></th><th><a href="/kiosk-indoor">Indoor</a></th><th class="on">ATM</th></tr></thead>
-        <tbody>
-          <tr><td>Best For</td><td>Open-air sites, parking lots</td><td>Lobbies, cafeterias, hospitals</td><td class="on">Building exteriors, storefronts</td></tr>
-          <tr><td>Equipment (USD)</td><td>$109,617</td><td>$98,216</td><td class="on">$86,078</td></tr>
-          <tr><td>Dimensions</td><td>10&#x27;8&quot; &times; 8&#x27;0&quot; &times; 8&#x27;7&quot;</td><td>9&#x27;5&quot; &times; 4&#x27;5&quot; &times; 8&#x27;0&quot;</td><td class="on">8&#x27;0&quot; &times; 5&#x27;0&quot; &times; 8&#x27;0&quot;</td></tr>
-          <tr><td>Weight</td><td>1,952 kg</td><td>750 kg</td><td class="on">750 kg</td></tr>
-          <tr><td>Power</td><td>208&ndash;240V 50A</td><td>208V 20A</td><td class="on">208V 20A</td></tr>
-          <tr><td>Restocked From</td><td>Inside the kiosk</td><td>The side</td><td class="on">Inside the building</td></tr>
-          <tr><td>Capacity</td><td>70 pizzas</td><td>70 pizzas</td><td class="on">70 pizzas</td></tr>
+        <tbody data-cms-list="compare" data-cms-label="Compare the kiosks: Rows" data-cms-mode="fixed">
+          <tr><td data-cms-f="label" data-cms-label="Row label" data-cms-max="60">Best For</td><td data-cms-f="a" data-cms-label="Outdoor" data-cms-max="60">Open-air sites, parking lots</td><td data-cms-f="b" data-cms-label="Indoor" data-cms-max="60">Lobbies, cafeterias, hospitals</td><td class="on" data-cms-f="c" data-cms-label="ATM" data-cms-max="60">Building exteriors, storefronts</td></tr>
+          <tr><td>Equipment (USD)</td><td><bdi data-cms="@price.outdoor" data-cms-label="Outdoor Kiosk price" data-cms-max="16">$109,617</bdi></td><td><bdi data-cms="@price.indoor" data-cms-label="Indoor Kiosk price" data-cms-max="16">$98,216</bdi></td><td class="on"><bdi data-cms="@price.atm" data-cms-label="ATM Kiosk price" data-cms-max="16">$86,078</bdi></td></tr>
+          <tr><td data-cms-f="label" data-cms-label="Row label" data-cms-max="60">Dimensions</td><td data-cms-f="a" data-cms-label="Outdoor" data-cms-max="60">10&#x27;8&quot; &times; 8&#x27;0&quot; &times; 8&#x27;7&quot;</td><td data-cms-f="b" data-cms-label="Indoor" data-cms-max="60">9&#x27;5&quot; &times; 4&#x27;5&quot; &times; 8&#x27;0&quot;</td><td class="on" data-cms-f="c" data-cms-label="ATM" data-cms-max="60">8&#x27;0&quot; &times; 5&#x27;0&quot; &times; 8&#x27;0&quot;</td></tr>
+          <tr><td data-cms-f="label" data-cms-label="Row label" data-cms-max="60">Weight</td><td data-cms-f="a" data-cms-label="Outdoor" data-cms-max="60">1,952 kg</td><td data-cms-f="b" data-cms-label="Indoor" data-cms-max="60">750 kg</td><td class="on" data-cms-f="c" data-cms-label="ATM" data-cms-max="60">750 kg</td></tr>
+          <tr><td data-cms-f="label" data-cms-label="Row label" data-cms-max="60">Power</td><td data-cms-f="a" data-cms-label="Outdoor" data-cms-max="60">208&ndash;240V 50A</td><td data-cms-f="b" data-cms-label="Indoor" data-cms-max="60">208V 20A</td><td class="on" data-cms-f="c" data-cms-label="ATM" data-cms-max="60">208V 20A</td></tr>
+          <tr><td data-cms-f="label" data-cms-label="Row label" data-cms-max="60">Restocked From</td><td data-cms-f="a" data-cms-label="Outdoor" data-cms-max="60">Inside the kiosk</td><td data-cms-f="b" data-cms-label="Indoor" data-cms-max="60">The side</td><td class="on" data-cms-f="c" data-cms-label="ATM" data-cms-max="60">Inside the building</td></tr>
+          <tr><td data-cms-f="label" data-cms-label="Row label" data-cms-max="60">Capacity</td><td data-cms-f="a" data-cms-label="Outdoor" data-cms-max="60">70 pizzas</td><td data-cms-f="b" data-cms-label="Indoor" data-cms-max="60">70 pizzas</td><td class="on" data-cms-f="c" data-cms-label="ATM" data-cms-max="60">70 pizzas</td></tr>
         </tbody>
       </table>
     </div>
