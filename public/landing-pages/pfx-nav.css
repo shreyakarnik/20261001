@@ -57,7 +57,7 @@ html{ overflow-x:clip; }
   /* the search entry looks like a field: a ruled line, the word greyed, the glass at the right */
   .pfx-msearch{ display:flex; align-items:center; justify-content:space-between; width:100%; margin:0 0 10px; padding:12px 0;
     background:none; border:0; border-bottom:1px solid rgba(223,231,224,.3); border-radius:0;
-    font:400 16px/1.2 'Inter', system-ui, sans-serif; color:rgba(223,231,224,.45); text-align:left; cursor:pointer; }
+    font:400 16px/1.2 'Inter', system-ui, sans-serif; color:rgba(223,231,224,.82); text-align:left; cursor:pointer; }
   .pfx-msearch svg{ width:18px; height:18px; flex:0 0 auto; }
   /* a long menu scrolls inside the sheet rather than running off the bottom */
   .pfx-links{ overflow-y:auto; overscroll-behavior:contain; padding-top:80px; }

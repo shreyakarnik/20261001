@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="talk-modal.css?v=9">
+<link rel="stylesheet" href="talk-modal.css?v=10">
 <style>
   :root{
     --red:#C00022;
@@ -105,16 +105,16 @@
   .footer-socials{display:flex; gap:12px;}
   .footer-socials a{
     width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
-    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.82);
   }
   .footer-right{text-align:right;}
   .footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
-  .footer-links a{font-size:14px; color:rgba(255,255,255,0.75);}
-  .footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+  .footer-links a{font-size:14px; color:rgba(255,255,255,.82);}
+  .footer-legal{font-size:12.5px; color:rgba(255,255,255,.82); max-width:480px; margin-left:auto;}
 
   /* PAGE-SPECIFIC: kiosk model detail pages */
   .model-tabs{display:flex; justify-content:center; gap:14px; padding:44px 24px 0; flex-wrap:wrap;}
-  .model-tabs a{padding:13px 30px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; font-size:14px; font-weight:500; color:rgba(255,255,255,0.8); transition:all .15s;}
+  .model-tabs a{padding:13px 30px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; font-size:14px; font-weight:500; color:rgba(255,255,255,.82); transition:all .15s;}
   .model-tabs a:hover{border-color:rgba(255,255,255,0.4); color:var(--white);}
   .model-tabs a.on{background:var(--red); border-color:var(--red); color:#fff; font-weight:600;}
 
@@ -125,40 +125,40 @@
   .k-badges{display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap;}
   .k-pill{display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 16px; font-size:13px; color:rgba(255,255,255,0.85); width:fit-content;}
   .k-pill svg{flex-shrink:0; color:var(--red);}
-  .k-hero .desc{color:rgba(255,255,255,0.7); font-size:15px; line-height:1.8; max-width:520px; margin-bottom:28px;}
+  .k-hero .desc{color:rgba(255,255,255,.82); font-size:15px; line-height:1.8; max-width:520px; margin-bottom:28px;}
   .k-specs{display:flex; flex-direction:column; gap:10px; align-items:flex-start;}
   .k-hero-image{border-radius:24px; overflow:hidden; aspect-ratio:1/1; background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08);}
   .k-hero-image img{width:100%; height:100%; object-fit:cover; display:block;}
 
   .cert-bar{max-width:1440px; margin:56px auto 0; padding:0 80px;}
   /* Same type spec as the section eyebrows ("Your Brand. Your Business") */
-  .cert-eyebrow{text-align:center; margin-bottom:12px; font-size:14px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.6);}
+  .cert-eyebrow{text-align:center; margin-bottom:12px; font-size:14px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,.82);}
   .cert-bar-inner{border:1px solid rgba(255,255,255,0.14); border-radius:50px; padding:22px 40px; display:flex; align-items:center; justify-content:center; gap:56px; font-size:15px; color:rgba(255,255,255,0.85); flex-wrap:wrap;}
   .cert-bar-inner img{height:78px; object-fit:contain;}
 
   .build-section{padding:88px 80px 0; text-align:center;}
   .build-section h2{font-size:32px; font-weight:600; margin-bottom:10px; color:var(--white);}
-  .build-section .sub{color:rgba(255,255,255,0.65); font-size:16px; margin-bottom:36px;}
+  .build-section .sub{color:rgba(255,255,255,.82); font-size:16px; margin-bottom:36px;}
   .build-cards{max-width:1280px; margin:0 auto; display:grid; gap:20px;}
   .build-cards.cols-2{grid-template-columns:1fr 1fr;}
   .build-cards.cols-3{grid-template-columns:repeat(3,1fr);}
   .build-card{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:26px; text-align:left;}
   .build-card h3{font-size:16px; font-weight:600; margin-bottom:10px; color:var(--white);}
-  .build-card p{font-size:13.5px; line-height:1.6; color:rgba(255,255,255,0.65);}
+  .build-card p{font-size:13.5px; line-height:1.6; color:rgba(255,255,255,.82);}
 
   .features-section{padding:56px 80px 0; text-align:center;}
-  .features-eyebrow{font-size:13px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:24px;}
+  .features-eyebrow{font-size:13px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,.82); margin-bottom:24px;}
   .features-grid{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
   .feature-pill{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 16px; font-size:13.5px; font-weight:500; color:rgba(255,255,255,0.85); line-height:1.4;}
   .security-bar{max-width:1280px; margin:20px auto 0;}
-  .security-bar-inner{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 24px; text-align:center; font-size:14px; color:rgba(255,255,255,0.75);}
+  .security-bar-inner{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 24px; text-align:center; font-size:14px; color:rgba(255,255,255,.82);}
   .k-cta{text-align:center; padding:40px 80px 0;}
 
   .deploy-section{padding:88px 80px 0; text-align:center;}
   .deploy-section h2{font-size:32px; font-weight:600; margin-bottom:10px; color:var(--white);}
-  .deploy-section .sub{color:rgba(255,255,255,0.65); font-size:16px; margin-bottom:32px;}
+  .deploy-section .sub{color:rgba(255,255,255,.82); font-size:16px; margin-bottom:32px;}
   .deploy-tags{display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-bottom:36px;}
-  .deploy-tag{border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 20px; font-size:13.5px; color:rgba(255,255,255,0.8);}
+  .deploy-tag{border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 20px; font-size:13.5px; color:rgba(255,255,255,.82);}
   .deploy-gallery{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr 1.15fr 1fr; gap:20px; align-items:stretch;}
   .deploy-gallery .g-item{border-radius:20px; background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); min-height:340px;}
   .deploy-gallery .g-item.tall{min-height:440px;}
@@ -188,17 +188,17 @@
     .footer-legal{margin-left:0;}
   }
 </style>
-<link rel="stylesheet" href="pfx-nav.css?v=9">
-<link rel="stylesheet" href="pfx-theme.css?v=47">
+<link rel="stylesheet" href="pfx-nav.css?v=10">
+<link rel="stylesheet" href="pfx-theme.css?v=48">
 <style>
 /* ---- support: the kiosk pages' line grammar (.kp, .kp-row in pfx-theme.css) */
-.sup-note{ margin:0 0 28px; font-size:17px; line-height:1.7; color:rgba(223,231,224,.62); max-width:58ch; }
+.sup-note{ margin:0 0 28px; font-size:17px; line-height:1.7; color:rgba(223,231,224,.82); max-width:58ch; }
 .sup-note a{ color:#fff; border-bottom:1px solid rgba(223,231,224,.4); }
 .sup-note a:hover{ border-color:#fff; }
 .sup-rows{ margin:0; }
 .sup-rows > div{ display:flex; justify-content:space-between; align-items:baseline; gap:18px; padding:20px 0; border-top:1px solid var(--kp-rule); }
 .sup-rows > div:last-child{ border-bottom:1px solid var(--kp-rule); }
-.sup-rows dt{ font-size:13px; color:rgba(223,231,224,.45); }
+.sup-rows dt{ font-size:13px; color:rgba(223,231,224,.82); }
 .sup-rows dd{ margin:0; font-size:22px; letter-spacing:-.01em; }
 .sup-rows dd a{ color:#fff; transition:color .2s; }
 .sup-rows dd a:hover{ color:#c00022; }
@@ -214,7 +214,7 @@
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23dfe7e0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 2px center; }
 .sup-f select option{ background:#0d0e10; color:#fff; }
 .sup-f textarea{ resize:vertical; min-height:110px; }
-.sup-f textarea::placeholder{ color:rgba(223,231,224,.3); }
+.sup-f textarea::placeholder{ color:rgba(223,231,224,.62); }
 .sup-f input:focus, .sup-f select:focus, .sup-f textarea:focus{ border-color:#fff; }
 .sup-submit{ margin-top:32px; }
 .sup-done{ margin:0; padding-top:20px; border-top:1px solid #fff; font-size:17px; color:#fff; }
@@ -225,7 +225,7 @@
   .sup-f:nth-child(2){ padding-top:18px; }
 }
 </style>
-<link rel="stylesheet" href="pfx-site.css?v=10">
+<link rel="stylesheet" href="pfx-site.css?v=11">
 </head>
 <body class="kiosk-spec no-campus">
 

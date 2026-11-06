@@ -45,20 +45,20 @@ body.tm-locked{overflow:hidden;}
 
 .tm-badge{
   display:block; width:fit-content; margin:0 auto 24px;
-  font-size:12.5px; color:rgba(255,255,255,0.65);
+  font-size:12.5px; color:rgba(255,255,255,.82);
   border:1px solid rgba(255,255,255,0.18); border-radius:20px; padding:6px 16px;
 }
 
 .tm-head{text-align:center; max-width:707px; margin:0 auto 40px;}
 .tm-head h2{font-size:36px; font-weight:700; margin-bottom:16px; color:#fff; letter-spacing:-0.5px;}
-.tm-head p{color:rgba(255,255,255,0.75); font-size:16px; line-height:1.8;}
+.tm-head p{color:rgba(255,255,255,.82); font-size:16px; line-height:1.8;}
 
 form.tm-form{max-width:1016px; margin:0 auto;}
 .tm-row{display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-bottom:16px;}
 .tm-row.single{grid-template-columns:1fr;}
 .tm-group{display:flex; flex-direction:column; gap:8px;}
 .tm-group label{font-size:16px; font-weight:400; color:#fff;}
-.tm-group label .hint{font-size:12.5px; color:rgba(255,255,255,0.55); font-weight:400;}
+.tm-group label .hint{font-size:12.5px; color:rgba(255,255,255,.82); font-weight:400;}
 .tm-group input[type="text"],
 .tm-group input[type="email"],
 .tm-group input[type="tel"],
@@ -68,17 +68,17 @@ form.tm-form{max-width:1016px; margin:0 auto;}
   border:none; border-radius:20px; padding:15px 18px; font-size:14.5px;
   font-family:inherit; color:#fff; background:rgba(255,255,255,0.3);
 }
-.tm-group input::placeholder, .tm-group textarea::placeholder{color:rgba(255,255,255,0.55);}
+.tm-group input::placeholder, .tm-group textarea::placeholder{color:rgba(255,255,255,.62);}
 .tm-group select option{color:#000;}
 .tm-group textarea{resize:vertical; min-height:90px;}
 .tm-group input:focus, .tm-group select:focus, .tm-group textarea:focus{outline:2px solid var(--red, #C00022); outline-offset:1px;}
 
-.tm-note{color:rgba(255,255,255,0.75); font-size:15px; line-height:1.8; text-align:center; margin:24px 0 28px;}
+.tm-note{color:rgba(255,255,255,.82); font-size:15px; line-height:1.8; text-align:center; margin:24px 0 28px;}
 
 .tm-extra{display:none; margin-top:8px;}
 .tm-extra.open{display:block;}
 
-.tm-consent{font-size:13.5px; color:rgba(255,255,255,0.6); margin:16px 0 10px; line-height:1.7;}
+.tm-consent{font-size:13.5px; color:rgba(255,255,255,.82); margin:16px 0 10px; line-height:1.7;}
 .tm-checkbox-row{display:flex; align-items:flex-start; gap:6px; margin-bottom:8px; font-size:14px; color:#fff;}
 .tm-checkbox-row input{margin-top:3px;}
 
@@ -164,7 +164,7 @@ form.tm-form{max-width:1016px; margin:0 auto;}
   font-size:13px !important; font-weight:400 !important; letter-spacing:0 !important; text-transform:none !important;
   color:#fff !important; margin-bottom:4px; line-height:1.4;
 }
-.tm-group label .hint{ font-size:12px !important; color:rgba(223,231,224,.3) !important; text-transform:none !important; letter-spacing:0 !important; }
+.tm-group label .hint{ font-size:12px !important; color:rgba(223,231,224,.82) !important; text-transform:none !important; letter-spacing:0 !important; }
 .tm-group input[type="text"], .tm-group input[type="email"], .tm-group input[type="tel"], .tm-group input[type="number"], .tm-group select, .tm-group textarea{
   width:100%; box-sizing:border-box; padding:10px 0 !important; background:transparent !important;
   border:0 !important; border-bottom:1px solid rgba(223,231,224,.22) !important; border-radius:0 !important;
@@ -178,7 +178,7 @@ form.tm-form{max-width:1016px; margin:0 auto;}
 .tm-group select option{ background:#0d0e10; color:#fff; }
 .tm-group textarea{ resize:vertical; min-height:110px; }
 .tm-group input:focus, .tm-group select:focus, .tm-group textarea:focus{ border-bottom-color:#fff !important; outline:0 !important; }
-.tm-group input::placeholder, .tm-group textarea::placeholder{ color:rgba(223,231,224,.3) !important; }
+.tm-group input::placeholder, .tm-group textarea::placeholder{ color:rgba(223,231,224,.62) !important; }
 .tm-row{ gap:18px 28px; margin-bottom:18px; }
 .tm-group{ gap:0; }
 .tm-checkbox-row input[type="checkbox"]{ width:18px; height:18px; border-radius:0; background:transparent; border:1px solid rgba(223,231,224,.4); }

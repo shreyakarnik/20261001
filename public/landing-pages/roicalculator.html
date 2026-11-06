@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="talk-modal.css?v=9">
+<link rel="stylesheet" href="talk-modal.css?v=10">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -89,12 +89,12 @@ footer{
 .footer-socials{display:flex; gap:12px;}
 .footer-socials a{
   width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
-  display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+  display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.82);
 }
 .footer-right{text-align:right;}
 .footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
-.footer-links a{font-size:14px; color:rgba(255,255,255,0.75); text-decoration:none;}
-.footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+.footer-links a{font-size:14px; color:rgba(255,255,255,.82); text-decoration:none;}
+.footer-legal{font-size:12.5px; color:rgba(255,255,255,.82); max-width:480px; margin-left:auto;}
 
 /* CALCULATOR */
 .calc-section{padding:56px 2.5rem;}
@@ -104,23 +104,23 @@ footer{
 .calc-box{background:var(--white);border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.04);}
 .calc-header{background:var(--off2);padding:26px 36px;border-bottom:1px solid var(--border2);}
 .calc-header h3{font-size:26px; font-weight:800; color:var(--black); line-height:1; margin-bottom:4px;}
-.calc-header p{font-size:14px;color:var(--hint);font-weight:300;}
+.calc-header p{font-size:14px;color:var(--hint);font-weight:400;}
 .calc-cols{display:grid;grid-template-columns:1fr 1fr;}
 .calc-left{padding:36px;border-right:1px solid var(--border2);}
 .calc-right{padding:36px;background:var(--off);}
 
 .model-btns{display:flex;gap:6px;margin-bottom:30px;}
-.mbtn{flex:1;padding:11px 6px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-family:inherit;font-size:10px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);text-align:center;line-height:1.5;transition:all .15s;}
+.mbtn{flex:1;padding:11px 6px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-family:inherit;font-size:12px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);text-align:center;line-height:1.5;transition:all .15s;}
 .mbtn:hover{border-color:var(--red-border);color:var(--black);}
 .mbtn.on{background:var(--red);color:#fff;border-color:var(--red);}
-.mbtn .mprice{display:block;font-size:10px;opacity:.7;font-weight:400;margin-top:2px;letter-spacing:.03em;}
+.mbtn .mprice{display:block;font-size:12px;opacity:.9;font-weight:400;margin-top:2px;letter-spacing:.03em;}
 
-.sec-div{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);padding-bottom:10px;border-bottom:1px solid var(--border);margin:28px 0 22px;}
+.sec-div{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);padding-bottom:10px;border-bottom:1px solid var(--border);margin:28px 0 22px;}
 .sec-div:first-of-type{margin-top:0;}
 
 .ig{margin-bottom:22px;}
-.ig label{display:block;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;}
-.hint-t{font-size:13px;color:var(--hint);margin-top:5px;font-style:italic;font-weight:300;}
+.ig label{display:block;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;}
+.hint-t{font-size:13px;color:var(--hint);margin-top:5px;font-style:italic;font-weight:400;}
 .sr{display:flex;align-items:center;gap:12px;}
 .sr input[type=range]{flex:1;-webkit-appearance:none;height:3px;background:var(--off2);border-radius:2px;outline:none;cursor:pointer;}
 .sr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;background:var(--red);border-radius:50%;cursor:pointer;}
@@ -131,32 +131,32 @@ footer{
 .pf input{border:none;background:transparent;color:var(--black);height:40px;padding:0 14px;font-size:14px;flex:1;outline:none;font-family:inherit;}
 .cr{display:flex;align-items:center;gap:10px;}
 .cr input[type=checkbox]{width:16px;height:16px;accent-color:var(--red);cursor:pointer;}
-.cl{font-size:14px;color:var(--muted);font-weight:300;}
+.cl{font-size:14px;color:var(--muted);font-weight:400;}
 
 /* Results */
-.rl{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);margin-bottom:16px;}
+.rl{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);margin-bottom:16px;}
 .big-r{margin-bottom:26px;}
-.big-lbl{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.big-lbl{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 .big-v{font-size:44px; font-weight:800; line-height:1; color:var(--black);}
 .big-v.good{color:var(--green);}
 .big-v.bad{color:var(--red);}
-.big-s{font-size:14px;color:var(--muted);margin-top:6px;font-weight:300;}
+.big-s{font-size:14px;color:var(--muted);margin-top:6px;font-weight:400;}
 .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
 .kpi{background:var(--white);border:1px solid var(--border2);border-radius:12px;padding:14px 16px;}
-.kpi .kl{font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;}
+.kpi .kl{font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;}
 .kpi .kv{font-size:20px; font-weight:800; color:var(--black);}
 .bbar-wrap{margin-bottom:24px;}
-.bbar-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:7px;font-weight:300;}
+.bbar-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:400;}
 .bbar{height:4px;background:var(--off2);border-radius:2px;overflow:hidden;}
 .bbar-fill{height:100%;background:var(--red);border-radius:2px;transition:width .3s;}
-.bbar-foot{display:flex;justify-content:space-between;font-size:10px;color:var(--hint);margin-top:4px;letter-spacing:.07em;text-transform:uppercase;}
+.bbar-foot{display:flex;justify-content:space-between;font-size:12px;color:var(--hint);margin-top:4px;letter-spacing:.07em;text-transform:uppercase;}
 .pl{border-top:1px solid var(--border);padding-top:18px;}
 .pr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:12px;}
 .pr:last-child{border-bottom:none;padding-top:12px;}
-.pr .p-l{color:var(--muted);font-weight:300;}
+.pr .p-l{color:var(--muted);font-weight:400;}
 .pr .p-v{color:var(--black);font-weight:600;font-variant-numeric:tabular-nums;}
 
-.disc{font-size:11px;color:var(--hint);line-height:1.7;border-top:1px solid var(--border);padding-top:22px;margin-top:28px;font-weight:300;max-width:1160px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0;}
+.disc{font-size:12px;color:var(--hint);line-height:1.7;border-top:1px solid var(--border);padding-top:22px;margin-top:28px;font-weight:400;max-width:1160px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0;}
 
 /* GATE — lead-capture modal shown over a dimmed, non-interactive calculator until the form is submitted */
 .gate-overlay{
@@ -181,8 +181,8 @@ body.gate-locked{overflow:hidden;}
 .gate-head{text-align:center;margin-bottom:28px;}
 .gate-head .eyebrow{color:var(--red);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;}
 .gate-head h1{font-size:clamp(26px,4vw,36px);font-weight:800;letter-spacing:-0.5px;margin-bottom:5px;}
-.gate-head .sub{font-size:15px;color:var(--hint);font-weight:300;line-height:1.7;}
-.gate-form .form-section-title{font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);border-bottom:1px solid var(--border);padding-bottom:9px;margin:24px 0 18px;}
+.gate-head .sub{font-size:15px;color:var(--hint);font-weight:400;line-height:1.7;}
+.gate-form .form-section-title{font-size:12px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);border-bottom:1px solid var(--border);padding-bottom:9px;margin:24px 0 18px;}
 .gate-form .form-section-title:first-child{margin-top:0;}
 .gate-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
 .gate-form .form-row.single{grid-template-columns:1fr;}
@@ -194,7 +194,7 @@ body.gate-locked{overflow:hidden;}
 }
 .gate-form input:focus, .gate-form select:focus{outline:2px solid var(--red);outline-offset:1px;}
 .hp-field{position:absolute;left:-9999px;top:-9999px;} /* honeypot — never visible to real visitors */
-.gate-consent{font-size:12.5px;line-height:1.6;color:rgba(223,231,224,.5);margin:18px 0 10px;}
+.gate-consent{font-size:12.5px;line-height:1.6;color:rgba(223,231,224,.82);margin:18px 0 10px;}
 .gate-check{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;line-height:1.5;color:#fff;margin:0 0 18px;cursor:pointer;}
 .gate-check input{width:16px;height:16px;margin-top:2px;flex:0 0 auto;accent-color:var(--red);cursor:pointer;}
 .gate-error{
@@ -229,9 +229,9 @@ body.gate-locked{overflow:hidden;}
   .gate-form .form-row{grid-template-columns:1fr;}
 }
 </style>
-<link rel="stylesheet" href="pfx-nav.css?v=9">
-<link rel="stylesheet" href="pfx-theme.css?v=47">
-<link rel="stylesheet" href="pfx-site.css?v=10">
+<link rel="stylesheet" href="pfx-nav.css?v=10">
+<link rel="stylesheet" href="pfx-theme.css?v=48">
+<link rel="stylesheet" href="pfx-site.css?v=11">
 </head>
 <body>
 
@@ -325,14 +325,14 @@ body.gate-locked{overflow:hidden;}
             <p>Illustrative estimates only — not a guarantee of earnings. Actual results vary by location, foot traffic, and operating conditions.</p>
           </div>
           <div style="display:flex;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;flex-shrink:0;align-self:center;">
-            <button id="btn-usd" onclick="setCurrency('usd')" style="padding:9px 18px;background:var(--red);color:white;font-family:inherit;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;">🇺🇸 USD</button>
-            <button id="btn-cad" onclick="setCurrency('cad')" style="padding:9px 18px;background:white;color:#20242c;font-family:inherit;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;">🇨🇦 CAD</button>
+            <button id="btn-usd" onclick="setCurrency('usd')" style="padding:9px 18px;background:var(--red);color:white;font-family:inherit;font-size:12px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;">🇺🇸 USD</button>
+            <button id="btn-cad" onclick="setCurrency('cad')" style="padding:9px 18px;background:white;color:#20242c;font-family:inherit;font-size:12px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;">🇨🇦 CAD</button>
           </div>
         </div>
       </div>
       <div class="calc-cols">
         <div class="calc-left">
-          <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--hint);margin-bottom:14px;">Select unit type</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--hint);margin-bottom:14px;">Select unit type</div>
           <div class="model-btns">
             <button id="mbtn-atm" class="mbtn on" onclick="setModel('atm',this)">ATM Style<span class="mprice">$86,078</span></button>
             <button id="mbtn-indoor" class="mbtn" onclick="setModel('indoor',this)">Indoor Kiosk<span class="mprice">$98,216</span></button>
@@ -349,7 +349,7 @@ body.gate-locked{overflow:hidden;}
             </div>
           </div>
           <div class="ig">
-            <label>Pizzas sold per day <span style="opacity:.45;">(per unit)</span></label>
+            <label>Pizzas sold per day <span style="opacity:.8;">(per unit)</span></label>
             <div class="sr">
               <input type="range" id="inp-pizzas" min="0" max="200" step="1" value="25" oninput="calc()">
               <span class="sv" id="out-pizzas">20</span>
@@ -379,7 +379,7 @@ body.gate-locked{overflow:hidden;}
             </div>
           </div>
           <div class="ig">
-            <label>Unit rent <span style="opacity:.45;">(% of revenue)</span></label>
+            <label>Unit rent <span style="opacity:.8;">(% of revenue)</span></label>
             <div class="sr">
               <input type="range" id="inp-rent" min="0" max="30" step="0.5" value="7" oninput="calc()">
               <span class="sv" id="out-rent">7.0%</span>
@@ -387,7 +387,7 @@ body.gate-locked{overflow:hidden;}
             <div class="hint-t">Typically 0–10% depending on location. Special venues may be higher.</div>
           </div>
           <div class="ig">
-            <label>Unit utilities <span style="opacity:.45;">(monthly, per unit)</span></label>
+            <label>Unit utilities <span style="opacity:.8;">(monthly, per unit)</span></label>
             <div class="pf"><span class="px cur-sym">$</span><input type="number" id="inp-util" value="0" min="0" step="10" oninput="calc()"></div>
             <div class="hint-t">Usually covered in rent / revenue-share agreement</div>
           </div>
@@ -427,14 +427,14 @@ body.gate-locked{overflow:hidden;}
           </div>
 
           <div style="background:rgba(192,0,34,0.12);border:1px solid var(--red-border);border-radius:12px;padding:18px 20px;margin-bottom:24px;">
-            <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:14px;">Lifetime projection (<span id="out-life-label">15</span> years)</div>
+            <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:14px;">Lifetime projection (<span id="out-life-label">15</span> years)</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
               <div>
-                <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;">Total earnings</div>
+                <div style="font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;">Total earnings</div>
                 <div style="font-size:24px; font-weight:800; color:var(--black);" id="out-lifetime">—</div>
               </div>
               <div>
-                <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;">Lifetime ROI</div>
+                <div style="font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;">Lifetime ROI</div>
                 <div style="font-size:24px; font-weight:800; color:var(--black);" id="out-lifetime-roi">—</div>
               </div>
             </div>

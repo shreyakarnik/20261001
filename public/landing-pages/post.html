@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="talk-modal.css?v=9">
+<link rel="stylesheet" href="talk-modal.css?v=10">
 <style>
   :root{
     --red:#C00022;
@@ -89,9 +89,9 @@
   /* PAGE HEAD */
   .page-head{max-width:1440px; margin:0 auto; padding:64px 86.4px 0;}
   .page-head-top{display:flex; justify-content:space-between; align-items:flex-end; gap:16px;}
-  .eyebrow{color:rgba(255,255,255,0.6); font-weight:400; font-size:14px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px;}
+  .eyebrow{color:rgba(255,255,255,.82); font-weight:400; font-size:14px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px;}
   .page-head h1{font-size:44px; font-weight:600; letter-spacing:-0.5px; margin-bottom:14px; color:var(--white);}
-  .page-head p{color:rgba(255,255,255,0.65); font-size:16px; max-width:640px;}
+  .page-head p{color:rgba(255,255,255,.82); font-size:16px; max-width:640px;}
   .lock-btn{
     width:40px; height:40px; flex-shrink:0; margin-bottom:10px;
     display:flex; align-items:center; justify-content:center;
@@ -110,12 +110,12 @@
     display:flex; flex-direction:column; height:100%;
   }
   .blog-card:target{ outline:2px solid var(--red); outline-offset:2px; }
-  .blog-date{font-size:12.5px; color:rgba(255,255,255,0.55); margin-bottom:10px; font-weight:600;}
+  .blog-date{font-size:12.5px; color:rgba(255,255,255,.82); margin-bottom:10px; font-weight:600;}
   .blog-card h3{font-size:19px; font-weight:600; margin-bottom:10px; line-height:1.3; color:var(--white);}
-  .blog-card p{font-size:14.5px; color:rgba(255,255,255,0.65); margin-bottom:16px; flex:1;}
+  .blog-card p{font-size:14.5px; color:rgba(255,255,255,.82); margin-bottom:16px; flex:1;}
   .blog-tags{display:flex; gap:6px; flex-wrap:wrap;}
   .blog-tags .tag{
-    font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    font-size:12px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
     background:rgba(192,0,34,0.15); color:#c00022; padding:4px 9px; border-radius:12px;
   }
 
@@ -130,12 +130,12 @@
   .footer-socials{display:flex; gap:12px;}
   .footer-socials a{
     width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
-    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.82);
   }
   .footer-right{text-align:right;}
   .footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
-  .footer-links a{font-size:14px; color:rgba(255,255,255,0.75);}
-  .footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+  .footer-links a{font-size:14px; color:rgba(255,255,255,.82);}
+  .footer-legal{font-size:12.5px; color:rgba(255,255,255,.82); max-width:480px; margin-left:auto;}
 
   @media (max-width: 900px){
     header.nav{margin:12px; padding:10px 16px;}
@@ -152,25 +152,25 @@
     .footer-legal{margin-left:0;}
   }
 </style>
-<link rel="stylesheet" href="pfx-nav.css?v=9">
-<link rel="stylesheet" href="pfx-theme.css?v=47">
+<link rel="stylesheet" href="pfx-nav.css?v=10">
+<link rel="stylesheet" href="pfx-theme.css?v=48">
 <style>
 /* ---- one blog post (/post?p=<slug>), in the kiosk pages' line style */
 .bp{ max-width:1180px; margin:0 auto; padding:56px 80px 120px; }
-.bp-back{ display:inline-flex; align-items:center; gap:10px; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.6); }
+.bp-back{ display:inline-flex; align-items:center; gap:10px; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:rgba(223,231,224,.82); }
 .bp-back:hover{ color:#fff; }
 .bp-back svg{ transform:rotate(-135deg); }
 .bp-head{ margin-top:40px; border-top:1px solid rgba(223,231,224,.16); padding-top:22px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:28px; }
-.bp-meta{ font-size:13px; line-height:1.7; color:rgba(223,231,224,.45); }
+.bp-meta{ font-size:13px; line-height:1.7; color:rgba(223,231,224,.82); }
 .bp-meta b{ display:block; font-weight:400; color:#dfe7e0; }
 .bp-tags{ display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:14px; }
-.bp-tags span{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:rgba(223,231,224,.45); }
+.bp-tags span{ font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:rgba(223,231,224,.82); }
 .bp h1{ margin:0 !important; font-size:clamp(32px,4vw,56px) !important; line-height:1.08 !important; font-weight:400 !important; letter-spacing:-.02em !important; color:#fff !important; }
-.bp-lede{ margin:20px 0 0; font-size:17px; line-height:1.65; color:rgba(223,231,224,.62); max-width:60ch; }
+.bp-lede{ margin:20px 0 0; font-size:17px; line-height:1.65; color:rgba(223,231,224,.82); max-width:60ch; }
 .bp-hero{ margin:48px 0 0; aspect-ratio:16/9; overflow:hidden; background:#232625; }
 .bp-hero img{ width:100%; height:100%; object-fit:cover; display:block; }
 .bp-body{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:28px; margin-top:56px; }
-.bp-article{ grid-column:2; max-width:68ch; font-size:17px; line-height:1.75; color:rgba(223,231,224,.78); }
+.bp-article{ grid-column:2; max-width:68ch; font-size:17px; line-height:1.75; color:rgba(223,231,224,.82); }
 .bp-article > *:first-child{ margin-top:0 !important; }
 .bp-article p{ margin:0 0 20px; }
 .bp-article h1, .bp-article h2, .bp-article h3, .bp-article h4, .bp-article h5, .bp-article h6{ color:#fff !important; font-weight:400 !important; letter-spacing:-.01em; margin:44px 0 16px !important; padding-top:18px; border-top:1px solid rgba(223,231,224,.16); }
@@ -181,13 +181,13 @@
 .bp-article li{ padding:12px 0; border-top:1px solid rgba(223,231,224,.1); }
 .bp-article ol{ counter-reset:bp; }
 .bp-article ol li{ counter-increment:bp; }
-.bp-article ol li::before{ content:counter(bp, decimal-leading-zero) "  "; color:rgba(223,231,224,.4); font-size:13px; }
+.bp-article ol li::before{ content:counter(bp, decimal-leading-zero) "  "; color:rgba(223,231,224,.82); font-size:13px; }
 .bp-article b, .bp-article strong{ color:#fff; font-weight:500; }
 .bp-article a{ color:#fff; text-decoration:none; border-bottom:1px solid rgba(223,231,224,.4); }
 .bp-article a:hover{ border-color:#fff; }
 .bp-article img{ max-width:100%; height:auto; display:block; margin:28px 0; }
 .bp-article blockquote{ margin:28px 0; padding:18px 0 0; border-top:1px solid #fff; font-size:21px; line-height:1.5; color:#fff; }
-.bp-note{ margin:0 0 28px; padding-top:14px; border-top:1px solid rgba(223,231,224,.16); font-size:13px; color:rgba(223,231,224,.55); }
+.bp-note{ margin:0 0 28px; padding-top:14px; border-top:1px solid rgba(223,231,224,.16); font-size:13px; color:rgba(223,231,224,.82); }
 .bp-more{ margin-top:120px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:28px; }
 .bp-more-head{ border-top:1px solid #fff; padding-top:20px; }
 .bp-more-head h2{ margin:0 !important; font-size:22px !important; font-weight:400 !important; color:#fff !important; }
@@ -196,10 +196,10 @@
 .bp-more li a::before{ content:''; position:absolute; left:0; right:0; top:-1px; height:1px; background:#fff; transform:scaleX(0); transform-origin:left; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
 .bp-more li a:hover::before{ transform:scaleX(1); }
 .bp-more li b{ font-weight:400; font-size:19px; color:#fff; }
-.bp-more li span{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(223,231,224,.4); white-space:nowrap; }
+.bp-more li span{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(223,231,224,.82); white-space:nowrap; }
 .bp-missing{ padding:80px 0; }
 .bp-missing h1{ margin-bottom:16px !important; }
-.bp-missing p{ color:rgba(223,231,224,.6); }
+.bp-missing p{ color:rgba(223,231,224,.82); }
 @media (max-width:900px){
   .bp{ padding:32px 24px 80px; }
   .bp-head, .bp-body, .bp-more{ grid-template-columns:1fr; }
@@ -209,7 +209,7 @@
 }
 </style>
 
-<link rel="stylesheet" href="pfx-site.css?v=10">
+<link rel="stylesheet" href="pfx-site.css?v=11">
 </head>
 <body class="kiosk-spec no-campus">
 

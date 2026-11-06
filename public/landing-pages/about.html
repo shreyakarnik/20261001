@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="talk-modal.css?v=9">
+<link rel="stylesheet" href="talk-modal.css?v=10">
 <style>
   :root{
     --red:#C00022;
@@ -105,16 +105,16 @@
   .footer-socials{display:flex; gap:12px;}
   .footer-socials a{
     width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.2);
-    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.75);
+    display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.82);
   }
   .footer-right{text-align:right;}
   .footer-links{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:28px; margin-bottom:18px;}
-  .footer-links a{font-size:14px; color:rgba(255,255,255,0.75);}
-  .footer-legal{font-size:12.5px; color:rgba(255,255,255,0.45); max-width:480px; margin-left:auto;}
+  .footer-links a{font-size:14px; color:rgba(255,255,255,.82);}
+  .footer-legal{font-size:12.5px; color:rgba(255,255,255,.82); max-width:480px; margin-left:auto;}
 
   /* PAGE-SPECIFIC: kiosk model detail pages */
   .model-tabs{display:flex; justify-content:center; gap:14px; padding:44px 24px 0; flex-wrap:wrap;}
-  .model-tabs a{padding:13px 30px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; font-size:14px; font-weight:500; color:rgba(255,255,255,0.8); transition:all .15s;}
+  .model-tabs a{padding:13px 30px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; font-size:14px; font-weight:500; color:rgba(255,255,255,.82); transition:all .15s;}
   .model-tabs a:hover{border-color:rgba(255,255,255,0.4); color:var(--white);}
   .model-tabs a.on{background:var(--red); border-color:var(--red); color:#fff; font-weight:600;}
 
@@ -125,40 +125,40 @@
   .k-badges{display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap;}
   .k-pill{display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 16px; font-size:13px; color:rgba(255,255,255,0.85); width:fit-content;}
   .k-pill svg{flex-shrink:0; color:var(--red);}
-  .k-hero .desc{color:rgba(255,255,255,0.7); font-size:15px; line-height:1.8; max-width:520px; margin-bottom:28px;}
+  .k-hero .desc{color:rgba(255,255,255,.82); font-size:15px; line-height:1.8; max-width:520px; margin-bottom:28px;}
   .k-specs{display:flex; flex-direction:column; gap:10px; align-items:flex-start;}
   .k-hero-image{border-radius:24px; overflow:hidden; aspect-ratio:1/1; background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08);}
   .k-hero-image img{width:100%; height:100%; object-fit:cover; display:block;}
 
   .cert-bar{max-width:1440px; margin:56px auto 0; padding:0 80px;}
   /* Same type spec as the section eyebrows ("Your Brand. Your Business") */
-  .cert-eyebrow{text-align:center; margin-bottom:12px; font-size:14px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.6);}
+  .cert-eyebrow{text-align:center; margin-bottom:12px; font-size:14px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,.82);}
   .cert-bar-inner{border:1px solid rgba(255,255,255,0.14); border-radius:50px; padding:22px 40px; display:flex; align-items:center; justify-content:center; gap:56px; font-size:15px; color:rgba(255,255,255,0.85); flex-wrap:wrap;}
   .cert-bar-inner img{height:78px; object-fit:contain;}
 
   .build-section{padding:88px 80px 0; text-align:center;}
   .build-section h2{font-size:32px; font-weight:600; margin-bottom:10px; color:var(--white);}
-  .build-section .sub{color:rgba(255,255,255,0.65); font-size:16px; margin-bottom:36px;}
+  .build-section .sub{color:rgba(255,255,255,.82); font-size:16px; margin-bottom:36px;}
   .build-cards{max-width:1280px; margin:0 auto; display:grid; gap:20px;}
   .build-cards.cols-2{grid-template-columns:1fr 1fr;}
   .build-cards.cols-3{grid-template-columns:repeat(3,1fr);}
   .build-card{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:26px; text-align:left;}
   .build-card h3{font-size:16px; font-weight:600; margin-bottom:10px; color:var(--white);}
-  .build-card p{font-size:13.5px; line-height:1.6; color:rgba(255,255,255,0.65);}
+  .build-card p{font-size:13.5px; line-height:1.6; color:rgba(255,255,255,.82);}
 
   .features-section{padding:56px 80px 0; text-align:center;}
-  .features-eyebrow{font-size:13px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:24px;}
+  .features-eyebrow{font-size:13px; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,.82); margin-bottom:24px;}
   .features-grid{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
   .feature-pill{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 16px; font-size:13.5px; font-weight:500; color:rgba(255,255,255,0.85); line-height:1.4;}
   .security-bar{max-width:1280px; margin:20px auto 0;}
-  .security-bar-inner{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 24px; text-align:center; font-size:14px; color:rgba(255,255,255,0.75);}
+  .security-bar-inner{background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px 24px; text-align:center; font-size:14px; color:rgba(255,255,255,.82);}
   .k-cta{text-align:center; padding:40px 80px 0;}
 
   .deploy-section{padding:88px 80px 0; text-align:center;}
   .deploy-section h2{font-size:32px; font-weight:600; margin-bottom:10px; color:var(--white);}
-  .deploy-section .sub{color:rgba(255,255,255,0.65); font-size:16px; margin-bottom:32px;}
+  .deploy-section .sub{color:rgba(255,255,255,.82); font-size:16px; margin-bottom:32px;}
   .deploy-tags{display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-bottom:36px;}
-  .deploy-tag{border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 20px; font-size:13.5px; color:rgba(255,255,255,0.8);}
+  .deploy-tag{border:1px solid rgba(255,255,255,0.16); border-radius:50px; padding:9px 20px; font-size:13.5px; color:rgba(255,255,255,.82);}
   .deploy-gallery{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr 1.15fr 1fr; gap:20px; align-items:stretch;}
   .deploy-gallery .g-item{border-radius:20px; background:var(--panel-solid); border:1px solid rgba(255,255,255,0.08); min-height:340px;}
   .deploy-gallery .g-item.tall{min-height:440px;}
@@ -188,33 +188,33 @@
     .footer-legal{margin-left:0;}
   }
 </style>
-<link rel="stylesheet" href="pfx-nav.css?v=9">
-<link rel="stylesheet" href="pfx-theme.css?v=47">
+<link rel="stylesheet" href="pfx-nav.css?v=10">
+<link rel="stylesheet" href="pfx-theme.css?v=48">
 <style>
 /* ---- about: the kiosk pages' line grammar (.kp, .kp-row in pfx-theme.css) */
 .ab-hero{ max-width:1180px; margin:56px auto 0; padding:0 var(--kp-pad); }
 .ab-hero figure{ margin:0; aspect-ratio:21/9; overflow:hidden; background:#232625; }
 .ab-hero img{ width:100%; height:100%; object-fit:cover; object-position:50% 15%; display:block; }   /* keep the kiosk's roof sign in frame */
-.ab-copy p{ margin:0 0 20px; font-size:17px; line-height:1.7; color:rgba(223,231,224,.62); max-width:62ch; }
+.ab-copy p{ margin:0 0 20px; font-size:17px; line-height:1.7; color:rgba(223,231,224,.82); max-width:62ch; }
 .ab-copy p:first-child{ font-size:20px; line-height:1.55; color:#fff; }
 .ab-copy p:last-child{ margin-bottom:0; }
 .ab-vals{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:0 28px; }
 .ab-vals li{ border-top:1px solid rgba(223,231,224,.16); padding:20px 0 24px; }
-.ab-vals span{ display:block; font-size:13px; color:rgba(223,231,224,.45); margin-bottom:8px; }
+.ab-vals span{ display:block; font-size:13px; color:rgba(223,231,224,.82); margin-bottom:8px; }
 .ab-vals b{ display:block; font-weight:400; font-size:20px; letter-spacing:-.01em; color:#fff; }
 .ab-quote{ margin:0; border-top:1px solid rgba(223,231,224,.16); padding-top:24px; }
 .ab-quote p{ margin:0; font-size:clamp(19px, 1.9vw, 24px); line-height:1.5; letter-spacing:-.01em; color:#fff; }
 .ab-quote footer{ all:unset; display:flex; align-items:center; gap:14px; margin-top:28px; }
 .ab-quote footer img{ width:48px; height:48px; object-fit:cover; display:block; }
-.ab-quote cite{ font-style:normal; font-size:13px; line-height:1.5; color:rgba(223,231,224,.45); }
+.ab-quote cite{ font-style:normal; font-size:13px; line-height:1.5; color:rgba(223,231,224,.82); }
 .ab-quote cite b{ display:block; font-weight:400; font-size:15px; color:#dfe7e0; }
 .ab-team{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:40px 20px; }
 .ab-team li{ border-top:1px solid rgba(223,231,224,.16); padding-top:16px; }
 .ab-team figure{ margin:0 0 14px; aspect-ratio:1/1; overflow:hidden; background:#232625; }
 .ab-team img{ width:100%; height:100%; object-fit:cover; display:block; }
 .ab-team b{ display:block; font-weight:400; font-size:16px; color:#fff; }
-.ab-team span{ display:block; margin-top:4px; font-size:13px; color:rgba(223,231,224,.45); }
-.ab-team a{ display:inline-flex; align-items:center; gap:6px; margin-top:10px; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:rgba(223,231,224,.62); border-bottom:1px solid rgba(223,231,224,.3); }
+.ab-team span{ display:block; margin-top:4px; font-size:13px; color:rgba(223,231,224,.82); }
+.ab-team a{ display:inline-flex; align-items:center; gap:6px; margin-top:10px; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:rgba(223,231,224,.82); border-bottom:1px solid rgba(223,231,224,.3); }
 .ab-team a:hover{ color:#fff; border-color:#fff; }
 @media (max-width:900px){
   .ab-hero{ margin-top:32px; }
@@ -226,7 +226,7 @@
   .ab-team{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:32px 16px; }
 }
 </style>
-<link rel="stylesheet" href="pfx-site.css?v=10">
+<link rel="stylesheet" href="pfx-site.css?v=11">
 </head>
 <body class="kiosk-spec no-campus">
 
@@ -285,7 +285,7 @@
   <section class="kp-row" id="team" aria-label="Our team">
     <div class="kp-row-head"><h2>Our Team</h2><p>The PizzaForno family behind PFX.</p></div>
     <div>
-      <p class="ab-copy" style="margin:0 0 40px; font-size:16px; line-height:1.7; color:rgba(223,231,224,.62); max-width:62ch;">Our team is a collective of seasoned experts, deeply committed to staying at the forefront of technological advancements and market trends. Together, we strive to revolutionize the pizza experience, combining convenience, taste, and cutting-edge technology to deliver unparalleled service and quality.</p>
+      <p class="ab-copy" style="margin:0 0 40px; font-size:16px; line-height:1.7; color:rgba(223,231,224,.82); max-width:62ch;">Our team is a collective of seasoned experts, deeply committed to staying at the forefront of technological advancements and market trends. Together, we strive to revolutionize the pizza experience, combining convenience, taste, and cutting-edge technology to deliver unparalleled service and quality.</p>
       <ul class="ab-team">
         <li><figure><img src="Images/team/will-moyer.webp" alt="Portrait of Will Moyer" width="540" height="540" loading="lazy"></figure><b>Will Moyer</b><span>Co-Founder &amp; CEO</span><a href="https://www.linkedin.com/in/william-moyer-887a2227/" target="_blank" rel="noopener" aria-label="Will Moyer on LinkedIn">LinkedIn <svg viewBox="0 0 14 14" fill="none" width="10" height="10" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
         <li><figure><img src="Images/team/travis-edmondson.webp" alt="Portrait of Travis Edmondson" width="540" height="540" loading="lazy"></figure><b>Travis Edmondson</b><span>President</span><a href="https://www.linkedin.com/in/travisedmondson/" target="_blank" rel="noopener" aria-label="Travis Edmondson on LinkedIn">LinkedIn <svg viewBox="0 0 14 14" fill="none" width="10" height="10" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
