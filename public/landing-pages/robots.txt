@@ -3,7 +3,6 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /login
-Disallow: /internal
 Disallow: /thank-you
 
 Sitemap: https://www.poweredbypfx.com/sitemap.xml

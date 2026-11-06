@@ -233,7 +233,7 @@ const PFX_BLOG_POSTS = [
 /* =========================================================
    LIVE POSTS FROM SUPABASE
    -------------------------------------------------------
-   Posts published from the internal tool (/internal) live in
+   Posts published from the internal site live in
    Supabase. Once Supabase has any published posts, they
    REPLACE the list above (use "Import website posts" in the
    tool to copy these into Supabase first). PFX_POSTS_READY
