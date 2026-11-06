@@ -9,8 +9,9 @@ At deploy time this script:
      site_content, public read-only) and writes it into the pages;
   3. removes the markers from the published HTML.
 
-If Supabase can't be reached, the site deploys with the text in the HTML, so a
-Supabase problem can never take the website down.
+If nothing has been published yet, the pages deploy as they are. If Supabase
+can't be reached, the deploy stops and the current live site stays up, because
+deploying without the published text would quietly undo everyone's edits.
 
   python3 scripts/cms.py build public/landing-pages      (what deploy.yml runs)
   python3 scripts/cms.py schema public/landing-pages     (only write the schema)
@@ -37,6 +38,7 @@ import html as H
 import json
 import re
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -355,15 +357,20 @@ def main(argv):
     print("content-schema.json: %d editable entries" % n)
     if argv[1] == "schema":
         return 0
-    try:
-        if "--content" in argv:
-            content = json.loads(Path(argv[argv.index("--content") + 1]).read_text(encoding="utf-8"))
-        else:
+    if "--content" in argv:
+        content = json.loads(Path(argv[argv.index("--content") + 1]).read_text(encoding="utf-8"))
+    else:
+        try:
             content = fetch_published()
-        print("published content for: %s" % (", ".join(sorted(content)) or "nothing yet"))
-    except Exception as err:  # the site must still deploy
-        print("WARNING: couldn't read published content (%s). Using the text in the HTML." % err)
-        content = {}
+        except urllib.error.HTTPError as err:
+            if err.code != 404:  # 404: the table isn't set up yet, so nothing is published
+                print("Couldn't read published text from Supabase: %s" % err)
+                return 1
+            content = {}
+        except OSError as err:
+            print("Couldn't reach Supabase: %s" % err)
+            return 1
+    print("published content for: %s" % (", ".join(sorted(content)) or "nothing yet"))
     shared = content.get(SHARED, {})
     for page, (fname, _) in PAGES.items():
         path = root / fname
