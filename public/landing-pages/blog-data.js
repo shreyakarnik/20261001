@@ -3,7 +3,8 @@
    -------------------------------------------------------
    Single source of truth for blog posts used by:
      - /blog      (renders the post cards)
-     - /post      (renders one post: /post?p=<slug>)
+     - /posts/<slug>  (one page per post, built at deploy by scripts/blog.py)
+     - /post      (shows a post before its page is built: /post?p=<slug>)
      - site-search.js (powers the nav search button)
 
    To add/edit a post, edit this array, or write it in the
@@ -251,7 +252,7 @@ var PFX_POSTS_READY = (function () {
   if (typeof fetch !== "function") return Promise.resolve(PFX_BLOG_POSTS);
   var timeout = new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 4000); });
   var load = fetch(PFX_SUPABASE.url + "/rest/v1/posts?status=eq.published" +
-      "&select=slug,title,excerpt,body,image,author,tags,date&order=date.desc",
+      "&select=*&order=date.desc",
       { headers: { apikey: PFX_SUPABASE.key } })
     .then(function (r) { return r.ok ? r.json() : null; })
     .catch(function () { return null; });

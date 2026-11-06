@@ -264,13 +264,15 @@
 
 <script src="blog-data.js"></script>
 <script>
-  /* One page for every post: /post?p=<slug> looks the slug up in
+  /* Shows a post that doesn't have its own /posts page yet, and old links:
+     /post?p=<slug> looks the slug up in
      PFX_BLOG_POSTS (blog-data.js). Posts written in the admin tool open
      here too: published ones from blog-data.js, and unpublished drafts as
      a preview (/post?p=<slug>&preview=1) in the browser that saved them.
      Waits for PFX_POSTS_READY so posts published from the internal tool
      (stored in Supabase) are found too. */
   (typeof PFX_POSTS_READY !== 'undefined' ? PFX_POSTS_READY : Promise.resolve()).then(function(){
+    if (document.querySelector('#post .bp-head')) return;   // pages in /posts already have the article
     function esc(str){
       return String(str == null ? '' : str).replace(/[&<>"']/g, function(c){
         return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
@@ -303,11 +305,13 @@
       main.insertAdjacentHTML('beforeend', '<div class="bp-missing"><h1>Post not found</h1><p>This post may have moved. <a href="/blog" style="color:#fff;border-bottom:1px solid">See all posts</a>.</p></div>');
       return;
     }
-    document.title = post.title + ' | PFX Blog';
-    setMeta('meta[name="description"]', 'content', post.excerpt || '');
-    setMeta('meta[property="og:title"]', 'content', post.title);
-    setMeta('meta[property="og:description"]', 'content', post.excerpt || '');
-    setMeta('link[rel="canonical"]', 'href', location.href.split('#')[0]);
+    var seoTitle = post.seo_title || post.title + ' | PFX Blog';
+    var seoDesc = post.seo_description || post.excerpt || '';
+    document.title = seoTitle;
+    setMeta('meta[name="description"]', 'content', seoDesc);
+    setMeta('meta[property="og:title"]', 'content', seoTitle);
+    setMeta('meta[property="og:description"]', 'content', seoDesc);
+    setMeta('link[rel="canonical"]', 'href', 'https://www.poweredbypfx.com/posts/' + encodeURIComponent(post.slug));
     var tags = (post.tags || []).map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('');
     var html =
       '<header class="bp-head">' +
@@ -315,7 +319,7 @@
           (tags ? '<div class="bp-tags">' + tags + '</div>' : '') + '</div>' +
         '<div><h1>' + esc(post.title) + '</h1>' + (post.excerpt ? '<p class="bp-lede">' + esc(post.excerpt) + '</p>' : '') + '</div>' +
       '</header>' +
-      (post.image ? '<figure class="bp-hero"><img src="' + esc(post.image) + '" alt="' + esc(post.title) + '"></figure>' : '') +
+      (post.image ? '<figure class="bp-hero"><img src="' + esc(post.image) + '" alt="' + esc(post.image_alt || post.title) + '"></figure>' : '') +
       '<div class="bp-body"><article class="bp-article">' +
         (preview ? '<p class="bp-note">Draft preview: only you can see this until it&rsquo;s published.</p>' : '') +
         (post.body || '<p>' + esc(post.excerpt) + '</p>') +
@@ -324,7 +328,7 @@
     if (others.length) {
       html += '<section class="bp-more" aria-label="More posts"><div class="bp-more-head"><h2>More From the Blog</h2></div><ul>' +
         others.map(function(p){
-          return '<li><a href="/post?p=' + encodeURIComponent(p.slug) + '"><b>' + esc(p.title) + '</b><span>' + esc(formatDate(p.date)) + '</span></a></li>';
+          return '<li><a href="/posts/' + encodeURIComponent(p.slug) + '"><b>' + esc(p.title) + '</b><span>' + esc(formatDate(p.date)) + '</span></a></li>';
         }).join('') + '</ul></section>';
     }
     main.insertAdjacentHTML('beforeend', html);

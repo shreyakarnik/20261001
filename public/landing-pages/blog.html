@@ -247,9 +247,9 @@
     if (typeof PFX_BLOG_POSTS === "undefined") return;
     grid.innerHTML = PFX_BLOG_POSTS.map(function(p){
       return '<article class="blog-card" id="' + p.slug + '">' +
-        (p.image ? '<div class="blog-thumb"><img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.title || "Blog post image") + '" loading="lazy" decoding="async"></div>' : '') +
+        (p.image ? '<div class="blog-thumb"><img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.image_alt || p.title || "Blog post image") + '" loading="lazy" decoding="async"></div>' : '') +
         '<div class="blog-date">' + formatDate(p.date) + '</div>' +
-        '<h3><a class="blog-card-link" href="/post?p=' + encodeURIComponent(p.slug) + '">' + escapeHtml(p.title) + '</a></h3>' +
+        '<h3><a class="blog-card-link" href="/posts/' + encodeURIComponent(p.slug) + '">' + escapeHtml(p.title) + '</a></h3>' +
         '<p>' + escapeHtml(p.excerpt) + '</p>' +
         '<div class="blog-tags">' + p.tags.map(function(t){ return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('') + '</div>' +
         '</article>';
@@ -264,7 +264,7 @@
   (typeof PFX_POSTS_READY !== 'undefined' ? PFX_POSTS_READY : Promise.resolve()).then(function(){
     if (location.hash.length > 1 && typeof PFX_BLOG_POSTS !== 'undefined' &&
         PFX_BLOG_POSTS.some(function(p){ return '#' + p.slug === location.hash; }))
-      location.replace('/post?p=' + encodeURIComponent(location.hash.slice(1)));
+      location.replace('/posts/' + encodeURIComponent(location.hash.slice(1)));
   });
 </script>
 <script src="site-search.js"></script>
