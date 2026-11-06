@@ -272,8 +272,8 @@ def fill_item(s, item, index):
             continue
         for name, tpl in fattrs(a):
             opener = set_attr(opener, name, fill_template(tpl, item))
-        if "data-cms-fhref" in a:
-            opener = set_attr(opener, "href", item.get(a["data-cms-fhref"], ""))
+        if "data-cms-fhref" in a and SAFE_URL.match(str(item.get(a["data-cms-fhref"], ""))):
+            opener = set_attr(opener, "href", item[a["data-cms-fhref"]])
         inner = None
         if "data-cms-f" in a:
             inner = render(item.get(a["data-cms-f"], ""), a.get("data-cms-type", "text"))
@@ -328,7 +328,7 @@ def write_page(s, values, shared):
                 inner_end, _ = close_of(s, tag, m.end())
                 s = s[:m.end()] + render(source[key], a.get("data-cms-type", "text")) + s[inner_end:]
         href_key = a.get("data-cms-href")
-        if href_key and values.get(href_key):
+        if href_key and SAFE_URL.match(str(values.get(href_key, ""))):
             new = set_attr(opener, "href", values[href_key])
             s = s[:m.start()] + new + s[m.end():]
             pos = m.start() + len(new)
