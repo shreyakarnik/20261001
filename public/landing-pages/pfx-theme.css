@@ -479,7 +479,7 @@ main.pp + footer{ margin-top:0 !important; }
   background:linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0)); }
 .pp-badge{ position:absolute; left:20px; bottom:18px; z-index:1; width:54px; height:auto; display:block; }
 .pp-badge img, .pp-badge .seal20{ width:100%; height:auto; display:block; }
-.pp-badge .seal20{ margin-bottom:14px; }   /* NAMA / UL, bottom-left, on the credit's line */
+.pp-badge .seal20{ margin-bottom:24px; }   /* NAMA / UL, bottom-left, on the credit's line */
 .pp-credit{ position:absolute; right:20px; bottom:18px; z-index:1; display:flex; align-items:flex-start; gap:8px; text-align:right; color:#fff; }
 .pp-credit svg{ margin-top:2px; flex:0 0 auto; color:#fff; }
 .pp-credit span{ font-size:12.5px; line-height:1.4; color:rgba(255,255,255,.82); letter-spacing:.01em; }
